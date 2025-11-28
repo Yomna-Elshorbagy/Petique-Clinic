@@ -1,0 +1,260 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+
+:root {
+  --vanilla-50:  #fcfbf6;
+  --vanilla-100: #f9f6eb;
+  --vanilla-200: #f5f0dd;
+  --vanilla-300: #f0ead2;
+  --vanilla-400: #eadfbd;
+  --vanilla-500: #e4d4a8;
+  --vanilla-600: #d8c591;
+  --vanilla-700: #c7b27a;
+  --vanilla-800: #b39d63;
+  --vanilla-900: #9c844b;
+
+  --cream-50:  #f8faef;
+  --cream-100: #f1f4de;
+  --cream-200: #e6edca;
+  --cream-300: #dde5b6;
+  --cream-400: #ced69a;
+  --cream-500: #bec77e;
+  --cream-600: #aab468;
+  --cream-700: #939c56;
+  --cream-800: #778043;
+  --cream-900: #5a6130;
+
+  --olive-50:  #f5f8ef;
+  --olive-100: #eaf1dd;
+  --olive-200: #d6e2ba;
+  --olive-300: #adc178;
+  --olive-400: #9aad68;
+  --olive-500: #879958;
+  --olive-600: #738549;
+  --olive-700: #5f6f3c;
+  --olive-800: #4a5830;
+  --olive-900: #354022;
+
+
+  --copper-50:  #f7f3f1;
+  --copper-100: #eee8e2;
+  --copper-200: #dccfca;
+  --copper-300: #c5b1a2;
+  --copper-400: #a98467;
+  --copper-500: #90694f;
+  --copper-600: #7b5841;
+  --copper-700: #684a37;
+  --copper-800: #523c2c;
+  --copper-900: #3c2c20;
+
+  --ash-50:  #f3f1ef;
+  --ash-100: #e7e3df;
+  --ash-200: #cdc7c1;
+  --ash-300: #b3aba4;
+  --ash-400: #8b7f72;
+  --ash-500: #6c584c;
+  --ash-600: #5a493f;
+  --ash-700: #4b3e36;
+  --ash-800: #3d332d;
+  --ash-900: #2c241f;
+}
+
+.dark {
+  --vanilla-50:  #3a362b;
+  --vanilla-100: #4a4435;
+  --vanilla-200: #5a5341;
+  --vanilla-300: #6c624c;
+  --vanilla-400: #7f7257;
+  --vanilla-500: #908262;
+  --vanilla-600: #a49475;
+  --vanilla-700: #b8a887;
+  --vanilla-800: #cbbd9e;
+  --vanilla-900: #ded3b8;
+
+  --cream-50:  #2f3426;
+  --cream-100: #3e4231;
+  --cream-200: #4c513c;
+  --cream-300: #5b6048;
+  --cream-400: #6a7054;
+  --cream-500: #7a8060;
+  --cream-600: #8d9370;
+  --cream-700: #a1a784;
+  --cream-800: #b5bb9b;
+  --cream-900: #cbd2b4;
+
+  --olive-50:  #1f241a;
+  --olive-100: #2a3022;
+  --olive-200: #35402b;
+  --olive-300: #405034;
+  --olive-400: #4c603d;
+  --olive-500: #597047;
+  --olive-600: #71885b;
+  --olive-700: #8ba272;
+  --olive-800: #a4bb8b;
+  --olive-900: #bdd4a6;
+
+  --copper-50:  #2c2522;
+  --copper-100: #3a322d;
+  --copper-200: #493d36;
+  --copper-300: #574b40;
+  --copper-400: #66594b;
+  --copper-500: #766857;
+  --copper-600: #8b7b68;
+  --copper-700: #a0917c;
+  --copper-800: #b6a895;
+  --copper-900: #ccbfad;
+
+
+  --ash-50:  #1b1917;
+  --ash-100: #24201d;
+  --ash-200: #2e2824;
+  --ash-300: #38312b;
+  --ash-400: #433a33;
+  --ash-500: #4e443b;
+  --ash-600: #62584f;
+  --ash-700: #776d64;
+  --ash-800: #8d847c;
+  --ash-900: #a49c96;
+
+
+  --color-bg: #0d1210;
+  --color-surface: #1a211e;
+  --color-border: #2a332f;
+
+  --color-text: #f5f2eb;
+  --color-text-muted: #b8c5b0;
+
+  --color-success: #8bc88a;
+  --color-warning: #e6d18a;
+  --color-error:   #d18a73;
+  --color-info:    #9dd4d1;
+}
+
+
+:root {
+  /* PEACH PINK */
+  --peach-50:  #fff3f1;
+  --peach-100: #ffe3dd;
+  --peach-200: #ffc8bf;
+  --peach-300: #ffab9f;
+  --peach-400: #ff9688;
+  --peach-500: #ffb6a6; 
+  --peach-600: #e89d8f;
+  --peach-700: #cc8478;
+  --peach-800: #a96b60;
+  --peach-900: #87564e;
+
+  /* SOFT YELLOW */
+  --yellow-50:  #fff9e6;
+  --yellow-100: #fff2cc;
+  --yellow-200: #ffe8a3;
+  --yellow-300: #ffdf85;
+  --yellow-400: #ffd66b; 
+  --yellow-500: #e6bf5e;
+  --yellow-600: #ccaa52;
+  --yellow-700: #b39646;
+  --yellow-800: #8f7838;
+  --yellow-900: #6b5a2b;
+
+  /* MINT GREEN */
+  --mint-50:  #f4fbf4;
+  --mint-100: #e6f6e6;
+  --mint-200: #d2edd2;
+  --mint-300: #b6e1b7;
+  --mint-400: #a3d7a4;
+  --mint-500: #c1e1c1; 
+  --mint-600: #93c093;
+  --mint-700: #78a878;
+  --mint-800: #5e895e;
+  --mint-900: #466b46;
+
+  /* BEIGE */
+  --beige-50:  #fffdf8;
+  --beige-100: #fefbf2;
+  --beige-200: #fdf7e9;
+  --beige-300: #fcf2df;
+  --beige-400: #f9e9cf;
+  --beige-500: #fff7ec; 
+  --beige-600: #e7decd;
+  --beige-700: #c4bbab;
+  --beige-800: #a09889;
+  --beige-900: #7a7567;
+
+  /* DARK PURPLE */
+  --purple-50:  #e8e7ef;
+  --purple-100: #d1d0df;
+  --purple-200: #a9a7c2;
+  --purple-300: #827fa7;
+  --purple-400: #59557f;
+  --purple-500: #3f3d56; 
+  --purple-600: #35344a;
+  --purple-700: #2b2b3e;
+  --purple-800: #222233;
+  --purple-900: #191927;
+}
+
+.dark {
+  /* PEACH PINK (inverted) */
+  --peach-50:  #4a3736;
+  --peach-100: #5b4241;
+  --peach-200: #6d4f4c;
+  --peach-300: #7e5c58;
+  --peach-400: #906b66;
+  --peach-500: #a47b75;
+  --peach-600: #b88d85;
+  --peach-700: #d0a79f;
+  --peach-800: #e7c2ba;
+  --peach-900: #f8ded8;
+
+  /* SOFT YELLOW */
+  --yellow-50:  #4a442e;
+  --yellow-100: #5a5335;
+  --yellow-200: #6b633f;
+  --yellow-300: #7d744a;
+  --yellow-400: #8f8656;
+  --yellow-500: #a19364;
+  --yellow-600: #b9ac7b;
+  --yellow-700: #d2c595;
+  --yellow-800: #e8ddb3;
+  --yellow-900: #f7eecf;
+
+  /* MINT GREEN */
+  --mint-50:  #2a372a;
+  --mint-100: #324132;
+  --mint-200: #3b4d3b;
+  --mint-300: #465b46;
+  --mint-400: #526a52;
+  --mint-500: #607a60;
+  --mint-600: #759275;
+  --mint-700: #8eab8e;
+  --mint-800: #a7c5a7;
+  --mint-900: #cfe5cf;
+
+  /* BEIGE */
+  --beige-50:  #2d2a27;
+  --beige-100: #38332f;
+  --beige-200: #433d38;
+  --beige-300: #4e4741;
+  --beige-400: #5a534d;
+  --beige-500: #6a625b;
+  --beige-600: #837b73;
+  --beige-700: #9e958e;
+  --beige-800: #bcb1aa;
+  --beige-900: #dfd8ce;
+
+  /* DARK PURPLE */
+  --purple-50:  #13121a;
+  --purple-100: #1a1922;
+  --purple-200: #22212b;
+  --purple-300: #2b2a35;
+  --purple-400: #34343f;
+  --purple-500: #3f3d56;
+  --purple-600: #6a6881;
+  --purple-700: #8a88a2;
+  --purple-800: #afadc3;
+  --purple-900: #d5d3e0;
+}
