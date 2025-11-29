@@ -1,9 +1,8 @@
 import axios from "axios";
 import type { ICategory, ICategoryStats, ITrendingCategory } from "../Interfaces/categryInterfaces";
+import { baseURL } from "./BaseUrl";
 
-const BASE_URL = "https://iti-react-backend.vercel.app/categories";
-
-
+const BASE_URL = `${baseURL}/categories`;
 
 const token = localStorage.getItem("accessToken");
 

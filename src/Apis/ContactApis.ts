@@ -1,7 +1,8 @@
 import axios from "axios";
+import { baseURL } from "./BaseUrl";
 
 const API = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: `${baseURL}`,
 });
 
 export const sendContact = async (data: any) => {
