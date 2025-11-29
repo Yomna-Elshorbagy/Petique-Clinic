@@ -2,8 +2,8 @@ export interface IContact {
   _id: string;
   fullName: string;
   email: string;
-  category: "appointment" | "emergency" | "health" | "vaccination" | "general";
-  urgency: "low" | "medium" | "high" | "emergency";
+  category: string;
+  urgency: string;
   petAge?: string;
   message: string;
 
@@ -17,4 +17,12 @@ export interface IContact {
 
   createdAt: string;
   updatedAt: string;
+}
+export interface ContactForm {
+  fullName: string;
+  email: string;
+  message: string;
+  category: string;
+  urgency: string;
+  petAge: string;
 }

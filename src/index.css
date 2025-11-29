@@ -4,6 +4,13 @@
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
 
+.input-box {
+  @apply w-full p-3 rounded-xl border border-[#A98868]/50 
+  bg-[#FCF9F4] text-[#443935] 
+  focus:ring-2 focus:ring-[#C58D52] focus:border-[#C58D52]
+  outline-none transition;
+}
+
 
 :root {
   --vanilla-50:  #fcfbf6;

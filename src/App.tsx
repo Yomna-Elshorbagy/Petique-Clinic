@@ -11,6 +11,7 @@ import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
 import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
 import OtpConfirmation from "./Pages/Otp/OtpConfirmation";
+import ContactUs from "./Pages/ContactUs/ContactUs";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Home /> },
       { path: "home", element: <Home /> },
+      { path: "contact", element: <ContactUs /> },
     ],
   },
     {
