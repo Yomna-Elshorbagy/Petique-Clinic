@@ -14,10 +14,10 @@ export default function AddPetForm() {
   const { data: categories = [], isLoading: catLoading } = useAnimalCategories();
   const { data: vaccinations = [], isLoading: vacLoading } = useVaccinations();
 
-  // Selected vaccinations state
+  //===> Selected vaccinations state
   const [selectedVaccinations, setSelectedVaccinations] = useState<VaccinationSelection[]>([]);
 
-  // Field changes
+  //===> field changes
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, files } = e.target;
     if (files && files[0]) {
@@ -27,7 +27,7 @@ export default function AddPetForm() {
     }
   };
 
-  // Toggle vaccination checkbox
+  // ===> toggle vaccination checkbox
   const handleVaccinationCheck = (vaccine: Vaccination, checked: boolean) => {
     if (checked) {
       setSelectedVaccinations(prev => [
@@ -53,7 +53,7 @@ export default function AddPetForm() {
     );
   };
 
-  // ---- FILTER VACCINATIONS BY CATEGORY ----
+  // ===> filter vaccination by category <===
   const filteredVaccinations =
     formData.category && vaccinations.length > 0
       ? vaccinations.filter(v =>
@@ -102,7 +102,7 @@ export default function AddPetForm() {
         className="w-full border border-[#A98868] rounded-md px-3 py-2"
       />
 
-      {/* CATEGORY SELECT */}
+      {/*===> category select <===*/}
       {catLoading ? (
         <p>Loading categories...</p>
       ) : (
@@ -128,7 +128,7 @@ export default function AddPetForm() {
         className="w-full border border-[#A98868] rounded-md px-3 py-2"
       />
 
-      {/* ALLERGIES */}
+      {/*====> ALLERGIES <====*/}
       <input
         placeholder="Allergies (comma separated)"
         onChange={(e) =>
@@ -140,7 +140,7 @@ export default function AddPetForm() {
         className="w-full border border-[#A98868] rounded-md px-3 py-2 md:col-span-2"
       />
 
-      {/*==== FILTERED VACCINATIONS ====*/}
+      {/*====> FILTERED VACCINATIONS <====*/}
       {vacLoading ? (
         <p>Loading vaccinations...</p>
       ) : (

@@ -31,7 +31,7 @@ export function useUserProfile() {
     enabled: !!token,
   });
 
-  // ===> Set form data when fetched
+  // ===> set form data when fetched
   useEffect(() => {
     if (data) {
       setFormData({
@@ -46,7 +46,7 @@ export function useUserProfile() {
     }
   }, [data]);
 
-  // ===> Input change handler
+  // ===> input change handler
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -54,7 +54,7 @@ export function useUserProfile() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ===> Image handler
+  // ===> image handler
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -63,7 +63,7 @@ export function useUserProfile() {
     }
   };
 
-  // ===> Mutation for update
+  // ===> mutation for update
   const mutation = useMutation({
     mutationFn: async () => {
       const formDataToSend = new FormData();

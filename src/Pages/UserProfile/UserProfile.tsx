@@ -1,10 +1,3 @@
-// import React from 'react'
-
-// export default function UserProfile() {
-//   return (
-//     <div>UserProfile</div>
-//   )
-// }
 import { useState } from "react";
 import { FaPen } from "react-icons/fa";
 import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
@@ -12,8 +5,9 @@ import profileImage from "../../assets/images/pet1.jpg";
 import SEO from "../../Components/SEO/SEO";
 import { useUserProfile } from "../../Hooks/UserProfile/useUserProfile";
 import AddPetForm from "../../Components/UserProfile/AddPet";
-import Orders from "../../Components/UserProfile/Orders";
 import UserPets from "../../Components/UserProfile/UserPets";
+import UserOrders from "../../Components/UserProfile/Orders";
+import PetOrderTracking from "../../Components/UserProfile/OrderTracking";
 
 export default function UserPetClinicProfile() {
   const [activeTab, setActiveTab] = useState("Personal Information");
@@ -33,8 +27,9 @@ export default function UserPetClinicProfile() {
   const tabs = [
     "Personal Information",
     "My Pets",
-    "Appointments",
     "Add New Pet",
+    "Orders",
+    "Order Tracking",
   ];
 
   if (isLoading) return <LoaderPage />;
@@ -56,7 +51,7 @@ export default function UserPetClinicProfile() {
         description="Manage your personal info, pets, and appointments."
       />
 
-      {/* === PAW PRINT BACKGROUND === */}
+      {/* ===> paw print background <=== */}
       <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
         <div className="absolute top-10 left-12 text-7xl">🐾</div>
         <div className="absolute top-40 right-10 text-6xl">🐾</div>
@@ -64,7 +59,7 @@ export default function UserPetClinicProfile() {
         <div className="absolute bottom-10 right-1/3 text-7xl">🐾</div>
       </div>
 
-      {/* === HEADER === */}
+      {/* ===> header <=== */}
       <div className="relative text-center mb-10">
         <h2
           className="text-4xl font-bold font-serif"
@@ -77,9 +72,8 @@ export default function UserPetClinicProfile() {
         </p>
       </div>
 
-      {/* === MAIN CARD === */}
       <div className="relative max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8 flex flex-col md:flex-row gap-8">
-        {/* === SIDEBAR === */}
+        {/* ===> sidebar <=== */}
         <div className="flex flex-col w-full md:w-1/4 border-r border-[#E8DED7]">
           <div className="flex flex-col items-center mb-8">
             <div className="relative w-28 h-28">
@@ -125,15 +119,13 @@ export default function UserPetClinicProfile() {
           ))}
         </div>
 
-        {/* === MAIN CONTENT === */}
+        {/* ===> main content <=== */}
         <div className="flex-1">
-          {/* PERSONAL INFO TAB */}
           {activeTab === "Personal Information" && (
             <form
               onSubmit={handleSubmit}
               className="grid grid-cols-1 md:grid-cols-2 gap-5"
             >
-              {/* Name */}
               <div className="md:col-span-2">
                 <label className="block text-[#443935] mb-1 font-medium">
                   Owner Name *
@@ -147,7 +139,6 @@ export default function UserPetClinicProfile() {
                 />
               </div>
 
-              {/* Email */}
               <div className="md:col-span-2">
                 <label className="block text-[#443935] mb-1 font-medium">
                   Email *
@@ -161,7 +152,6 @@ export default function UserPetClinicProfile() {
                 />
               </div>
 
-              {/* Phone Number */}
               <div className="md:col-span-2">
                 <label className="block text-[#443935] mb-1 font-medium">
                   Phone Number
@@ -175,7 +165,7 @@ export default function UserPetClinicProfile() {
                 />
               </div>
 
-              {/* === COLLAPSIBLE PASSWORD SECTION === */}
+              {/* ====> collaps password section <==== */}
               <div className="md:col-span-2 mt-3">
                 <button
                   type="button"
@@ -215,7 +205,6 @@ export default function UserPetClinicProfile() {
                 )}
               </div>
 
-              {/* Submit */}
               <div className="md:col-span-2 flex justify-end mt-4">
                 <button
                   type="submit"
@@ -229,17 +218,26 @@ export default function UserPetClinicProfile() {
             </form>
           )}
 
-          {/* OTHER TABS */}
-          {activeTab === "My Pets" && <div><UserPets/></div>}
-          {activeTab === "orders" && (
+          {activeTab === "My Pets" && (
             <div>
-              {" "}
-              <Orders />
+              <UserPets />
             </div>
           )}
           {activeTab === "Add New Pet" && (
             <div>
               <AddPetForm />
+            </div>
+          )}
+          {activeTab === "Orders" && (
+            <div>
+              {" "}
+              <UserOrders />
+            </div>
+          )}
+
+          {activeTab === "Order Tracking" && (
+            <div>
+              <PetOrderTracking />
             </div>
           )}
         </div>

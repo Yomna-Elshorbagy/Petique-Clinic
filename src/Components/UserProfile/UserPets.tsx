@@ -33,14 +33,12 @@ export default function UserPets() {
             key={pet._id}
             className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-200"
           >
-            {/* Image */}
             <img
               src={pet.image?.secure_url}
               alt={pet.name}
               className="w-full h-48 object-cover rounded-xl mb-4"
             />
 
-            {/* Name + Category */}
             <h4
               className="text-xl font-semibold mb-2"
               style={{ color: "var(--color-primary)" }}
@@ -72,7 +70,7 @@ export default function UserPets() {
               )}
             </div>
 
-            {/* Vaccinations */}
+            {/* vaccinations */}
             {pet.vaccinationHistory?.length > 0 && (
               <div className="mt-4 border-t border-gray-300 dark:border-gray-600 pt-3">
                 <h5 className="font-medium text-gray-800 dark:text-gray-100 mb-2 flex items-center gap-2">
