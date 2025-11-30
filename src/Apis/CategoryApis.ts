@@ -12,7 +12,7 @@ const headers = {
 };
 
 export const getAllCategories = async (): Promise<ICategory[]> => {
-  const { data } = await axios.get(`${BASE_URL}`, { headers });
+  const { data } = await axios.get(`${BASE_URL}`);
   return data.data;
 };
 
@@ -36,7 +36,6 @@ export const getCategories = async (
 
   const { data } = await axios.get(`${BASE_URL}/getCategories`, {
     params,
-    headers,
   });
   return data;
 };
