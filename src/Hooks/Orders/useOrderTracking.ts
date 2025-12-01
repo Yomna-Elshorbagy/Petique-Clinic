@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { baseURL } from "../../Apis/BaseUrl";
-import type { Order } from "../../Types/OrderType";
+import type { Order, OrdersResponse } from "../../Types/OrderType";
 
 export const useOrderTracking = (orderId: string) => {
   const token = localStorage.getItem("accessToken");
@@ -18,5 +18,21 @@ export const useOrderTracking = (orderId: string) => {
       return res.data.data;
     },
     enabled: !!orderId,
+  });
+};
+export const useUserOrders = (page: number, limit: number) => {
+  const token = localStorage.getItem("accessToken");
+
+  return useQuery<OrdersResponse>({
+    queryKey: ["userOrders", page],
+    queryFn: async () => {
+      const res = await axios.get(`${baseURL}/order`, {
+        headers: { authentication: `bearer ${token}` },
+        params: { page, limit },
+      });
+
+      return res.data;
+    },
+    enabled: !!token,
   });
 };

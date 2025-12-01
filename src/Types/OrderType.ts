@@ -9,7 +9,14 @@ export type CreateOrderInput = {
 };
 
 export type OrderProduct = {
-  productId: string;
+  productId: {
+    title:string,
+    description:string,
+    imageCover:{
+      secure_url:string,
+      public_id:string,
+    }
+  };
   title: string;
   price: number;
   quantity: number;
@@ -34,3 +41,7 @@ export type Order = {
   updatedAt: string;
 };
 
+export interface OrdersResponse {
+  data: Order[];
+  totalPages: number;
+}
