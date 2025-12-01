@@ -1,5 +1,4 @@
-import React from "react";
-import { Helmet } from "react-helmet";
+import React, { useEffect } from "react";
 
 interface SEOProps {
   title?: string;
@@ -9,31 +8,48 @@ interface SEOProps {
   url?: string;
 }
 
+function setMetaTag(attrName: string, attrValue: string, content: string) {
+  const selector = `[${attrName}="${attrValue}"]`;
+  let el = document.head.querySelector<HTMLMetaElement>(`meta${selector}`);
+  if (!el) {
+    el = document.createElement("meta");
+    el.setAttribute(attrName, attrValue);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("content", content);
+}
+
 const SEO: React.FC<SEOProps> = ({
   title = "Pet Clinic",
   description = "",
   keywords = "Pets , Vet ,",
   image = "",
-  url = "http://localhost:5175/"
+  url = "http://localhost:5175/",
 }) => {
-  return (
-    <Helmet>
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      <meta name="keywords" content={keywords} />
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = title;
 
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
-      <meta property="og:url" content={url} />
-      <meta property="og:type" content="website" />
+    if (description) setMetaTag("name", "description", description);
+    if (keywords) setMetaTag("name", "keywords", keywords);
 
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
-    </Helmet>
-  );
+    if (title) setMetaTag("property", "og:title", title);
+    if (description) setMetaTag("property", "og:description", description);
+    if (image) setMetaTag("property", "og:image", image);
+    if (url) setMetaTag("property", "og:url", url);
+    setMetaTag("property", "og:type", "website");
+
+    setMetaTag("name", "twitter:card", "summary_large_image");
+    if (title) setMetaTag("name", "twitter:title", title);
+    if (description) setMetaTag("name", "twitter:description", description);
+    if (image) setMetaTag("name", "twitter:image", image);
+
+    return () => {
+      document.title = previousTitle;
+    };
+  }, [title, description, keywords, image, url]);
+
+  return null;
 };
 
 export default SEO;

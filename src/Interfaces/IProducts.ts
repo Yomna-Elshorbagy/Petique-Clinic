@@ -11,8 +11,14 @@ export interface IProduct {
   discount?: number;
 
   stock: number;
-
-  category: string;
+ 
+  category: string | {
+    _id: string;
+    name: string;
+    image?: string;
+    createdBy?: string;
+    id?: string;
+  };
   createdBy: string;
   updatedBy: string;
 

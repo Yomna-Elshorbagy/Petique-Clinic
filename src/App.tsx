@@ -12,6 +12,9 @@ import Register from "./Pages/Register/Register";
 import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
 import OtpConfirmation from "./Pages/Otp/OtpConfirmation";
 import ContactUs from "./Pages/ContactUs/ContactUs";
+import Products from "./Pages/Products/Products";
+import ProductDetails from "./Pages/ProductDetails/ProductDetails";
+
 
 const router = createBrowserRouter([
   {
@@ -21,6 +24,8 @@ const router = createBrowserRouter([
       { path: "", element: <Home /> },
       { path: "home", element: <Home /> },
       { path: "contact", element: <ContactUs /> },
+      { path: "products", element: <Products /> },
+      { path: "product-details/:id", element: <ProductDetails /> },
     ],
   },
     {
