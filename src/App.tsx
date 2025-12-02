@@ -15,7 +15,9 @@ import ContactUs from "./Pages/ContactUs/ContactUs";
 import Checkout from "./Pages/Checkout/Checkout";
 import Products from "./Pages/Products/Products";
 import ProductDetails from "./Pages/ProductDetails/ProductDetails";
-
+import DashboardHome from "./Reservation/Pages/DashboardHome/DashboardHome";
+import Reservations from "./Reservation/Pages/Reservations/Reservations";
+import DashboardLayout from "./Reservation/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "forgetPass", element: <ForgetPassword /> },
       { path: "otp", element: <OtpConfirmation /> },
+    ],
+  },
+  {
+    path: "resDashboard",
+    element: <DashboardLayout />,
+    children: [
+      { path: "", element: <DashboardHome /> },
+      { path: "reservations", element: <Reservations /> },
     ],
   },
 ]);
