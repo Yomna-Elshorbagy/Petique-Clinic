@@ -1,7 +1,425 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from "react";
+import SEO from "../../Components/SEO/SEO";
+import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
+import ProductCard from "../../Components/Products/ProductCard";
+import ProductsHero from "../../Components/Products/ProductsHero";
+import { getAllProducts } from "../../Apis/ProductApis";
+import type { IProduct } from "../../Interfaces/IProducts";
+import { getAllCategories } from "../../Apis/CategoryApis";
+import type { ICategory } from "../../Interfaces/categryInterfaces";
 
-export default function Products() {
-  return (
-    <div>Products</div>
-  )
+interface ProductsState {
+  items: IProduct[];
+  allItems: IProduct[];
+  loading: boolean;
+  error: string | null;
 }
+
+interface PaginationState {
+  currentPage: number;
+  numberOfPages: number;
+  limit: number;
+  prevPage: number | null;
+  nextPage: number | null;
+  totalResults: number;
+}
+
+interface FilterState {
+  search: string;
+  category: string;
+  minPrice: string;
+  maxPrice: string;
+  stock: "all" | "in" | "out";
+}
+
+const initialFilters: FilterState = {
+  search: "",
+  category: "all",
+  minPrice: "",
+  maxPrice: "",
+  stock: "all",
+};
+
+const Products: React.FC = () => {
+  const [productsState, setProductsState] = useState<ProductsState>({
+    items: [],
+    allItems: [],
+    loading: true,
+    error: null,
+  });
+
+  const [pagination, setPagination] = useState<PaginationState>({
+    currentPage: 1,
+    numberOfPages: 1,
+    limit: 12,
+    prevPage: null,
+    nextPage: null,
+    totalResults: 0,
+  });
+
+  const [filters, setFilters] = useState<FilterState>(initialFilters);
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [isFiltersDirty, setIsFiltersDirty] = useState(false);
+
+  const debouncedSearch = useDebouncedValue(filters.search, 300);
+
+  const fetchProducts = async (page: number = 1) => {
+    try {
+      setProductsState((prev) => ({ ...prev, loading: true, error: null }));
+
+      const response = await getAllProducts(page, pagination.limit);
+
+      // Backend response shape: { success, message, data: IProduct[] }
+      setProductsState({
+        items: response.data,
+        allItems: response.data,
+        loading: false,
+        error: null,
+      });
+    } catch (error: any) {
+      setProductsState({
+        items: [],
+        allItems: [],
+        loading: false,
+        error:
+          error?.response?.data?.message ||
+          error?.message ||
+          "Something went wrong while loading products.",
+      });
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const data = await getAllCategories();
+      setCategories(data);
+    } catch {
+      // fail silently for category dropdown
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+    fetchProducts(1);
+  }, []);
+
+  const filteredItems = useMemo(() => {
+    let items = [...productsState.allItems];
+
+    // text search on title
+    if (debouncedSearch.trim()) {
+      const term = debouncedSearch.trim().toLowerCase();
+      items = items.filter((product) =>
+        product.title.toLowerCase().includes(term)
+      );
+    }
+
+    // category filter (compare against populated category name)
+    if (filters.category !== "all") {
+      items = items.filter((product) => {
+        if (typeof product.category === "string") {
+          return product.category === filters.category;
+        }
+        return product.category?.name === filters.category;
+      });
+    }
+
+    // price range
+    const min = filters.minPrice.trim() !== "" ? Number(filters.minPrice) : undefined;
+    const max = filters.maxPrice.trim() !== "" ? Number(filters.maxPrice) : undefined;
+
+    if (typeof min === "number" && !Number.isNaN(min)) {
+      items = items.filter((product) => (product.finalPrice ?? product.price) >= min);
+    }
+
+    if (typeof max === "number" && !Number.isNaN(max)) {
+      items = items.filter((product) => (product.finalPrice ?? product.price) <= max);
+    }
+
+    // stock status
+    if (filters.stock === "in") {
+      items = items.filter((product) => product.stock > 0);
+    } else if (filters.stock === "out") {
+      items = items.filter((product) => product.stock <= 0);
+    }
+
+    return items;
+  }, [productsState.allItems, debouncedSearch, filters]);
+
+  const handlePageChange = (page: number, pageCount: number) => {
+    if (page === pagination.currentPage || page < 1 || page > pageCount) return;
+    setPagination((prev) => ({
+      ...prev,
+      currentPage: page,
+    }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleFilterChange = <K extends keyof FilterState>(key: K, value: FilterState[K]) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+    setIsFiltersDirty(true);
+  };
+
+  const handleResetFilters = () => {
+    setFilters(initialFilters);
+    setIsFiltersDirty(false);
+  };
+
+  const renderPagination = (pageCount: number, totalFiltered: number) => {
+    if (pageCount <= 1) return null;
+
+    const pages = Array.from({ length: pageCount }, (_, index) => index + 1);
+
+    return (
+      <nav
+        aria-label="Product pagination"
+        className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-6 dark:border-slate-800"
+      >
+        <p className="text-xs text-slate-500 dark:text-slate-400">
+          Showing{" "}
+          <span className="font-semibold text-slate-800 dark:text-slate-100">
+            {Math.min(
+              totalFiltered - (pagination.currentPage - 1) * pagination.limit,
+              pagination.limit
+            )}
+          </span>{" "}
+          of{" "}
+          <span className="font-semibold text-slate-800 dark:text-slate-100">
+            {totalFiltered}
+          </span>{" "}
+          products
+        </p>
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => handlePageChange(pagination.currentPage - 1, pageCount)}
+            disabled={pagination.currentPage <= 1}
+            className="inline-flex h-8 items-center rounded-full border border-slate-200 px-3 text-xs font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:border-slate-100 disabled:text-slate-300 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800 dark:disabled:border-slate-900 dark:disabled:text-slate-600"
+          >
+            Prev
+          </button>
+
+          <div className="flex items-center gap-1 overflow-x-auto rounded-full bg-slate-50 px-1 py-1 text-xs dark:bg-slate-900/70">
+            {pages.map((page) => (
+              <button
+                key={page}
+                type="button"
+                onClick={() => handlePageChange(page, pageCount)}
+                className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-semibold transition ${
+                  page === pagination.currentPage
+                    ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/40"
+                    : "text-slate-600 hover:bg-white hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => handlePageChange(pagination.currentPage + 1, pageCount)}
+            disabled={pagination.currentPage >= pageCount}
+            className="inline-flex h-8 items-center rounded-full border border-slate-200 px-3 text-xs font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:border-slate-100 disabled:text-slate-300 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800 dark:disabled:border-slate-900 dark:disabled:text-slate-600"
+          >
+            Next
+          </button>
+        </div>
+      </nav>
+    );
+  };
+
+  if (productsState.loading && !productsState.items.length) {
+    return <LoaderPage />;
+  }
+
+  const totalFiltered = filteredItems.length;
+  const pageCount = Math.max(1, Math.ceil(totalFiltered / pagination.limit));
+  const startIndex = (pagination.currentPage - 1) * pagination.limit;
+  const endIndex = startIndex + pagination.limit;
+  const pagedItems = filteredItems.slice(startIndex, endIndex);
+
+  return (
+    <>
+      <SEO title="Products | Petique Clinic" description="Browse our curated pet products." />
+
+      <ProductsHero />
+
+      <main className="bg-slate-50 py-10 dark:bg-slate-950">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <section
+            aria-label="Product filters"
+            className="mb-8 rounded-2xl bg-white/90 p-4 shadow-sm ring-1 ring-slate-100 backdrop-blur-sm dark:bg-slate-900/90 dark:ring-slate-800 sm:p-5 lg:p-6"
+          >
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 sm:text-base">
+                Filter products
+              </h2>
+              <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                {isFiltersDirty && (
+                  <span className="inline-flex h-5 items-center rounded-full bg-emerald-50 px-2 text-[11px] font-medium text-emerald-700 ring-1 ring-emerald-100 dark:bg-emerald-900/40 dark:text-emerald-200 dark:ring-emerald-700/60">
+                    Filters active
+                  </span>
+                )}
+                <button
+                  type="button"
+                  onClick={handleResetFilters}
+                  className="inline-flex items-center rounded-full border border-slate-200 px-2 py-0.5 text-[11px] font-medium text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+
+            <div className="grid gap-3 text-xs sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+              <div className="flex flex-col gap-1">
+                <label
+                  htmlFor="search"
+                  className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400"
+                >
+                  Search
+                </label>
+                <input
+                  id="search"
+                  type="text"
+                  value={filters.search}
+                  onChange={(event) => handleFilterChange("search", event.target.value)}
+                  placeholder="Search by name"
+                  className="h-9 rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs text-slate-900 outline-none ring-emerald-500/30 transition placeholder:text-slate-400 focus:bg-white focus:ring-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label
+                  htmlFor="category"
+                  className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400"
+                >
+                  Category
+                </label>
+                <select
+                  id="category"
+                  value={filters.category}
+                  onChange={(event) => handleFilterChange("category", event.target.value)}
+                  className="h-9 rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs text-slate-900 outline-none ring-emerald-500/30 transition focus:bg-white focus:ring-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                >
+                  <option value="all">All categories</option>
+                  {categories.map((category) => (
+                    <option key={category._id} value={category.name}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                  Price (min)
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  value={filters.minPrice}
+                  onChange={(event) => handleFilterChange("minPrice", event.target.value)}
+                  placeholder="Min"
+                  className="h-9 rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs text-slate-900 outline-none ring-emerald-500/30 transition placeholder:text-slate-400 focus:bg-white focus:ring-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                  Price (max)
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  value={filters.maxPrice}
+                  onChange={(event) => handleFilterChange("maxPrice", event.target.value)}
+                  placeholder="Max"
+                  className="h-9 rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs text-slate-900 outline-none ring-emerald-500/30 transition placeholder:text-slate-400 focus:bg-white focus:ring-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label
+                  htmlFor="stock"
+                  className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400"
+                >
+                  Stock
+                </label>
+                <select
+                  id="stock"
+                  value={filters.stock}
+                  onChange={(event) =>
+                    handleFilterChange("stock", event.target.value as FilterState["stock"])
+                  }
+                  className="h-9 rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs text-slate-900 outline-none ring-emerald-500/30 transition focus:bg-white focus:ring-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                >
+                  <option value="all">All</option>
+                  <option value="in">In stock</option>
+                  <option value="out">Out of stock</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <section aria-label="Product list" className="space-y-4">
+            {productsState.error && (
+              <div className="rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-xs text-red-700 dark:border-red-900/60 dark:bg-red-950/50 dark:text-red-200">
+                {productsState.error}
+              </div>
+            )}
+
+            {!productsState.loading && !filteredItems.length && !productsState.error && (
+              <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white py-10 text-center text-sm text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+                <p className="font-medium">No products found for selected filters.</p>
+                <button
+                  type="button"
+                  onClick={handleResetFilters}
+                  className="mt-3 inline-flex items-center rounded-full bg-emerald-500 px-4 py-1.5 text-xs font-semibold text-white shadow-sm shadow-emerald-500/40 transition hover:bg-emerald-600"
+                >
+                  Clear filters
+                </button>
+              </div>
+            )}
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {pagedItems.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
+
+            {productsState.loading && productsState.items.length > 0 && (
+              <div className="mt-4 text-center text-xs text-slate-500 dark:text-slate-400">
+                Updating products...
+              </div>
+            )}
+
+            {renderPagination(pageCount, totalFiltered)}
+          </section>
+        </div>
+      </main>
+    </>
+  );
+};
+
+function useDebouncedValue<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
+export default Products;

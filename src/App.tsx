@@ -12,6 +12,14 @@ import Register from "./Pages/Register/Register";
 import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
 import OtpConfirmation from "./Pages/Otp/OtpConfirmation";
 import ContactUs from "./Pages/ContactUs/ContactUs";
+import Checkout from "./Pages/Checkout/Checkout";
+import DashboardEcoLayout from "./Dashboard/DashboardEcoLayout";
+import DashboardEcoHome from "./Dashboard/Pages/Home/DashboardEcoHome";
+import Products from "./Pages/Products/Products";
+import ProductDetails from "./Pages/ProductDetails/ProductDetails";
+import DashboardHome from "./Reservation/Pages/DashboardHome/DashboardHome";
+import Reservations from "./Reservation/Pages/Reservations/Reservations";
+import DashboardLayout from "./Reservation/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -21,9 +29,12 @@ const router = createBrowserRouter([
       { path: "", element: <Home /> },
       { path: "home", element: <Home /> },
       { path: "contact", element: <ContactUs /> },
+      { path: "checkout", element: <Checkout /> },
+      { path: "products", element: <Products /> },
+      { path: "product-details/:id", element: <ProductDetails /> },
     ],
   },
-    {
+  {
     path: "",
     element: <AuthLayout />,
     children: [
@@ -33,10 +44,25 @@ const router = createBrowserRouter([
       { path: "otp", element: <OtpConfirmation /> },
     ],
   },
+  {
+    path: "ecoDashboard",
+    element: <DashboardEcoLayout />,
+    children: [
+      { path: "", element: <DashboardEcoHome /> },
+    ],
+  },
+  {
+    path: "resDashboard",
+    element: <DashboardLayout />,
+    children: [
+      { path: "", element: <DashboardHome /> },
+      { path: "reservations", element: <Reservations /> },
+    ],
+  },
 ]);
 
 export default function App() {
-    const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
 
   return (
     <>
