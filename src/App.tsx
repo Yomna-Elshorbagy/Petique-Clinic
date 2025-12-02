@@ -13,6 +13,8 @@ import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
 import OtpConfirmation from "./Pages/Otp/OtpConfirmation";
 import ContactUs from "./Pages/ContactUs/ContactUs";
 import Checkout from "./Pages/Checkout/Checkout";
+import DashboardEcoLayout from "./Dashboard/DashboardEcoLayout";
+import DashboardEcoHome from "./Dashboard/Pages/Home/DashboardEcoHome";
 import Products from "./Pages/Products/Products";
 import ProductDetails from "./Pages/ProductDetails/ProductDetails";
 import DashboardHome from "./Reservation/Pages/DashboardHome/DashboardHome";
@@ -40,6 +42,13 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "forgetPass", element: <ForgetPassword /> },
       { path: "otp", element: <OtpConfirmation /> },
+    ],
+  },
+  {
+    path: "ecoDashboard",
+    element: <DashboardEcoLayout />,
+    children: [
+      { path: "", element: <DashboardEcoHome /> },
     ],
   },
   {
