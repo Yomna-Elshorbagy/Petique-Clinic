@@ -70,7 +70,7 @@ export default function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
-          <RouterProvider router={router} />;
+          <RouterProvider router={router} />
         </Provider>
       </QueryClientProvider>
     </>
