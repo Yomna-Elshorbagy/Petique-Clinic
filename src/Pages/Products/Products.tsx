@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import SEO from "../../Components/SEO/SEO";
 import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
 import ProductCard from "../../Components/Products/ProductCard";
@@ -7,6 +8,7 @@ import { getAllProducts } from "../../Apis/ProductApis";
 import type { IProduct } from "../../Interfaces/IProducts";
 import { getAllCategories } from "../../Apis/CategoryApis";
 import type { ICategory } from "../../Interfaces/categryInterfaces";
+import Features from "../../Components/Products/features";
 
 interface ProductsState {
   items: IProduct[];
@@ -41,6 +43,9 @@ const initialFilters: FilterState = {
 };
 
 const Products: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryFromUrl = searchParams.get("category");
+
   const [productsState, setProductsState] = useState<ProductsState>({
     items: [],
     allItems: [],
@@ -57,11 +62,32 @@ const Products: React.FC = () => {
     totalResults: 0,
   });
 
-  const [filters, setFilters] = useState<FilterState>(initialFilters);
+  const [filters, setFilters] = useState<FilterState>(() => {
+    // Initialize filters with category from URL if present
+    if (categoryFromUrl) {
+      return {
+        ...initialFilters,
+        category: decodeURIComponent(categoryFromUrl),
+      };
+    }
+    return initialFilters;
+  });
   const [categories, setCategories] = useState<ICategory[]>([]);
-  const [isFiltersDirty, setIsFiltersDirty] = useState(false);
+  const [isFiltersDirty, setIsFiltersDirty] = useState(!!categoryFromUrl);
 
   const debouncedSearch = useDebouncedValue(filters.search, 300);
+
+  // Update filters when URL category changes
+  useEffect(() => {
+    if (categoryFromUrl) {
+      const decodedCategory = decodeURIComponent(categoryFromUrl);
+      setFilters((prev) => ({
+        ...prev,
+        category: decodedCategory,
+      }));
+      setIsFiltersDirty(true);
+    }
+  }, [categoryFromUrl]);
 
   const fetchProducts = async (page: number = 1) => {
     try {
@@ -166,6 +192,8 @@ const Products: React.FC = () => {
   const handleResetFilters = () => {
     setFilters(initialFilters);
     setIsFiltersDirty(false);
+    // Clear category from URL
+    setSearchParams({});
   };
 
   const renderPagination = (pageCount: number, totalFiltered: number) => {
@@ -176,18 +204,18 @@ const Products: React.FC = () => {
     return (
       <nav
         aria-label="Product pagination"
-        className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-6 dark:border-slate-800"
+        className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-amber-200/50 pt-6"
       >
-        <p className="text-xs text-slate-500 dark:text-slate-400">
+        <p className="text-sm text-stone-600">
           Showing{" "}
-          <span className="font-semibold text-slate-800 dark:text-slate-100">
+          <span className="font-semibold text-amber-950">
             {Math.min(
               totalFiltered - (pagination.currentPage - 1) * pagination.limit,
               pagination.limit
             )}
           </span>{" "}
           of{" "}
-          <span className="font-semibold text-slate-800 dark:text-slate-100">
+          <span className="font-semibold text-amber-950">
             {totalFiltered}
           </span>{" "}
           products
@@ -198,21 +226,21 @@ const Products: React.FC = () => {
             type="button"
             onClick={() => handlePageChange(pagination.currentPage - 1, pageCount)}
             disabled={pagination.currentPage <= 1}
-            className="inline-flex h-8 items-center rounded-full border border-slate-200 px-3 text-xs font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:border-slate-100 disabled:text-slate-300 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800 dark:disabled:border-slate-900 dark:disabled:text-slate-600"
+            className="inline-flex h-9 items-center rounded-full border border-stone-300 bg-white px-4 text-xs font-medium text-amber-950 transition-all duration-300 hover:bg-amber-50 hover:border-amber-600 hover:shadow-sm disabled:cursor-not-allowed disabled:border-stone-200 disabled:bg-stone-50/50 disabled:text-stone-400"
           >
             Prev
           </button>
 
-          <div className="flex items-center gap-1 overflow-x-auto rounded-full bg-slate-50 px-1 py-1 text-xs dark:bg-slate-900/70">
+          <div className="flex items-center gap-1 overflow-x-auto rounded-full bg-amber-50/50 px-2 py-1.5">
             {pages.map((page) => (
               <button
                 key={page}
                 type="button"
                 onClick={() => handlePageChange(page, pageCount)}
-                className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-semibold transition ${
+                className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition-all duration-300 ${
                   page === pagination.currentPage
-                    ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/40"
-                    : "text-slate-600 hover:bg-white hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+                    ? "bg-amber-600 text-white shadow-md shadow-amber-600/30 scale-110"
+                    : "text-amber-950 hover:bg-white hover:text-amber-950 hover:shadow-sm hover:border hover:border-stone-300"
                 }`}
               >
                 {page}
@@ -224,7 +252,7 @@ const Products: React.FC = () => {
             type="button"
             onClick={() => handlePageChange(pagination.currentPage + 1, pageCount)}
             disabled={pagination.currentPage >= pageCount}
-            className="inline-flex h-8 items-center rounded-full border border-slate-200 px-3 text-xs font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:border-slate-100 disabled:text-slate-300 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800 dark:disabled:border-slate-900 dark:disabled:text-slate-600"
+            className="inline-flex h-9 items-center rounded-full border border-stone-300 bg-white px-4 text-xs font-medium text-amber-950 transition-all duration-300 hover:bg-amber-50 hover:border-amber-600 hover:shadow-sm disabled:cursor-not-allowed disabled:border-stone-200 disabled:bg-stone-50/50 disabled:text-stone-400"
           >
             Next
           </button>
@@ -249,37 +277,55 @@ const Products: React.FC = () => {
 
       <ProductsHero />
 
-      <main className="bg-slate-50 py-10 dark:bg-slate-950">
+      
+      <section className=" py-4 text-center">
+        <div className="container mx-auto px-4">
+          <h1 className="mb-4 text-4xl font-bold md:text-5xl text-amber-900 ">
+            Our Products
+          </h1>
+          <p className="mx-auto max-w-2xl text-lg  text-stone-600 ">
+            Discover premium quality products for your beloved pets
+          </p>
+        </div>
+      </section>
+
+      {/* Features */}
+      <Features />
+
+
+      
+
+      <main className="bg-[#FAF8F4] py-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <section
             aria-label="Product filters"
-            className="mb-8 rounded-2xl bg-white/90 p-4 shadow-sm ring-1 ring-slate-100 backdrop-blur-sm dark:bg-slate-900/90 dark:ring-slate-800 sm:p-5 lg:p-6"
+            className="mb-8 rounded-2xl bg-white/95 p-5 shadow-[0_4px_20px_rgba(0,0,0,0.08)] ring-1 ring-amber-100/50 backdrop-blur-sm transition-all duration-300 hover:shadow-[0_6px_25px_rgba(0,0,0,0.12)] sm:p-6 lg:p-7"
           >
-            <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 sm:text-base">
-                Filter products
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-base font-semibold text-amber-950 sm:text-lg font-['Playfair_Display']">
+                Filter Products
               </h2>
-              <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+              <div className="flex items-center gap-2 text-xs">
                 {isFiltersDirty && (
-                  <span className="inline-flex h-5 items-center rounded-full bg-emerald-50 px-2 text-[11px] font-medium text-emerald-700 ring-1 ring-emerald-100 dark:bg-emerald-900/40 dark:text-emerald-200 dark:ring-emerald-700/60">
-                    Filters active
+                  <span className="inline-flex h-6 items-center rounded-full bg-amber-100 px-3 text-[11px] font-medium text-amber-900 ring-1 ring-amber-200 animate-fadeIn">
+                    Filters Active
                   </span>
                 )}
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="inline-flex items-center rounded-full border border-slate-200 px-2 py-0.5 text-[11px] font-medium text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                  className="inline-flex items-center rounded-full border border-amber-200 bg-white px-3 py-1.5 text-[11px] font-medium text-amber-900 transition-all duration-300 hover:bg-amber-50 hover:border-amber-300 hover:shadow-sm"
                 >
                   Reset
                 </button>
               </div>
             </div>
 
-            <div className="grid gap-3 text-xs sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-              <div className="flex flex-col gap-1">
+            <div className="grid gap-4 text-xs sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+              <div className="flex flex-col gap-2">
                 <label
                   htmlFor="search"
-                  className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400"
+                  className="text-[11px] font-semibold uppercase tracking-wider text-amber-900"
                 >
                   Search
                 </label>
@@ -289,14 +335,14 @@ const Products: React.FC = () => {
                   value={filters.search}
                   onChange={(event) => handleFilterChange("search", event.target.value)}
                   placeholder="Search by name"
-                  className="h-9 rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs text-slate-900 outline-none ring-emerald-500/30 transition placeholder:text-slate-400 focus:bg-white focus:ring-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500"
+                  className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 placeholder:text-stone-500 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600"
                 />
               </div>
 
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-2">
                 <label
                   htmlFor="category"
-                  className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400"
+                  className="text-[11px] font-semibold uppercase tracking-wider text-amber-900"
                 >
                   Category
                 </label>
@@ -304,7 +350,7 @@ const Products: React.FC = () => {
                   id="category"
                   value={filters.category}
                   onChange={(event) => handleFilterChange("category", event.target.value)}
-                  className="h-9 rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs text-slate-900 outline-none ring-emerald-500/30 transition focus:bg-white focus:ring-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                  className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600 cursor-pointer"
                 >
                   <option value="all">All categories</option>
                   {categories.map((category) => (
@@ -315,8 +361,8 @@ const Products: React.FC = () => {
                 </select>
               </div>
 
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              <div className="flex flex-col gap-2">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-amber-900">
                   Price (min)
                 </label>
                 <input
@@ -325,12 +371,12 @@ const Products: React.FC = () => {
                   value={filters.minPrice}
                   onChange={(event) => handleFilterChange("minPrice", event.target.value)}
                   placeholder="Min"
-                  className="h-9 rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs text-slate-900 outline-none ring-emerald-500/30 transition placeholder:text-slate-400 focus:bg-white focus:ring-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500"
+                  className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 placeholder:text-stone-500 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600"
                 />
               </div>
 
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              <div className="flex flex-col gap-2">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-amber-900">
                   Price (max)
                 </label>
                 <input
@@ -339,14 +385,14 @@ const Products: React.FC = () => {
                   value={filters.maxPrice}
                   onChange={(event) => handleFilterChange("maxPrice", event.target.value)}
                   placeholder="Max"
-                  className="h-9 rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs text-slate-900 outline-none ring-emerald-500/30 transition placeholder:text-slate-400 focus:bg-white focus:ring-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500"
+                  className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 placeholder:text-stone-500 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600"
                 />
               </div>
 
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-2">
                 <label
                   htmlFor="stock"
-                  className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400"
+                  className="text-[11px] font-semibold uppercase tracking-wider text-amber-900"
                 >
                   Stock
                 </label>
@@ -356,7 +402,7 @@ const Products: React.FC = () => {
                   onChange={(event) =>
                     handleFilterChange("stock", event.target.value as FilterState["stock"])
                   }
-                  className="h-9 rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs text-slate-900 outline-none ring-emerald-500/30 transition focus:bg-white focus:ring-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                  className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600 cursor-pointer"
                 >
                   <option value="all">All</option>
                   <option value="in">In stock</option>
@@ -368,18 +414,19 @@ const Products: React.FC = () => {
 
           <section aria-label="Product list" className="space-y-4">
             {productsState.error && (
-              <div className="rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-xs text-red-700 dark:border-red-900/60 dark:bg-red-950/50 dark:text-red-200">
+              <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 animate-fadeIn transition-all duration-300">
                 {productsState.error}
               </div>
             )}
 
             {!productsState.loading && !filteredItems.length && !productsState.error && (
-              <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white py-10 text-center text-sm text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
-                <p className="font-medium">No products found for selected filters.</p>
+              <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-amber-200 bg-white/80 py-12 text-center animate-fadeIn transition-all duration-300">
+                <p className="font-medium text-stone-600 mb-1">No products found for selected filters.</p>
+                <p className="text-xs text-stone-500 mb-4">Try adjusting your search criteria</p>
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="mt-3 inline-flex items-center rounded-full bg-emerald-500 px-4 py-1.5 text-xs font-semibold text-white shadow-sm shadow-emerald-500/40 transition hover:bg-emerald-600"
+                  className="inline-flex items-center rounded-full bg-amber-600 px-5 py-2 text-xs font-semibold text-white shadow-md shadow-amber-600/30 transition-all duration-300 hover:bg-amber-700 hover:shadow-lg hover:scale-105"
                 >
                   Clear filters
                 </button>
@@ -393,7 +440,7 @@ const Products: React.FC = () => {
             </div>
 
             {productsState.loading && productsState.items.length > 0 && (
-              <div className="mt-4 text-center text-xs text-slate-500 dark:text-slate-400">
+              <div className="mt-4 text-center text-sm text-stone-600 animate-pulse">
                 Updating products...
               </div>
             )}
