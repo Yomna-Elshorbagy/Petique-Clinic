@@ -1,13 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  FaPaw,
-  FaTruck,
-  FaCheckCircle,
-  FaClock,
-  FaBox,
-} from "react-icons/fa";
+import { FaPaw, FaTruck, FaCheckCircle, FaClock, FaBox } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 
 const OrderDetails: React.FC = () => {
@@ -63,18 +57,17 @@ const OrderDetails: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-12 px-4">
+    <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-12 px-4 mt-12">
       <div className="max-w-4xl mx-auto">
-    
-           {/* Header */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-white dark:bg-[var(--color-dark-card)] rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 p-8 mb-8"
         >
           <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
-            <div>
-              <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] mb-2">
+            <div className="max-w-full overflow-hidden">
+              <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] mb-2 whitespace-nowrap overflow-x-auto no-scrollbar">
                 Order #{orderData._id}
               </h1>
               <p className="text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
@@ -91,7 +84,6 @@ const OrderDetails: React.FC = () => {
                 {orderData.status.charAt(0).toUpperCase() +
                   orderData.status.slice(1).toLowerCase()}
               </div>
-             
             </div>
           </div>
         </motion.div>
@@ -162,36 +154,33 @@ const OrderDetails: React.FC = () => {
                 {orderData.products && orderData.products.length > 0 ? (
                   orderData.products.map((item: any, index: number) => (
                     <div
-                    //   key={index}
+                      //   key={index}
                       className="flex items-center justify-between p-4 bg-gray-50 dark:bg-[var(--color-dark-background)] rounded-lg border border-gray-100 dark:border-gray-700"
                     >
                       <div className="flex items-center gap-4 flex-1">
-                       
-                          <img
-                            src=""
-                            alt=""
-                            className="w-16 h-16 rounded-lg object-cover"
-                          />
-                        
+                        <img
+                          src=""
+                          alt=""
+                          className="w-16 h-16 rounded-lg object-cover"
+                        />
+
                         <div className="flex-1">
                           <h3 className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
                             {item?.title}
                           </h3>
                           <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
                             Qty: {item.quantity}
-                            
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                          EGP {item.price }
+                          EGP {item.price}
                         </p>
-                        
-                          <p className="text-sm text-green-600 dark:text-green-400">
-                            Save: {item.discount} EGP
-                          </p>
-                        
+
+                        <p className="text-sm text-green-600 dark:text-green-400">
+                          Save: {item.discount} EGP
+                        </p>
                       </div>
                     </div>
                   ))
@@ -201,7 +190,6 @@ const OrderDetails: React.FC = () => {
                   </p>
                 )}
               </div>
-              
             </motion.div>
           </div>
 
@@ -223,7 +211,7 @@ const OrderDetails: React.FC = () => {
                     Subtotal
                   </span>
                   <span className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                     EGP { orderData.orderPrice}
+                    EGP {orderData.orderPrice}
                   </span>
                 </div>
 
@@ -239,7 +227,7 @@ const OrderDetails: React.FC = () => {
                     Total
                   </span>
                   <span className="font-bold text-lg text-[var(--color-light-accent)]">
-                    EGP {  orderData.finalPrice}
+                    EGP {orderData.finalPrice}
                   </span>
                 </div>
               </div>
@@ -250,7 +238,7 @@ const OrderDetails: React.FC = () => {
                     Payment Method
                   </p>
                   <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                   { orderData.payment  }
+                    {orderData.payment}
                   </p>
                 </div>
 
@@ -259,7 +247,7 @@ const OrderDetails: React.FC = () => {
                     Order Date
                   </p>
                   <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                   { new Date(orderData.createdAt).toLocaleDateString() }
+                    {new Date(orderData.createdAt).toLocaleDateString()}
                   </p>
                 </div>
 
@@ -268,7 +256,7 @@ const OrderDetails: React.FC = () => {
                     Status
                   </p>
                   <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                   {orderData.status}
+                    {orderData.status}
                   </p>
                 </div>
               </div>

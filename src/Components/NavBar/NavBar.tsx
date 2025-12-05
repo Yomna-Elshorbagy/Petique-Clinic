@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../Store/store";
 import { motion } from "framer-motion";
 import {
-  FaPaw,
   FaBars,
   FaTimes,
   FaShoppingCart,
@@ -16,6 +17,8 @@ export default function NavBar() {
   const [open, setOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { noOfCartItems } = useSelector((state: RootState) => state.cart);
 
   const navLinks = [
     { label: "Home", href: "#" },
@@ -34,16 +37,29 @@ export default function NavBar() {
     }
   }, [isDark]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="relative w-full z-50 bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] shadow-md"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-[var(--color-light-background)]/90 dark:bg-[var(--color-dark-background)]/90 backdrop-blur-xl shadow-lg"
+          : "bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] shadow-md"
+      }`}
     >
       {/* Container */}
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-5 md:px-6 py-3 md:py-4">
+        <div className="flex items-center justify-between gap-3 flex-wrap">
           {/* Logo */}
           <motion.div
             className="flex items-center gap-3 cursor-pointer select-none"
@@ -93,10 +109,15 @@ export default function NavBar() {
 
             <a
               href="/cart"
-              className="p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]"
+              className="relative p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]"
               aria-label="Cart"
             >
               <FaShoppingCart />
+              {noOfCartItems > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-[var(--color-light-accent)] text-white text-[11px] font-bold flex items-center justify-center">
+                  {noOfCartItems}
+                </span>
+              )}
             </a>
 
             <div className="relative">
@@ -172,10 +193,15 @@ export default function NavBar() {
                 </button>
                 <a
                   href="/cart"
-                  className="p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm"
+                  className="relative p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm"
                   onClick={() => setOpen(false)}
                 >
                   <FaShoppingCart />
+                  {noOfCartItems > 0 && (
+                    <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-[var(--color-light-accent)] text-white text-[11px] font-bold flex items-center justify-center">
+                      {noOfCartItems}
+                    </span>
+                  )}
                 </a>
               </div>
 
