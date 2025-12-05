@@ -21,6 +21,7 @@ import DashboardHome from "./Reservation/Pages/DashboardHome/DashboardHome";
 import Reservations from "./Reservation/Pages/Reservations/Reservations";
 import DashboardLayout from "./Reservation/DashboardLayout";
 import Cart from "./Pages/Cart/Cart";
+import ClinicReviews from "./Pages/ClinicReviews/ClinicReviews";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: "products", element: <Products /> },
       { path: "cart", element: <Cart /> },
       { path: "product-details/:id", element: <ProductDetails /> },
+      { path: "clinicReviews", element: <ClinicReviews /> },
     ],
   },
   {
