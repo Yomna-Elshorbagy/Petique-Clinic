@@ -1,7 +1,13 @@
 export interface IVaccinationHistory {
-  vaccine: string;
+  vaccine: {
+    _id: string;
+    name: string;
+    categories: string[];
+  };
   date: string;
   nextDose: string;
+  status: "Pending" | "Completed" | "Missed";
+  notes?: string;
 }
 
 export interface IMedicalRecord {
@@ -10,9 +16,17 @@ export interface IMedicalRecord {
 
 export interface IPet {
   _id: string;
-  petOwner: string;
+  petOwner: {
+    _id: string;
+    userName: string;
+    email: string;
+  };
+  category: {
+    _id: string;
+    name: string;
+  };
   name: string;
-  age: string;
+  age: number;
   weight: number;
   allergies: string[];
   vaccinationHistory: IVaccinationHistory[];
