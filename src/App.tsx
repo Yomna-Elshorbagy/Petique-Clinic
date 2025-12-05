@@ -18,7 +18,6 @@ import DashboardEcoHome from "./Dashboard/Pages/Home/DashboardEcoHome";
 import Products from "./Pages/Products/Products";
 import ProductDetails from "./Pages/ProductDetails/ProductDetails";
 import DashboardHome from "./Reservation/Pages/DashboardHome/DashboardHome";
-import Reservations from "./Reservation/Pages/Reservations/Reservations";
 import DashboardLayout from "./Reservation/DashboardLayout";
 import Cart from "./Pages/Cart/Cart";
 import ClinicReviews from "./Pages/ClinicReviews/ClinicReviews";
@@ -31,6 +30,7 @@ import Orders from "./Dashboard/Pages/Orders/Orders";
 import Coupons from "./Dashboard/Pages/Coupons/Coupons";
 import Categories from "./Dashboard/Pages/Categories/Categories";
 import MedicalHistory from "./Reservation/Pages/MedicalHistory/MedicalHistory";
+import Reservationpet from './Reservation/Pages/ResevationPet/Reservationpet';
 
 const router = createBrowserRouter([
   {
@@ -73,8 +73,8 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       { path: "", element: <DashboardHome /> },
-      { path: "reservations", element: <Reservations /> },
       { path: "animals", element: <Animals /> },
+      { path: "reserv", element: <Reservationpet /> },
       { path: "animalCategory", element: <AnimalCategories /> },
       { path: "doctors", element: <Doctors /> },
       { path: "vaccinations", element: <Vaccinations /> },

@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import { baseURL } from "./BaseUrl";
 
 const BASE_URL = `${baseURL}/pet`;
@@ -32,7 +33,7 @@ export const updatePet = async (id: string, payload: FormData | any) => {
   return data.data;
 };
 
-//==> soft delete 
+//==> soft delete
 export const softDeletePet = async (id: string) => {
   const { data } = await axios.put(`${BASE_URL}/soft/${id}`, {}, { headers });
   return data;

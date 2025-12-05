@@ -1,7 +1,269 @@
-import React from 'react'
+import { useEffect, useState } from "react";
+import { deletePet, getAllPets, softDeletePet } from "../../../Apis/PetApis";
+import type { IPet } from "../../../Interfaces/Ipet";
+import AddPetModal from "./Components/AddPetModal";
+import { FaSearch, FaFilter, FaThLarge, FaList, FaPlus } from "react-icons/fa";
+import { usePetSearch } from "./Hook/UseAnimalSearch";
+import PetCard from "./Components/PetCard";
+import Swal from "sweetalert2";
 
 export default function Animals() {
+  const [pets, setPets] = useState<IPet[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { search, setSearch, filtered } = usePetSearch(pets);
+
+  const fetchPets = async () => {
+    try {
+      setLoading(true);
+      const data = await getAllPets();
+      setPets(data);
+    } catch (error) {
+      console.error("Failed to fetch pets", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPets();
+  }, []);
+
+  const categories = ["All", "Dog", "Cat", "Turtles", "Rabbits"];
+
+  const filteredPets =
+    activeCategory === "All"
+      ? filtered
+      : filtered.filter(
+          (pet) =>
+            pet.category?.name.toLowerCase() === activeCategory.toLowerCase()
+        );
+  // ===> to prevent double tabs
+  const [_processingId, setProcessingId] = useState<string | null>(null);
+
+  const handleSoftDelete = async (id: string) => {
+    try {
+      const result = await Swal.fire({
+        title: "Archive pet?",
+        text: "This will soft-delete (archive) the pet. You can restore it later.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, archive",
+        cancelButtonText: "Cancel",
+        reverseButtons: true,
+        confirmButtonColor: "#F9BE91",
+      });
+
+      if (!result.isConfirmed) return;
+
+      setProcessingId(id);
+      Swal.fire({
+        title: "Archiving...",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+      });
+
+      await softDeletePet(id);
+
+      Swal.close();
+      await Swal.fire({
+        title: "Archived",
+        text: "Pet was archived successfully.",
+        icon: "success",
+        timer: 1400,
+        showConfirmButton: false,
+      });
+      await fetchPets();
+    } catch (error: any) {
+      console.error("Soft delete failed", error);
+      Swal.close();
+      Swal.fire({
+        title: "Error",
+        text:
+          (error?.response?.data?.message as string) ||
+          error?.message ||
+          "Failed to archive pet. Try again.",
+        icon: "error",
+      });
+    } finally {
+      setProcessingId(null);
+    }
+  };
+  const handleHardDelete = async (id: string) => {
+    try {
+      const result = await Swal.fire({
+        title: "Delete permanently?",
+        text: "This will permanently remove the pet and cannot be undone.",
+        icon: "error",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete permanently",
+        cancelButtonText: "Cancel",
+        reverseButtons: true,
+        confirmButtonColor: "#d33",
+      });
+
+      if (!result.isConfirmed) return;
+
+      setProcessingId(id);
+      Swal.fire({
+        title: "Deleting...",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+      });
+
+      await deletePet(id);
+
+      Swal.close();
+      await Swal.fire({
+        title: "Deleted",
+        text: "Pet was permanently deleted.",
+        icon: "success",
+        timer: 1400,
+        showConfirmButton: false,
+      });
+      await fetchPets();
+    } catch (error: any) {
+      console.error("Hard delete failed", error);
+      Swal.close();
+      Swal.fire({
+        title: "Error",
+        text:
+          (error?.response?.data?.message as string) ||
+          error?.message ||
+          "Failed to delete pet. Try again.",
+        icon: "error",
+      });
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
+  const handleViewDetails = (pet: IPet) => {
+    console.log("view details for", pet);
+  };
+
+  const renderGridView = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {filteredPets.map((pet) => (
+        <PetCard
+          pet={pet}
+          key={pet._id}
+          view="grid"
+          onSoftDelete={handleSoftDelete}
+          onHardDelete={handleHardDelete}
+          onViewDetails={handleViewDetails}
+        />
+      ))}
+    </div>
+  );
+
+  const renderListView = () => (
+    <div className="flex flex-col gap-4">
+      {filteredPets.map((pet) => (
+        <PetCard
+          pet={pet}
+          key={pet._id}
+          view="list"
+          onSoftDelete={handleSoftDelete}
+          onHardDelete={handleHardDelete}
+          onViewDetails={handleViewDetails}
+        />
+      ))}
+    </div>
+  );
+
   return (
-    <div>Animals</div>
-  )
+    <div className="min-h-screen bg-[#ECE7E2] p-6 font-['Inter']">
+      <AddPetModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSuccess={fetchPets}
+      />
+
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-[#86654F] mb-1">Animals</h1>
+          <p className="text-[#A98770]">Manage your pet patients</p>
+        </div>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center gap-2 bg-[#86654F] text-white px-6 py-2.5 rounded-xl hover:bg-[#6d5240] transition-colors shadow-sm"
+        >
+          <FaPlus size={14} />
+          <span>Add New Pet</span>
+        </button>
+      </div>
+
+      {/* filter Bar */}
+      <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <div className="relative flex-1">
+          <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A98770]" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search pets by name or owner..."
+            className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#FCF9F4] border-none focus:ring-2 focus:ring-[#A98770]/50 text-[#86654F] placeholder-[#A98770]/70 shadow-sm"
+          />
+        </div>
+        <div className="flex gap-3">
+          <button className="flex items-center gap-2 px-5 py-3 bg-[#FCF9F4] text-[#86654F] rounded-xl hover:bg-white transition-colors shadow-sm font-medium">
+            <FaFilter size={14} />
+            <span>Filter</span>
+          </button>
+          <div className="flex bg-[#FCF9F4] p-1 rounded-xl shadow-sm">
+            <button
+              onClick={() => setViewMode("grid")}
+              className={`p-2 rounded-lg transition-all ${
+                viewMode === "grid"
+                  ? "bg-[#86654F] text-white shadow-sm"
+                  : "text-[#A98770] hover:bg-[#ECE7E2]"
+              }`}
+            >
+              <FaThLarge size={18} />
+            </button>
+            <button
+              onClick={() => setViewMode("list")}
+              className={`p-2 rounded-lg transition-all ${
+                viewMode === "list"
+                  ? "bg-[#86654F] text-white shadow-sm"
+                  : "text-[#A98770] hover:bg-[#ECE7E2]"
+              }`}
+            >
+              <FaList size={18} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/*==> categories <==*/}
+      <div className="w-full flex justify-center">
+        <div className="flex gap-3 mb-8 overflow-x-auto pb-2 scrollbar-hide max-w-max">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-6 py-2 rounded-full whitespace-nowrap transition-all font-medium ${
+                activeCategory === cat
+                  ? "bg-[#A98770] text-white shadow-md"
+                  : "bg-[#FCF9F4] text-[#86654F] hover:bg-[#e8d8c4]"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="text-center py-20 text-[#86654F]">Loading pets...</div>
+      ) : viewMode === "grid" ? (
+        renderGridView()
+      ) : (
+        renderListView()
+      )}
+    </div>
+  );
 }
