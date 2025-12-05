@@ -31,6 +31,7 @@ import Coupons from "./Dashboard/Pages/Coupons/Coupons";
 import Categories from "./Dashboard/Pages/Categories/Categories";
 import MedicalHistory from "./Reservation/Pages/MedicalHistory/MedicalHistory";
 import Reservationpet from './Reservation/Pages/ResevationPet/Reservationpet';
+import OrderDetails from "./Pages/OrderDetails/OrderDetails";
 
 const router = createBrowserRouter([
   {
