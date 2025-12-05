@@ -3,14 +3,16 @@ import { motion } from "framer-motion";
 import { FaPaw, FaCheckCircle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../../Store/store";
-//import { addOrder } from "../../../Store/Slices/OrderSlice";
+import { addOrder } from "../../../Store/Slices/OrderSlice";
 import { useNavigate } from "react-router-dom";
 
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
-const CheckoutForm = () => {
 
+const CheckoutForm = () => {
+ const dispatch = useAppDispatch();
+  const Navigate = useNavigate();
 
   const [formData, setFormData] = React.useState({
     fullName: "",
@@ -18,15 +20,22 @@ const CheckoutForm = () => {
     address: "",
     note: "",
   });
- const handleGoToDetails = () => {
-    Navigate("/orderdetails", { state: formData });
-  };
+ const handleGoToDetails = async () => {
+  const result = await dispatch(addOrder(formData));
+
+  if (addOrder.rejected.match(result)) {
+    console.error("Failed to add order:", result.payload);
+    return;
+  }
+  
+  Navigate("/OrderDetails", { state: { order: result.payload } }); 
+};
+
   useEffect(() => {
     console.log(formData);
   }, [formData]);
 
 
-  const Navigate = useNavigate();
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}

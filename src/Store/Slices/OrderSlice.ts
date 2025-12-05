@@ -13,12 +13,17 @@ const token = localStorage.getItem("accessToken");
 
 export const addOrder = createAsyncThunk(
   "order/addOrder",
-  async (order: IOrder) => {
-    const res = await axios.post(
-        "http://localhost:3000/order", order,
-         { headers: { authentication: `bearer ${token}`}}
-    );
-    return res.data;
+async (order: IOrder, thunkAPI) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/order",
+        order,
+        { headers: { authentication: `bearer ${token}` } }
+      );
+      return res.data;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err.response?.data);
+    }
   }
 );
 
@@ -32,6 +37,7 @@ const orderSlice = createSlice({
     });
     builder.addCase(addOrder.fulfilled, (state) => {
       state.loading = false;
+
     });
   },
 });

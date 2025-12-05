@@ -5,9 +5,9 @@ import HeroSection from "./HeroSection/Herosection";
 export default function Home() {
   return (
     <>
-      
+     <HeroSection /> 
     <CategorySlider />
-    <HeroSection />
+    
       <Checkout />
     </>
   );

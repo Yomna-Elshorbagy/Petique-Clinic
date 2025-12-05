@@ -16,12 +16,13 @@ import Checkout from "./Pages/Checkout/Checkout";
 import DashboardEcoLayout from "./Dashboard/DashboardEcoLayout";
 import DashboardEcoHome from "./Dashboard/Pages/Home/DashboardEcoHome";
 import Products from "./Pages/Products/Products";
-import ProductDetails from "./Pages/ProductDetails/ProductDetails";
+//import ProductDetails from "./Pages/ProductDetails/ProductDetails";
 import DashboardHome from "./Reservation/Pages/DashboardHome/DashboardHome";
 import Reservations from "./Reservation/Pages/Reservations/Reservations";
 import DashboardLayout from "./Reservation/DashboardLayout";
 import Cart from "./Pages/Cart/Cart";
 import ClinicReviews from "./Pages/ClinicReviews/ClinicReviews";
+import OrderDetails from "./Pages/OrderDetails/OrderDetails";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,8 @@ const router = createBrowserRouter([
       { path: "checkout", element: <Checkout /> },
       { path: "products", element: <Products /> },
       { path: "cart", element: <Cart /> },
-      { path: "product-details/:id", element: <ProductDetails /> },
+      // { path: "product-details/:id", element: <ProductDetails /> },
+      {path:"orderdetails", element:<OrderDetails />},
       { path: "clinicReviews", element: <ClinicReviews /> },
     ],
   },

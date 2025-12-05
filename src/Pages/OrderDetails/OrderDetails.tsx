@@ -11,24 +11,22 @@ import {
 import { useLocation } from "react-router-dom";
 
 const OrderDetails: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const orderData = location.state?.order?.data;
 
-const location = useLocation();
-const formData = location.state;
-  // Sample order data for UI display
- 
-
-//   const getStatusIcon = (status: string) => {
-//     switch (status?.toLowerCase()) {
-//       case "placed":
-//         return <FaClock className="text-yellow-500" />;
-//       case "shipped":
-//         return <FaTruck className="text-blue-500" />;
-//       case "delivered":
-//         return <FaCheckCircle className="text-green-500" />;
-//       default:
-//         return <FaBox className="text-gray-500" />;
-//     }
-//   };
+  const getStatusIcon = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case "placed":
+        return <FaClock className="text-yellow-500" />;
+      case "shipped":
+        return <FaTruck className="text-blue-500" />;
+      case "delivered":
+        return <FaCheckCircle className="text-green-500" />;
+      default:
+        return <FaBox className="text-gray-500" />;
+    }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status?.toLowerCase()) {
@@ -43,14 +41,33 @@ const formData = location.state;
     }
   };
 
-  
+  if (!orderData) {
+    return (
+      <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-12 px-4 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
+            No Order Data Found
+          </h1>
+          <p className="text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mt-2">
+            Please go back and select an order to view its details.
+          </p>
+          <button
+            onClick={() => navigate("/")}
+            className="w-full mt-6 px-6 py-3 bg-[var(--color-light-accent)] hover:bg-[#d69560] text-white font-semibold rounded-lg transition-colors"
+          >
+            Go to Homepage
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-12 px-4 mt-7">
+    <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-12 px-4">
       <div className="max-w-4xl mx-auto">
     
            {/* Header */}
-        {/* <motion.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-white dark:bg-[var(--color-dark-card)] rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 p-8 mb-8"
@@ -58,26 +75,26 @@ const formData = location.state;
           <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
             <div>
               <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] mb-2">
-                Order #
+                Order #{orderData._id}
               </h1>
               <p className="text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
-                Placed on 
+                Placed on {new Date(orderData.createdAt).toLocaleDateString()}
               </p>
             </div>
             <div className="flex items-center gap-3">
               <div
                 className={`px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 ${getStatusColor(
-                  formData.status
+                  orderData.status
                 )}`}
               >
-                {getStatusIcon(formData.status)}
-                {formData.status.charAt(0).toUpperCase() +
-                  formData.status.slice(1).toLowerCase()}
+                {getStatusIcon(orderData.status)}
+                {orderData.status.charAt(0).toUpperCase() +
+                  orderData.status.slice(1).toLowerCase()}
               </div>
              
             </div>
           </div>
-        </motion.div> */}
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
@@ -96,10 +113,10 @@ const formData = location.state;
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-1">
-                    {formData.fullName}
+                    {orderData.fullName}
                   </p>
                   <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                    {formData.fullName}
+                    {orderData.fullName}
                   </p>
                 </div>
                 <div>
@@ -107,7 +124,7 @@ const formData = location.state;
                     Phone Number
                   </p>
                   <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                    {formData.phone}
+                    {orderData.phone}
                   </p>
                 </div>
                 <div className="md:col-span-2">
@@ -115,16 +132,16 @@ const formData = location.state;
                     Delivery Address
                   </p>
                   <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                    {formData.address}
+                    {orderData.address}
                   </p>
                 </div>
-                {formData.note && (
+                {orderData.note && (
                   <div className="md:col-span-2">
                     <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-1">
                       Special Notes
                     </p>
                     <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                      {formData.note}
+                      {orderData.note}
                     </p>
                   </div>
                 )}
@@ -132,7 +149,7 @@ const formData = location.state;
             </motion.div>
 
             {/* Order Items---------------------------------------------------------------------------------------------- */}
-            {/* <motion.div
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -142,7 +159,8 @@ const formData = location.state;
                 Order Items
               </h2>
               <div className="space-y-4">
-              
+                {orderData.products && orderData.products.length > 0 ? (
+                  orderData.products.map((item: any, index: number) => (
                     <div
                     //   key={index}
                       className="flex items-center justify-between p-4 bg-gray-50 dark:bg-[var(--color-dark-background)] rounded-lg border border-gray-100 dark:border-gray-700"
@@ -157,37 +175,38 @@ const formData = location.state;
                         
                         <div className="flex-1">
                           <h3 className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                            
+                            {item?.title}
                           </h3>
                           <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
-                            Qty: 
+                            Qty: {item.quantity}
                             
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                          EGP
+                          EGP {item.price }
                         </p>
                         
                           <p className="text-sm text-green-600 dark:text-green-400">
-                            Save:  EGP
+                            Save: {item.discount} EGP
                           </p>
                         
                       </div>
                     </div>
-                  
-               
+                  ))
+                ) : (
                   <p className="text-center text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] py-8">
                     No items in this order
                   </p>
-               
+                )}
               </div>
-            </motion.div> */}
+              
+            </motion.div>
           </div>
 
           {/* Sidebar: Order Summary------------------------------------------------------------------------------------- */}
-          {/* <motion.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -204,14 +223,14 @@ const formData = location.state;
                     Subtotal
                   </span>
                   <span className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                     EGP
+                     EGP { orderData.orderPrice}
                   </span>
                 </div>
 
-                {formData.coupon && (
+                {orderData.coupon && (
                   <div className="flex justify-between text-sm text-green-600 dark:text-green-400">
-                    <span>Coupon </span>
-                    <span> EGP</span>
+                    <span>Coupon {orderData.coupon.code} </span>
+                    <span>- EGP {orderData.coupon.amount}</span>
                   </div>
                 )}
 
@@ -220,7 +239,7 @@ const formData = location.state;
                     Total
                   </span>
                   <span className="font-bold text-lg text-[var(--color-light-accent)]">
-                    EGP
+                    EGP {  orderData.finalPrice}
                   </span>
                 </div>
               </div>
@@ -231,7 +250,7 @@ const formData = location.state;
                     Payment Method
                   </p>
                   <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                   
+                   { orderData.payment  }
                   </p>
                 </div>
 
@@ -240,7 +259,7 @@ const formData = location.state;
                     Order Date
                   </p>
                   <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                   
+                   { new Date(orderData.createdAt).toLocaleDateString() }
                   </p>
                 </div>
 
@@ -249,7 +268,7 @@ const formData = location.state;
                     Status
                   </p>
                   <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                   
+                   {orderData.status}
                   </p>
                 </div>
               </div>
@@ -261,7 +280,7 @@ const formData = location.state;
                 Continue Shopping
               </button>
             </div>
-          </motion.div> */}
+          </motion.div>
         </div>
       </div>
     </div>
