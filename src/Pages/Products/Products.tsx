@@ -239,7 +239,7 @@ const Products: React.FC = () => {
                 onClick={() => handlePageChange(page, pageCount)}
                 className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition-all duration-300 ${
                   page === pagination.currentPage
-                    ? "bg-amber-600 text-white shadow-md shadow-amber-600/30 scale-110"
+                    ? "bg-[#e6953a] text-white shadow-md shadow-amber-600/30 scale-110"
                     : "text-amber-950 hover:bg-white hover:text-amber-950 hover:shadow-sm hover:border hover:border-stone-300"
                 }`}
               >
@@ -280,10 +280,10 @@ const Products: React.FC = () => {
       
       <section className=" py-4 text-center">
         <div className="container mx-auto px-4">
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl text-amber-900 ">
+          <h1 className="mb-4 text-4xl font-bold md:text-5xl text-[#4C3A26] ">
             Our Products
           </h1>
-          <p className="mx-auto max-w-2xl text-lg  text-stone-600 ">
+          <p className="mx-auto max-w-2xl text-lg  text-[#8A7A67] ">
             Discover premium quality products for your beloved pets
           </p>
         </div>
@@ -426,7 +426,7 @@ const Products: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="inline-flex items-center rounded-full bg-amber-600 px-5 py-2 text-xs font-semibold text-white shadow-md shadow-amber-600/30 transition-all duration-300 hover:bg-amber-700 hover:shadow-lg hover:scale-105"
+                  className="inline-flex items-center rounded-full bg-[#e6953a] px-5 py-2 text-xs font-semibold text-white shadow-md shadow-amber-600/30 transition-all duration-300 hover:bg-[#cc7422] hover:shadow-lg hover:scale-105"
                 >
                   Clear filters
                 </button>

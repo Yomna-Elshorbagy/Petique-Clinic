@@ -1,11 +1,10 @@
 import { Facebook, Twitter, Instagram, Send } from "lucide-react";
-import DogImg from "../../assets/images/dogimg.png";
 import CatImg from "../../assets/images/catimg.png";
+import DogImg from "../../assets/images/dogimg.png";
 
 export default function Footer() {
   return (
     <footer className="bg-[#3c2f2f] text-white pt-20 pb-6 relative overflow-hidden">
-      {/* === CAT LEFT - positioned on the divider line === */}
       <img
         src={CatImg}
         alt="cat"
@@ -13,7 +12,6 @@ export default function Footer() {
         style={{ bottom: '80px' }}
       />
 
-      {/* === DOG RIGHT - positioned on the divider line === */}
       <img
         src={DogImg}
         alt="dog"
@@ -27,11 +25,11 @@ export default function Footer() {
           {/* COLUMN 1 — LOGO */}
           <div>
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-12 h-12 bg-orange-400 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-[#e6953a] rounded-full flex items-center justify-center">
                 <span className="text-2xl">🐾</span>
               </div>
               <div>
-                <h2 className="text-2xl font-bold tracking-wide text-orange-400">Petique</h2>
+                <h2 className="text-2xl font-bold tracking-wide text-[#e6953a]">Petique</h2>
                 <p className="text-xs opacity-75">Trusted Pet Care</p>
               </div>
             </div>
@@ -47,7 +45,7 @@ export default function Footer() {
                 placeholder="Email Address"
                 className="px-5 py-3 bg-transparent text-sm flex-1 focus:outline-none focus:ring-0 text-white/60 border-0"
               />
-              <button className="w-12 h-12 rounded-full bg-orange-400 hover:bg-orange-500 transition-all duration-300 hover:scale-110 group flex items-center justify-center">
+              <button className="w-12 h-12 rounded-full bg-[#e6953a] hover:bg-orange-500 transition-all duration-300 hover:scale-110 group flex items-center justify-center">
                 <Send className="w-5 h-5 text-white group-hover:translate-x-0.5 transition-transform" />
               </button>
             </div>
@@ -121,14 +119,14 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm opacity-75 text-center md:text-left">
               © Copyright 2024. All rights reserved. <span className="text-orange-400 font-semibold">Petique</span>.
-              Designed by Zozothemes
+              Designed by ITI Team.
             </p>
 
             <div className="flex gap-3">
               {[{ icon: Facebook }, { icon: Twitter }, { icon: Instagram }, { icon: Send }].map((item, i) => (
                 <button
                   key={i}
-                  className="w-10 h-10 rounded-full bg-orange-400 hover:bg-orange-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-orange-400/50"
+                  className="w-10 h-10 rounded-full bg-[#e6953a] hover:bg-orange-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-orange-400/50"
                 >
                   <item.icon className="w-4 h-4" />
                 </button>

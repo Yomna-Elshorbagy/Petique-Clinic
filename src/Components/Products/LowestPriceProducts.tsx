@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Slider from "react-slick";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
 import type { IProduct } from "../../Interfaces/IProducts";
 import { getAllProducts } from "../../Apis/ProductApis";
 
 const LowestPriceProducts: React.FC = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +19,6 @@ const LowestPriceProducts: React.FC = () => {
         setLoading(true);
         setError(null);
         
-       
         const response = await getAllProducts(1, 50);
 
         if (response.data && Array.isArray(response.data)) {
@@ -52,41 +54,6 @@ const LowestPriceProducts: React.FC = () => {
     fetchLowestPriceProducts();
   }, []);
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 600,
-    cssEase: "ease-in-out",
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    pauseOnHover: true,
-    responsive: [
-      {
-        breakpoint: 1280,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
-
   if (loading) {
     return <LoaderPage />;
   }
@@ -107,90 +74,122 @@ const LowestPriceProducts: React.FC = () => {
   }
 
   return (
-    <div className="relative py-20 bg-[#FAF8F4] px-4 sm:px-6 lg:px-24 overflow-hidden">
-      {/* Decorative paw prints */}
-      <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
-        <div className="paw-print absolute top-10 left-10 text-6xl">🐾</div>
-        <div className="paw-print absolute top-40 right-16 text-5xl">🐾</div>
-        <div className="paw-print absolute bottom-20 left-1/4 text-7xl">🐾</div>
-        <div className="paw-print absolute bottom-10 right-32 text-6xl">🐾</div>
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className="relative py-20 bg-[#FAF8F4] px-4 sm:px-6 lg:px-24 overflow-hidden"
+    >
+      {/* Decorative paw prints with subtle animation */}
+      <div className="absolute inset-0 opacity-[0.2] pointer-events-none">
+        <motion.div
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="paw-print absolute top-10 left-10 text-6xl"
+        >
+          🐾
+        </motion.div>
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          className="paw-print absolute top-40 right-16 text-5xl"
+        >
+          🐾
+        </motion.div>
+        <motion.div
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="paw-print absolute bottom-20 left-1/4 text-7xl"
+        >
+          🐾
+        </motion.div>
+        <motion.div
+          animate={{ y: [0, 12, 0] }}
+          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+          className="paw-print absolute bottom-10 right-32 text-6xl"
+        >
+          🐾
+        </motion.div>
       </div>
 
-      {/* Section Header */}
-      <div className="text-center mb-12 relative z-10">
-        <h2 className="font-['Playfair_Display'] text-[#A88F7B] uppercase tracking-widest font-semibold text-xl md:text-3xl mb-4">
+      {/* Section Header with fade-in animation */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="text-center mb-12 relative z-10"
+      >
+        <h2 className="font-['Playfair_Display'] text-[#6c5136] uppercase tracking-widest font-semibold text-xl md:text-3xl mb-4">
           Best Value Products
         </h2>
-        <p className="text-stone-600 text-sm md:text-base max-w-2xl mx-auto">
+        <p className="text-[#8A7A67] text-sm md:text-base max-w-2xl mx-auto">
           Discover our lowest-priced premium products for your beloved pets
         </p>
-      </div>
+      </motion.div>
 
-      {/* Slider Container */}
+      {/* Products Grid */}
       <div className="relative z-10">
-        <Slider {...sliderSettings}>
-          {products.map((product) => (
-            <div key={product._id} className="px-4 animate-[fadeInUp_0.7s_ease] transform">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+          {products.map((product, index) => (
+            <motion.div
+              key={product._id}
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.08,
+                ease: [0.25, 0.46, 0.45, 0.94],
+              }}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              className="h-full"
+            >
               <ProductCard product={product} />
-            </div>
+            </motion.div>
           ))}
-        </Slider>
+        </div>
+
+        {/* Shop Now Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+          className="text-center"
+        >
+          <motion.button
+            onClick={() => navigate("/products")}
+            whileHover={{ scale: 1.05, x: 5 }}
+            whileTap={{ scale: 0.95 }}
+            className="
+              inline-flex
+              items-center
+              gap-3
+              px-8
+              py-4
+              bg-gradient-to-r
+              from-[#E5A85C]
+              to-[#D98C33]
+              text-white
+              font-semibold
+              text-lg
+              rounded-full
+              shadow-lg
+              hover:shadow-xl
+              transition-all
+              duration-300
+              group
+            "
+          >
+            <span>Shop Now</span>
+            <motion.div
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </motion.div>
+          </motion.button>
+        </motion.div>
       </div>
-
-    <div className="text-center mt-20 relative z-10">
-      <button
-        onClick={() => window.location.href = '/products'}
-        className="px-8 py-3 bg-[#A88F7B] text-white font-semibold rounded-lg hover:bg-[#8B7863] transition-colors duration-300 shadow-md hover:shadow-lg"
-      >
-        Shop Now
-      </button>
-    </div>
-
-      {/* Custom Slider Styles */}
-      <style>{`
-        .slick-dots {
-          bottom: -50px;
-        }
-        .slick-dots li button:before {
-          color: #A88F7B;
-          font-size: 12px;
-          opacity: 0.5;
-        }
-        .slick-dots li.slick-active button:before {
-          color: #A88F7B;
-          opacity: 1;
-        }
-        .slick-prev,
-        .slick-next {
-          z-index: 10;
-        }
-        .slick-prev:before,
-        .slick-next:before {
-          color: #A88F7B;
-          font-size: 30px;
-        }
-        .slick-prev {
-          left: -40px;
-        }
-        .slick-next {
-          right: -40px;
-        }
-        @media (max-width: 1024px) {
-          .slick-prev {
-            left: -20px;
-          }
-          .slick-next {
-            right: -20px;
-          }
-        }
-        @media (max-width: 640px) {
-          .slick-prev,
-          .slick-next {
-            display: none !important;
-          }
-        }
-      `}</style>
-    </div>
+    </motion.section>
   );
 };
 

@@ -141,6 +141,10 @@ const cartSlice = createSlice({
     });
 
     // =====> addProductToCart <=====
+    builder.addCase(addProductToCart.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
     builder.addCase(addProductToCart.fulfilled, (state, action) => {
       const cartData = action.payload.cart;
       if (cartData) {

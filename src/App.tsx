@@ -16,10 +16,22 @@ import Checkout from "./Pages/Checkout/Checkout";
 import DashboardEcoLayout from "./Dashboard/DashboardEcoLayout";
 import DashboardEcoHome from "./Dashboard/Pages/Home/DashboardEcoHome";
 import Products from "./Pages/Products/Products";
-import ProductDetails from "./Pages/ProductDetails/ProductDetails";
+//import ProductDetails from "./Pages/ProductDetails/ProductDetails";
 import DashboardHome from "./Reservation/Pages/DashboardHome/DashboardHome";
-import Reservations from "./Reservation/Pages/Reservations/Reservations";
 import DashboardLayout from "./Reservation/DashboardLayout";
+import Cart from "./Pages/Cart/Cart";
+import ClinicReviews from "./Pages/ClinicReviews/ClinicReviews";
+import Animals from "./Reservation/Pages/Animals/Animals";
+import AnimalCategories from "./Reservation/Pages/AnimalCategories/AnimalCategories";
+import Doctors from "./Reservation/Pages/Doctors/Doctors";
+import Vaccinations from "./Reservation/Pages/Vaccination/Vaccinations";
+import ProductsDashboared from './Dashboard/Pages/Products/Products';
+import Orders from "./Dashboard/Pages/Orders/Orders";
+import Coupons from "./Dashboard/Pages/Coupons/Coupons";
+import Categories from "./Dashboard/Pages/Categories/Categories";
+import MedicalHistory from "./Reservation/Pages/MedicalHistory/MedicalHistory";
+import Reservationpet from './Reservation/Pages/ResevationPet/Reservationpet';
+import OrderDetails from "./Pages/OrderDetails/OrderDetails";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +43,10 @@ const router = createBrowserRouter([
       { path: "contact", element: <ContactUs /> },
       { path: "checkout", element: <Checkout /> },
       { path: "products", element: <Products /> },
-      { path: "product-details/:id", element: <ProductDetails /> },
+      { path: "cart", element: <Cart /> },
+      // { path: "product-details/:id", element: <ProductDetails /> },
+      {path:"orderdetails", element:<OrderDetails />},
+      { path: "clinicReviews", element: <ClinicReviews /> },
     ],
   },
   {
@@ -49,6 +64,10 @@ const router = createBrowserRouter([
     element: <DashboardEcoLayout />,
     children: [
       { path: "", element: <DashboardEcoHome /> },
+      { path: "products", element: <ProductsDashboared /> },
+      { path: "orders", element: <Orders /> },
+      { path: "coupons", element: <Coupons /> },
+      { path: "categories", element: <Categories /> },
     ],
   },
   {
@@ -56,7 +75,12 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       { path: "", element: <DashboardHome /> },
-      { path: "reservations", element: <Reservations /> },
+      { path: "animals", element: <Animals /> },
+      { path: "reserv", element: <Reservationpet /> },
+      { path: "animalCategory", element: <AnimalCategories /> },
+      { path: "doctors", element: <Doctors /> },
+      { path: "vaccinations", element: <Vaccinations /> },
+      { path: "medical", element: <MedicalHistory /> },
     ],
   },
 ]);
