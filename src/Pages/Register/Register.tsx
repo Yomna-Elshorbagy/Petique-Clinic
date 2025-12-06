@@ -10,7 +10,7 @@ import axios from "axios";
 import Input from "../../Components/Auth/Input";
 import AuthBtn from "../../Components/Auth/AuthBtn";
 import pet from "../../assets/images/dog.jpg";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 export default function Register() {
   const navigate = useNavigate();

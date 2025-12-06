@@ -1,105 +1,204 @@
+/* ProductCard CSS Module - Component Variables */
+.root {
+  --card-bg: #ffffff;
+  --card-border: #e9dfd3;
+
+  --card-shadow: 0 2px 8px rgba(112, 82, 48, 0.08);
+  --card-shadow-hover: 0 8px 24px rgba(112, 82, 48, 0.15);
+
+  --card-radius: 0.5rem;
+  --card-radius-hover: 1rem;
+  
+  --primary-brown: #6c5136;
+  --primary-brown-dark: #5a422a;
+  --primary-orange: #e6953a;
+  --primary-orange-dark: #cc7422;
+  
+  --text-title: #6c5136;
+  --text-title-hover: #5a422a;
+  --text-price: #e6953a;
+  --text-muted: #b3a593;
+  
+  --badge-bg: #e6953a;
+  --badge-text: #ffffff;
+  
+  --btn-bg: #e6953a;
+  --btn-bg-hover: #cc7422;
+  --btn-text: #ffffff;
+  
+  --overlay-bg: rgba(112, 82, 48, 0.05);
+  
+  --transition-fast: 300ms ease-in-out;
+  --transition-medium: 500ms ease-in-out;
+}
+
 .card {
-  background: white;
-  border-radius: 18px;
+  composes: root;
+  position: relative;
+  cursor: pointer;
+  background-color: transparent;
+  /* background-color: var(--card-bg); */
+  padding: 1rem;
+  /* box-shadow: var(--card-shadow); */
+  transition: all var(--transition-medium);
+  border-radius: var(--card-radius);
   overflow: hidden;
-  border: 1px solid #eee;
-  transition: 0.25s ease;
+  animation: fadeInUp 0.3s ease-out;
 }
 
 .card:hover {
-  box-shadow: 0 18px 25px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-0.25rem);
+  border-radius: var(--card-radius-hover);
 }
 
-
-/* IMAGE */
-.imageWrapper {
+/* Image Container */
+.imageContainer {
   position: relative;
-  padding: 24px;
-  height: 230px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: all var(--transition-medium);
+  border-radius: 0.1rem;
+   border: 1px solid transparent;
 }
 
-.imageWrapper img {
-  max-height: 150px;
-  object-fit: contain;
+.card:hover .imageContainer {
+  border-radius: 0.75rem;
+  border: solid 1px lightgray;
 }
 
-
-/* SALE */
+/* Sale Badge - matches top-left corner of image */
 .saleBadge {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  background: #f59e0b;
-  color: white;
-  font-size: 12px;
-  padding: 4px 10px;
-  border-radius: 5px;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  background-color: var(--badge-bg);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--badge-text);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition: all var(--transition-medium);
+  border-top-left-radius: 0.1rem;
+  border-bottom-right-radius: 0;
 }
 
+.card:hover .saleBadge {
+  border-top-left-radius: 0.75rem;
+  border-bottom-right-radius:0.1 rem;
+}
 
-/* HOVER OVERLAY */
+/* Product Image */
+.productImage {
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+  transition: all var(--transition-medium);
+}
+
+.card:hover .productImage {
+  transform: scale(1.05);
+  opacity: 0.25;
+}
+
+/* Hover Overlay */
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--overlay-bg);
   opacity: 0;
-  transition: 0.25s ease;
+  transition: all var(--transition-medium);
 }
 
 .card:hover .overlay {
   opacity: 1;
 }
 
-
-/* BUTTON */
-.cartBtn {
-  background: #ff7a00;
-  color: white;
-  border-radius: 999px;
-  padding: 8px 18px;
-  font-size: 13px;
+/* Add to Cart Button */
+.addToCartBtn {
+  border-radius: 9999px;
+  background-color: var(--btn-bg);
+  padding: 0.625rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  color: var(--btn-text);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  transition: transform var(--transition-medium), 
+              opacity var(--transition-medium), 
+              background-color var(--transition-medium);
+  opacity: 0;
+  transform: translateY(1.5rem);
   border: none;
-  transition: 0.2s ease;
+  cursor: pointer;
 }
 
-.cartBtn:hover {
-  background: #111;
-  color: #fff;
+.card:hover .addToCartBtn {
+  opacity: 1;
+  transform: translateY(0);
 }
 
+.addToCartBtn:hover {
+  background-color: var(--btn-bg-hover);
+}
 
-/* CONTENT */
+.addToCartBtn:active {
+  transform: scale(0.95);
+}
+
+/* Content Section */
 .content {
-  padding: 15px;
   text-align: center;
 }
 
-.content h3 {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 8px;
+.content > * + * {
+  margin-top: 0.5rem;
 }
 
+.title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-title);
+  transition: color var(--transition-fast);
+}
 
-/* PRICE */
-.price {
+.card:hover .title {
+  color: var(--text-title-hover);
+}
+
+/* Price Section */
+.priceContainer {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
-.old {
-  color: #aaa;
+.originalPrice {
+  font-size: 0.875rem;
+  color: var(--text-muted);
   text-decoration: line-through;
 }
 
-.new {
-  color: #f97316;
+.finalPrice {
+  font-size: 1rem;
   font-weight: 600;
+  color: var(--text-price);
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
