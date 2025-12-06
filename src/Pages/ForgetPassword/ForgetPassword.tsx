@@ -13,6 +13,7 @@ import { StepTracker } from "../../Shared/StepTracker/StepTracker";
 import { changePass, forgetPass } from "../../Apis/AuthApis";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import OTPBlocks from "./components/OTPBlocks";
 
 type Step = 1 | 2 | 3;
 
@@ -28,11 +29,11 @@ export default function ForgetPassword() {
     formState: { errors: emailErrors },
   } = useForm<EmailForm>({ resolver: zodResolver(emailSchema) });
 
-  const {
-    register: regOtp,
-    handleSubmit: submitOtp,
-    formState: { errors: otpErrors },
-  } = useForm<OTPForm>();
+  const { handleSubmit: submitOtp, watch: otpWatch, setValue: setOtpValue, formState: { errors: otpErrors } } = useForm<OTPForm>({
+    defaultValues: {
+      otp: ""
+    }
+  });
 
   const {
     register: regPass,
@@ -208,14 +209,15 @@ export default function ForgetPassword() {
                   <h2 className="text-(--color-light-accent) text-2xl mb-6">Enter OTP</h2>
 
                   <div className="mb-6">
-                    <Input
-                      type="text"
-                      placeholder="6 digit code"
-                      register={regOtp("otp")}
+                    <OTPBlocks
+                      value={otpWatch("otp") || ""}
+                      onChange={(val) => setOtpValue("otp", val)}
                     />
 
                     {otpErrors.otp && (
-                      <p className="text-red-400 text-sm">{otpErrors.otp.message}</p>
+                      <p className="text-red-400 text-sm">
+                        {otpErrors.otp.message}
+                      </p>
                     )}
                   </div>
                   <MyButton title="Verify Code" isLoading={false} type="submit" />
