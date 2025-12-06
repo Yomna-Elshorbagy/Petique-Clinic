@@ -29,7 +29,7 @@ export default function Stuff() {
   return (
     <section className="py-20">
       <div className="max-w-7xl mx-auto text-center mb-12">
-        <p className="text-(--color-light-accent) font-bold flex justify-center items-center gap-2 mb-2">
+        <p className="text-(--color-light-accent) font-bold flex justify-center items-center gap-2 mb-2 text-2xl">
           Our Specialists <span>🐾</span>
         </p>
         <h2 className="text-4xl font-bold text-(--color-light-dark)">
