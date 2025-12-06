@@ -10,7 +10,7 @@ export const signUpSchema = zod
     email: zod.email("Please Enter a correct email"),
     password: zod
       .string()
-      .min(8, "Your password should be 8 characters")
+      .min(6, "Your password should be 6 characters")
       .regex(
         passRegex,
         "Password must contain lower, upper chartecter"

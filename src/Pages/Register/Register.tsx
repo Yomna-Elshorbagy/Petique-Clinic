@@ -54,10 +54,10 @@ export default function Register() {
   };
   return (
     <>
-    <div className="min-h-screen bg-[#FAF8F4] flex items-center justify-center p-4">
+    <div className="relative min-h-screen bg-[#FAF8F4] flex items-center justify-center p-4">
       {/* Background */}
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute bg-cover bg-center h-auto w-full min-h-full"
         style={{
           backgroundImage: `url(${pet})`,
         }}
@@ -68,54 +68,59 @@ export default function Register() {
 
       {/* Card */}
       <motion.div
-  key="login"
-  initial={{ x: 100, opacity: 0 }}
-  animate={{ x: 0, opacity: 1 }}
-  exit={{ x: -100, opacity: 0 }}
-  transition={{ duration: 0.4, ease: "easeInOut" }}
-  className="relative w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl border border-white/10"
->
+        key="login"
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: -100, opacity: 0 }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+        className="relative w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+      >
         <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
 
        <div className="relative grid grid-cols-1 md:grid-cols-2">
           {/* FORM */}
           <div className="p-10 bg-black/40">
-            <h2 className="text-[#f69946] font-['Playfair_Display'] text-3xl font-semibold mb-6">Sign Up</h2>
+            <h2 className="text-(--color-light-accent) font-['Playfair_Display'] text-3xl font-semibold mb-6">Sign Up</h2>
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
 
               <div className="relative">
                 <MdPerson className="absolute left-3 top-1/2 -translate-y-1/2 text-[#e0d0c1]" />
-                <Input placeholder="Your name" register={register("userName")} error={errors.userName} />
+                <Input placeholder="Your name" register={register("userName")}/>
               </div>
+              {errors.userName && <p className="text-red-400 text-sm">{errors.userName.message}</p>}
 
               <div className="relative">
                 <MdEmail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#e0d0c1]" />
-                <Input placeholder="Your email" type="email" register={register("email")} error={errors.email}/>
+                <Input placeholder="Your email" type="email" register={register("email")}/>
               </div>
+              {errors.email && <p className="text-red-400 text-sm">{errors.email.message}</p>}
 
               <div className="relative">
                 <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#d5c5b5]" />
-                <Input placeholder="Password" type="password" register={register("password")} error={errors.password}/>
+                <Input placeholder="Password" type="password" register={register("password")}/>
               </div>
+              {errors.password && <p className="text-red-400 text-sm">{errors.password.message}</p>}
 
               <div className="relative">
                 <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#d5c5b5]" />
-                <Input placeholder="Confirm password" type="password" register={register("Cpassword")} error={errors.Cpassword}/>
+                <Input placeholder="Confirm password" type="password" register={register("Cpassword")}/>
               </div>
+              {errors.Cpassword && <p className="text-red-400 text-sm">{errors.Cpassword.message}</p>}
 
               <div className="relative">
                 <MdPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-[#d5c5b5]" />
-                <Input placeholder="Phone number" register={register("mobileNumber")} error={errors.mobileNumber}/>
+                <Input placeholder="Phone number" register={register("mobileNumber")}/>
               </div>
+              {errors.mobileNumber && <p className="text-red-400 text-sm">{errors.mobileNumber.message}</p>}
 
               <div className="flex gap-4 text-white mt-2">
                 <label className="flex items-center gap-2">
-                  <input type="radio" value="male" {...register("gender")} className="appearance-none w-5 h-5 border-3 border-[#f69946] rounded-full"/>
+                  <input type="radio" value="male" {...register("gender")} className="appearance-none w-5 h-5 border-3 border-(--color-light-accent) rounded-full"/>
                   Male
                 </label>
                 <label className="flex items-center gap-2">
-                  <input type="radio" value="female" {...register("gender")} className="appearance-none w-5 h-5 border-3 border-[#f69946] rounded-full"/>
+                  <input type="radio" value="female" {...register("gender")} className="appearance-none w-5 h-5 border-3 border-(--color-light-accent) rounded-full"/>
                   Female
                 </label>
               </div>
@@ -132,14 +137,14 @@ export default function Register() {
           </div>
 
           {isError && (
-            <p className="text-red-400 text-sm mt-2">
+            <p className="text-red-500 text-sm mt-2">
               {(error as any)?.response?.data?.message || "Signup failed"}
             </p>
           )}
 
           {/* RIGHT SIDE */}
           <div className="p-10 flex flex-col justify-center items-start">
-            <p className="text-4xl font-bold mb-4 font-['Playfair_Display'] text-[#f69946] animate-pulse">
+            <p className="text-4xl font-bold mb-4 font-['Playfair_Display'] text-(--color-light-accent) animate-pulse">
               Join Petique
             </p>
             <p className="text-[#443935] font-bold font-['Playfair_Display']">
