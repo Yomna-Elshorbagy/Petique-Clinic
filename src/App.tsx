@@ -28,13 +28,13 @@ import Vaccinations from "./Reservation/Pages/Vaccination/Vaccinations";
 import ProductsDashboared from './Dashboard/Pages/Products/Products';
 import Orders from "./Dashboard/Pages/Orders/Orders";
 import Coupons from "./Dashboard/Pages/Coupons/Coupons";
-import Categories from "./Dashboard/Pages/Categories/Categories";
 import MedicalHistory from "./Reservation/Pages/MedicalHistory/MedicalHistory";
 import Reservationpet from './Reservation/Pages/ResevationPet/Reservationpet';
 import CategoriesDashboared from "./Dashboard/Pages/Categories/Categories";
 import Users from "./Dashboard/Pages/Users/Users";
 import Reports from "./Dashboard/Pages/Reports/Reports";
 import Emails from "./Dashboard/Pages/Emails/Emails";
+import OrderDetails from "./Pages/OrderDetails/OrderDetails";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +48,7 @@ const router = createBrowserRouter([
       { path: "products", element: <Products /> },
       { path: "cart", element: <Cart /> },
       { path: "product-details/:id", element: <ProductDetails /> },
+      {path:"orderdetails", element:<OrderDetails />},
       { path: "clinicReviews", element: <ClinicReviews /> },
     ],
   },

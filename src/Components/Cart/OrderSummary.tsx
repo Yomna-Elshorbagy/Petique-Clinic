@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ShieldCheck, Sparkles, Tag, Truck } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface OrderSummaryProps {
   totalItems: number;
@@ -12,6 +13,13 @@ export default function OrderSummary({
   subtotal,
   total,
 }: OrderSummaryProps) {
+
+  const navigate = useNavigate();
+
+  const goToCheckout = () => {
+    navigate("/Checkout");
+  };
+
   return (
     <div className="sticky top-24">
       <motion.div
@@ -26,14 +34,17 @@ export default function OrderSummary({
             Order Summary
           </h2>
         </div>
+
         <p className="text-[#7a7067] text-sm mb-8">
           {totalItems} items in your cart
         </p>
 
+        {/* PROMO CODE */}
         <div className="mb-8">
           <label className="text-xs font-bold text-[#4f3f36] flex items-center gap-2 mb-2">
             <Tag className="w-3 h-3" /> Promo Code
           </label>
+
           <div className="flex gap-2">
             <input
               type="text"
@@ -49,6 +60,7 @@ export default function OrderSummary({
           </div>
         </div>
 
+        {/* PRICE DETAILS */}
         <div className="space-y-3 mb-8">
           <div className="flex justify-between text-[#7a7067]">
             <span>Subtotal</span>
@@ -56,13 +68,16 @@ export default function OrderSummary({
               ${subtotal.toFixed(2)}
             </span>
           </div>
+
           <div className="flex justify-between text-[#7a7067]">
             <span className="flex items-center gap-2">
               <Truck className="w-4 h-4" /> Shipping
             </span>
             <span className="text-green-600 font-bold">Free</span>
           </div>
+
           <div className="h-px bg-[#e8d8c4]/50 my-4"></div>
+
           <div className="flex justify-between items-end">
             <span className="text-lg font-bold text-[#4f3f36]">Total</span>
             <span className="text-3xl font-serif font-bold text-[#4f3f36]">
@@ -71,12 +86,15 @@ export default function OrderSummary({
           </div>
         </div>
 
+        {/* CHECKOUT BUTTON */}
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
+          onClick={goToCheckout}
           className="w-full bg-gradient-to-r from-[#e9a66f] to-[#d68f55] text-white py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 relative overflow-hidden group"
         >
           <span className="relative z-10">Proceed to Checkout</span>
+
           <motion.div
             className="absolute inset-0 bg-white/20"
             initial={{ x: "-100%" }}
@@ -85,6 +103,7 @@ export default function OrderSummary({
           />
         </motion.button>
 
+        {/* BADGES */}
         <div className="mt-6 flex justify-center gap-6 text-[#b89c86]">
           <div className="flex items-center gap-2 text-xs font-medium">
             <ShieldCheck className="w-4 h-4" /> Secure Checkout

@@ -1,64 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../../Store/store";
+import type { RootState, AppDispatch } from "../../../Store/store";
 import { FaTruck, FaShieldAlt, FaHeart } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { getUserCart } from "../../../Store/Slices/CartSlice";
+
+const useAppDispatch = () => useDispatch<AppDispatch>();
 
 const OrderSummary = () => {
-  const { products, totalPrice } = useSelector((state: RootState) => state.cart);
+  const dispatch = useAppDispatch();
+  const { products, totalPrice } = useSelector(
+    (state: RootState) => state.cart
+  );
 
-  // Mock data for visualization if cart is empty
-  const displayProducts =
-    products.length > 0
-      ? products
-      : [
-          {
-            _id: "1",
-            productId: {
-              _id: "p1",
-              title: "Wellness Checkup Package",
-              price: 89.99,
-              imageCover: {
-                secure_url: "https://cdn-icons-png.flaticon.com/512/3048/3048122.png",
-              }, // Stethoscope icon style
-            },
-            price: 89.99,
-            quantity: 1,
-            category: { name: "Service" },
-          },
-          {
-            _id: "2",
-            productId: {
-              _id: "p2",
-              title: "Premium Pet Vitamins",
-              price: 69.98,
-              imageCover: {
-                secure_url: "https://cdn-icons-png.flaticon.com/512/883/883407.png",
-              }, // Pill icon style
-            },
-            price: 34.99,
-            quantity: 2,
-            category: { name: "Product" },
-          },
-          {
-            _id: "3",
-            productId: {
-              _id: "p3",
-              title: "Grooming Session",
-              price: 55.0,
-              imageCover: {
-                secure_url: "https://cdn-icons-png.flaticon.com/512/2991/2991616.png",
-              }, // Scissors icon style
-            },
-            price: 55.0,
-            quantity: 1,
-            category: { name: "Service" },
-          },
-        ];
+  const displayProducts = products;
 
   const subtotal = totalPrice > 0 ? totalPrice : 214.97;
   const tax = subtotal * 0.08;
   const total = subtotal + tax;
+
+  useEffect(() => {
+    dispatch(getUserCart());
+  }, [dispatch]);
 
   return (
     <motion.section

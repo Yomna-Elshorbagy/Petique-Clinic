@@ -1,8 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaPaw, FaHeart, FaCheckCircle } from "react-icons/fa";
+import { FaPaw, FaCheckCircle } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../../Store/store";
+import { addOrder } from "../../../Store/Slices/OrderSlice";
+import { useNavigate } from "react-router-dom";
+
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+
 
 const CheckoutForm = () => {
+ const dispatch = useAppDispatch();
+  const Navigate = useNavigate();
+
+  const [formData, setFormData] = React.useState({
+    fullName: "",
+    phone: "",
+    address: "",
+    note: "",
+  });
+ const handleGoToDetails = async () => {
+  const result = await dispatch(addOrder(formData));
+
+  if (addOrder.rejected.match(result)) {
+    console.error("Failed to add order:", result.payload);
+    return;
+  }
+  
+  Navigate("/OrderDetails", { state: { order: result.payload } }); 
+};
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -25,52 +58,44 @@ const CheckoutForm = () => {
       </div>
 
       <form className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label
-              htmlFor="firstName"
-              className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
-            >
-              First Name
-            </label>
-            <input
-              type="text"
-              id="firstName"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[var(--color-light-accent)] focus:border-transparent outline-none transition-all"
-              placeholder="John"
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="lastName"
-              className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
-            >
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="lastName"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[var(--color-light-accent)] focus:border-transparent outline-none transition-all"
-              placeholder="Doe"
-            />
-          </div>
+        {/* FULL NAME — FULL WIDTH */}
+        <div>
+          <label
+            htmlFor="fullName"
+            className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
+          >
+            Full Name
+          </label>
+          <input
+            onChange={(e) =>
+              setFormData({ ...formData, fullName: e.target.value })
+            }
+            type="text"
+            id="fullName"
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[var(--color-light-accent)] focus:border-transparent outline-none transition-all"
+            placeholder="John Doe"
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label
-              htmlFor="email"
+              htmlFor="address"
               className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
             >
-              Email Address
+              Address
             </label>
             <input
-              type="email"
-              id="email"
+              onChange={(e) =>
+                setFormData({ ...formData, address: e.target.value })
+              }
+              type="text"
+              id="address"
               className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[var(--color-light-accent)] focus:border-transparent outline-none transition-all"
-              placeholder="john@example.com"
+              placeholder="123 Main St, City, Country"
             />
           </div>
+
           <div>
             <label
               htmlFor="phone"
@@ -79,33 +104,38 @@ const CheckoutForm = () => {
               Phone Number
             </label>
             <input
+              onChange={(e) =>
+                setFormData({ ...formData, phone: e.target.value })
+              }
               type="tel"
               id="phone"
               className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[var(--color-light-accent)] focus:border-transparent outline-none transition-all"
-              placeholder="(555) 123-4567"
+              placeholder="+20 1X XXX XXXX"
             />
           </div>
         </div>
 
+        {/* NOTE */}
         <div>
           <label
-            htmlFor="petName"
+            htmlFor="note"
             className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
           >
-            <span className="flex items-center gap-2">
-              <FaHeart className="text-red-400" /> Pet's Name
-            </span>
+            Note (Optional)
           </label>
-          <input
-            type="text"
-            id="petName"
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[var(--color-light-accent)] focus:border-transparent outline-none transition-all"
-            placeholder="What's your pet's name?"
+          <textarea
+            onChange={(e) => setFormData({ ...formData, note: e.target.value })}
+            id="note"
+            rows={4}
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[var(--color-light-accent)] focus:border-transparent outline-none transition-all resize-none"
+            placeholder="Any special requests or information we should know..."
           />
         </div>
 
+        {/* BUTTON */}
         <div className="flex justify-end pt-6">
           <button
+            onClick={handleGoToDetails}
             type="button"
             className="px-8 py-3 bg-[var(--color-light-accent)] hover:bg-[#d69560] text-white font-semibold rounded-xl shadow-lg shadow-orange-200 dark:shadow-none transition-all transform hover:scale-105 flex items-center gap-2"
           >
