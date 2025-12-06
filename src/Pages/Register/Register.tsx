@@ -2,7 +2,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { signUpSchema, type SignUpSchemaType } from "../../Utils/Schema/signupSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { userSignup } from "../../Apis/AuthApis";
 import { MdEmail, MdLock, MdPerson, MdPhone } from "react-icons/md";
 import Swal from "sweetalert2";
@@ -133,6 +133,12 @@ export default function Register() {
                 navName="Login"
                 isLoading={isPending}
               />
+                <p className="text-sm text-gray-400 text-center">
+                Already Register ? {" "}
+                <Link to="/otp" className="text-[#A88F7B] cursor-pointer hover:underline">
+                  Confirm OTP 
+                </Link>
+              </p>
             </form>
           </div>
 

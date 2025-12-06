@@ -7,7 +7,13 @@ import Input from "../../Components/Auth/Input";
 import MyButton from "../../Components/Auth/MyButton";
 import { MdEmail, MdLock } from "react-icons/md";
 import { useForm } from "react-hook-form";
-import { emailSchema, passSchema, type EmailForm, type OTPForm, type PassForm } from "../../Utils/Schema/forgetPassSchema";
+import {
+  emailSchema,
+  passSchema,
+  type EmailForm,
+  type OTPForm,
+  type PassForm,
+} from "../../Utils/Schema/forgetPassSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StepTracker } from "../../Shared/StepTracker/StepTracker";
 import { changePass, forgetPass } from "../../Apis/AuthApis";
@@ -29,10 +35,15 @@ export default function ForgetPassword() {
     formState: { errors: emailErrors },
   } = useForm<EmailForm>({ resolver: zodResolver(emailSchema) });
 
-  const { handleSubmit: submitOtp, watch: otpWatch, setValue: setOtpValue, formState: { errors: otpErrors } } = useForm<OTPForm>({
+  const {
+    handleSubmit: submitOtp,
+    watch: otpWatch,
+    setValue: setOtpValue,
+    formState: { errors: otpErrors },
+  } = useForm<OTPForm>({
     defaultValues: {
-      otp: ""
-    }
+      otp: "",
+    },
   });
 
   const {
@@ -47,14 +58,22 @@ export default function ForgetPassword() {
       name: "Send Code",
       icon: FaEnvelope,
       status:
-        currentStep === 1 ? "current" : currentStep > 1 ? "complete" : "upcoming",
+        currentStep === 1
+          ? "current"
+          : currentStep > 1
+          ? "complete"
+          : "upcoming",
     },
     {
       id: 2,
       name: "Verify Code",
       icon: FaKey,
       status:
-        currentStep === 2 ? "current" : currentStep > 2 ? "complete" : "upcoming",
+        currentStep === 2
+          ? "current"
+          : currentStep > 2
+          ? "complete"
+          : "upcoming",
     },
     {
       id: 3,
@@ -162,7 +181,6 @@ export default function ForgetPassword() {
           <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
 
           <div className="relative grid grid-cols-1 md:grid-cols-2">
-
             {/* LEFT TEXT */}
             <div className="p-10 flex flex-col justify-center">
               <p className="text-(--color-light-accent) text-4xl font-['Playfair_Display'] font-bold mb-4">
@@ -187,7 +205,10 @@ export default function ForgetPassword() {
                   </h2>
 
                   <div className="relative mb-6">
-                    <MdEmail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#e0d0c1]" size={20} />
+                    <MdEmail
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-[#e0d0c1]"
+                      size={20}
+                    />
                     <Input
                       type="email"
                       placeholder="Your email"
@@ -196,17 +217,30 @@ export default function ForgetPassword() {
                   </div>
 
                   {emailErrors.email && (
-                    <p className="text-red-400 text-sm">{emailErrors.email.message}</p>
+                    <p className="text-red-400 text-sm">
+                      {emailErrors.email.message}
+                    </p>
                   )}
 
                   <MyButton title="Send OTP" isLoading={false} type="submit" />
+                  <p className="text-sm text-white/80 text-center mt-4">
+                    Remember your password?{" "}
+                    <span
+                      className="text-[#f69946] hover:underline cursor-pointer"
+                      onClick={() => navigate("/login")}
+                    >
+                      Login
+                    </span>
+                  </p>
                 </form>
               )}
 
               {/* STEP 2 — OTP */}
               {currentStep === 2 && (
                 <form onSubmit={submitOtp(handleVerifyOtp)}>
-                  <h2 className="text-(--color-light-accent) text-2xl mb-6">Enter OTP</h2>
+                  <h2 className="text-(--color-light-accent) text-2xl mb-6">
+                    Enter OTP
+                  </h2>
 
                   <div className="mb-6">
                     <OTPBlocks
@@ -220,14 +254,20 @@ export default function ForgetPassword() {
                       </p>
                     )}
                   </div>
-                  <MyButton title="Verify Code" isLoading={false} type="submit" />
+                  <MyButton
+                    title="Verify Code"
+                    isLoading={false}
+                    type="submit"
+                  />
                 </form>
               )}
 
               {/* STEP 3 — PASSWORD */}
               {currentStep === 3 && (
                 <form onSubmit={submitPass(handleResetPass)}>
-                  <h2 className="text-(--color-light-accent) text-2xl mb-6">New Password</h2>
+                  <h2 className="text-(--color-light-accent) text-2xl mb-6">
+                    New Password
+                  </h2>
 
                   <div className="relative mb-3">
                     <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#d5c5b5]" />
@@ -238,7 +278,9 @@ export default function ForgetPassword() {
                     />
                   </div>
                   {passErrors.newPass && (
-                    <p className="text-red-400 text-sm">{passErrors.newPass.message}</p>
+                    <p className="text-red-400 text-sm">
+                      {passErrors.newPass.message}
+                    </p>
                   )}
 
                   <div className="relative mb-6">
@@ -250,10 +292,16 @@ export default function ForgetPassword() {
                     />
                   </div>
                   {passErrors.rePass && (
-                    <p className="text-red-400 text-sm">{passErrors.rePass.message}</p>
+                    <p className="text-red-400 text-sm">
+                      {passErrors.rePass.message}
+                    </p>
                   )}
 
-                  <MyButton title="Reset Password" isLoading={false} type="submit" />
+                  <MyButton
+                    title="Reset Password"
+                    isLoading={false}
+                    type="submit"
+                  />
                 </form>
               )}
             </div>
@@ -261,5 +309,5 @@ export default function ForgetPassword() {
         </motion.div>
       </div>
     </>
-  )
+  );
 }
