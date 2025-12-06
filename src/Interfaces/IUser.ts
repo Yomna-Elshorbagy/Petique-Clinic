@@ -3,7 +3,7 @@ export interface IUser {
 
   userName: string;
   email: string;
-  password?: string; 
+  password: string; 
 
   mobileNumber?: string;
 
@@ -27,4 +27,11 @@ export interface IUser {
 
   createdAt: string;
   updatedAt: string;
+}
+
+export type ILogin = Pick<IUser, "email" | "password">;
+
+export interface ISignup extends ILogin {
+  userName: string;
+  re_password: string;
 }
