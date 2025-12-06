@@ -18,3 +18,18 @@ export const userSignup = async (data: SignUpSchemaType) => {
     return res.data;
 };
 
+export const forgetPass = async (email: string) => {
+    const res = await axios.put(`${baseURL}/auth/forgetPass` , {email});
+    return res.data;
+}
+
+export const changePass = async (data: {
+  otp: string;
+  newPass: string;
+  email: string;
+}) => {
+    const res = await axios.put(`${baseURL}/auth/changePass` , data , {headers});
+    return res.data;
+
+}
+
