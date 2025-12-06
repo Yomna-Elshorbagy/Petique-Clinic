@@ -13,7 +13,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Input from "../../Components/Auth/Input";
 import AuthBtn from "../../Components/Auth/AuthBtn";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 export default function Login() {
   const navigate = useNavigate();

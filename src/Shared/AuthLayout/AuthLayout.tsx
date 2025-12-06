@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router";
 
 export default function AuthLayout() {
