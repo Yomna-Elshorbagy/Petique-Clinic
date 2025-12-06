@@ -57,7 +57,7 @@ const OrderDetails: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-12 px-4 mt-12">
+    <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-12 px-4 mt-15">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
@@ -159,8 +159,9 @@ const OrderDetails: React.FC = () => {
                     >
                       <div className="flex items-center gap-4 flex-1">
                         <img
-                          src=""
-                          alt=""
+                        src={item.imageCover?.secure_url}
+
+                          alt={item.productId?.title}
                           className="w-16 h-16 rounded-lg object-cover"
                         />
 
