@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import type { IButtonProps } from "../../Interfaces/components/buttonProps";
 
 const MyButton = ({ title, type = "button", isLoading, onClick }: IButtonProps) => {

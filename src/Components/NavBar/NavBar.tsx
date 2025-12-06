@@ -21,9 +21,9 @@ export default function NavBar() {
   const { noOfCartItems } = useSelector((state: RootState) => state.cart);
 
   const navLinks = [
-    { label: "Home", href: "#" },
+    { label: "Home", href: "/" },
     { label: "Products", href: "/products" },
-    { label: "Services", href: "#services" },
+    { label: "Services", href: "services" },
     { label: "Reservation", href: "/resDashboard/reservations" },
     { label: "Contact Us", href: "/contact" },
   ];
