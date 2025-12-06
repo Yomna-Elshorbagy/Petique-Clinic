@@ -35,18 +35,24 @@ export default DataTableComponent;
 const customStyles = {
   headCells: {
     style: {
-      fontWeight: "bold",
-      fontSize: "15px",
+      fontWeight: "600",
+      fontSize: "14px",
       backgroundColor: "var(--color-light-primary)",
       color: "var(--color-light-dark)",
+      borderBottom: "1px solid var(--color-light-secondary)",
+      paddingTop: "14px",
+      paddingBottom: "14px",
     },
   },
   rows: {
     style: {
       backgroundColor: "var(--color-light-background)",
       color: "var(--color-light-dark)",
+      fontSize: "14px",
+      borderBottom: "1px solid var(--color-light-secondary)",
       "&:hover": {
         backgroundColor: "var(--color-light-secondary)",
+        cursor: "pointer",
       },
     },
   },
@@ -55,6 +61,17 @@ const customStyles = {
       backgroundColor: "var(--color-light-background)",
       color: "var(--color-light-dark)",
       borderTop: `1px solid var(--color-light-secondary)`,
+      paddingTop: "10px",
+      paddingBottom: "10px",
+    },
+    pageButtonsStyle: {
+      fill: "var(--color-light-dark)",
+      "&:hover": {
+        backgroundColor: "var(--color-light-secondary)",
+      },
+      "&:disabled": {
+        color: "var(--color-light-textSecondary)",
+      },
     },
   },
 };

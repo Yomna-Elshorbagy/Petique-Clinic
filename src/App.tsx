@@ -31,6 +31,10 @@ import Coupons from "./Dashboard/Pages/Coupons/Coupons";
 import Categories from "./Dashboard/Pages/Categories/Categories";
 import MedicalHistory from "./Reservation/Pages/MedicalHistory/MedicalHistory";
 import Reservationpet from './Reservation/Pages/ResevationPet/Reservationpet';
+import CategoriesDashboared from "./Dashboard/Pages/Categories/Categories";
+import Users from "./Dashboard/Pages/Users/Users";
+import Reports from "./Dashboard/Pages/Reports/Reports";
+import Emails from "./Dashboard/Pages/Emails/Emails";
 
 const router = createBrowserRouter([
   {
@@ -62,10 +66,13 @@ const router = createBrowserRouter([
     element: <DashboardEcoLayout />,
     children: [
       { path: "", element: <DashboardEcoHome /> },
-      { path: "products", element: <ProductsDashboared /> },
       { path: "orders", element: <Orders /> },
+      { path: "Categories", element: <CategoriesDashboared /> },
+      { path: "products", element: <ProductsDashboared /> },
       { path: "coupons", element: <Coupons /> },
-      { path: "categories", element: <Categories /> },
+      { path: "users", element: <Users /> },
+      { path: "emails", element: <Emails /> },
+      { path: "reports", element: <Reports /> },
     ],
   },
   {
