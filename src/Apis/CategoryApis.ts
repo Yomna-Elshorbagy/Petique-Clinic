@@ -11,6 +11,7 @@ const headers = {
   "Content-Type": "application/json",
 };
 
+
 export const getAllCategories = async (): Promise<ICategory[]> => {
   const { data } = await axios.get(`${BASE_URL}`);
   return data.data;
