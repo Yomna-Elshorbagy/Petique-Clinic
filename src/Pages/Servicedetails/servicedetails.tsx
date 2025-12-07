@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import type { IService } from "./../../Interfaces/IService";
+import type { IService } from "../../Interfaces/IService";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -139,7 +139,7 @@ export default function Servicesdetails() {
         </div>
 
         {/* Main Content */}
-        <div className="w-full md:w-3/4 mx-auto flex flex-col md:flex-row gap-6 mt-8 font-serif">
+        <div className="w-full md:w-3/4 mx-auto flex flex-col md:flex-row gap-6 font-serif mt-20">
           <div className="flex flex-col md:flex-row gap-8 p-6 ">
             {/* Left Side*/}
             <div className="w-full md:w-1/4 space-y-4">

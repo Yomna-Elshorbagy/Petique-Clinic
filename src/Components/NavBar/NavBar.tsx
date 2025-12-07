@@ -23,9 +23,11 @@ export default function NavBar() {
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "Products", href: "/products" },
-    { label: "Services", href: "services" },
-    { label: "Reservation", href: "/resDashboard/reservations" },
+    { label: "Services", href: "service" },
+    { label: "Reservation", href: "/reservation" },
     { label: "Contact Us", href: "/contact" },
+    { label: "Blog", href: "/blog" },
+
   ];
 
   useEffect(() => {

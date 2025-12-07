@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import type { IService } from "./../../Interfaces/IService";
+import type { IService } from "../../Interfaces/IService";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -80,7 +80,7 @@ export default function Services() {
         />
       </div>
 
-      <div className="mt-40 font-serif">
+      <div className="mt-40 font-serif mb-10">
         <div className="flex flex-wrap justify-center gap-6 px-6">
           {services.map((service: IService) => {
             const img1 =

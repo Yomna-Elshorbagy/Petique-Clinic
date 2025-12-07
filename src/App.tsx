@@ -12,9 +12,10 @@ import Register from "./Pages/Register/Register";
 import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
 import OtpConfirmation from "./Pages/Otp/OtpConfirmation";
 import ContactUs from "./Pages/ContactUs/ContactUs";
-import Reservation from "./Pages/reservation/reservation";
+import Reservation from "./Pages/Reservation/reservation";
 import Services from "./Pages/Services/services";
 import Servicesdetails from "./Pages/Servicedetails/servicedetails";
+import Blog from "./Pages/Blog/Blog";
 
 import Checkout from "./Pages/Checkout/Checkout";
 import DashboardEcoLayout from "./Dashboard/DashboardEcoLayout";
@@ -51,6 +52,7 @@ const router = createBrowserRouter([
       { path: "reservation", element: <Reservation/> },
       { path: "service", element: <Services/> },
       { path: "service/:id", element: <Servicesdetails/> },
+       { path:"blog", element: <Blog/> },
 
 
       { path: "checkout", element: <Checkout /> },

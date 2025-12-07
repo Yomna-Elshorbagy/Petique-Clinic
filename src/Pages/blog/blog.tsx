@@ -48,7 +48,7 @@ export default function Blog() {
   return (
     <>
       {/* Header */}
-      <div className="mt-32 bg-[#faf9f6]">
+      <div className="bg-[#faf9f6]">
         <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-center mt-20 font-serif">
           <div className="max-w-7xl text-center md:text-left w-full">
             <Bone
@@ -81,7 +81,7 @@ export default function Blog() {
           />
         </div>
 
-        <div className="container mx-auto flex flex-col md:flex-row gap-6 mt-20 justify-center font-serif p-3  ">
+        <div className="container mx-auto flex flex-col md:flex-row gap-6 mt-20 justify-center font-serif p-3 mb-10 ">
           <div className="w-full md:w-1/2">
             {expandedPostId === null ? (
               <>
