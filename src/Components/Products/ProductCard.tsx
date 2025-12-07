@@ -158,13 +158,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Title */}
         <h3 className={styles.title}>{title.split(" ").slice(0, 3).join(" ")}</h3>
 
-        {/* Rating */}
-        {rate !== undefined && rate > 0 && (
-          <div className={styles.ratingContainer}>
-            <StarRating rating={rate} />
-          </div>
-        )}
-
         {/* Price Section */}
         <div className={styles.priceContainer}>
           {hasDiscount && (
@@ -175,6 +168,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </span>
         </div>
 
+        {/* Rating */}
+        {rate !== undefined && rate > 0 && (
+          <div className={styles.ratingContainer}>
+            <StarRating rating={rate} />
+          </div>
+        )}
+
+       
         {/* Add to Cart Button */}
          <button
           onClick={async (e) => {
