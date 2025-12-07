@@ -19,11 +19,18 @@ export interface IProduct {
   category: {
     _id: string;
     name: string;
-    image?: string;
+    image?: {
+      secure_url: string;
+      public_id: string;
+    };
     createdBy?: string;
     id?: string;
   };
-  createdBy: string;
+  createdBy: {
+    userName: string;
+    mobileNumber: string;
+    address: string;
+  };
   updatedBy: string;
 
   rate: number;

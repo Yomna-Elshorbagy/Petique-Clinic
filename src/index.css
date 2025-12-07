@@ -10,6 +10,18 @@
   focus:ring-2 focus:ring-[#C58D52] focus:border-[#C58D52]
   outline-none transition;
 }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { transform: translateY(40px) scale(0.96); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.35s ease-out;
+}
 
 :root {
   --color-light-primary: #e8d8c4;
