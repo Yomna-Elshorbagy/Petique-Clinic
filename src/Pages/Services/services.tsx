@@ -45,35 +45,38 @@ export default function Services() {
 
   return (
     <>
-      <div className="relative  bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center mt-20 font-serif">
-        <div className="max-w-7xl text-left pl-100">
+      <div className="relative bg-[#1f1b22] h-auto px-10 py-10 overflow-visible flex flex-col md:flex-row items-center mt-20 font-serif">
+        <div className="max-w-7xl text-center md:text-left md:pl-100">
           <Bone
             ref={boneRef}
             className="
-            bone-icon 
-            w-30 h-30 
-            text-white 
-            drop-shadow-[0_0_10px_#ff9100]
-               ml-[-80px]
-            
-          "
+        bone-icon 
+        w-30 h-30 
+        text-white 
+        drop-shadow-[0_0_10px_#ff9100]
+        ml-[-60px] md:ml-[-80px] 
+        mx-auto md:mx-0
+      "
             strokeWidth={2.5}
             color="#e3e3e3"
           />
-          <h1 className="text-white text-6xl font-extrabold">Our Services</h1>
+          <h1 className="text-white text-4xl font-extrabold mt-4">
+            Our Services
+          </h1>
 
-          <div className="mt-8 flex justify-start gap-6 text-orange-500 font-medium text-3xl">
+          <div className="mt-8 flex justify-center md:justify-start gap-6 text-[#e9a66f] font-medium text-1xl">
             <Link to="/home" className="hover:text-white transition-colors">
               Home
             </Link>
-            <span className="text-orange-500"> &gt; </span>
+            <span className="text-[#e9a66f]"> &gt; </span>
             <p className="text-white font-semibold">Services</p>
           </div>
         </div>
+
         <img
           src="/src/assets/images/cat-relaxing.png"
           alt="cat"
-          className="absolute right-1 bottom-[-120px] w-[600px] z-10"
+          className="hidden md:block absolute md:right-1 md:bottom-[-120px] w-[600px] z-10"
         />
       </div>
 
@@ -113,7 +116,7 @@ export default function Services() {
                 <div className="text-center">
                   <h3
                     className="text-lg font-bold mb-2 text-black text-ellipsis overflow-hidden line-clamp-1 mt-3
-             transition-colors duration-300 group-hover:text-orange-400"
+             transition-colors duration-300 group-hover:text-[#e9a66f]"
                     style={{ fontSize: 25 }}
                   >
                     {service.title}

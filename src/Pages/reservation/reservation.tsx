@@ -16,7 +16,6 @@ import "swiper/css/navigation";
 import { Autoplay } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 
-
 export default function Reservation() {
   const navigate = useNavigate();
 
@@ -190,7 +189,7 @@ export default function Reservation() {
         <div className="flex items-center gap-2 mb-6 justify-center">
           <h1 className="text-3xl font-bold flex items-center gap-2 ">
             Petique
-            <PawPrint className="w-5 h-5 text-orange-500" />
+            <PawPrint className="w-5 h-5 text-[#e9a66f]" />
           </h1>
         </div>
 
@@ -200,7 +199,7 @@ export default function Reservation() {
 
         <div className="flex gap-6 rounded-xl p-6 shadow-lg bg-white border border-green-50">
           {/* Left image */}
-          <div className="w-2/5 max-h-[600px] overflow-hidden rounded-xl">
+          <div className="w-2/5 max-h-[600px] overflow-hidden rounded-xl hidden md:block">
             <img
               src="https://i.pinimg.com/736x/27/de/c9/27dec9a621e90a7d93c946ce086e95e4.jpg"
               alt="Reservation"
@@ -210,8 +209,6 @@ export default function Reservation() {
 
           {/*right steps */}
           <div className="flex-1 space-y-6">
-         
-
             {/* Step Indicator */}
             <div className="flex justify-between items-center mb-6">
               {["Pet", "Service", "Doctor", "Date/Time", "Notes"].map(
@@ -231,7 +228,7 @@ export default function Reservation() {
             isCompleted
               ? "bg-green-500"
               : isActive
-              ? "bg-orange-500"
+              ? "bg-[#e9a66f]"
               : "bg-gray-300"
           }`}
                       >
@@ -270,7 +267,7 @@ export default function Reservation() {
               <div className={`p-4 }`}>
                 <h2 className="text-lg font-medium mb-2 flex items-center gap-2">
                   Select Your Pet{" "}
-                  <PawPrint className="w-5 h-5 text-orange-500" />
+                  <PawPrint className="w-5 h-5 text-[#e9a66f]" />
                 </h2>
                 <select
                   className="w-full p-2 border-0  bg-orange-50"
@@ -293,7 +290,7 @@ export default function Reservation() {
               <div className="p-4">
                 <h2 className="text-lg font-medium mb-2 flex items-center gap-2">
                   Select Service
-                  <PawPrint className="w-5 h-5 text-orange-500" />
+                  <PawPrint className="w-5 h-5 text-[#e9a66f]" />
                 </h2>
                 <select
                   className="w-full p-2 border-0  bg-orange-50"
@@ -316,7 +313,7 @@ export default function Reservation() {
               <div className="p-4">
                 <h2 className="text-lg font-medium mb-2 flex items-center gap-2">
                   Select Doctor
-                  <PawPrint className="w-5 h-5 text-orange-500" />
+                  <PawPrint className="w-5 h-5 text-[#e9a66f]" />
                 </h2>
                 <select
                   className="w-full p-2 border-0  bg-orange-50 outline-none"
@@ -357,7 +354,7 @@ export default function Reservation() {
                       {doctors.find((d) => d._id === doctor)?.mobileNumber}
                     </span>
 
-                    <div className="flex items-center gap-1 mt-2">
+                    <div className="flex items-center gap-1 mt-2 mb-3">
                       {[1, 2, 3, 4, 5].map((i) => (
                         <Star key={i} className="w-4 h-4 text-yellow-400" />
                       ))}
@@ -368,13 +365,13 @@ export default function Reservation() {
               )}
 
               {step >= 4 && (
-                <div>
+                <div className="flex-1">
                   <h2 className="text-lg font-medium flex items-center gap-2 p-3">
                     Select Date & Time
-                    <PawPrint className="w-5 h-5 text-orange-500" />
+                    <PawPrint className="w-5 h-5 text-[#e9a66f]" />
                   </h2>
 
-                  <div className="flex gap-3 justify-start p-4 ">
+                  <div className="flex gap-3 justify-start p-4  ">
                     <div className="flex gap-3 justify-start">
                       {next5Days.map((d) => (
                         <div key={d.iso} className="flex flex-col items-center">
@@ -383,7 +380,7 @@ export default function Reservation() {
                             className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
           ${
             date === d.iso
-              ? "bg-orange-500 text-white"
+              ? "bg-[#e9a66f] text-white"
               : "bg-orange-200 text-orange-700"
           }`}
                             onClick={() => {
@@ -414,7 +411,7 @@ export default function Reservation() {
                             className={`text-xs px-1 py-1 rounded border transition-colors
             ${
               timeSlot === t
-                ? "bg-orange-500 text-white border-orange-500"
+                ? "bg-[#e9a66f] text-white border-[#e9a66f]"
                 : !isAvailable
                 ? "bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed"
                 : "bg-gray-100 border-gray-300"
@@ -439,7 +436,7 @@ export default function Reservation() {
               <div className={`p-4 }`}>
                 <h2 className="text-lg font-medium mb-2 flex items-center gap-2">
                   Notes
-                  <PawPrint className="w-5 h-5 text-orange-500" />
+                  <PawPrint className="w-5 h-5 text-[#e9a66f]" />
                 </h2>
                 <textarea
                   value={notes}
@@ -459,7 +456,7 @@ export default function Reservation() {
 
                       setShowModal(true);
                     }}
-                    className="bg-orange-500 text-white py-2 px-4 rounded mt-4 w-full"
+                    className="bg-[#e9a66f] text-white py-2 px-4 rounded mt-4 w-full"
                   >
                     Confirm
                   </button>
@@ -509,7 +506,7 @@ export default function Reservation() {
                       }
                       mutation.mutate();
                     }}
-                    className="px-4 py-2 bg-orange-500 text-white rounded"
+                    className="px-4 py-2 bg-[#e9a66f] text-white rounded"
                   >
                     Confirm
                   </button>
@@ -520,7 +517,7 @@ export default function Reservation() {
         </div>
       </div>
 
-      <div className="mt-32 bg-amber-50 py-16 px-6 rounded-xl shadow-inner font-serif">
+      <div className="mt-32 bg-[#faf9f6] py-16 px-6  shadow-inner font-serif">
         <h2 className="text-5xl font-bold text-center mb-12 text-gray-900 leading-snug">
           Over 100,000 Happy Customers <br />
           Through the Worldwide
@@ -571,7 +568,7 @@ export default function Reservation() {
                   <div className="text-center bg-white">
                     <h3
                       className="text-lg font-bold mb-2 text-black text-ellipsis overflow-hidden line-clamp-1 mt-3
-             transition-colors duration-300 group-hover:text-orange-400"
+             transition-colors duration-300 group-hover:text-[#e9a66f]"
                       style={{ fontSize: 25 }}
                     >
                       {service.title}
