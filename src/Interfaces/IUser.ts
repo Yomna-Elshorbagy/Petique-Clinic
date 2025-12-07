@@ -3,12 +3,12 @@ export interface IUser {
 
   userName: string;
   email: string;
-  password: string; 
+  password: string;
 
   mobileNumber?: string;
 
-  role: "admin" | "doctor" | "petOwner";  
-  gender: "male" | "female";              
+  role: "admin" | "doctor" | "petOwner";
+  gender: "male" | "female";
 
   isVerified: boolean;
   isActive: boolean;
@@ -20,6 +20,7 @@ export interface IUser {
   };
 
   address?: string;
+  doctorSpecialist?: string;
   otpCode?: string;
   otpExpire?: string;
 
