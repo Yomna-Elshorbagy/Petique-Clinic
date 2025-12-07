@@ -12,6 +12,10 @@ import Register from "./Pages/Register/Register";
 import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
 import OtpConfirmation from "./Pages/Otp/OtpConfirmation";
 import ContactUs from "./Pages/ContactUs/ContactUs";
+import Reservation from "./Pages/reservation/reservation";
+import Services from "./Pages/Services/services";
+import Servicesdetails from "./Pages/Servicedetails/servicedetails";
+
 import Checkout from "./Pages/Checkout/Checkout";
 import DashboardEcoLayout from "./Dashboard/DashboardEcoLayout";
 import DashboardEcoHome from "./Dashboard/Pages/Home/DashboardEcoHome";
@@ -44,6 +48,11 @@ const router = createBrowserRouter([
       { path: "", element: <Home /> },
       { path: "home", element: <Home /> },
       { path: "contact", element: <ContactUs /> },
+      { path: "reservation", element: <Reservation/> },
+      { path: "service", element: <Services/> },
+      { path: "service/:id", element: <Servicesdetails/> },
+
+
       { path: "checkout", element: <Checkout /> },
       { path: "products", element: <Products /> },
       { path: "cart", element: <Cart /> },
@@ -60,6 +69,7 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "forgetPass", element: <ForgetPassword /> },
       { path: "otp", element: <OtpConfirmation /> },
+
     ],
   },
   {

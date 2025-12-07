@@ -94,6 +94,8 @@ const Products: React.FC = () => {
       setProductsState((prev) => ({ ...prev, loading: true, error: null }));
 
       const response = await getAllProducts(page, pagination.limit);
+      console.log("Products Array:", response.data);
+
 
       // Backend response shape: { success, message, data: IProduct[] }
       setProductsState({
@@ -195,6 +197,7 @@ const Products: React.FC = () => {
     // Clear category from URL
     setSearchParams({});
   };
+  
 
   const renderPagination = (pageCount: number, totalFiltered: number) => {
     if (pageCount <= 1) return null;
