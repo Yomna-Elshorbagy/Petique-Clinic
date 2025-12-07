@@ -1,44 +1,128 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { TableColumn } from "react-data-table-component";
-import { getProducts } from "../../../Apis/ProductsDashboard";
+import {
+  deleteProduct,
+  getProducts,
+  softDeleteProducts,
+} from "../../../Apis/ProductsDashboard";
 import type { IProduct } from "../../../Interfaces/IProducts";
 import DataTableComponent from "../../../Shared/Table/TableComponent";
 import toast from "react-hot-toast";
 import { FaEdit, FaEye, FaTrash, FaUndo } from "react-icons/fa";
+import Swal from "sweetalert2";
+import ProductModal from "./Components/viewProductModle";
+import EditProductModal from "./Components/EditProductModel";
 
 export default function ProductsDashboared() {
-  const [page, setPage] = useState(1);
-  const [size] = useState(20);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
+  const [editOpen, setEditOpen] = useState(false);
+  const queryClient = useQueryClient();
 
   // ===> fetch products
   const { data, isLoading } = useQuery({
-    queryKey: ["products", page, size],
-    queryFn: () => getProducts(page, size),
+    queryKey: ["products"],
+    queryFn: () => getProducts(),
   });
 
   // ====> action handlers
   const handleView = (product: IProduct) => {
-    console.log("View product", product);
-    toast.success(`View ${product.title}`);
+    setSelectedProduct(product);
+    setOpenModal(true);
   };
 
   const handleEdit = (product: IProduct) => {
-    console.log("Edit product", product);
-    toast.success(`Edit ${product.title}`);
+    setSelectedProduct(product);
+    setEditOpen(true);
   };
 
-  const handleDelete = (id: string) => {
-    if (!confirm("are you sure you want to permanently delete this product?"))
-      return;
-    console.log("Delete", id);
-    toast.success("Deleted ");
+  const handleSoftDelete = async (id: string) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) return toast.error("Unauthorized");
+      const result = await Swal.fire({
+        title: "Archive category?",
+        text: "This will soft-delete (archive) the category.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, archive",
+        cancelButtonText: "Cancel",
+        reverseButtons: true,
+        confirmButtonColor: "#F9BE91",
+      });
+
+      if (!result.isConfirmed) return;
+
+      Swal.fire({
+        title: "Archiving...",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+      });
+
+      await softDeleteProducts(id, token);
+
+      Swal.close();
+      await Swal.fire({
+        title: "Archived",
+        text: "Category was archived successfully.",
+        icon: "success",
+        timer: 1400,
+        showConfirmButton: false,
+      });
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    } catch (error: any) {
+      console.error("Soft delete failed", error);
+      Swal.close();
+      Swal.fire({
+        title: "Error",
+        text: error?.response?.data?.message || "Failed to archive category.",
+        icon: "error",
+      });
+    }
   };
 
-  const handleSoftDelete = (id: string) => {
-    if (!confirm("Soft delete this product?")) return;
-    console.log("Soft delete", id);
-    toast.success("Soft deleted");
+  const handleDelete = async (id: string) => {
+    try {
+      const result = await Swal.fire({
+        title: "Delete permanently?",
+        text: "This will permanently remove the category and cannot be undone.",
+        icon: "error",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete permanently",
+        cancelButtonText: "Cancel",
+        reverseButtons: true,
+        confirmButtonColor: "red",
+      });
+
+      if (!result.isConfirmed) return;
+
+      Swal.fire({
+        title: "Deleting...",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+      });
+
+      await deleteProduct(id);
+
+      Swal.close();
+      await Swal.fire({
+        title: "Deleted",
+        text: "Category was permanently deleted.",
+        icon: "success",
+        timer: 1400,
+        showConfirmButton: false,
+      });
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    } catch (error: any) {
+      console.error("Hard delete failed", error);
+      Swal.close();
+      Swal.fire({
+        title: "Error",
+        text: error?.response?.data?.message || "Failed to delete category.",
+        icon: "error",
+      });
+    }
   };
 
   const columns: TableColumn<IProduct>[] = [
@@ -204,6 +288,20 @@ export default function ProductsDashboared() {
         loading={isLoading}
         onRowClicked={(row) => console.log("Clicked:", row)}
         pagination
+      />
+      <ProductModal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        product={selectedProduct}
+      />
+
+      <EditProductModal
+        isOpen={editOpen}
+        onClose={() => setEditOpen(false)}
+        product={selectedProduct}
+        onUpdated={() =>
+          queryClient.invalidateQueries({ queryKey: ["products"] })
+        }
       />
     </div>
   );
