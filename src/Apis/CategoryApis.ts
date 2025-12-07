@@ -47,7 +47,7 @@ export const getCategoryById = async (id: string): Promise<ICategory> => {
 };
 
 export const addCategory = async (formData: FormData): Promise<ICategory> => {
-  const { data } = await axios.post(`${BASE_URL}/addCategory`, formData, {
+  const { data } = await axios.post(`${BASE_URL}/`, formData, {
     headers: {
       authentication: `bearer ${token}`,
       "Content-Type": "multipart/form-data",
