@@ -1,21 +1,9 @@
-import React, { useState, useEffect } from "react";
-import type { IContact } from "../../../../Interfaces/IContact";
-
-interface ReplyModalProps {
-  isOpen: boolean;
-  contact: IContact | null;
-  onClose: () => void;
-  onSend: (id: string, message: string) => void;
-}
+import { useState} from "react";
+import type { ReplyModalProps } from "../../../../Interfaces/components/IReplaymodel";
 
 const ReplyModal = ({ isOpen, contact, onClose, onSend }: ReplyModalProps) => {
   const [replyMessage, setReplyMessage] = useState("");
 
-  useEffect(() => {
-    if (contact) {
-      setReplyMessage(contact.replyMessage || "");
-    }
-  }, [contact]);
 
   if (!isOpen || !contact) return null;
 

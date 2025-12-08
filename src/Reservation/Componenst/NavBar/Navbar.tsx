@@ -1,7 +1,7 @@
 import React from "react";
 import { FaBell, FaUserCircle, FaBars } from "react-icons/fa";
 import type { TokenPayload } from "../../../Interfaces/ITokenPayload";
-import jwtDecode  from "jwt-decode";
+import jwtDecode from "jwt-decode";
 
 interface NavbarProps {
   toggleSidebar: () => void;
