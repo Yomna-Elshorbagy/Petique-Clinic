@@ -59,7 +59,7 @@ export default function ReviewModal({onClose,onSubmit}:Props) {
                 {rateError && <p className="text-red-500 text-sm mb-2">{rateError}</p>}
               <label className="block font-semibold mb-2 text-gray-700">Comment</label>
               <textarea value={comment} onChange={(e) => {setComment(e.target.value);  if (e.target.value.trim()) setCommentError("")}}
-                className="w-full h-24 p-2 border rounded-lg resize-none focus:outline-none   focus:ring-2 focus:ring-orange-400 mb-4"
+                className="w-full h-24 p-2 border rounded-lg resize-none focus:outline-none  focus:ring-0 border-orange-400 mb-4"
                 placeholder="Write your review here..."
               />
                  {commentError && <p className="text-red-500 text-sm mb-2">{commentError}</p>}
