@@ -46,11 +46,12 @@ export const replyToContact = async (
 ): Promise<IReplyContact> => {
   const { data } = await axios.post(
     `${BASE_URL}/reply/${id}`,
-    { replyMessage },
+    { replyMessage},
     { headers }
   );
   return data.data;
 };
+
 export const updateContact = async (
   id: string,
   updateData: Partial<IContact>

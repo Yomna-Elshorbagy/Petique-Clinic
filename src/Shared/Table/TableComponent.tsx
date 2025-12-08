@@ -14,7 +14,7 @@ function DataTableComponent<T>({
     <div
       style={{
         width: "100%",
-        maxWidth: "1220px",
+        maxWidth: "1400px",
         overflowX: "auto",
       }}
     >
