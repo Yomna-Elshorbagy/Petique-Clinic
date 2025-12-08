@@ -12,10 +12,8 @@ import Register from "./Pages/Register/Register";
 import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
 import OtpConfirmation from "./Pages/Otp/OtpConfirmation";
 import ContactUs from "./Pages/ContactUs/ContactUs";
-import Reservation from "./Pages/Reservation/reservation";
 import Services from "./Pages/Services/services";
 import Servicesdetails from "./Pages/Servicedetails/servicedetails";
-import Blog from "./Pages/Blog/Blog";
 
 import Checkout from "./Pages/Checkout/Checkout";
 import DashboardEcoLayout from "./Dashboard/DashboardEcoLayout";
@@ -40,6 +38,8 @@ import Users from "./Dashboard/Pages/Users/Users";
 import Reports from "./Dashboard/Pages/Reports/Reports";
 import Emails from "./Dashboard/Pages/Emails/Emails";
 import OrderDetails from "./Pages/OrderDetails/OrderDetails";
+import Reservation from "./Pages/reservation/reservation";
+import Blog from "./Pages/blog/blog";
 
 const router = createBrowserRouter([
   {
