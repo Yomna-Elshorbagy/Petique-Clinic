@@ -10,6 +10,18 @@
   focus:ring-2 focus:ring-[#C58D52] focus:border-[#C58D52]
   outline-none transition;
 }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { transform: translateY(40px) scale(0.96); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.35s ease-out;
+}
 
 :root {
   --color-light-primary: #e8d8c4;
@@ -18,6 +30,12 @@
   --color-light-background: #faf7f2;
   --color-light-textSecondary: #7a7067;
   --color-light-accent: #e9a66f;
+
+  --color-extra-1: #f9be91;
+  --color-extra-2: #a98770;
+  --color-extra-3: #ece7e2;
+  --color-extra-4: #86654f;
+  --color-extra-5: #f9ebe0;
 }
 
 .dark {
@@ -27,8 +45,13 @@
   --color-dark-text: #f7f4ef;
   --color-dark-textSecondary: #c6bcb3;
   --color-dark-accent: #e9a66f;
-}
 
+  --color-dark-extra-1: #f9be91;
+  --color-dark-extra-2: #a98770;
+  --color-dark-extra-3: #ece7e2;
+  --color-dark-extra-4: #86654f;
+  --color-dark-extra-5: #f9ebe0;
+}
 
 @keyframes fadeIn {
   from {

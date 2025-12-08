@@ -62,3 +62,9 @@ export const getUserPets = async () => {
   const { data } = await axios.get(`${BASE_URL}/userPet`, { headers });
   return data.data;
 };
+
+//==> count pets in each category
+export const getCountCategoryPet = async () => {
+  const { data } = await axios.get(`${BASE_URL}/count-cat`, { headers });
+  return data.data;
+};

@@ -4,22 +4,33 @@ export interface IProduct {
   title: string;
   description: string;
 
-  imageCover: any;
+  imageCover: {
+    secure_url: string;
+    public_id: string;
+  };
   subImages: any[];
 
   price: number;
   discount?: number;
 
   stock: number;
- 
-  category: string | {
+  status: string;
+
+  category: {
     _id: string;
     name: string;
-    image?: string;
+    image?: {
+      secure_url: string;
+      public_id: string;
+    };
     createdBy?: string;
     id?: string;
   };
-  createdBy: string;
+  createdBy: {
+    userName: string;
+    mobileNumber: string;
+    address: string;
+  };
   updatedBy: string;
 
   rate: number;
@@ -34,4 +45,21 @@ export interface IProduct {
 
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IProductStats {
+  totalProducts: number;
+  lowStockProducts: number;
+  trendingProducts: IProduct[];
+  [key: string]: any;
+}
+
+export interface IUseProducts {
+  products: IProduct[];
+  page: number;
+  pagesCount: number;
+  loading: boolean;
+  error: unknown;
+  setPage: (page: number) => void;
+  refetch: () => void;
 }

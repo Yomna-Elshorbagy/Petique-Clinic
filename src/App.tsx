@@ -12,11 +12,15 @@ import Register from "./Pages/Register/Register";
 import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
 import OtpConfirmation from "./Pages/Otp/OtpConfirmation";
 import ContactUs from "./Pages/ContactUs/ContactUs";
+import Reservation from "./Pages/reservation/reservation";
+import Services from "./Pages/Services/services";
+import Servicesdetails from "./Pages/Servicedetails/servicedetails";
+
 import Checkout from "./Pages/Checkout/Checkout";
 import DashboardEcoLayout from "./Dashboard/DashboardEcoLayout";
 import DashboardEcoHome from "./Dashboard/Pages/Home/DashboardEcoHome";
 import Products from "./Pages/Products/Products";
-//import ProductDetails from "./Pages/ProductDetails/ProductDetails";
+import ProductDetails from "./Pages/ProductDetails/ProductDetails";
 import DashboardHome from "./Reservation/Pages/DashboardHome/DashboardHome";
 import DashboardLayout from "./Reservation/DashboardLayout";
 import Cart from "./Pages/Cart/Cart";
@@ -28,9 +32,12 @@ import Vaccinations from "./Reservation/Pages/Vaccination/Vaccinations";
 import ProductsDashboared from './Dashboard/Pages/Products/Products';
 import Orders from "./Dashboard/Pages/Orders/Orders";
 import Coupons from "./Dashboard/Pages/Coupons/Coupons";
-import Categories from "./Dashboard/Pages/Categories/Categories";
 import MedicalHistory from "./Reservation/Pages/MedicalHistory/MedicalHistory";
 import Reservationpet from './Reservation/Pages/ResevationPet/Reservationpet';
+import CategoriesDashboared from "./Dashboard/Pages/Categories/Categories";
+import Users from "./Dashboard/Pages/Users/Users";
+import Reports from "./Dashboard/Pages/Reports/Reports";
+import Emails from "./Dashboard/Pages/Emails/Emails";
 import OrderDetails from "./Pages/OrderDetails/OrderDetails";
 
 const router = createBrowserRouter([
@@ -41,10 +48,15 @@ const router = createBrowserRouter([
       { path: "", element: <Home /> },
       { path: "home", element: <Home /> },
       { path: "contact", element: <ContactUs /> },
+      { path: "reservation", element: <Reservation/> },
+      { path: "service", element: <Services/> },
+      { path: "service/:id", element: <Servicesdetails/> },
+
+
       { path: "checkout", element: <Checkout /> },
       { path: "products", element: <Products /> },
       { path: "cart", element: <Cart /> },
-      // { path: "product-details/:id", element: <ProductDetails /> },
+      { path: "product-details/:id", element: <ProductDetails /> },
       {path:"orderdetails", element:<OrderDetails />},
       { path: "clinicReviews", element: <ClinicReviews /> },
     ],
@@ -57,6 +69,7 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "forgetPass", element: <ForgetPassword /> },
       { path: "otp", element: <OtpConfirmation /> },
+
     ],
   },
   {
@@ -64,10 +77,13 @@ const router = createBrowserRouter([
     element: <DashboardEcoLayout />,
     children: [
       { path: "", element: <DashboardEcoHome /> },
-      { path: "products", element: <ProductsDashboared /> },
       { path: "orders", element: <Orders /> },
+      { path: "Categories", element: <CategoriesDashboared /> },
+      { path: "products", element: <ProductsDashboared /> },
       { path: "coupons", element: <Coupons /> },
-      { path: "categories", element: <Categories /> },
+      { path: "users", element: <Users /> },
+      { path: "emails", element: <Emails /> },
+      { path: "reports", element: <Reports /> },
     ],
   },
   {
