@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getAllReservations } from "../../Apis/Reservation";
+import { getAllReservations } from "../../Apis/ReservationApis";
 
 export const useReservationsNotifications = () => {
   const [reservations, setReservations] = useState<any[]>([]);
