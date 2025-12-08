@@ -2,6 +2,7 @@ import React from "react";
 import { FaBell, FaUserCircle, FaBars } from "react-icons/fa";
 import type { TokenPayload } from "../../../Interfaces/ITokenPayload";
 import { jwtDecode } from "jwt-decode";
+import ReservationNotificationBell from "../NotificationsDoctor/ReservationNotificationBell";
 
 interface NavbarProps {
   toggleSidebar: () => void;
@@ -35,11 +36,8 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
         <FaBars size={24} />
       </button>
 
-      <div className="flex items-center gap-6 text-[#86654F] ml-auto">
-        <div className="relative cursor-pointer hover:text-[#A98770] transition-colors">
-          <FaBell size={22} />
-          <span className="absolute top-0 right-0 w-2 h-2 bg-[#A98770] rounded-full border border-[#ECE7E2]"></span>
-        </div>
+      <div className="flex items-center gap-6 text-[#86654F]  ml-auto">
+          <ReservationNotificationBell />
 
         <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition pl-6 border-l border-[#A98770]/20">
           <div className="text-right hidden sm:block">

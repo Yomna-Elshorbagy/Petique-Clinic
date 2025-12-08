@@ -149,4 +149,4 @@ const OrderNotificationBell: React.FC = () => {
   );
 };
 
-export default React.memo(OrderNotificationBell);
+export default OrderNotificationBell;
