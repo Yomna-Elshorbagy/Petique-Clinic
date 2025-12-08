@@ -18,7 +18,25 @@
   from { transform: translateY(40px) scale(0.96); opacity: 0; }
   to   { transform: translateY(0) scale(1); opacity: 1; }
 }
-
+/* ========= Import & Export Buttons ========= */
+.action-btn {
+  @apply px-4 py-2 rounded-xl text-sm font-medium
+  transition-all duration-300 ease-out
+  shadow-sm hover:shadow-md 
+  flex items-center gap-2;
+}
+.btn-export {
+  @apply bg-[#C58D52] text-white 
+  hover:bg-[#b67e46] active:scale-[0.97];
+}
+.btn-import {
+  @apply bg-[#FCF9F4] text-[#4f3f36] border border-[#A98868]/50
+  hover:bg-[#f3ede6] active:scale-[0.97];
+}
+.animate-soft {
+  animation: fadeIn 0.25s ease-out, slideUp 0.35s ease-out;
+}
+/* /////////////////////////////////////////////// */
 .animate-slideUp {
   animation: slideUp 0.35s ease-out;
 }
