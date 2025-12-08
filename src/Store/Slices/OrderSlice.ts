@@ -40,14 +40,42 @@ export const getOrderById = createAsyncThunk(
     }
   }
 );
-//delete order by id
+//delete order by id "soft delete"
 export const deleteOrderById = createAsyncThunk(
   "order/deleteOrderById",
   async (id: string, thunkAPI) => {
     try {
       const token = localStorage.getItem("accessToken");
-      const res = await axios.delete(`http://localhost:3000/order/soft/${id}`, {
-        headers: { authentication: `bearer ${token}` },
+      const res = await axios.put(
+        `http://localhost:3000/order/soft/${id}`,
+        {},
+        {
+          headers: {
+            authentication: `bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return res.data;
+    } catch (err: any) {
+      console.log("deleted");
+
+      return thunkAPI.rejectWithValue(err.response?.data);
+    }
+  }
+);
+
+//delete order by id "hard delete"
+export const deleteOrderhard = createAsyncThunk(
+  "order/deleteOrderhard",
+  async (id: string, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const res = await axios.delete(`http://localhost:3000/order/hard/${id}`, {
+        headers: {
+          authentication: `bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
       return res.data;
     } catch (err: any) {
@@ -63,14 +91,57 @@ export const updateOrderStatus = createAsyncThunk(
   async ({ id, status }: { id: string; status: string }, thunkAPI) => {
     try {
       const token = localStorage.getItem("accessToken");
-      // Capitalize first letter of status
-      const capitalizedStatus =
-        status.charAt(0).toUpperCase() + status.slice(1);
-      const res = await axios.patch(
+
+      const res = await axios.put(
         `http://localhost:3000/order/status/${id}`,
-        { status: capitalizedStatus },
+        { status },
         {
-          headers: { authentication: `bearer ${token}` },
+          headers: {
+            authentication: `bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return res.data;
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue(err.response?.data);
+    }
+  }
+);
+
+//update order details
+export const updateOrderDetails = createAsyncThunk(
+  "order/updateOrderDetails",
+  async (
+    {
+      id,
+      fullName,
+      phone,
+      address,
+      status,
+      finalPrice,
+      notes,
+    }: {
+      id: string;
+      fullName: string;
+      phone: string;
+      address: string;
+      status: string;
+      finalPrice: number;
+      notes?: string;
+    },
+    thunkAPI
+  ) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const res = await axios.put(
+        `http://localhost:3000/order/${id}`,
+        { fullName, phone, address, status, finalPrice, notes },
+        {
+          headers: {
+            authentication: `bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
       return res.data;
@@ -124,7 +195,7 @@ const orderSlice = createSlice({
       state.loading = false;
     });
 
-    // Delete order
+    // Delete order soft
     builder.addCase(deleteOrderById.pending, (state) => {
       state.loading = true;
     });
@@ -132,6 +203,17 @@ const orderSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(deleteOrderById.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Delete order hard
+    builder.addCase(deleteOrderhard.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteOrderhard.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(deleteOrderhard.rejected, (state) => {
       state.loading = false;
     });
 
@@ -143,6 +225,17 @@ const orderSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(updateOrderStatus.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // Update order details
+    builder.addCase(updateOrderDetails.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateOrderDetails.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(updateOrderDetails.rejected, (state) => {
       state.loading = false;
     });
   },

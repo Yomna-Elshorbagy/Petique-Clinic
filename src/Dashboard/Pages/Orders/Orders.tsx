@@ -1,32 +1,80 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import TableComponent from "../../../Shared/Table/TableComponent";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../Store/store";
-import { useNavigate } from "react-router-dom";
 import {
   getAllOrders,
   deleteOrderById,
+  deleteOrderhard,
   updateOrderStatus,
 } from "../../../Store/Slices/OrderSlice";
 import Swal from "sweetalert2";
-import { FaEdit, FaTrash, FaEye } from "react-icons/fa";
+import {
+  FaEdit,
+  FaEye,
+  FaSearch,
+  FaUndo,
+  FaFilter,
+  FaTrash,
+} from "react-icons/fa";
+import OrderDetailsModal from "./OrderDetailsModal";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export default function Orders() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { orders, loading } = useSelector((state: RootState) => state.Order);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [dateFilter, setDateFilter] = useState("");
+  const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
   // Fetch orders on component mount
   useEffect(() => {
     dispatch(getAllOrders());
   }, [dispatch]);
 
+  // Filter orders based on search term, status, and date
+  const filteredOrders = useMemo(() => {
+    let filtered = orders;
+
+    // Search filter
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase();
+      filtered = filtered.filter(
+        (order: any) =>
+          order._id?.toLowerCase().includes(searchLower) ||
+          order.fullName?.toLowerCase().includes(searchLower) ||
+          order.phone?.toLowerCase().includes(searchLower) ||
+          order.address?.toLowerCase().includes(searchLower) ||
+          order.status?.toLowerCase().includes(searchLower) ||
+          order.payment?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Status filter
+    if (statusFilter) {
+      filtered = filtered.filter((order: any) => order.status === statusFilter);
+    }
+
+    // Date filter
+    if (dateFilter) {
+      filtered = filtered.filter((order: any) => {
+        const orderDate = new Date(order.createdAt).toLocaleDateString();
+        const filterDate = new Date(dateFilter).toLocaleDateString();
+        return orderDate === filterDate;
+      });
+    }
+
+    return filtered;
+  }, [orders, searchTerm, statusFilter, dateFilter]);
+
   const handleViewOrder = (orderId: string) => {
     const order = orders.find((o: any) => o._id === orderId);
     if (order) {
-      navigate(`/orderdetails`, { state: { order: { data: order } } });
+      setSelectedOrder(order);
+      setIsDetailsModalOpen(true);
     }
   };
 
@@ -35,12 +83,11 @@ export default function Orders() {
       title: "Update Order Status",
       input: "select",
       inputOptions: {
-        Placed: "Placed",
-        Shipped: "Shipped",
-        Delivered: "Delivered",
-        Pending: "Pending",
-        Processing: "Processing",
-        Cancelled: "Cancelled",
+        placed: "placed",
+        shipping: "shipping",
+        completed: "completed",
+        canceled: "canceled",
+        refund: "refund",
       },
       inputPlaceholder: "Select a status",
       showCancelButton: true,
@@ -87,13 +134,13 @@ export default function Orders() {
 
   const handleDeleteOrder = async (orderId: string) => {
     const result = await Swal.fire({
-      title: "Delete Order?",
-      text: "Are you sure you want to delete this order? This action cannot be undone.",
+      title: "Archive Order?",
+      text: "This order will be archived (soft deleted). You can restore it later.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d69560",
       cancelButtonColor: "#6b7280",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, archive it!",
       cancelButtonText: "Cancel",
     });
 
@@ -103,8 +150,52 @@ export default function Orders() {
         if (deleteOrderById.fulfilled.match(resultAction)) {
           Swal.fire({
             icon: "success",
+            title: "Archived!",
+            text: "Order has been archived successfully.",
+            timer: 2000,
+            timerProgressBar: true,
+          });
+          dispatch(getAllOrders());
+        } else {
+          const errorPayload = resultAction.payload as any;
+          const errorMessage =
+            errorPayload?.message || errorPayload?.error || "Archive failed";
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: errorMessage,
+          });
+        }
+      } catch (error: any) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: error.message || "Failed to archive order",
+        });
+      }
+    }
+  };
+
+  const handleHardDelete = async (orderId: string) => {
+    const result = await Swal.fire({
+      title: "Permanently Delete Order?",
+      text: "This action cannot be undone! The order will be permanently deleted.",
+      icon: "error",
+      showCancelButton: true,
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, delete permanently!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const resultAction = await dispatch(deleteOrderhard(orderId));
+        if (deleteOrderhard.fulfilled.match(resultAction)) {
+          Swal.fire({
+            icon: "success",
             title: "Deleted!",
-            text: "Order has been deleted successfully.",
+            text: "Order has been permanently deleted.",
             timer: 2000,
             timerProgressBar: true,
           });
@@ -132,7 +223,7 @@ export default function Orders() {
   const columns = [
     {
       name: "Order ID",
-      selector: (row: any) => row._id?.slice(-6) || "N/A",
+      selector: (row: any) => `#${row._id?.slice(-6) || "N/A"}`,
       sortable: true,
       width: "120px",
     },
@@ -165,20 +256,35 @@ export default function Orders() {
     },
     {
       name: "Status",
-      selector: (row: any) => (
-        <span
-          className={`px-3 py-1 rounded-full text-xs font-bold ${
-            row.status === "delivered"
-              ? "bg-green-100 text-green-800"
-              : row.status === "shipped"
-              ? "bg-blue-100 text-blue-800"
-              : "bg-yellow-100 text-yellow-800"
-          }`}
-        >
-          {row.status?.charAt(0).toUpperCase() +
-            row.status?.slice(1).toLowerCase()}
-        </span>
-      ),
+      selector: (row: any) => {
+        const getStatusColor = (status: string) => {
+          switch (status?.toLowerCase()) {
+            case "completed":
+              return "bg-green-100 text-green-800";
+            case "shipping":
+              return "bg-blue-100 text-blue-800";
+            case "placed":
+              return "bg-yellow-100 text-yellow-800";
+            case "canceled":
+              return "bg-red-100 text-red-800";
+            case "refund":
+              return "bg-purple-100 text-purple-800";
+            default:
+              return "bg-gray-100 text-gray-800";
+          }
+        };
+
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-xs font-bold ${getStatusColor(
+              row.status
+            )}`}
+          >
+            {row.status?.charAt(0).toUpperCase() +
+              row.status?.slice(1).toLowerCase()}
+          </span>
+        );
+      },
       width: "120px",
     },
     {
@@ -207,14 +313,21 @@ export default function Orders() {
           </button>
           <button
             onClick={() => handleDeleteOrder(row._id)}
+            className="p-2 rounded-lg bg-orange-100 text-orange-600 hover:bg-orange-200 transition-colors"
+            title="Archive"
+          >
+            <FaUndo size={16} />
+          </button>
+          <button
+            onClick={() => handleHardDelete(row._id)}
             className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
-            title="Delete"
+            title="Delete Permanently"
           >
             <FaTrash size={16} />
           </button>
         </div>
       ),
-      width: "150px",
+      width: "180px",
     },
   ];
 
@@ -225,7 +338,94 @@ export default function Orders() {
           Orders Management
         </h1>
       </div>
-      <TableComponent columns={columns} data={orders} loading={loading} />
+
+      {/* Search Filter */}
+      <div className="mb-4">
+        <div className="flex gap-4 flex-wrap items-center">
+          {/* Search Input */}
+          <div className="relative flex-1 min-w-[250px]">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaSearch className="text-gray-400" size={18} />
+            </div>
+            <input
+              type="text"
+              placeholder="Search "
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent outline-none transition-all"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Status Filter */}
+          <div className="relative min-w-[200px]">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaFilter className="text-gray-400" size={14} />
+            </div>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent outline-none transition-all appearance-none bg-white cursor-pointer"
+            >
+              <option value="">All Status</option>
+              <option value="placed">Placed</option>
+              <option value="shipping">Shipping</option>
+              <option value="completed">Completed</option>
+              <option value="canceled">Canceled</option>
+              <option value="refund">Refund</option>
+            </select>
+          </div>
+
+          {/* Date Filter */}
+          <div className="relative min-w-[200px]">
+            <input
+              type="date"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent outline-none transition-all cursor-pointer"
+            />
+            {dateFilter && (
+              <button
+                onClick={() => setDateFilter("")}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Results Counter */}
+        {(searchTerm || statusFilter || dateFilter) && (
+          <p className="mt-2 text-sm text-gray-600">
+            Found {filteredOrders.length} order
+            {filteredOrders.length !== 1 ? "s" : ""}
+          </p>
+        )}
+      </div>
+
+      <TableComponent
+        columns={columns}
+        data={filteredOrders}
+        loading={loading}
+      />
+
+      {/* Order Details Modal */}
+      <OrderDetailsModal
+        isOpen={isDetailsModalOpen}
+        onClose={() => {
+          setIsDetailsModalOpen(false);
+          setSelectedOrder(null);
+        }}
+        order={selectedOrder}
+      />
     </>
   );
 }
