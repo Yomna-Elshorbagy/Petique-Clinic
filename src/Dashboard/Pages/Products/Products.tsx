@@ -9,16 +9,18 @@ import {
 import type { IProduct } from "../../../Interfaces/IProducts";
 import DataTableComponent from "../../../Shared/Table/TableComponent";
 import toast from "react-hot-toast";
-import { FaEdit, FaEye, FaTrash, FaUndo } from "react-icons/fa";
+import { FaEdit, FaEye, FaPlusCircle, FaTrash, FaUndo } from "react-icons/fa";
 import Swal from "sweetalert2";
 import ProductModal from "./Components/viewProductModle";
 import EditProductModal from "./Components/EditProductModel";
+import AddProductModal from "./Components/AddProductModel";
 
 export default function ProductsDashboared() {
   const [openModal, setOpenModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
   const [editOpen, setEditOpen] = useState(false);
   const queryClient = useQueryClient();
+  const [addOpen, setAddOpen] = useState(false);
 
   // ===> fetch products
   const { data, isLoading } = useQuery({
@@ -279,10 +281,25 @@ export default function ProductsDashboared() {
 
   return (
     <div>
-      <h2>Products</h2>
-
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() => setAddOpen(true)}
+          className="
+      flex items-center gap-2 px-4 py-2 
+      bg-[var(--color-extra-1)] 
+      text-[var(--color-light-dark)]
+      font-semibold rounded-xl shadow-md
+      hover:bg-[var(--color-light-accent)]
+      transition-all duration-300 
+      hover:scale-105 active:scale-95
+      animate-fadeIn
+    "
+        >
+          <FaPlusCircle /> Add Product
+        </button>
+      </div>{" "}
       <DataTableComponent<IProduct>
-        title="Products List"
+        // title="Products List"
         columns={columns}
         data={tableData}
         loading={isLoading}
@@ -294,7 +311,6 @@ export default function ProductsDashboared() {
         onClose={() => setOpenModal(false)}
         product={selectedProduct}
       />
-
       <EditProductModal
         isOpen={editOpen}
         onClose={() => setEditOpen(false)}
@@ -302,6 +318,13 @@ export default function ProductsDashboared() {
         onUpdated={() =>
           queryClient.invalidateQueries({ queryKey: ["products"] })
         }
+      />
+      <AddProductModal
+        open={addOpen}
+        onClose={() => setAddOpen(false)}
+        onProductAdded={() => {
+          queryClient.invalidateQueries({ queryKey: ["products"] });
+        }}
       />
     </div>
   );
