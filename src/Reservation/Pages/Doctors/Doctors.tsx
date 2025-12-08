@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import {
   getAllDoctors,
   softDeleteDoctor,
-  deleteDoctor
+  deleteDoctor,
 } from "../../../Apis/DoctoresApis";
 import AddDoctorModal from "./Components/AddDoctorModal";
 import DoctorCard from "./Components/DoctorCard";
@@ -34,6 +34,7 @@ export default function Doctors() {
   useEffect(() => {
     fetchDoctors();
   }, []);
+
 
   const handleSoftDelete = async (id: string) => {
     try {
@@ -178,9 +179,17 @@ export default function Doctors() {
       </div>
 
       {loading ? (
-        <div className="text-center py-20 text-[#86654F]">Loading doctors...</div>
+        <div className="text-center py-20 text-[#86654F]">
+          Loading doctors...
+        </div>
       ) : (
-        <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" : "flex flex-col gap-4"}>
+        <div
+          className={
+            viewMode === "grid"
+              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              : "flex flex-col gap-4"
+          }
+        >
           {filtered.map((doctor) => (
             <DoctorCard
               key={doctor._id}
@@ -188,7 +197,9 @@ export default function Doctors() {
               view={viewMode}
               onSoftDelete={handleSoftDelete}
               onHardDelete={handleHardDelete}
+              onUpdate={fetchDoctors}
             />
+
           ))}
         </div>
       )}
