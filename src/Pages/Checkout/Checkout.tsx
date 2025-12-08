@@ -1,5 +1,4 @@
 import React from "react";
-import { FaPaw, FaShieldAlt } from "react-icons/fa";
 import CheckoutTracker from "./components/CheckoutTracker";
 import CheckoutForm from "./components/CheckoutForm";
 import OrderSummary from "./components/OrderSummary";
