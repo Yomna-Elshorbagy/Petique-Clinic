@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseURL } from "./BaseUrl";
+import type { IVaccination } from "../Interfaces/IVacination";
 
 const VACCINATION_BASE_URL = `${baseURL}/vaccine`;
 const token = localStorage.getItem("accessToken");
@@ -7,18 +8,6 @@ const token = localStorage.getItem("accessToken");
 const headers = {
   authentication: `bearer ${token}`,
 };
-
-export interface IVaccination {
-  _id: string;
-  name: string;
-  description?: string;
-  doses?: number;
-  categories?: string[];
-  createdBy?: { userName: string };
-  isDeleted?: boolean;
-  deletedAt?: string;
-  deletedBy?: string;
-}
 
 // ===> get all vaccines
 export const getVaccinations = async (): Promise<IVaccination[]> => {
