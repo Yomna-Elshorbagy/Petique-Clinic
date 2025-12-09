@@ -4,6 +4,7 @@ import type { TokenPayload } from "../../../Interfaces/ITokenPayload";
 import { jwtDecode } from "jwt-decode";
 import ReservationNotificationBell from "../NotificationsDoctor/ReservationNotificationBell";
 
+
 interface NavbarProps {
   toggleSidebar: () => void;
 }

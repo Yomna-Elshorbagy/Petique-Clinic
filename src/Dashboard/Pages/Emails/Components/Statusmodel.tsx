@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from "react";
-import type { IContact } from "../../../../Interfaces/IContact";
+import React, { useState } from "react";
+import type { EditModalProps } from "../../../../Interfaces/components/IStatusmodel";
 
-interface EditModalProps {
-  isOpen: boolean;
-  contact: IContact | null;
-  onClose: () => void;
-  onUpdateContact: (id: string, updatedData: any) => void;
-}
-
-const categories = ["appointment", "emergency", "health", "vaccination", "general"];
+const categories = [
+  "appointment",
+  "emergency",
+  "health",
+  "vaccination",
+  "general",
+];
 const statusOptions = ["replied", "inProgress", "pending"];
-const urgencyLevel = ['low', 'medium', 'high', 'emergency'];
+const urgencyLevel = ["low", "medium", "high", "emergency"];
 
-const EditModal: React.FC<EditModalProps> = ({ isOpen, contact, onClose, onUpdateContact }) => {
+const EditModal: React.FC<EditModalProps> = ({
+  isOpen,
+  contact,
+  onClose,
+  onUpdateContact,
+}) => {
   const [formData, setFormData] = useState({
     fullName: "",
     category: categories[0],
@@ -21,21 +25,11 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, contact, onClose, onUpdat
     urgency: urgencyLevel[0],
   });
 
-  useEffect(() => {
-    if (contact) {
-      setFormData({
-        fullName: contact.fullName || "",
-        category: contact.category || categories[0],
-        petAge: contact.petAge || "",
-        replyStatus: contact.replyStatus || statusOptions[0],
-        urgency: contact.urgency || urgencyLevel[0],
-      });
-    }
-  }, [contact]);
-
   if (!isOpen || !contact) return null;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     let value: string | number = e.target.value;
 
     if (e.target.name === "petAge") {
@@ -46,13 +40,19 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, contact, onClose, onUpdat
   };
 
   const isFormValid = () => {
-    return formData.fullName.trim() !== "" && formData.petAge.trim() !== "" && Number(formData.petAge) > 0;
+    return (
+      formData.fullName.trim() !== "" &&
+      formData.petAge.trim() !== "" &&
+      Number(formData.petAge) > 0
+    );
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="bg-amber-50 p-6 rounded-xl w-96 shadow-lg border border-amber-200">
-        <h2 className="text-2xl font-bold mb-4 text-[#86654f] text-center">Edit Contact</h2>
+        <h2 className="text-2xl font-bold mb-4 text-[#86654f] text-center">
+          Edit Contact
+        </h2>
 
         {/* Full Name */}
         <input
@@ -127,7 +127,9 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, contact, onClose, onUpdat
 
           <button
             className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-              isFormValid() ? "bg-[#c6bcb3] hover:bg-[#e9a66f] text-white" : "bg-orange-200 text-gray-400 cursor-not-allowed"
+              isFormValid()
+                ? "bg-[#c6bcb3] hover:bg-[#e9a66f] text-white"
+                : "bg-orange-200 text-gray-400 cursor-not-allowed"
             }`}
             onClick={() => {
               if (!isFormValid()) return;
