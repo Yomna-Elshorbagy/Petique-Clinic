@@ -14,6 +14,7 @@ import {
   getMostActiveDoctors,
   filterReservations,
   getReservationsByStatus,
+  getTodayReservations,
 } from "../../Apis/ReservationApis";
 
 // 1) get all reservations
@@ -132,5 +133,12 @@ export const useReservationsByStatus = (status: string) => {
     queryKey: ["reservations-status", status],
     queryFn: () => getReservationsByStatus(status),
     enabled: !!status,
+  });
+};
+// 14) get today reservations
+export const useTodayReservations = () => {
+  return useQuery({
+    queryKey: ["todayReservations"],
+    queryFn: getTodayReservations,
   });
 };

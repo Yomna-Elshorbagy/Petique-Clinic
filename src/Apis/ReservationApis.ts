@@ -70,6 +70,12 @@ export const checkAvailableSlots = async (doctor: string, date: string) => {
   return data;
 };
 
+export const getTodayReservations = async () => {
+  const { data } = await axios.get(`${BASE_URL}/today`, {
+    headers,
+  });
+  return data.data; 
+};
 // ===> get doctor today reservations
 export const getDoctorTodayReservations = async () => {
   const { data } = await axios.get(`${BASE_URL}/doctor/reservations/today`, {
