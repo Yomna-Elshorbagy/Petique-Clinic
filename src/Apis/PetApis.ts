@@ -1,5 +1,4 @@
 import axios from "axios";
-import Swal from "sweetalert2";
 import { baseURL } from "./BaseUrl";
 
 const BASE_URL = `${baseURL}/pet`;
@@ -63,8 +62,34 @@ export const getUserPets = async () => {
   return data.data;
 };
 
-//==> count pets in each category
+//===> count pets in each category
 export const getCountCategoryPet = async () => {
   const { data } = await axios.get(`${BASE_URL}/count-cat`, { headers });
   return data.data;
+};
+
+export const addVaccinationToPet = async (id: string, data: any) => {
+  const token = localStorage.getItem("accessToken");
+  const res = await axios.post(`${baseURL}/pet/${id}/vaccination`, data, {
+    headers: { authentication: `bearer ${token}` },
+  });
+  return res.data;
+};
+
+// ===> get all vaccination records for all pets
+export const getVaccinationRecords = async () => {
+  const token = localStorage.getItem("accessToken");
+  const res = await axios.get(`${baseURL}/pet/pet-vaccine`, {
+    headers: { authentication: `bearer ${token}` },
+  });
+  return res.data.data;
+};
+
+// ===> get all vaccination records for a specific pet
+export const getPetVaccinations = async (id: string) => {
+  const token = localStorage.getItem("accessToken");
+  const res = await axios.get(`${baseURL}/pet/${id}/specific-vaccines`, {
+    headers: { authentication: `bearer ${token}` },
+  });
+  return res.data;
 };

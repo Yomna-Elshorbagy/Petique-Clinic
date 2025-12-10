@@ -8,6 +8,9 @@ import {
   getPetById,
   getUserPets,
   getCountCategoryPet,
+  getPetVaccinations,
+  getVaccinationRecords,
+  addVaccinationToPet,
 } from "../../Apis/PetApis";
 
 export const useAllPets = () => {
@@ -94,5 +97,34 @@ export const useDeletePet = () => {
       queryClient.invalidateQueries({ queryKey: ["userPets"] });
       queryClient.invalidateQueries({ queryKey: ["countCategoryPet"] });
     },
+  });
+};
+
+export const useAddVaccinationToPet = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: any }) =>
+      addVaccinationToPet(id, data),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["pet"] });
+      queryClient.invalidateQueries({ queryKey: ["vaccinationRecords"] });
+    },
+  });
+};
+
+export const useVaccinationRecords = () => {
+  return useQuery({
+    queryKey: ["vaccinationRecords"],
+    queryFn: getVaccinationRecords,
+  });
+};
+
+export const usePetVaccinations = (id: string) => {
+  return useQuery({
+    queryKey: ["petVaccinations", id],
+    queryFn: () => getPetVaccinations(id),
+    enabled: !!id,
   });
 };
