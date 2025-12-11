@@ -10,8 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@hookform/resolvers": "^5.2.2",
+    "@mui/icons-material": "^7.3.6",
+    "@mui/material": "^7.3.6",
+    "@mui/styled-engine-sc": "^7.3.6",
     "@react-oauth/google": "^0.12.2",
     "@reduxjs/toolkit": "^2.11.0",
     "@tailwindcss/vite": "^4.1.17",
@@ -41,6 +46,7 @@
     "react-spinners": "^0.17.0",
     "react-toastify": "^11.0.5",
     "slick-carousel": "^1.8.1",
+    "styled-components": "^6.1.19",
     "sweetalert2": "^11.26.3",
     "swiper": "^12.0.3",
     "tailwindcss": "^4.1.17",
