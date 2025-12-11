@@ -46,6 +46,11 @@ const Sidebar: React.FC<SidebarProps> = ({
     },
     {
       icon: <FaClipboardList />,
+      label: "Services",
+      to: "/resDashboard/service",
+    },
+     {
+      icon: <FaClipboardList />,
       label: "Medical History",
       to: "/resDashboard/medical",
     },
