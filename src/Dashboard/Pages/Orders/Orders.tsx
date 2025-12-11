@@ -16,6 +16,7 @@ import {
   FaUndo,
   FaFilter,
   FaTrash,
+  FaSync,
 } from "react-icons/fa";
 import OrderDetailsModal from "./OrderDetailsModal";
 
@@ -30,10 +31,26 @@ export default function Orders() {
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
-  // Fetch orders on component mount
+  // Fetch orders on component mount and set up auto-refresh
   useEffect(() => {
+    console.log(" Fetching orders on mount...");
     dispatch(getAllOrders());
+
+    // Auto-refresh orders every 10 seconds to catch new orders from mobile app
+    const intervalId = setInterval(() => {
+      console.log(" Auto-refreshing orders...");
+      dispatch(getAllOrders());
+    }, 10000000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
   }, [dispatch]);
+
+  // Debug: Log orders whenever they change
+  useEffect(() => {
+    console.log("Orders in Redux state:", orders);
+    console.log("Total orders count:", orders.length);
+  }, [orders]);
 
   // Filter orders based on search term, status, and date
   const filteredOrders = useMemo(() => {
@@ -66,6 +83,16 @@ export default function Orders() {
         return orderDate === filterDate;
       });
     }
+
+    console.log(" Filtered orders count:", filtered.length);
+    console.log(
+      " Filters active - Search:",
+      searchTerm,
+      "Status:",
+      statusFilter,
+      "Date:",
+      dateFilter
+    );
 
     return filtered;
   }, [orders, searchTerm, statusFilter, dateFilter]);
@@ -333,10 +360,19 @@ export default function Orders() {
 
   return (
     <>
-      <div className="mb-6">
+      <div className="mb-6 flex justify-between items-center">
         <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
           Orders Management
         </h1>
+        <button
+          onClick={() => dispatch(getAllOrders())}
+          disabled={loading}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--color-extra-1)] text-[var(--color-light-dark)] hover:bg-[var(--color-light-accent)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+          title="Refresh Orders"
+        >
+          <FaSync className={loading ? "animate-spin" : ""} size={16} />
+          Refresh
+        </button>
       </div>
 
       {/* Search Filter */}
