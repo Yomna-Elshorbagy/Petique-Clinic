@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getAllReservations,
   getReservationById,
@@ -14,6 +14,7 @@ import {
   getMostActiveDoctors,
   filterReservations,
   getReservationsByStatus,
+  getTodayReservations,
 } from "../../Apis/ReservationApis";
 
 // 1) get all reservations
@@ -134,3 +135,11 @@ export const useReservationsByStatus = (status: string) => {
     enabled: !!status,
   });
 };
+// 14) get today reservations
+export const useTodayReservations = () => {
+  return useQuery({
+    queryKey: ["todayReservations"],
+    queryFn: getTodayReservations,
+  });
+};
+

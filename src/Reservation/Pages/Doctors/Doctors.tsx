@@ -10,6 +10,8 @@ import AddDoctorModal from "./Components/AddDoctorModal";
 import DoctorCard from "./Components/DoctorCard";
 import { useDoctorSearch } from "./Hook/UseDoctorSearch";
 import type { IUser } from "../../../Interfaces/IUser";
+import { useLocalPagination } from "../../Componenst/Pagination/UsePagination";
+import Pagination from "../../Componenst/Pagination/Pagination";
 
 export default function Doctors() {
   const [doctors, setDoctors] = useState<IUser[]>([]);
@@ -18,6 +20,11 @@ export default function Doctors() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { search, setSearch, filtered } = useDoctorSearch(doctors);
+
+  const { page, totalPages, paginatedItems, goToPage } = useLocalPagination(
+    filtered,
+    8
+  );
 
   const fetchDoctors = async () => {
     try {
@@ -34,7 +41,6 @@ export default function Doctors() {
   useEffect(() => {
     fetchDoctors();
   }, []);
-
 
   const handleSoftDelete = async (id: string) => {
     try {
@@ -159,19 +165,21 @@ export default function Doctors() {
         <div className="flex bg-[#FCF9F4] p-1 rounded-xl shadow-sm">
           <button
             onClick={() => setViewMode("grid")}
-            className={`p-2 rounded-lg transition-all ${viewMode === "grid"
+            className={`p-2 rounded-lg transition-all ${
+              viewMode === "grid"
                 ? "bg-[#86654F] text-white shadow-sm"
                 : "text-[#A98770] hover:bg-[#ECE7E2]"
-              }`}
+            }`}
           >
             <FaThLarge size={18} />
           </button>
           <button
             onClick={() => setViewMode("list")}
-            className={`p-2 rounded-lg transition-all ${viewMode === "list"
+            className={`p-2 rounded-lg transition-all ${
+              viewMode === "list"
                 ? "bg-[#86654F] text-white shadow-sm"
                 : "text-[#A98770] hover:bg-[#ECE7E2]"
-              }`}
+            }`}
           >
             <FaList size={18} />
           </button>
@@ -190,7 +198,7 @@ export default function Doctors() {
               : "flex flex-col gap-4"
           }
         >
-          {filtered.map((doctor) => (
+          {paginatedItems.map((doctor) => (
             <DoctorCard
               key={doctor._id}
               doctor={doctor}
@@ -199,10 +207,10 @@ export default function Doctors() {
               onHardDelete={handleHardDelete}
               onUpdate={fetchDoctors}
             />
-
           ))}
         </div>
       )}
+      <Pagination page={page} totalPages={totalPages} onPageChange={goToPage} />
     </div>
   );
 }

@@ -1,7 +1,12 @@
-import React from 'react'
+import React from "react";
+import OverviewStats from "./Components/OverviewStats";
 
 export default function DashboardHome() {
   return (
-    <div>DashboardHome</div>
-  )
+    <>
+      <div className="p-6">
+        <OverviewStats />
+      </div>{" "}
+    </>
+  );
 }
