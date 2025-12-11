@@ -14,11 +14,22 @@ export const getAllOrders = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const token = localStorage.getItem("accessToken");
-      const res = await axios.get("http://localhost:3000/order", {
+      console.log("Token:", token ? "Found" : "Missing");
+      console.log(" Fetching orders from: http://localhost:3000/order");
+
+      const res = await axios.get("http://localhost:3000/order/allorders", {
         headers: { authentication: `bearer ${token}` },
       });
+
+      console.log(" API Response:", res.data);
+      console.log(
+        " Orders count:",
+        res.data?.data?.length || res.data?.length || 0
+      );
+
       return res.data;
     } catch (err: any) {
+      console.error("API Error:", err.response?.data || err.message);
       return thunkAPI.rejectWithValue(err.response?.data);
     }
   }
@@ -178,6 +189,7 @@ const orderSlice = createSlice({
     });
     builder.addCase(getAllOrders.fulfilled, (state, action) => {
       state.loading = false;
+      console.log("Orders API Response:", action.payload);
       state.orders = action.payload.data || action.payload;
     });
     builder.addCase(getAllOrders.rejected, (state) => {
