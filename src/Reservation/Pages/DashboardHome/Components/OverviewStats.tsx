@@ -41,7 +41,10 @@ const StatCard: React.FC<StatCardProps> = ({
     >
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-medium text-gray-700">{title}</h3>
-        <div className="p-3 rounded-xl text-white" style={{ background: iconBg }}>
+        <div
+          className="p-3 rounded-xl text-white"
+          style={{ background: iconBg }}
+        >
           {icon}
         </div>
       </div>
@@ -82,7 +85,8 @@ const OverviewStats: React.FC = () => {
   const { data: doctorsData, isLoading: loadingDoctors } = useAllDoctors();
   const { data: petsData, isLoading: loadingPets } = useAllPets();
   const { data: vaccinesData, isLoading: loadingVaccines } = useVaccinations();
-  const { data: todayReservations, isLoading: loadingToday } = useTodayReservations();
+  const { data: todayReservations, isLoading: loadingToday } =
+    useTodayReservations();
 
   const doctorsCount = doctorsData?.length ?? 0;
   const petsCount = petsData?.length ?? 0;

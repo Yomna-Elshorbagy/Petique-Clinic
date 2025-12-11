@@ -30,7 +30,10 @@ export const softDeleteReservation = async (id: string) => {
     `${BASE_URL}/soft/${id}`,
     {},
     {
-      headers,
+      headers: {
+        authentication: `bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     }
   );
   return data.data;

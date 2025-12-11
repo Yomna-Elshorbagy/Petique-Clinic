@@ -7,26 +7,28 @@ export const useSoftDeleteReservation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => softDeleteReservation(id),
+    mutationFn: async ({ id }: { id: string }) =>
+      softDeleteReservation(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todayReservations"] });
-    }
+    },
   });
 };
+
 
 // 16) hard delete
 export const useHardDeleteReservation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => deleteReservation(id),
+    mutationFn: async ({ id }: { id: string }) =>
+      deleteReservation(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todayReservations"] });
-    }
+    },
   });
 };
 
-// 17) update reservation
 // 17) update reservation
 export const useUpdateReservation = () => {
   const queryClient = useQueryClient();
