@@ -6,6 +6,7 @@ interface Props {
   index: number;
   onSoftDelete: (id: string) => void;
   onHardDelete: (id: string) => void;
+  onEdit: (category: any) => void;
 }
 
 export default function AnimalCategoryCard({
@@ -13,6 +14,7 @@ export default function AnimalCategoryCard({
   index,
   onSoftDelete,
   onHardDelete,
+  onEdit,
 }: Props) {
   const getIcon = (name: string) => {
     const lower = name.toLowerCase();
@@ -43,6 +45,28 @@ export default function AnimalCategoryCard({
     >
       {/* ===> here hover buttons */}
       <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+        {/* ===> Edit button */}
+        <button
+          onClick={() => onEdit(category)}
+          className="p-2 bg-white/80 rounded-full text-blue-500 hover:bg-white hover:text-blue-600 transition-colors"
+          title="Edit Category"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M11 5h2M5 11h14M12 19l7-7-7-7"
+            />
+          </svg>
+        </button>
+
         {/* ===> here soft delete */}
         <button
           onClick={() => onSoftDelete(category._id)}

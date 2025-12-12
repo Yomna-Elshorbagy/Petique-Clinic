@@ -13,6 +13,7 @@ import CategoryOverview from "./Components/OverViewCat";
 import AnimalCategoryCard from "./Components/AnimalCategoryCard";
 import { useLocalPagination } from "../../Componenst/Pagination/UsePagination";
 import Pagination from "../../Componenst/Pagination/Pagination";
+import EditAnimalCategoryModal from "./Components/EditAnimalCategoryModal";
 
 export default function AnimalCategories() {
   const [categories, setCategories] = useState<IAnimalCategory[]>([]);
@@ -23,6 +24,8 @@ export default function AnimalCategories() {
   const [search, setSearch] = useState("");
   const [petCounts, setPetCounts] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<any | null>(null);
 
   const fetchCategories = async () => {
     try {
@@ -74,6 +77,11 @@ export default function AnimalCategories() {
     filteredCategories,
     6
   );
+
+  const handleEdit = (category: any) => {
+    setSelectedCategory(category);
+    setEditModalOpen(true);
+  };
 
   const handleSoftDelete = async (id: string) => {
     try {
@@ -211,9 +219,16 @@ export default function AnimalCategories() {
                 index={index}
                 onSoftDelete={handleSoftDelete}
                 onHardDelete={handleHardDelete}
+                onEdit={handleEdit}
               />
             ))}
           </div>
+          <EditAnimalCategoryModal
+            isOpen={editModalOpen}
+            onClose={() => setEditModalOpen(false)}
+            category={selectedCategory}
+            onSuccess={fetchCategories}
+          />
 
           <Pagination
             page={page}

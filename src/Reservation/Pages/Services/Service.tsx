@@ -11,11 +11,13 @@ import {
 import { useServiceSearch } from "./Hooks/useServiceSearch";
 import StatsCards from "./Components/StatesCard";
 import Pagination from "../../Componenst/Pagination/Pagination";
+import EditServiceModal from "./Components/EditServiceModal";
 
 export default function ServiceDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
   const [page, setPage] = useState(1);
+  const [editId, setEditId] = useState<string | null>(null);
 
   const { data, isLoading } = useServices();
   const services = data?.data || [];
@@ -154,11 +156,16 @@ export default function ServiceDashboard() {
               service={service}
               onSoftDelete={handleSoftDelete}
               onHardDelete={handleHardDelete}
+              onEdit={setEditId}
             />
           ))}
         </div>
       )}
-
+      <EditServiceModal
+        isOpen={!!editId}
+        onClose={() => setEditId(null)}
+        serviceId={editId}
+      />
       {/* ===> pagination */}
       {filteredServices.length > 0 && (
         <Pagination
