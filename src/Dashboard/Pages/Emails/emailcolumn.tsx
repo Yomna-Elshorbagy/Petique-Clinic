@@ -31,7 +31,7 @@ export const contactColumns = ({
     sortable: true,
     width: "160px",
   },
-  { name: "Email", selector: (row) => row.email, width: "150px" },
+  { name: "Email", selector: (row) => row.email },
   { name: "Category", selector: (row) => row.category },
   {
     name: "Urgency",

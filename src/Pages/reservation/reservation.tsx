@@ -12,13 +12,22 @@ import type { IPet } from "../../Interfaces/Ipet";
 import type { IService } from "../../Interfaces/IService";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/navigation";
 import { Autoplay } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import React from "react";
+
+type ReservationPayload = {
+  petOwner: string;
+  pet: string;
+  service: string;
+  doctor: string;
+  date: string;
+  timeSlot: string;
+  notes?: string;
+};
 
 export default function Reservation() {
-  const navigate = useNavigate();
-
   const [step, setStep] = useState<number>(1);
   const [pet, setPet] = useState<string>("");
   const [service, setService] = useState<string>("");
@@ -27,6 +36,7 @@ export default function Reservation() {
   const [timeSlot, setTimeSlot] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const token = localStorage.getItem("accessToken");
   let userId: string | null = null;
@@ -43,23 +53,26 @@ export default function Reservation() {
 
   console.log("User ID:", userId);
 
-  const timeOptions = [
-    "09:00 AM",
-    "09:30 AM",
-    "10:00 AM",
-    "10:30 AM",
-    "11:00 AM",
-    "11:30 AM",
-    "12:00 PM",
-    "12:30 PM",
-    "01:00 PM",
-    "01:30 PM",
-    "02:00 PM",
-    "02:30 PM",
-    "03:00 PM",
-    "03:30 PM",
-    "04:00 PM",
-  ];
+  const timeOptions = React.useMemo(
+    () => [
+      "09:00 AM",
+      "09:30 AM",
+      "10:00 AM",
+      "10:30 AM",
+      "11:00 AM",
+      "11:30 AM",
+      "12:00 PM",
+      "12:30 PM",
+      "01:00 PM",
+      "01:30 PM",
+      "02:00 PM",
+      "02:30 PM",
+      "03:00 PM",
+      "03:30 PM",
+      "04:00 PM",
+    ],
+    []
+  );
 
   // Fetch Pets
   const { data: pets } = useQuery<IPet[]>({
@@ -111,11 +124,9 @@ export default function Reservation() {
 
   const [availableTimes, setAvailableTimes] = useState<string[]>(timeOptions);
 
-  console.log(date, doctor);
-  console.log(availableTimes);
-
   const { data: allReservations } = useQuery<IAppointment[]>({
     queryKey: ["allReservations"],
+
     queryFn: async () => {
       const res = await axios.get("http://localhost:3000/reserve", {
         headers: { authentication: `bearer ${token}` },
@@ -135,14 +146,27 @@ export default function Reservation() {
       .map((r) => r.timeSlot);
 
     const filteredTimes = timeOptions.filter((t) => !bookedTimes.includes(t));
-    setAvailableTimes(filteredTimes);
-
-    if (timeSlot && !filteredTimes.includes(timeSlot)) setTimeSlot("");
-  }, [date, doctor, allReservations, timeSlot]);
+    setTimeout(() => {
+      setAvailableTimes(filteredTimes);
+      if (timeSlot && !filteredTimes.includes(timeSlot)) setTimeSlot("");
+    }, 0);
+  }, [date, doctor, allReservations, timeSlot, timeOptions]);
 
   // Create Reservation
   const mutation = useMutation({
     mutationFn: async () => {
+      if (!userId) throw new Error("Invalid token");
+
+      const payload: ReservationPayload = {
+        petOwner: userId,
+        pet,
+        service,
+        doctor,
+        date,
+        timeSlot,
+      };
+      if (notes) payload.notes = notes;
+
       const res = await axios.post(
         "http://localhost:3000/reserve",
         { petOwner: userId, pet, service, doctor, date, timeSlot, notes },
@@ -151,7 +175,13 @@ export default function Reservation() {
       return res.data;
     },
     onSuccess: () => {
-      toast.success("Reservation created successfully");
+      Swal.fire({
+        title: "Success!",
+        text: "Reservation created successfully",
+        icon: "success",
+        confirmButtonColor: "#b89c86",
+      });
+
       setShowModal(false);
       setStep(1);
       setPet("");
@@ -180,8 +210,19 @@ export default function Reservation() {
       d.setDate(today.getDate() + diff);
       return { abbr, iso: d.toISOString().split("T")[0] };
     });
-    setNext5Days(arr);
+    setTimeout(() => {
+      setNext5Days(arr);
+    }, 0);
   }, []);
+
+  const showAlert = (title: string, message: string) => {
+    Swal.fire({
+      title,
+      text: message,
+      icon: "error",
+      confirmButtonColor: "#b89c86",
+    });
+  };
 
   return (
     <>
@@ -449,8 +490,27 @@ export default function Reservation() {
                 {timeSlot && (
                   <button
                     onClick={() => {
-                      if (!pet || !service || !doctor || !date || !timeSlot) {
-                        toast.error("Please complete all required fields");
+                      if (!service || !doctor || !date || !timeSlot) {
+                        showAlert(
+                          "Missing Fields",
+                          "Please fill all required fields before submitting."
+                        );
+                        return;
+                      }
+
+                      if (!pets || pets.length === 0) {
+                        showAlert(
+                          "No Pets Found",
+                          "You don't have any pets registered yet. Please add a pet first."
+                        );
+                        return;
+                      }
+
+                      if (!pet) {
+                        showAlert(
+                          "Pet Not Selected",
+                          "Please select a pet before submitting."
+                        );
                         return;
                       }
 
@@ -504,6 +564,7 @@ export default function Reservation() {
                         toast.error("Invalid token, cannot get user ID");
                         return;
                       }
+
                       mutation.mutate();
                     }}
                     className="px-4 py-2 bg-[#e9a66f] text-white rounded"

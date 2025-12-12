@@ -14,7 +14,6 @@ import { useState } from "react";
 import ReplyModal from "./Components/Replaymodel";
 import EditModal from "./Components/Statusmodel";
 import PreviewModal from "./Components/previewModel";
-import { FaEye, FaReply, FaEdit, FaUndo, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const token = localStorage.getItem("accessToken");
@@ -29,8 +28,7 @@ const ContactsDashboard = () => {
   const [replyStatus] = useState<"pending" | "inProgress" | "replied">(
     "pending"
   );
-  const [page, setPage] = useState(1);
-  const pageSize = 5;
+
 
   const [filter, setFilter] = useState({
     email: "",
@@ -222,27 +220,24 @@ const ContactsDashboard = () => {
     });
   };
 
-  const paginatedContacts = filteredContacts.slice(
-  (page - 1) * pageSize,
-  page * pageSize
-);
+  
 
   if (isLoading) return <p>Loading...</p>;
 
   if (isError) return <p>Error fetching contacts</p>;
 
   return (
-    <div className="w-full max-w-[1400px]">
+    <div className="w-full">
       <h1 className="text-2xl font-bold mb-4">Contacts Dashboard</h1>
-      <div className="flex-1">
-        <div className="flex flex-wrap gap-2 mb-4">
-          <input
+      <div>
+         <div className="flex flex-wrap gap-2 mb-4">
+           <input
             type="text"
             name="email"
             placeholder="Filter by email"
             value={filter.email}
             onChange={handleFilterChange}
-            className="border rounded p-1 flex-1 min-w-[120px] sm:min-w-[150px]"
+            className="border rounded p-1 w-75"
           />
           <input
             type="text"
@@ -250,13 +245,13 @@ const ContactsDashboard = () => {
             placeholder="Filter by name"
             value={filter.name}
             onChange={handleFilterChange}
-            className="border rounded p-1 flex-1 min-w-[120px] sm:min-w-[150px]"
+            className="border rounded p-1 w-75"
           />
           <select
             name="urgency"
             value={filter.urgency}
             onChange={handleFilterChange}
-            className="border rounded p-1 flex-1 min-w-[120px] sm:w-32"
+            className="border rounded p-1 w-50"
           >
             <option value="">All Urgency</option>
             <option value="low">Low</option>
@@ -268,7 +263,7 @@ const ContactsDashboard = () => {
             name="replyStatus"
             value={filter.replyStatus}
             onChange={handleFilterChange}
-            className="border rounded p-1 flex-1 min-w-[120px] sm:w-32"
+            className="border rounded p-1 w-50 "
           >
             <option value="">All Status</option>
             <option value="replied">Replied</option>
@@ -277,7 +272,7 @@ const ContactsDashboard = () => {
           </select>
         </div>
 
-        <div className="hidden sm:block overflow-x-auto">
+        <div className="overflow-x-auto w-full">
           <DataTableComponent<IContact>
             columns={contactColumns({
               handleSoftDelete,
@@ -313,132 +308,7 @@ const ContactsDashboard = () => {
         />
       </div>
 
-      <div className="sm:hidden grid grid-cols-1 gap-4 mt-4">
-        {paginatedContacts.map((contact) => (
-          <div
-            key={contact._id}
-            className="bg-white shadow rounded-lg p-4 flex flex-col gap-2"
-          >
-            <div className="flex justify-between items-center">
-              <h3 className="font-bold text-[#86654f]">{contact.fullName}</h3>
-              <span
-                className={`font-semibold ${
-                  contact.urgency === "emergency"
-                    ? "text-red-700"
-                    : contact.urgency === "high"
-                    ? "text-red-500"
-                    : contact.urgency === "medium"
-                    ? "text-orange-500"
-                    : "text-green-600"
-                }`}
-              >
-                {contact.urgency.charAt(0).toUpperCase() +
-                  contact.urgency.slice(1)}
-              </span>
-            </div>
-
-            <p className="text-sm text-gray-600">Email: {contact.email}</p>
-            <p className="text-sm text-gray-600">
-              Category: {contact.category}
-            </p>
-            <p className="text-sm text-gray-600">
-              Pet Age: {contact.petAge || "—"}
-            </p>
-            <p className="text-sm text-gray-600">
-              Status:
-              <span
-                className={`ml-1 font-semibold ${
-                  contact.replyStatus === "replied"
-                    ? "text-green-600"
-                    : contact.replyStatus === "inProgress"
-                    ? "text-blue-600"
-                    : "text-orange-500"
-                }`}
-              >
-                {contact.replyStatus.charAt(0).toUpperCase() +
-                  contact.replyStatus.slice(1)}
-              </span>
-            </p>
-
-            <div className="flex gap-3 mt-2">
-              <button
-                onClick={() => openPreviewModal(contact)}
-                className="p-2 rounded-lg bg-blue-50 text-blue-600 
-                       hover:bg-blue-100 transition-all duration-200
-                       hover:scale-[1.07] active:scale-[0.96]
-                       shadow-sm hover:shadow-md border border-blue-100"
-                title="Preview"
-              >
-                <FaEye />
-              </button>
-              <button
-                onClick={() => openReplyModal(contact)}
-                className="p-2 rounded-lg bg-green-50 text-green-600 
-               hover:bg-green-100 transition-all duration-200
-               hover:scale-[1.07] active:scale-[0.96]
-               shadow-sm hover:shadow-md border border-green-100"
-                title="Reply"
-              >
-                <FaReply />
-              </button>
-              <button
-                onClick={() => handleEdit(contact)}
-                className="p-2 rounded-lg bg-orange-50 text-orange-600 
-               hover:bg-orange-100 transition-all duration-200
-               hover:scale-[1.07] active:scale-[0.96]
-               shadow-sm hover:shadow-md border border-orange-100"
-                title="Edite"
-              >
-                <FaEdit />
-              </button>
-              {!contact.isDeleted && (
-                <button
-                  onClick={() => handleSoftDelete(contact._id)}
-                  className="p-2 rounded-lg bg-yellow-50 text-yellow-600 
-                                   hover:bg-yellow-100 transition-all duration-200
-                                   hover:scale-[1.07] active:scale-[0.96]
-                                   shadow-sm hover:shadow-md border border-yellow-100"
-                  title="Archive"
-                >
-                  <FaUndo size={15} />
-                </button>
-              )}
-              <button
-                onClick={() => handleHardDelete(contact._id)}
-                className="p-2 rounded-lg bg-red-50 text-red-600 
-               hover:bg-red-100 transition-all duration-200
-               hover:scale-[1.07] active:scale-[0.96]
-               shadow-sm hover:shadow-md border border-red-100"
-                title="Delete"
-              >
-                <FaTrash size={15} />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="sm:hidden flex justify-center gap-3 mt-4">
-  <button
-    disabled={page === 1}
-    onClick={() => setPage(page - 1)}
-    className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-  >
-    Prev
-  </button>
-
-  <div className="px-3 py-1 font-semibold">
-    {page} / {Math.ceil(filteredContacts.length / pageSize)}
-  </div>
-
-  <button
-    disabled={page * pageSize >= filteredContacts.length}
-    onClick={() => setPage(page + 1)}
-    className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-  >
-    Next
-  </button>
-</div>
+      
 
     </div>
 
