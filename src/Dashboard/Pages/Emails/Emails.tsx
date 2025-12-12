@@ -26,9 +26,6 @@ const ContactsDashboard = () => {
   const [selectedStatusContact, setSelectedStatusContact] =
     useState<IContact | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-  const [replyStatus] = useState<"pending" | "inProgress" | "replied">(
-    "pending"
-  );
   const [page, setPage] = useState(1);
   const pageSize = 5;
 
@@ -175,8 +172,6 @@ const ContactsDashboard = () => {
     );
   };
 
-  console.log("STATUS FROM API:", replyStatus);
-
   const updateContactMutation = useMutation({
     mutationFn: ({
       id,
@@ -223,26 +218,30 @@ const ContactsDashboard = () => {
   };
 
   const paginatedContacts = filteredContacts.slice(
-  (page - 1) * pageSize,
-  page * pageSize
-);
+    (page - 1) * pageSize,
+    page * pageSize
+  );
 
   if (isLoading) return <p>Loading...</p>;
 
   if (isError) return <p>Error fetching contacts</p>;
 
   return (
-    <div className="w-full max-w-[1400px]">
-      <h1 className="text-2xl font-bold mb-4">Contacts Dashboard</h1>
-      <div className="flex-1">
-        <div className="flex flex-wrap gap-2 mb-4">
+    <div className="w-full max-w-full overflow-x-hidden px-4 md:px-6">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
+          Contacts Dashboard
+        </h1>
+      </div>
+      <div className="mb-4">
+        <div className="flex gap-4 flex-wrap items-center">
           <input
             type="text"
             name="email"
             placeholder="Filter by email"
             value={filter.email}
             onChange={handleFilterChange}
-            className="border rounded p-1 flex-1 min-w-[120px] sm:min-w-[150px]"
+            className="flex-1 min-w-[120px] sm:min-w-[150px] px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
           />
           <input
             type="text"
@@ -250,13 +249,13 @@ const ContactsDashboard = () => {
             placeholder="Filter by name"
             value={filter.name}
             onChange={handleFilterChange}
-            className="border rounded p-1 flex-1 min-w-[120px] sm:min-w-[150px]"
+            className="flex-1 min-w-[120px] sm:min-w-[150px] px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
           />
           <select
             name="urgency"
             value={filter.urgency}
             onChange={handleFilterChange}
-            className="border rounded p-1 flex-1 min-w-[120px] sm:w-32"
+            className="flex-1 min-w-[120px] sm:w-32 px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200 appearance-none cursor-pointer"
           >
             <option value="">All Urgency</option>
             <option value="low">Low</option>
@@ -268,50 +267,72 @@ const ContactsDashboard = () => {
             name="replyStatus"
             value={filter.replyStatus}
             onChange={handleFilterChange}
-            className="border rounded p-1 flex-1 min-w-[120px] sm:w-32"
+            className="flex-1 min-w-[120px] sm:w-32 px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200 appearance-none cursor-pointer"
           >
             <option value="">All Status</option>
             <option value="replied">Replied</option>
             <option value="inProgress">In Progress</option>
             <option value="pending">Pending</option>
           </select>
+
+          {/* Reset Button */}
+          <button
+            onClick={() => {
+              setFilter({
+                email: "",
+                name: "",
+                urgency: "",
+                replyStatus: "",
+              });
+            }}
+            disabled={
+              !filter.email &&
+              !filter.name &&
+              !filter.urgency &&
+              !filter.replyStatus
+            }
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium whitespace-nowrap"
+            title="Reset Filters"
+          >
+            Reset
+          </button>
         </div>
+      </div>
 
-        <div className="hidden sm:block overflow-x-auto">
-          <DataTableComponent<IContact>
-            columns={contactColumns({
-              handleSoftDelete,
-              handleHardDelete,
-              openReplyModal,
-              handleEdit,
-              openPreviewModal,
-            })}
-            data={filteredContacts}
-            loading={isLoading}
-            pagination
-          />
-        </div>
-
-        <ReplyModal
-          isOpen={isReplyOpen}
-          contact={selectedContact}
-          onClose={() => setIsReplyOpen(false)}
-          onSend={handleSendReply}
-        />
-
-        <EditModal
-          isOpen={isStatusOpen}
-          contact={selectedStatusContact}
-          onClose={() => setIsStatusOpen(false)}
-          onUpdateContact={handleUpdateContact}
-        />
-
-        <PreviewModal
-          isOpen={isPreviewOpen}
-          contact={selectedContact}
-          onClose={() => setIsPreviewOpen(false)}
+      <div className="w-full overflow-x-auto">
+        <DataTableComponent<IContact>
+          columns={contactColumns({
+            handleSoftDelete,
+            handleHardDelete,
+            openReplyModal,
+            handleEdit,
+            openPreviewModal,
+          })}
+          data={filteredContacts}
+          loading={isLoading}
+          pagination
         />
       </div>
+
+      <ReplyModal
+        isOpen={isReplyOpen}
+        contact={selectedContact}
+        onClose={() => setIsReplyOpen(false)}
+        onSend={handleSendReply}
+      />
+
+      <EditModal
+        isOpen={isStatusOpen}
+        contact={selectedStatusContact}
+        onClose={() => setIsStatusOpen(false)}
+        onUpdateContact={handleUpdateContact}
+      />
+
+      <PreviewModal
+        isOpen={isPreviewOpen}
+        contact={selectedContact}
+        onClose={() => setIsPreviewOpen(false)}
+      />
 
       <div className="sm:hidden grid grid-cols-1 gap-4 mt-4">
         {paginatedContacts.map((contact) => (
@@ -419,30 +440,27 @@ const ContactsDashboard = () => {
       </div>
 
       <div className="sm:hidden flex justify-center gap-3 mt-4">
-  <button
-    disabled={page === 1}
-    onClick={() => setPage(page - 1)}
-    className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-  >
-    Prev
-  </button>
+        <button
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+        >
+          Prev
+        </button>
 
-  <div className="px-3 py-1 font-semibold">
-    {page} / {Math.ceil(filteredContacts.length / pageSize)}
-  </div>
+        <div className="px-3 py-1 font-semibold">
+          {page} / {Math.ceil(filteredContacts.length / pageSize)}
+        </div>
 
-  <button
-    disabled={page * pageSize >= filteredContacts.length}
-    onClick={() => setPage(page + 1)}
-    className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-  >
-    Next
-  </button>
-</div>
-
+        <button
+          disabled={page * pageSize >= filteredContacts.length}
+          onClick={() => setPage(page + 1)}
+          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
     </div>
-
-    
   );
 };
 

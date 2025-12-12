@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { TableColumn } from "react-data-table-component";
-import { FaEdit, FaPlusCircle, FaTrash, FaUndo,  FaTags } from "react-icons/fa";
+import { FaEdit, FaPlusCircle, FaTrash, FaUndo, FaTags } from "react-icons/fa";
 import DataTableComponent from "../../../Shared/Table/TableComponent";
 import Swal from "sweetalert2";
 
@@ -142,7 +142,7 @@ export default function Coupons() {
     return !coupon.isDeleted && !isExpired(coupon.expire);
   };
 
-  // TABLE COLUMNS 
+  // TABLE COLUMNS
   const columns: TableColumn<ICoupon>[] = [
     {
       name: "Code",
@@ -270,7 +270,6 @@ export default function Coupons() {
   ];
   //END COLUMNS
 
-
   // Filter local data
   const filteredData = (data?.data || []).filter((coupon: ICoupon) => {
     const matchCode = coupon.code
@@ -292,13 +291,13 @@ export default function Coupons() {
   });
 
   return (
-
-    <div className="flex flex-col gap-2 p-4">
+    <div className="w-full max-w-full px-4 md:px-6">
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-xl text-[#6c5136] font-semibold flex items-center gap-2">
           <FaTags className="text-[#6c5136]" />
           Coupons Management
-        </h2>        <button
+        </h2>{" "}
+        <button
           onClick={handleAdd}
           className="flex items-center gap-2 px-4 py-2 
             bg-[var(--color-extra-1)] 
@@ -329,11 +328,8 @@ export default function Coupons() {
         }}
       />
 
-      
-
       {/* USE FILTERED DATA */}
       <DataTableComponent<ICoupon>
-        // title="Coupons Management"
         columns={columns}
         data={filteredData}
         loading={isLoading}

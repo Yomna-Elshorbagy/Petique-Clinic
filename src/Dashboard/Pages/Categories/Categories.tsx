@@ -42,8 +42,7 @@ export default function CategoriesDashboared() {
       resetForm();
       Setshowmodal(false);
     },
-    onError: (error) => {
-      console.log("add category error :", error);
+    onError: () => {
       toast.error("Failed to add Category ", { position: "top-center" });
     },
   });
@@ -73,8 +72,7 @@ export default function CategoriesDashboared() {
       Setshowmodal(false);
       setUpdateId(null);
     },
-    onError: (error) => {
-      console.log("update category error :", error);
+    onError: () => {
       toast.error("Failed to update Category ", { position: "top-center" });
     },
   });
@@ -116,8 +114,7 @@ export default function CategoriesDashboared() {
       });
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
-    onError: (error) => {
-      console.log("delete category error :", error);
+    onError: () => {
       toast.error("Failed to delete Category ", { position: "top-center" });
     },
   });
@@ -137,8 +134,7 @@ export default function CategoriesDashboared() {
       });
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
-    onError(error) {
-      console.log(" soft delete category error :", error);
+    onError() {
       toast.error("Failed to archive Category ", { position: "top-center" });
     },
   });
@@ -214,27 +210,30 @@ export default function CategoriesDashboared() {
       cell: (row) => (
         <div className="flex items-center gap-3">
           <button
-            className="bg-blue-50 text-blue-600 p-2 rounded-full
-          border border-blue-100 hover:bg-blue-100 hover:scale-110 transition-all duration-150
-          shadow-sm hover:shadow-md"
+            className="p-2 rounded-lg bg-blue-50 text-blue-600 
+               hover:bg-blue-100 transition-all duration-200
+               hover:scale-[1.07] active:scale-[0.96]
+               shadow-sm hover:shadow-md border border-blue-100"
             onClick={() => openUpdateModal(row)}
           >
             <FaEdit size={15} />
           </button>
 
           <button
-            className="bg-yellow-50 text-yellow-600 p-2 rounded-full 
-          border border-yellow-100 hover:bg-yellow-100 hover:scale-110 transition-all duration-150
-          shadow-sm hover:shawdow-md"
+            className="p-2 rounded-lg bg-yellow-50 text-yellow-600 
+               hover:bg-yellow-100 transition-all duration-200
+               hover:scale-[1.07] active:scale-[0.96]
+               shadow-sm hover:shadow-md border border-yellow-100"
             onClick={() => handleSoftdeletecategory(row._id || "")}
           >
             <FaUndo size={15} />
           </button>
 
           <button
-            className="bg-red-50 text-red-600 p-2 rounded-full
-          border border-red-100 hover:bg-red-100 hover:scale-110 transition-all duration-150
-          shadow-sm hover:shadow-md"
+            className="p-2 rounded-lg bg-red-50 text-red-600 
+               hover:bg-red-100 transition-all duration-200
+               hover:scale-[1.07] active:scale-[0.96]
+               shadow-sm hover:shadow-md border border-red-100"
             onClick={() => handleDeleteCategory(row._id || "")}
           >
             <FaTrash size={15} />
@@ -251,7 +250,13 @@ export default function CategoriesDashboared() {
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold text-[#86654f]">Categories</h2>
         <button
-          className="flex items-center gap-2 bg-[#86654f] text-white px-4 py-2 rounded shadow font-bold"
+          className="flex items-center gap-2 px-4 py-2 
+            bg-[var(--color-extra-1)] 
+            text-[var(--color-light-dark)]
+            font-semibold rounded-xl shadow-md
+            hover:bg-[var(--color-light-accent)]
+            transition-all duration-300 
+            hover:scale-105 active:scale-95"
           onClick={() => {
             resetForm();
             Setshowmodal(true);
@@ -261,7 +266,6 @@ export default function CategoriesDashboared() {
         </button>
       </div>
       <DataTableComponent<ICategory>
-        title="Categories List"
         columns={categorycolumns}
         loading={isLoading}
         data={data || []}

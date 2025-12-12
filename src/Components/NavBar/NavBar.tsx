@@ -27,7 +27,6 @@ export default function NavBar() {
     { label: "Reservation", href: "/reservation" },
     { label: "Contact Us", href: "/contact" },
     { label: "Blog", href: "/blog" },
-
   ];
 
   useEffect(() => {
@@ -53,7 +52,7 @@ export default function NavBar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
         isScrolled
           ? "bg-[var(--color-light-background)]/90 dark:bg-[var(--color-dark-background)]/90 backdrop-blur-xl shadow-lg"
           : "bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] shadow-md"

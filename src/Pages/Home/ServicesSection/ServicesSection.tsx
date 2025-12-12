@@ -37,7 +37,7 @@ const serviceCards = [
 
 const ServicesSection = () => {
   return (
-    <section className="relative py-20 bg-[#fdfdfd] overflow-hidden">
+    <section className="relative py-20 bg-[#FAF8F4] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* ===> header */}
         <div className="text-center mb-16">
@@ -156,7 +156,7 @@ const ServicesSection = () => {
         <img
           src={dogServiceImg}
           alt="Happy Dog"
-          className="w-[180px] h-auto object-contain"
+          className="w-[155px] h-auto object-contain"
         />
       </motion.div>
     </section>

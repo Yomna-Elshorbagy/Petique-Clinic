@@ -280,7 +280,7 @@ export default function ProductsDashboared() {
   const tableData = data?.data || [];
 
   return (
-    <div>
+    <div className="w-full max-w-full px-4 md:px-6">
       <div className="flex justify-end mb-4">
         <button
           onClick={() => setAddOpen(true)}
@@ -299,11 +299,9 @@ export default function ProductsDashboared() {
         </button>
       </div>{" "}
       <DataTableComponent<IProduct>
-        // title="Products List"
         columns={columns}
         data={tableData}
         loading={isLoading}
-        onRowClicked={(row) => console.log("Clicked:", row)}
         pagination
       />
       <ProductModal
