@@ -18,20 +18,28 @@ export const addReservation = async (payload: any) => {
 
 // ===> update reservations
 export const updateReservation = async (id: string, payload: any) => {
-  const { data } = await axios.put(`${BASE_URL}/${id}`, payload, { headers });
+  const { data } = await axios.put(`${BASE_URL}/${id}`, payload, {
+    headers,
+  });
   return data.data;
 };
 
 // ===> soft delete reservations
 export const softDeleteReservation = async (id: string) => {
-  const { data } = await axios.put(`${BASE_URL}/soft/${id}`, {}, { headers });
-  return data;
+  const { data } = await axios.put(
+    `${BASE_URL}/soft/${id}`,
+    {},
+    {
+      headers,
+    }
+  );
+  return data.data;
 };
 
 // ===> hard delete reservations
 export const deleteReservation = async (id: string) => {
   const { data } = await axios.delete(`${BASE_URL}/${id}`, { headers });
-  return data;
+  return data.data;
 };
 
 // ===> get all reservations
@@ -62,14 +70,20 @@ export const getPastReservations = async () => {
 };
 
 // ===> check avilable slots
-export const checkAvailableSlots = async (doctorId: string, date: string) => {
+export const checkAvailableSlots = async (doctor: string, date: string) => {
   const { data } = await axios.get(`${BASE_URL}/check/availability`, {
     headers,
-    params: { doctor: doctorId, date },
+    params: { doctor, date },
   });
   return data;
 };
 
+export const getTodayReservations = async () => {
+  const { data } = await axios.get(`${BASE_URL}/today`, {
+    headers,
+  });
+  return data.data;
+};
 // ===> get doctor today reservations
 export const getDoctorTodayReservations = async () => {
   const { data } = await axios.get(`${BASE_URL}/doctor/reservations/today`, {

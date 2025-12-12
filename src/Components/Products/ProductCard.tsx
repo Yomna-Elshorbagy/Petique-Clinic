@@ -42,7 +42,7 @@ const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
   return (
-   <div className={styles.ratingWrapper}>
+    <div className={styles.ratingWrapper}>
       {[...Array(fullStars)].map((_, i) => (
         <Star key={`full-${i}`} className={styles.starFilled} />
       ))}
@@ -119,9 +119,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 : imageSrc
             }
             alt={title}
-            className={`${styles.mainImage} ${
-              isHovering && validSubImages.length > 0 ? styles.mainImageHovering : ""
-            }`}
+            className={`${styles.mainImage} ${isHovering && validSubImages.length > 0 ? styles.mainImageHovering : ""
+              }`}
           />
 
           {/* Hover Overlay with Sub Images */}
@@ -136,9 +135,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                       e.stopPropagation();
                       setCurrentSubImageIndex(index);
                     }}
-                    className={`${styles.subImageButton} ${
-                      index === currentSubImageIndex ? styles.subImageButtonActive : ""
-                    }`}
+                    className={`${styles.subImageButton} ${index === currentSubImageIndex ? styles.subImageButtonActive : ""
+                      }`}
                   >
                     <img
                       src={getSubImageSrc(subImage)}
@@ -176,22 +174,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Add to Cart Button */}
-         <button
+        <button
           onClick={async (e) => {
-          e.stopPropagation();
-          setIsAddingToCart(true);
-          try {
-            await handleAddToCart(dispatch, product._id);
-          } finally {
-            setIsAddingToCart(false);
-          }
-        }}
+            e.stopPropagation();
+            setIsAddingToCart(true);
+            try {
+              await handleAddToCart(dispatch, product._id);
+            } finally {
+              setIsAddingToCart(false);
+            }
+          }}
           className={styles.addToCartButton}
         >
           <ShoppingCart
-            className={`${styles.cartIcon} ${
-              isAddingToCart ? styles.cartIconBounce : ""
-            }`}
+            className={`${styles.cartIcon} ${isAddingToCart ? styles.cartIconBounce : ""
+              }`}
           />
           {isAddingToCart ? "Adding..." : "Add to Cart"}
         </button>

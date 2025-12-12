@@ -4,10 +4,12 @@ export interface IProduct {
   title: string;
   description: string;
 
-  imageCover: {
-    secure_url: string;
-    public_id: string;
-  };
+  imageCover:
+    | string
+    | {
+        secure_url: string;
+        public_id: string;
+      };
   subImages: any[];
 
   price: number;

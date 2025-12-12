@@ -11,12 +11,24 @@
   outline-none transition;
 }
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes slideUp {
-  from { transform: translateY(40px) scale(0.96); opacity: 0; }
-  to   { transform: translateY(0) scale(1); opacity: 1; }
+  from {
+    transform: translateY(40px) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
 }
 /* ========= Import & Export Buttons ========= */
 .action-btn {
@@ -54,6 +66,35 @@
   --color-extra-3: #ece7e2;
   --color-extra-4: #86654f;
   --color-extra-5: #f9ebe0;
+
+  /* Additional warm neutrals */
+  --color-extra-6: #d4c4b0;
+  --color-extra-7: #c9b499;
+  --color-extra-8: #9d8c7a;
+  --color-extra-9: #6b5a4d;
+  --color-extra-10: #3d322a;
+
+  /* Accent variations */
+  --color-accent-light: #f4c6a0;
+  --color-accent-lighter: #fde5d3;
+  --color-accent-dark: #d69560;
+  --color-accent-darker: #c2844d;
+
+  /* Background shades */
+  --color-bg-lighter: #ffffff;
+  --color-bg-light: #fdfbf8;
+  --color-bg-cream: #f5f0ea;
+  --color-bg-warm: #f0e9e0;
+
+  /* Text variations */
+  --color-text-primary: #3a2f27;
+  --color-text-muted: #9a8c81;
+  --color-text-light: #b3a89d;
+
+  /* Border colors */
+  --color-border-light: #e6ddd3;
+  --color-border-medium: #d1c4b5;
+  --color-border-dark: #a89078;
 }
 
 .dark {
@@ -69,6 +110,35 @@
   --color-dark-extra-3: #ece7e2;
   --color-dark-extra-4: #86654f;
   --color-dark-extra-5: #f9ebe0;
+
+  /* Additional dark mode warm neutrals */
+  --color-dark-extra-6: #4a3f38;
+  --color-dark-extra-7: #5a4d44;
+  --color-dark-extra-8: #6b5d52;
+  --color-dark-extra-9: #d4c4b0;
+  --color-dark-extra-10: #1f1b18;
+
+  /* Dark mode accent variations */
+  --color-dark-accent-light: #f4c6a0;
+  --color-dark-accent-lighter: #fde5d3;
+  --color-dark-accent-dark: #d69560;
+  --color-dark-accent-darker: #c2844d;
+
+  /* Dark mode background shades */
+  --color-dark-bg-deeper: #221e1b;
+  --color-dark-bg-deep: #2b2521;
+  --color-dark-bg-elevated: #3a342f;
+  --color-dark-bg-hover: #453f39;
+
+  /* Dark mode text variations */
+  --color-dark-text-primary: #f7f4ef;
+  --color-dark-text-muted: #a89d92;
+  --color-dark-text-dimmed: #8a7f74;
+
+  /* Dark mode border colors */
+  --color-dark-border-light: #4a3f38;
+  --color-dark-border-medium: #5a4d44;
+  --color-dark-border-dark: #6b5d52;
 }
 
 @keyframes fadeIn {
@@ -84,4 +154,34 @@
 
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-out;
+}
+
+/* Dashboard Sidebar Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
 }

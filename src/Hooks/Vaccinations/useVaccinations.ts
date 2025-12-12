@@ -1,35 +1,80 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { baseURL } from "../../Apis/BaseUrl";
-
-export interface Vaccination {
-  _id: string;
-  name: string;
-}
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  getVaccinations,
+  getVaccination,
+  getVaccinationOfCategory as apiGetVaccinationOfCategory,
+  addVaccination,
+  updateVaccination,
+  softDeleteVaccination,
+  deleteVaccination,
+} from "../../Apis/VaccinationApis";
+import type { IVaccination } from "../../Interfaces/IVacination";
 
 export const useVaccinations = () => {
-  const token = localStorage.getItem("accessToken");
-
-  return useQuery<Vaccination[]>({
+  return useQuery<IVaccination[]>({
     queryKey: ["vaccinations"],
-    queryFn: async () => {
-      const res = await axios.get(`${baseURL}/vacine`, {
-        headers: { authentication: `bearer ${token}` },
-      });
-      return res.data.data; 
+    queryFn: getVaccinations,
+  });
+};
+
+export const useVaccinationsByCategory = (categoryId?: string) => {
+  return useQuery<IVaccination[]>({
+    queryKey: ["vaccinations-category", categoryId],
+    queryFn: () => apiGetVaccinationOfCategory(categoryId!),
+    enabled: !!categoryId,
+  });
+};
+
+export const useVaccination = (id?: string) => {
+  return useQuery<IVaccination>({
+    queryKey: ["vaccination", id],
+    queryFn: () => getVaccination(id!),
+    enabled: !!id,
+  });
+};
+
+export const useAddVaccination = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: addVaccination,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["vaccinations"] });
     },
   });
 };
 
-export const getVaccinationOfCategory = (categoryId?: string) => {
-  return useQuery({
-    queryKey: ["vaccinations", categoryId],
-    queryFn: async () => {
-      const res = await axios.get(`${baseURL}/vacine/ofcategory`, {
-        params: { category: categoryId },
-      });
-      return res.data;
+export const useUpdateVaccination = (id: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: Partial<IVaccination>) =>
+      updateVaccination(id, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["vaccinations"] });
+      queryClient.invalidateQueries({ queryKey: ["vaccination", id] });
     },
-    enabled: !!categoryId,
+  });
+};
+
+export const useSoftDeleteVaccination = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: softDeleteVaccination,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["vaccinations"] });
+    },
+  });
+};
+
+export const useDeleteVaccination = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteVaccination,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["vaccinations"] });
+    },
   });
 };

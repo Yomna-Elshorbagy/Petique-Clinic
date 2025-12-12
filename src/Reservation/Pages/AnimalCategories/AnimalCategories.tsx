@@ -11,6 +11,8 @@ import AddAnimalCategoryModal from "./Components/AddAnimalCategoryModal";
 import { getCountCategoryPet } from "../../../Apis/PetApis";
 import CategoryOverview from "./Components/OverViewCat";
 import AnimalCategoryCard from "./Components/AnimalCategoryCard";
+import { useLocalPagination } from "../../Componenst/Pagination/UsePagination";
+import Pagination from "../../Componenst/Pagination/Pagination";
 
 export default function AnimalCategories() {
   const [categories, setCategories] = useState<IAnimalCategory[]>([]);
@@ -68,6 +70,11 @@ export default function AnimalCategories() {
     cat.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const { paginatedItems, page, totalPages, goToPage } = useLocalPagination(
+    filteredCategories,
+    6
+  );
+
   const handleSoftDelete = async (id: string) => {
     try {
       const result = await Swal.fire({
@@ -115,7 +122,7 @@ export default function AnimalCategories() {
     try {
       const result = await Swal.fire({
         title: "Delete permanently?",
-        text: "This will permanently remove the category and cannot be undone.",
+        text: "This will permanently remove the category.",
         icon: "error",
         showCancelButton: true,
         confirmButtonText: "Yes, delete permanently",
@@ -156,7 +163,6 @@ export default function AnimalCategories() {
 
   return (
     <div className="min-h-screen bg-[#ECE7E2] p-6 font-['Inter']">
-      {/* ===> add modal */}
       <AddAnimalCategoryModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -179,7 +185,6 @@ export default function AnimalCategories() {
         </button>
       </div>
 
-      {/* ===> search */}
       <div className="relative mb-8">
         <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A98770]" />
         <input
@@ -191,23 +196,31 @@ export default function AnimalCategories() {
         />
       </div>
 
-      {/* ===> cards */}
+      {/* Cards */}
       {loading ? (
         <div className="text-center py-20 text-[#86654F]">
           Loading categories...
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCategories.map((cat, index) => (
-            <AnimalCategoryCard
-              key={cat._id}
-              category={cat}
-              index={index}
-              onSoftDelete={handleSoftDelete}
-              onHardDelete={handleHardDelete}
-            />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {paginatedItems.map((cat, index) => (
+              <AnimalCategoryCard
+                key={cat._id}
+                category={cat}
+                index={index}
+                onSoftDelete={handleSoftDelete}
+                onHardDelete={handleHardDelete}
+              />
+            ))}
+          </div>
+
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            onPageChange={goToPage}
+          />
+        </>
       )}
 
       <div className="my-8">

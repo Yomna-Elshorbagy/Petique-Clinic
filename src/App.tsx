@@ -40,6 +40,7 @@ import Emails from "./Dashboard/Pages/Emails/Emails";
 import OrderDetails from "./Pages/OrderDetails/OrderDetails";
 import Reservation from "./Pages/reservation/reservation";
 import Blog from "./Pages/blog/blog";
+import ServiceDashbored from "./Reservation/Pages/Services/Service";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +100,7 @@ const router = createBrowserRouter([
       { path: "doctors", element: <Doctors /> },
       { path: "vaccinations", element: <Vaccinations /> },
       { path: "medical", element: <MedicalHistory /> },
+      { path: "service", element: <ServiceDashbored /> },
     ],
   },
 ]);

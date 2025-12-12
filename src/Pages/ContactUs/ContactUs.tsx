@@ -66,7 +66,7 @@ export default function ContactUs() {
       <motion.div
         animate={{ y: [0, -20, 0] }}
         transition={{ duration: 4, repeat: Infinity }}
-        className="absolute top-16 left-10 opacity-40 pointer-events-none"
+        className="absolute top-26 left-10 opacity-40 pointer-events-none"
       >
         <Cat size={80} className="text-amber-800" />
       </motion.div>
@@ -74,7 +74,7 @@ export default function ContactUs() {
       <motion.div
         animate={{ y: [0, -25, 0] }}
         transition={{ duration: 4, repeat: Infinity }}
-        className="absolute top-40 right-10 opacity-40 pointer-events-none"
+        className="absolute top-90 right-10 opacity-40 pointer-events-none"
       >
         <Dog size={90} className="text-cyan-900" />
       </motion.div>
