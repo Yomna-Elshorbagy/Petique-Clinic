@@ -7,12 +7,12 @@ import FeaturesList from "./components/FeaturesList";
 export default function About() {
     return (
         <>
-            <section className='relative px-6 py-20'>
+            <section className='relative px-6 py-20 bg-[#FAF8F4]'>
                 <div>
                     <img
                         src={bunny}
                         alt="Bunny"
-                        className="absolute -left-1 top-70 w-40 pointer-events-none hidden md:block"
+                        className="absolute -left-1 top-90 w-33 pointer-events-none hidden md:block"
                     />
                 </div>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-12 md:pl-35 items-center'>

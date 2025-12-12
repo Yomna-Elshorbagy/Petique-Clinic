@@ -1,14 +1,19 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch, RootState } from '../../../Store/store';
-import { getAllUsersThunk } from '../../../Store/User/UserThunks';
-import DataTableComponent from '../../../Shared/Table/TableComponent';
-import { UserColumns } from './Components/UserColumns';
-import UsersFilter from './Components/UserFilter';
-import type { IUser } from '../../../Interfaces/IUser';
-import UserModal from './Components/viewUserModal';
-import UserEditModal from './Components/EditUserModal';
-import { handleEditUser, handleHardDeleteUser, handleSoftDeleteUser, handleViewUser } from './Components/UserHandlers';
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../../Store/store";
+import { getAllUsersThunk } from "../../../Store/User/UserThunks";
+import DataTableComponent from "../../../Shared/Table/TableComponent";
+import { UserColumns } from "./Components/UserColumns";
+import UsersFilter from "./Components/UserFilter";
+import type { IUser } from "../../../Interfaces/IUser";
+import UserModal from "./Components/viewUserModal";
+import UserEditModal from "./Components/EditUserModal";
+import {
+  handleEditUser,
+  handleHardDeleteUser,
+  handleSoftDeleteUser,
+  handleViewUser,
+} from "./Components/UserHandlers";
 
 export default function Users() {
   const dispatch = useDispatch<AppDispatch>();
@@ -66,7 +71,7 @@ export default function Users() {
   };
 
   return (
-    <>
+    <div className="w-full max-w-full px-4 md:px-6">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-(--color-light-dark) dark:text-(--color-dark-text)">
           Pet Owners
@@ -110,6 +115,6 @@ export default function Users() {
           loading={loading}
         />
       </div>
-    </>
-  )
+    </div>
+  );
 }

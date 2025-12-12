@@ -47,7 +47,7 @@ const Cart: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-[#faf9f6] text-[#4f3f36] font-sans pb-20"
+      className="min-h-screen bg-[#faf9f6] text-[#4f3f36] font-sans pb-20 pt-24"
     >
       <CartHeader totalItems={noOfCartItems} onClearCart={handleClearCart} />
 

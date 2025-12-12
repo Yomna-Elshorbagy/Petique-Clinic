@@ -16,7 +16,6 @@ import {
   FaUndo,
   FaFilter,
   FaTrash,
-  FaSync,
 } from "react-icons/fa";
 import OrderDetailsModal from "./OrderDetailsModal";
 
@@ -31,26 +30,10 @@ export default function Orders() {
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
-  // Fetch orders on component mount and set up auto-refresh
+  // Fetch orders on component mount
   useEffect(() => {
-    console.log(" Fetching orders on mount...");
     dispatch(getAllOrders());
-
-    // Auto-refresh orders every 10 seconds to catch new orders from mobile app
-    const intervalId = setInterval(() => {
-      console.log(" Auto-refreshing orders...");
-      dispatch(getAllOrders());
-    }, 10000000);
-
-    // Cleanup interval on component unmount
-    return () => clearInterval(intervalId);
   }, [dispatch]);
-
-  // Debug: Log orders whenever they change
-  useEffect(() => {
-    console.log("Orders in Redux state:", orders);
-    console.log("Total orders count:", orders.length);
-  }, [orders]);
 
   // Filter orders based on search term, status, and date
   const filteredOrders = useMemo(() => {
@@ -83,16 +66,6 @@ export default function Orders() {
         return orderDate === filterDate;
       });
     }
-
-    console.log(" Filtered orders count:", filtered.length);
-    console.log(
-      " Filters active - Search:",
-      searchTerm,
-      "Status:",
-      statusFilter,
-      "Date:",
-      dateFilter
-    );
 
     return filtered;
   }, [orders, searchTerm, statusFilter, dateFilter]);
@@ -258,17 +231,17 @@ export default function Orders() {
       name: "Customer",
       selector: (row: any) => row.fullName || "N/A",
       sortable: true,
-      width: "150px",
+      width: "120px",
     },
     {
       name: "Phone",
       selector: (row: any) => row.phone || "N/A",
-      width: "130px",
+      width: "120px",
     },
     {
       name: "Address",
       selector: (row: any) => row.address || "N/A",
-      width: "150px",
+      width: "120px",
     },
     {
       name: "Total",
@@ -279,7 +252,7 @@ export default function Orders() {
     {
       name: "Payment",
       selector: (row: any) => row.payment || "N/A",
-      width: "130px",
+      width: "120px",
     },
     {
       name: "Status",
@@ -303,7 +276,7 @@ export default function Orders() {
 
         return (
           <span
-            className={`px-3 py-1 rounded-full text-xs font-bold ${getStatusColor(
+            className={`px-2 py-1 rounded-full text-xs font-bold ${getStatusColor(
               row.status
             )}`}
           >
@@ -312,7 +285,7 @@ export default function Orders() {
           </span>
         );
       },
-      width: "120px",
+      width: "100px",
     },
     {
       name: "Date",
@@ -322,57 +295,62 @@ export default function Orders() {
     },
     {
       name: "Actions",
+      center: true,
       cell: (row: any) => (
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-3 items-center justify-center">
           <button
             onClick={() => handleViewOrder(row._id)}
-            className="p-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors"
+            className="p-2 rounded-lg bg-blue-50 text-blue-600 
+               hover:bg-blue-100 transition-all duration-200
+               hover:scale-[1.07] active:scale-[0.96]
+               shadow-sm hover:shadow-md border border-blue-100"
             title="View"
           >
-            <FaEye size={16} />
+            <FaEye size={15} />
           </button>
           <button
             onClick={() => handleEditOrder(row)}
-            className="p-2 rounded-lg bg-amber-100 text-amber-600 hover:bg-amber-200 transition-colors"
+            className="p-2 rounded-lg bg-green-50 text-green-600 
+               hover:bg-green-100 transition-all duration-200
+               hover:scale-[1.07] active:scale-[0.96]
+               shadow-sm hover:shadow-md border border-green-100"
             title="Edit"
           >
-            <FaEdit size={16} />
+            <FaEdit size={15} />
           </button>
           <button
             onClick={() => handleDeleteOrder(row._id)}
-            className="p-2 rounded-lg bg-orange-100 text-orange-600 hover:bg-orange-200 transition-colors"
+            className="p-2 rounded-lg bg-yellow-50 text-yellow-600 
+               hover:bg-yellow-100 transition-all duration-200
+               hover:scale-[1.07] active:scale-[0.96]
+               shadow-sm hover:shadow-md border border-yellow-100"
             title="Archive"
           >
-            <FaUndo size={16} />
+            <FaUndo size={15} />
           </button>
           <button
             onClick={() => handleHardDelete(row._id)}
-            className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
+            className="p-2 rounded-lg bg-red-50 text-red-600 
+               hover:bg-red-100 transition-all duration-200
+               hover:scale-[1.07] active:scale-[0.96]
+               shadow-sm hover:shadow-md border border-red-100"
             title="Delete Permanently"
           >
-            <FaTrash size={16} />
+            <FaTrash size={15} />
           </button>
         </div>
       ),
-      width: "180px",
+      width: "160px",
+      right: true,
     },
   ];
 
   return (
-    <>
-      <div className="mb-6 flex justify-between items-center">
+    <div className="w-full max-w-full overflow-x-hidden px-4 md:px-6">
+      <div className="mb-6">
         <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
           Orders Management
         </h1>
-        <button
-          onClick={() => dispatch(getAllOrders())}
-          disabled={loading}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--color-extra-1)] text-[var(--color-light-dark)] hover:bg-[var(--color-light-accent)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
-          title="Refresh Orders"
-        >
-          <FaSync className={loading ? "animate-spin" : ""} size={16} />
-          Refresh
-        </button>
       </div>
 
       {/* Search Filter */}
@@ -436,6 +414,20 @@ export default function Orders() {
               </button>
             )}
           </div>
+
+          {/* Reset Button */}
+          <button
+            onClick={() => {
+              setSearchTerm("");
+              setStatusFilter("");
+              setDateFilter("");
+            }}
+            disabled={!searchTerm && !statusFilter && !dateFilter}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium whitespace-nowrap"
+            title="Reset Filters"
+          >
+            Reset
+          </button>
         </div>
 
         {/* Results Counter */}
@@ -447,11 +439,13 @@ export default function Orders() {
         )}
       </div>
 
-      <TableComponent
-        columns={columns}
-        data={filteredOrders}
-        loading={loading}
-      />
+      <div className="w-full overflow-x-auto">
+        <TableComponent
+          columns={columns}
+          data={filteredOrders}
+          loading={loading}
+        />
+      </div>
 
       {/* Order Details Modal */}
       <OrderDetailsModal
@@ -462,6 +456,6 @@ export default function Orders() {
         }}
         order={selectedOrder}
       />
-    </>
+    </div>
   );
 }

@@ -9,11 +9,11 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <ServicesSection />
-      <Stuff />
-      <About />
       <CategorySlider />
       <LowestPriceProducts />
+      <ServicesSection />
+       <Stuff />
+      <About />
     </>
   );
 }

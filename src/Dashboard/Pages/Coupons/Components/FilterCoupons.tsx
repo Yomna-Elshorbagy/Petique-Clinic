@@ -24,19 +24,18 @@ export default function FilterCoupons({
 }: FilterProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-
       {/* Search by Code */}
       <input
         type="text"
         placeholder="Search by code..."
-        className="border p-2 rounded-lg focus:outline-none focus:border-[#8A7A67] focus:ring-2 focus:ring-[#8A7A67]"
+        className="w-full px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
         value={searchCode}
         onChange={(e) => setSearchCode(e.target.value)}
       />
 
       {/* Type Filter */}
       <select
-        className="border p-2 rounded-lg focus:outline-none focus:border-[#8A7A67] focus:ring-2 focus:ring-[#8A7A67]"
+        className="w-full px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200 appearance-none cursor-pointer"
         value={filterType}
         onChange={(e) => setFilterType(e.target.value)}
       >
@@ -47,7 +46,7 @@ export default function FilterCoupons({
 
       {/* Status Filter */}
       <select
-        className="border p-2 rounded-lg focus:outline-none focus:border-[#8A7A67] focus:ring-2 focus:ring-[#8A7A67]"
+        className="w-full px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200 appearance-none cursor-pointer"
         value={filterStatus}
         onChange={(e) => setFilterStatus(e.target.value)}
       >
@@ -59,7 +58,7 @@ export default function FilterCoupons({
 
       {/* Reset */}
       <button
-        className="bg-gray-200 p-2 rounded-lg hover:bg-gray-300"
+        className="px-4 py-2.5 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-all duration-200 font-medium"
         onClick={onReset}
       >
         Reset Filters
