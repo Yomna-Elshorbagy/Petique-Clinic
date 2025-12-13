@@ -1,41 +1,41 @@
 import { motion } from "framer-motion";
 import { FaPaw, FaDog, FaCat, FaDove } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import petTaxiImg from "../../../assets/images/homeReservation/PetTax.jpg";
 import petGroomingImg from "../../../assets/images/homeReservation/PetGromming.jpg";
 import petTrainingImg from "../../../assets/images/homeReservation/petTraining.jpg";
 import dogServiceImg from "../../../assets/images/homeReservation/dogService.jpg";
 
-const serviceCards = [
-  {
-    type: "card-top",
-    title: "Pet Taxi 24/7",
-    description:
-      "A plan for ensuring that young pets receive their core vaccinations at the appropriate ages.",
-    icon: <FaDog className="w-10 h-10 text-[var(--color-light-accent)]" />,
-    image: petTaxiImg,
-    imagePos: "bottom",
-  },
-  {
-    type: "card-bottom",
-    title: "Pet Grooming",
-    description:
-      "A plan for ensuring that young pets receive their core vaccinations at the appropriate ages.",
-    icon: <FaCat className="w-10 h-10 text-[var(--color-light-accent)]" />,
-    image: petGroomingImg,
-    imagePos: "top",
-  },
-  {
-    type: "card-top",
-    title: "Pet Training",
-    description:
-      "A plan for ensuring that young pets receive their core vaccinations at the appropriate ages.",
-    icon: <FaDove className="w-10 h-10 text-[var(--color-light-accent)]" />,
-    image: petTrainingImg,
-    imagePos: "bottom",
-  },
-];
-
 const ServicesSection = () => {
+  const { t } = useTranslation();
+
+  const serviceCards = [
+    {
+      type: "card-top",
+      title: t("servicesSection.petTaxiTitle"),
+      description: t("servicesSection.petTaxiDesc"),
+      icon: <FaDog className="w-10 h-10 text-[var(--color-light-accent)]" />,
+      image: petTaxiImg,
+      imagePos: "bottom",
+    },
+    {
+      type: "card-bottom",
+      title: t("servicesSection.petGroomingTitle"),
+      description: t("servicesSection.petGroomingDesc"),
+      icon: <FaCat className="w-10 h-10 text-[var(--color-light-accent)]" />,
+      image: petGroomingImg,
+      imagePos: "top",
+    },
+    {
+      type: "card-top",
+      title: t("servicesSection.petTrainingTitle"),
+      description: t("servicesSection.petTrainingDesc"),
+      icon: <FaDove className="w-10 h-10 text-[var(--color-light-accent)]" />,
+      image: petTrainingImg,
+      imagePos: "bottom",
+    },
+  ];
+
   return (
     <section className="relative py-20 bg-[#FAF8F4] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -49,7 +49,7 @@ const ServicesSection = () => {
             className="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-1.5 rounded-full shadow-sm mb-6"
           >
             <span className="text-[var(--color-light-accent)] font-bold text-sm tracking-wide">
-              Our Service
+              {t("servicesSection.ourService")}
             </span>
             <FaPaw className="text-[var(--color-light-accent)] text-xs" />
           </motion.div>
@@ -61,7 +61,7 @@ const ServicesSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-4xl md:text-5xl font-extrabold text-[#3d2e25] leading-tight max-w-3xl mx-auto"
           >
-            Making Memories Around the World, Together
+            {t("servicesSection.title")}
           </motion.h2>
         </div>
 
@@ -140,7 +140,7 @@ const ServicesSection = () => {
           className="mt-16 text-center"
         >
           <button className="bg-[var(--color-light-accent)] hover:bg-[#e09e60] text-white px-8 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 mx-auto transition-all transform hover:-translate-y-1">
-            VIEW SERVICES <FaPaw />
+            {t("servicesSection.viewServices")} <FaPaw />
           </button>
         </motion.div>
       </div>

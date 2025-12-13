@@ -1,0 +1,70 @@
+{
+  "navbar": {
+    "home": "Home",
+    "products": "Products",
+    "services": "Services",
+    "reservation": "Reservation",
+    "contactUs": "Contact Us",
+    "blog": "Blog",
+    "profile": "Profile",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "cart": "Cart",
+    "toggleTheme": "Toggle theme"
+  },
+  "contactUs": {
+    "title": "Contact Us",
+    "ourLocation": "Our Location",
+    "fullName": "Full Name",
+    "email": "Email",
+    "category": "Category",
+    "urgency": "Urgency",
+    "petAge": "Pet Age (optional)",
+    "describeIssue": "Describe your issue...",
+    "sendMessage": "Send Message",
+    "sending": "Sending...",
+    "categoryOptions": {
+      "general": "General Inquiry",
+      "appointment": "Appointment",
+      "health": "Health",
+      "emergency": "Emergency",
+      "vaccination": "Vaccination"
+    },
+    "urgencyOptions": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "emergency": "Emergency"
+    },
+    "openHours": "Open: 10am – 10pm Daily",
+    "successMessage": "Your Query has been delivered successfully!",
+    "successTitle": "Message Sent 🎉",
+    "errorTitle": "Oops...",
+    "errorMessage": "Something went wrong!"
+  },
+  "servicesSection": {
+    "ourService": "Our Service",
+    "title": "Making Memories Around the World, Together",
+    "petTaxiTitle": "Pet Taxi 24/7",
+    "petTaxiDesc": "Safe and reliable transportation for your pets, available 24/7.",
+    "petGroomingTitle": "Pet Grooming",
+    "petGroomingDesc": "Professional grooming services to keep your pets looking and feeling great.",
+    "petTrainingTitle": "Pet Training",
+    "petTrainingDesc": "Expert training programs to help your pets learn and behave better.",
+    "viewServices": "VIEW SERVICES"
+  },
+  "qrSection": {
+    "title": "Quick Access QR",
+    "description": "Scan this QR to instantly access pet records, appointments, and fast check-in at our clinic.",
+    "whyUse": "Why use this QR?",
+    "benefits": {
+      "access": "Instant access to pet medical history",
+      "checkin": "Fast check-in at our clinic",
+      "secure": "Secure & expires every hour",
+      "noLogin": "No login required — scan & go"
+    },
+    "refresh": "Refresh QR",
+    "autoRefresh": "Auto-refreshes every hour."
+  }
+}
