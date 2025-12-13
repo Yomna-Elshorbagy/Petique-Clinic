@@ -7,6 +7,7 @@ import {
   updateVaccination,
   softDeleteVaccination,
   deleteVaccination,
+  vaccinatePetApi,
 } from "../../Apis/VaccinationApis";
 import type { IVaccination } from "../../Interfaces/IVacination";
 
@@ -48,7 +49,7 @@ export const useUpdateVaccination = (id: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload: Partial<IVaccination>) =>
+    mutationFn: (payload: any) =>
       updateVaccination(id, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["vaccinations"] });
@@ -76,5 +77,17 @@ export const useDeleteVaccination = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["vaccinations"] });
     },
+  });
+};
+
+export const useVaccinatePet = () => {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: vaccinatePetApi,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["pets"] });
+      qc.invalidateQueries({ queryKey: ["pet-vaccinations"] });
+    }
   });
 };
