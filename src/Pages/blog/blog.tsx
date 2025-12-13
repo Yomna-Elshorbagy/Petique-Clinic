@@ -49,14 +49,14 @@ export default function Blog() {
     <>
       {/* Header */}
       <div className="bg-[#faf9f6]">
-        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-center mt-20 font-serif">
+        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-start mt-20 font-serif">
           <div className="max-w-7xl text-center md:text-left w-full">
             <Bone
               className="bone-icon 
       w-30 h-30
        text-white 
        drop-shadow-[0_0_10px_#ff9100]         
-      ml-[-20px] md:ml-[-80px] 
+      ml-[-20px] md:ml-[-40px] 
 "
               strokeWidth={2.5}
               color="#e3e3e3"
@@ -77,7 +77,7 @@ export default function Blog() {
           <img
             src="/src/assets/images/cat-relaxing.png"
             alt="cat"
-            className="hidden md:block absolute right-1 bottom-[-120px] w-[600px] z-10"
+            className="hidden md:block absolute right-0 bottom-[-120px] w-[600px] z-10"
           />
         </div>
 
