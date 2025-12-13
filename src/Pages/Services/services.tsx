@@ -45,8 +45,8 @@ export default function Services() {
 
   return (
     <>
-      <div className="relative bg-[#1f1b22] h-auto px-10 py-10 overflow-visible flex flex-col md:flex-row items-center font-serif">
-        <div className="max-w-7xl text-center md:text-left md:pl-100">
+      <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-start font-serif">
+        <div className="max-w-7xl text-center md:text-left w-full">
           <Bone
             ref={boneRef}
             className="
@@ -54,7 +54,7 @@ export default function Services() {
         w-30 h-30 
         text-white 
         drop-shadow-[0_0_10px_#ff9100]
-        ml-[-60px] md:ml-[-80px] 
+        ml-[-20px] md:ml-[-40px] 
         mx-auto md:mx-0
       "
             strokeWidth={2.5}
@@ -117,13 +117,13 @@ export default function Services() {
                   <h3
                     className="text-lg font-bold mb-2 text-black text-ellipsis overflow-hidden line-clamp-1 mt-3
              transition-colors duration-300 group-hover:text-[#e9a66f]"
-                    style={{ fontSize: 25 }}
+                    style={{ fontSize: 20 }}
                   >
                     {service.title}
                   </h3>
                   <p
                     className="text-gray-400 mb-4 text-sm text-ellipsis overflow-hidden line-clamp-2 mt-3"
-                    style={{ fontSize: 20 }}
+                    style={{ fontSize: 15 }}
                   >
                     {service.description}
                   </p>

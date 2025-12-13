@@ -94,8 +94,8 @@ export default function Servicesdetails() {
   return (
     <>
       <div className=" bg-[#faf9f6]">
-        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible  mt-20">
-          <div className="max-w-7xl font-serif md:text-start text-center mx-auto">
+        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-start mt-20 font-serif">
+          <div className="max-w-7xl text-center md:text-left w-full">
             <Bone
               ref={boneRef}
               className="
@@ -103,7 +103,7 @@ export default function Servicesdetails() {
         w-30 h-30 
         text-white 
         drop-shadow-[0_0_10px_#ff9100]
-        ml-[-30px] md:ml-[-80px] 
+        ml-[-30px] md:ml-[-40px] 
         mx-auto md:mx-0
       "
               strokeWidth={2.5}
