@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ShieldCheck, Sparkles, Tag, Truck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface OrderSummaryProps {
   totalItems: number;
@@ -13,8 +14,8 @@ export default function OrderSummary({
   subtotal,
   total,
 }: OrderSummaryProps) {
-
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const goToCheckout = () => {
     navigate("/Checkout");
@@ -31,7 +32,7 @@ export default function OrderSummary({
         <div className="flex items-center gap-2 mb-2">
           <Sparkles className="w-5 h-5 text-[#e9a66f]" />
           <h2 className="font-serif text-2xl font-bold text-[#4f3f36]">
-            Order Summary
+            {t("cart.orderSummary")}
           </h2>
         </div>
 
@@ -42,20 +43,20 @@ export default function OrderSummary({
         {/* PROMO CODE */}
         <div className="mb-8">
           <label className="text-xs font-bold text-[#4f3f36] flex items-center gap-2 mb-2">
-            <Tag className="w-3 h-3" /> Promo Code
+            <Tag className="w-3 h-3" /> {t("cart.promoCode")}
           </label>
 
           <div className="flex gap-2">
             <input
               type="text"
-              placeholder="Enter code"
+              placeholder={t("cart.enterCode")}
               className="flex-1 bg-white border border-[#e8d8c4] rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#e9a66f] transition-colors"
             />
             <motion.button
               whileTap={{ scale: 0.95 }}
               className="bg-[#e8d8c4] text-[#4f3f36] font-bold text-sm px-4 rounded-xl hover:bg-[#d6c2a8] transition-colors"
             >
-              Apply
+              {t("cart.apply")}
             </motion.button>
           </div>
         </div>
@@ -63,7 +64,7 @@ export default function OrderSummary({
         {/* PRICE DETAILS */}
         <div className="space-y-3 mb-8">
           <div className="flex justify-between text-[#7a7067]">
-            <span>Subtotal</span>
+            <span>{t("cart.subtotal")}</span>
             <span className="font-bold text-[#4f3f36]">
               ${subtotal.toFixed(2)}
             </span>
@@ -71,15 +72,17 @@ export default function OrderSummary({
 
           <div className="flex justify-between text-[#7a7067]">
             <span className="flex items-center gap-2">
-              <Truck className="w-4 h-4" /> Shipping
+              <Truck className="w-4 h-4" /> {t("cart.shipping")}
             </span>
-            <span className="text-green-600 font-bold">Free</span>
+            <span className="text-green-600 font-bold">{t("cart.free")}</span>
           </div>
 
           <div className="h-px bg-[#e8d8c4]/50 my-4"></div>
 
           <div className="flex justify-between items-end">
-            <span className="text-lg font-bold text-[#4f3f36]">Total</span>
+            <span className="text-lg font-bold text-[#4f3f36]">
+              {t("cart.total")}
+            </span>
             <span className="text-3xl font-serif font-bold text-[#4f3f36]">
               ${total.toFixed(2)}
             </span>
@@ -93,7 +96,7 @@ export default function OrderSummary({
           onClick={goToCheckout}
           className="w-full bg-gradient-to-r from-[#e9a66f] to-[#d68f55] text-white py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 relative overflow-hidden group"
         >
-          <span className="relative z-10">Proceed to Checkout</span>
+          <span className="relative z-10">{t("cart.proceedToCheckout")}</span>
 
           <motion.div
             className="absolute inset-0 bg-white/20"
@@ -106,10 +109,10 @@ export default function OrderSummary({
         {/* BADGES */}
         <div className="mt-6 flex justify-center gap-6 text-[#b89c86]">
           <div className="flex items-center gap-2 text-xs font-medium">
-            <ShieldCheck className="w-4 h-4" /> Secure Checkout
+            <ShieldCheck className="w-4 h-4" /> {t("cart.secureCheckout")}
           </div>
           <div className="flex items-center gap-2 text-xs font-medium">
-            <Truck className="w-4 h-4" /> Fast Delivery
+            <Truck className="w-4 h-4" /> {t("cart.fastDelivery")}
           </div>
         </div>
       </motion.div>

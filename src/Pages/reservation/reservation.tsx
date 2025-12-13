@@ -185,7 +185,7 @@ export default function Reservation() {
 
   return (
     <>
-      <div className="max-w-7xl mx-auto p-6 space-y-6 mt-20  font-serif">
+      <div className="max-w-7xl mx-auto p-6 space-y-6 mt-10  font-serif">
         <div className="flex items-center gap-2 mb-6 justify-center">
           <h1 className="text-3xl font-bold flex items-center gap-2 ">
             Petique

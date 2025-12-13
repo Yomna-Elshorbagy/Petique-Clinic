@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import CartHeader from "../../Components/Cart/CartHeader";
 import Banner from "../../Components/Cart/Banner";
 import CartItems from "../../Components/Cart/CartItems";
@@ -15,6 +16,7 @@ import {
 } from "../../Store/Slices/CartSlice.ts";
 
 const Cart: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
   const { products, totalPrice, noOfCartItems } = useAppSelector(
@@ -72,16 +74,14 @@ const Cart: React.FC = () => {
               </motion.div>
             </div>
             <h2 className="text-3xl font-serif font-bold mb-4 text-[#4f3f36]">
-              Your cart is empty
+              {t("cart.emptyTitle")}
             </h2>
-            <p className="text-[#7a7067] mb-8">
-              Looks like you haven't added anything yet.
-            </p>
+            <p className="text-[#7a7067] mb-8">{t("cart.emptyDesc")}</p>
             <Link
               to="/products"
               className="bg-[#e9a66f] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#d68f55] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 inline-block"
             >
-              Start Shopping
+              {t("cart.startShopping")}
             </Link>
           </motion.div>
         ) : (

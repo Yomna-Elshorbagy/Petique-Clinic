@@ -96,8 +96,6 @@ const Products: React.FC = () => {
       const response = await getAllProducts(page, pagination.limit);
       console.log("Products Array:", response.data);
 
-
-      // Backend response shape: { success, message, data: IProduct[] }
       setProductsState({
         items: response.data,
         allItems: response.data,
@@ -194,7 +192,6 @@ const Products: React.FC = () => {
   const handleResetFilters = () => {
     setFilters(initialFilters);
     setIsFiltersDirty(false);
-    // Clear category from URL
     setSearchParams({});
   };
   
@@ -279,7 +276,6 @@ const Products: React.FC = () => {
       <SEO title="Products | Petique Clinic" description="Browse our curated pet products." />
 
       <ProductsHero />
-
       
       <section className=" py-4 text-center">
         <div className="container mx-auto px-4">
@@ -292,11 +288,7 @@ const Products: React.FC = () => {
         </div>
       </section>
 
-      {/* Features */}
       <Features />
-
-
-      
 
       <main className="bg-[#FAF8F4] py-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

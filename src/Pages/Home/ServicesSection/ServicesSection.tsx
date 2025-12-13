@@ -37,7 +37,7 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="relative py-20 bg-[#FAF8F4] overflow-hidden">
+    <section className="relative py-20 bg-[#FAF8F4] overflow-hidden w-full">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* ===> header */}
         <div className="text-center mb-16">
@@ -66,7 +66,7 @@ const ServicesSection = () => {
         </div>
 
         {/* grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10 max-w-full overflow-hidden">
           {serviceCards.map((card, index) => (
             <div key={index} className="flex flex-col h-full gap-6">
               {/* ===> If Image is Top */}
@@ -76,7 +76,7 @@ const ServicesSection = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="relative h-64 w-full overflow-hidden shadow-lg rounded-t-[150px]"
+                  className="relative h-64 w-full overflow-hidden shadow-lg rounded-t-[150px] max-w-full"
                 >
                   <img
                     src={card.image}
@@ -118,7 +118,7 @@ const ServicesSection = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.2 + 0.4 }}
-                  className="relative h-64 w-full overflow-hidden shadow-lg rounded-b-[150px]"
+                  className="relative h-64 w-full overflow-hidden shadow-lg rounded-b-[150px] max-w-full"
                 >
                   <img
                     src={card.image}

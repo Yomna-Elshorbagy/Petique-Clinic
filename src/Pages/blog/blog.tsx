@@ -49,7 +49,7 @@ export default function Blog() {
     <>
       {/* Header */}
       <div className="bg-[#faf9f6]">
-        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-center mt-20 font-serif">
+        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-center font-serif">
           <div className="max-w-7xl text-center md:text-left w-full">
             <Bone
               className="bone-icon 

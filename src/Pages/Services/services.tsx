@@ -45,7 +45,7 @@ export default function Services() {
 
   return (
     <>
-      <div className="relative bg-[#1f1b22] h-auto px-10 py-10 overflow-visible flex flex-col md:flex-row items-center mt-20 font-serif">
+      <div className="relative bg-[#1f1b22] h-auto px-10 py-10 overflow-visible flex flex-col md:flex-row items-center font-serif">
         <div className="max-w-7xl text-center md:text-left md:pl-100">
           <Bone
             ref={boneRef}
