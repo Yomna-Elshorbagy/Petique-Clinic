@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { PawPrint, QrCode, RefreshCw } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useQr } from "../../Hooks/QrCode/useQrcode";
 import rabbitImg from "../../assets/images/shap-33.jpg";
 
 export default function QrSection() {
   const { data, isLoading, isError, refetch } = useQr();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -25,12 +27,11 @@ export default function QrSection() {
 
           <h2 className="text-3xl font-bold text-[#443935] flex items-center gap-3 mb-6">
             <QrCode className="text-[#C58D52]" />
-            Quick Access QR
+            {t("qrSection.title")}
           </h2>
 
           <p className="text-[#7A6F69] mb-6 max-w-xl">
-            Scan this QR to instantly access pet records, appointments, and fast
-            check-in at our clinic.
+            {t("qrSection.description")}
           </p>
 
           <div className="flex flex-col md:flex-row items-center gap-8">
@@ -61,18 +62,18 @@ export default function QrSection() {
                 onClick={() => refetch()}
                 className="mt-4 flex items-center gap-2 text-[#C58D52] hover:text-[#A98868] transition"
               >
-                <RefreshCw size={18} /> Refresh QR
+                <RefreshCw size={18} /> {t("qrSection.refresh")}
               </button>
             </div>
 
             <div className="flex-1 text-[#443935] space-y-3">
-              <h3 className="text-xl font-semibold">Why use this QR?</h3>
+              <h3 className="text-xl font-semibold">{t("qrSection.whyUse")}</h3>
 
               <ul className="space-y-2 list-disc list-inside text-[#6D625E]">
-                <li>Instant access to pet medical history</li>
-                <li>Fast check-in at our clinic</li>
-                <li>Secure & expires every hour</li>
-                <li>No login required — scan & go</li>
+                <li>{t("qrSection.benefits.access")}</li>
+                <li>{t("qrSection.benefits.checkin")}</li>
+                <li>{t("qrSection.benefits.secure")}</li>
+                <li>{t("qrSection.benefits.noLogin")}</li>
               </ul>
 
               <motion.div
@@ -80,7 +81,7 @@ export default function QrSection() {
                 transition={{ duration: 2, repeat: Infinity }}
                 className="text-sm text-[#A98868]"
               >
-                Auto-refreshes every hour.
+                {t("qrSection.autoRefresh")}
               </motion.div>
             </div>
           </div>
