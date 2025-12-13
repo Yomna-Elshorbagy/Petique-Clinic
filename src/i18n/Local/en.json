@@ -108,6 +108,16 @@
     "clinicReview": "Clinic Review",
     "anonymous": "Anonymous"
   },
+  "blog": {
+    "latestArticles": "Latest Blog Articles",
+    "home": "Home",
+    "blog": "Blog"
+  },
+  "services": {
+    "ourServices": "Our Services",
+    "home": "Home",
+    "services": "Services"
+  },
   "cart": {
     "emptyTitle": "Your cart is empty",
     "emptyDesc": "Looks like you haven't added anything yet.",

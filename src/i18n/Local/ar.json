@@ -108,6 +108,16 @@
     "clinicReview": "مراجعة العيادة",
     "anonymous": "مجهول"
   },
+  "blog": {
+    "latestArticles": "أحدث مقالات المدونة",
+    "home": "الرئيسية",
+    "blog": "المدونة"
+  },
+  "services": {
+    "ourServices": "خدماتنا",
+    "home": "الرئيسية",
+    "services": "الخدمات"
+  },
   "cart": {
     "emptyTitle": "سلتك فارغة",
     "emptyDesc": "يبدو أنك لم تضف شيئاً بعد.",
