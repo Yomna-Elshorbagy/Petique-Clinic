@@ -1,0 +1,10 @@
+.users-filter-bar .users-input {
+  width: 180px !important;
+  padding-left: 40px !important;
+}
+
+.button {
+  padding-inline: 30px;
+  padding-block: 15px;
+  font-size: 16px;
+}

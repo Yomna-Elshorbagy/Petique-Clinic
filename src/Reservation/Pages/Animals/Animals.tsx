@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import { deletePet, getAllPets, softDeletePet } from "../../../Apis/PetApis";
 import type { IPet } from "../../../Interfaces/Ipet";
 import AddPetModal from "./Components/AddPetModal";
-import { FaSearch, FaFilter, FaThLarge, FaList, FaPlus } from "react-icons/fa";
+import { FaSearch, FaPlus } from "react-icons/fa";
 import { usePetSearch } from "./Hook/UseAnimalSearch";
 import PetCard from "./Components/PetCard";
 import Swal from "sweetalert2";
+import { useLocalPagination } from "../../Componenst/Pagination/UsePagination";
+import Pagination from "../../Componenst/Pagination/Pagination";
+import EditPetModal from "./Components/EditPetModal";
+import PetDetailsModal from "./Components/PetDetailsModal";
 
 export default function Animals() {
   const [pets, setPets] = useState<IPet[]>([]);
@@ -13,6 +17,11 @@ export default function Animals() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [activeCategory, setActiveCategory] = useState("All");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // FIXED: missing state
+  const [selectedPet, setSelectedPet] = useState<IPet | null>(null);
+  const [viewId, setViewId] = useState<string | null>(null);
+
   const { search, setSearch, filtered } = usePetSearch(pets);
 
   const fetchPets = async () => {
@@ -40,7 +49,12 @@ export default function Animals() {
           (pet) =>
             pet.category?.name.toLowerCase() === activeCategory.toLowerCase()
         );
-  // ===> to prevent double tabs
+
+  const { paginatedItems, page, totalPages, goToPage } = useLocalPagination(
+    filteredPets,
+    8
+  );
+
   const [_processingId, setProcessingId] = useState<string | null>(null);
 
   const handleSoftDelete = async (id: string) => {
@@ -75,30 +89,28 @@ export default function Animals() {
         timer: 1400,
         showConfirmButton: false,
       });
+
       await fetchPets();
     } catch (error: any) {
-      console.error("Soft delete failed", error);
       Swal.close();
       Swal.fire({
         title: "Error",
-        text:
-          (error?.response?.data?.message as string) ||
-          error?.message ||
-          "Failed to archive pet. Try again.",
+        text: error?.response?.data?.message || "Failed to archive pet",
         icon: "error",
       });
     } finally {
       setProcessingId(null);
     }
   };
+
   const handleHardDelete = async (id: string) => {
     try {
       const result = await Swal.fire({
         title: "Delete permanently?",
-        text: "This will permanently remove the pet and cannot be undone.",
+        text: "This cannot be undone.",
         icon: "error",
         showCancelButton: true,
-        confirmButtonText: "Yes, delete permanently",
+        confirmButtonText: "Yes, delete",
         cancelButtonText: "Cancel",
         reverseButtons: true,
         confirmButtonColor: "#d33",
@@ -123,16 +135,13 @@ export default function Animals() {
         timer: 1400,
         showConfirmButton: false,
       });
+
       await fetchPets();
     } catch (error: any) {
-      console.error("Hard delete failed", error);
       Swal.close();
       Swal.fire({
         title: "Error",
-        text:
-          (error?.response?.data?.message as string) ||
-          error?.message ||
-          "Failed to delete pet. Try again.",
+        text: error?.response?.data?.message || "Failed to delete pet",
         icon: "error",
       });
     } finally {
@@ -140,13 +149,19 @@ export default function Animals() {
     }
   };
 
+  // FIX: open details modal
   const handleViewDetails = (pet: IPet) => {
-    console.log("view details for", pet);
+    setViewId(pet._id);
+  };
+
+  // FIX: open edit modal
+  const handleEdit = (pet: IPet) => {
+    setSelectedPet(pet);
   };
 
   const renderGridView = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {filteredPets.map((pet) => (
+      {paginatedItems.map((pet) => (
         <PetCard
           pet={pet}
           key={pet._id}
@@ -154,6 +169,7 @@ export default function Animals() {
           onSoftDelete={handleSoftDelete}
           onHardDelete={handleHardDelete}
           onViewDetails={handleViewDetails}
+          onEdit={handleEdit}
         />
       ))}
     </div>
@@ -161,7 +177,7 @@ export default function Animals() {
 
   const renderListView = () => (
     <div className="flex flex-col gap-4">
-      {filteredPets.map((pet) => (
+      {paginatedItems.map((pet) => (
         <PetCard
           pet={pet}
           key={pet._id}
@@ -169,6 +185,7 @@ export default function Animals() {
           onSoftDelete={handleSoftDelete}
           onHardDelete={handleHardDelete}
           onViewDetails={handleViewDetails}
+          onEdit={handleEdit}
         />
       ))}
     </div>
@@ -182,6 +199,20 @@ export default function Animals() {
         onSuccess={fetchPets}
       />
 
+      <EditPetModal
+        pet={selectedPet}
+        isOpen={!!selectedPet}
+        onClose={() => setSelectedPet(null)}
+        onSuccess={fetchPets}
+      />
+
+      <PetDetailsModal
+        petId={viewId}
+        isOpen={!!viewId}
+        onClose={() => setViewId(null)}
+      />
+
+      {/* header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
           <h1 className="text-3xl font-bold text-[#86654F] mb-1">Animals</h1>
@@ -196,7 +227,7 @@ export default function Animals() {
         </button>
       </div>
 
-      {/* filter Bar */}
+      {/* Search */}
       <div className="flex flex-col md:flex-row gap-4 mb-8">
         <div className="relative flex-1">
           <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A98770]" />
@@ -204,41 +235,13 @@ export default function Animals() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search pets by name or owner..."
+            placeholder="Search pets..."
             className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#FCF9F4] border-none focus:ring-2 focus:ring-[#A98770]/50 text-[#86654F] placeholder-[#A98770]/70 shadow-sm"
           />
         </div>
-        <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-5 py-3 bg-[#FCF9F4] text-[#86654F] rounded-xl hover:bg-white transition-colors shadow-sm font-medium">
-            <FaFilter size={14} />
-            <span>Filter</span>
-          </button>
-          <div className="flex bg-[#FCF9F4] p-1 rounded-xl shadow-sm">
-            <button
-              onClick={() => setViewMode("grid")}
-              className={`p-2 rounded-lg transition-all ${
-                viewMode === "grid"
-                  ? "bg-[#86654F] text-white shadow-sm"
-                  : "text-[#A98770] hover:bg-[#ECE7E2]"
-              }`}
-            >
-              <FaThLarge size={18} />
-            </button>
-            <button
-              onClick={() => setViewMode("list")}
-              className={`p-2 rounded-lg transition-all ${
-                viewMode === "list"
-                  ? "bg-[#86654F] text-white shadow-sm"
-                  : "text-[#A98770] hover:bg-[#ECE7E2]"
-              }`}
-            >
-              <FaList size={18} />
-            </button>
-          </div>
-        </div>
       </div>
 
-      {/*==> categories <==*/}
+      {/* category filters */}
       <div className="w-full flex justify-center">
         <div className="flex gap-3 mb-8 overflow-x-auto pb-2 scrollbar-hide max-w-max">
           {categories.map((cat) => (
@@ -263,6 +266,14 @@ export default function Animals() {
         renderGridView()
       ) : (
         renderListView()
+      )}
+
+      {!loading && filteredPets.length > 0 && (
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onPageChange={goToPage}
+        />
       )}
     </div>
   );

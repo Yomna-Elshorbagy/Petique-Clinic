@@ -36,3 +36,17 @@ export interface ISignup extends ILogin {
   userName: string;
   re_password: string;
 }
+
+export interface IUpdateUser {
+  userName?: string;
+  mobileNumber?: string;
+  gender?: string;
+  newPassword?: string;
+  confirmPassword?: string;
+}
+
+export interface UserState {
+    users: IUser[];
+    loading: boolean;
+    error: string | null;
+}

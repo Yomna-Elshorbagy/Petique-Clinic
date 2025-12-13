@@ -23,20 +23,20 @@ export const contactColumns = ({
       return `#${lastFive}`;
     },
     sortable: true,
-    width: "90px",
+    width: "70px",
   },
   {
     name: "Full Name",
     selector: (row) => row.fullName,
     sortable: true,
-    width: "160px",
+    width: "100px",
   },
-  { name: "Email", selector: (row) => row.email },
-  { name: "Category", selector: (row) => row.category },
+  { name: "Email", selector: (row) => row.email, width: "110px" },
+  { name: "Category", selector: (row) => row.category, width: "90px" },
   {
     name: "Urgency",
     selector: (row) => row.urgency,
-    width: "140px",
+    width: "90px",
     cell: (row) => {
       let colorClass = "";
       switch (row.urgency) {
@@ -72,12 +72,13 @@ export const contactColumns = ({
   {
     name: "Pet Age",
     selector: (row) => (row.petAge ? `${row.petAge} month` : "—"),
+    width: "80px",
   },
-  { name: "Message", selector: (row) => row.message, grow: 2 },
+  { name: "Message", selector: (row) => row.message, width: "120px" },
   {
     name: "Reply Status",
     selector: (row) => row.replyStatus,
-    width: "160px",
+    width: "100px",
     cell: (row) => {
       let colorClass = "";
 
@@ -109,8 +110,7 @@ export const contactColumns = ({
   {
     name: "Reply Message",
     selector: (row) => row.replyMessage || "—",
-    grow: 2,
-    width: "130px",
+    width: "100px",
     cell: (row) => {
       const hasReply = !!row.replyMessage;
       return (
@@ -123,9 +123,11 @@ export const contactColumns = ({
 
   {
     name: "Actions",
-    width: "250px",
+    center: true,
+    width: "180px",
+    right: true,
     cell: (row) => (
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center justify-center">
         {/* View Button */}
         <button
           onClick={() => openPreviewModal(row)}
@@ -135,7 +137,7 @@ export const contactColumns = ({
                shadow-sm hover:shadow-md border border-blue-100"
           title="Preview"
         >
-          <FaEye />
+          <FaEye size={15} />
         </button>
 
         {/* Reply Button */}
@@ -147,7 +149,7 @@ export const contactColumns = ({
                shadow-sm hover:shadow-md border border-green-100"
           title="Reply"
         >
-          <FaReply />
+          <FaReply size={15} />
         </button>
 
         {/* Edit Button */}
@@ -157,9 +159,9 @@ export const contactColumns = ({
                hover:bg-orange-100 transition-all duration-200
                hover:scale-[1.07] active:scale-[0.96]
                shadow-sm hover:shadow-md border border-orange-100"
-          title="Edite"
+          title="Edit"
         >
-          <FaEdit />
+          <FaEdit size={15} />
         </button>
 
         {/* Soft Delete */}

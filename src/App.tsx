@@ -40,6 +40,8 @@ import Emails from "./Dashboard/Pages/Emails/Emails";
 import OrderDetails from "./Pages/OrderDetails/OrderDetails";
 import Reservation from "./Pages/reservation/reservation";
 import Blog from "./Pages/blog/blog";
+import ServiceDashbored from "./Reservation/Pages/Services/Service";
+import UserPetClinicProfile from "./Pages/UserProfile/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +55,7 @@ const router = createBrowserRouter([
       { path: "service", element: <Services/> },
       { path: "service/:id", element: <Servicesdetails/> },
        { path:"blog", element: <Blog/> },
+       { path:"profile", element: <UserPetClinicProfile/> },
 
 
       { path: "checkout", element: <Checkout /> },
@@ -99,6 +102,7 @@ const router = createBrowserRouter([
       { path: "doctors", element: <Doctors /> },
       { path: "vaccinations", element: <Vaccinations /> },
       { path: "medical", element: <MedicalHistory /> },
+      { path: "service", element: <ServiceDashbored /> },
     ],
   },
 ]);

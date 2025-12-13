@@ -11,14 +11,7 @@ function DataTableComponent<T>({
   loading,
 }: DataTableProps<T>) {
   return (
-    <div
-      style={{
-        width: "100%",
-        maxWidth: "1400px",
-        overflowX: "auto",
-      }}
-    >
-      {" "}
+    <div className="w-full">
       <DataTable
         title={title}
         columns={columns}
@@ -47,6 +40,7 @@ const customStyles = {
       overflow: "hidden",
       boxShadow: "0 4px 10px rgba(0,0,0,0.06)",
       animation: "fadeIn 0.3s ease-out",
+      minWidth: "100%",
     },
   },
   headRow: {
@@ -54,6 +48,9 @@ const customStyles = {
       backgroundColor: "var(--color-light-primary)",
       borderBottom: "1px solid var(--color-light-secondary)",
       minHeight: "48px",
+      "@media (max-width: 768px)": {
+        minHeight: "40px",
+      },
     },
   },
   headCells: {
@@ -65,6 +62,11 @@ const customStyles = {
       paddingTop: "14px",
       paddingBottom: "14px",
       transition: "all 0.25s ease",
+      "@media (max-width: 768px)": {
+        fontSize: "12px",
+        paddingTop: "10px",
+        paddingBottom: "10px",
+      },
     },
   },
   rows: {
@@ -75,6 +77,10 @@ const customStyles = {
       borderBottom: "1px solid var(--color-light-secondary)",
       transition: "all 0.25s ease",
       minHeight: "54px",
+      "@media (max-width: 768px)": {
+        fontSize: "12px",
+        minHeight: "48px",
+      },
       "&:hover": {
         backgroundColor: "var(--color-light-extra-5, #f9ebe0)",
         transform: "scale(1.002)",
@@ -85,6 +91,9 @@ const customStyles = {
   cells: {
     style: {
       padding: "14px 12px",
+      "@media (max-width: 768px)": {
+        padding: "10px 8px",
+      },
     },
   },
   pagination: {
@@ -96,12 +105,20 @@ const customStyles = {
       paddingBottom: "10px",
       fontWeight: "500",
       fontSize: "14px",
+      "@media (max-width: 768px)": {
+        fontSize: "12px",
+        paddingTop: "8px",
+        paddingBottom: "8px",
+      },
     },
     pageButtonsStyle: {
       borderRadius: "8px",
       padding: "6px 10px",
       transition: "all 0.2s ease",
       fill: "var(--color-light-dark)",
+      "@media (max-width: 768px)": {
+        padding: "4px 8px",
+      },
       "&:hover": {
         backgroundColor: "var(--color-light-primary)",
         transform: "scale(1.05)",
@@ -112,4 +129,3 @@ const customStyles = {
     },
   },
 };
-

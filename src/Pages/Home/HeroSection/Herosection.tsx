@@ -13,8 +13,9 @@ const HeroSection = () => {
 
   return (
     <div className="relative w-full h-[90vh] md:h-screen overflow-hidden flex items-center">
-      {/* Grid Image Reveal Container */}
+      {/* Grid Image Reveal Container - Force LTR to prevent image direction change */}
       <div
+        dir="ltr"
         className="absolute inset-0 grid w-full h-full"
         style={{
           gridTemplateColumns: `repeat(${cols}, 1fr)`,
@@ -51,8 +52,6 @@ const HeroSection = () => {
                 height: "90vh",
               }}
             />
-
-           
           </motion.div>
         ))}
       </div>

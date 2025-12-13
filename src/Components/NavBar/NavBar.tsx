@@ -11,6 +11,7 @@ import {
   FaUserCircle,
   FaChevronDown,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import logo from "../../assets/images/logo.jpg";
 
 export default function NavBar() {
@@ -19,16 +20,24 @@ export default function NavBar() {
   const [isDark, setIsDark] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { noOfCartItems } = useSelector((state: RootState) => state.cart);
+  const { t, i18n } = useTranslation();
 
   const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "Products", href: "/products" },
-    { label: "Services", href: "service" },
-    { label: "Reservation", href: "/reservation" },
-    { label: "Contact Us", href: "/contact" },
-    { label: "Blog", href: "/blog" },
-
+    { label: t("navbar.home"), href: "/" },
+    { label: t("navbar.products"), href: "/products" },
+    { label: t("navbar.services"), href: "service" },
+    { label: t("navbar.reservation"), href: "/reservation" },
+    { label: t("navbar.contactUs"), href: "/contact" },
+    { label: t("navbar.blog"), href: "/blog" },
   ];
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === "en" ? "ar" : "en";
+    i18n.changeLanguage(newLang);
+    localStorage.setItem("i18nextLng", newLang);
+    document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
+    document.documentElement.lang = newLang;
+  };
 
   useEffect(() => {
     const root = document.documentElement;
@@ -38,6 +47,12 @@ export default function NavBar() {
       root.classList.remove("dark");
     }
   }, [isDark]);
+
+  useEffect(() => {
+    const currentLang = i18n.language || "en";
+    document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
+    document.documentElement.lang = currentLang;
+  }, [i18n.language]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,7 +68,7 @@ export default function NavBar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
         isScrolled
           ? "bg-[var(--color-light-background)]/90 dark:bg-[var(--color-dark-background)]/90 backdrop-blur-xl shadow-lg"
           : "bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] shadow-md"
@@ -98,7 +113,15 @@ export default function NavBar() {
           {/* Actions */}
           <div className="hidden md:flex items-center gap-4">
             <button
-              aria-label="Toggle theme"
+              aria-label={t("navbar.toggleTheme")}
+              onClick={toggleLanguage}
+              className="p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] font-semibold text-sm"
+            >
+              {i18n.language === "en" ? "AR" : "EN"}
+            </button>
+
+            <button
+              aria-label={t("navbar.toggleTheme")}
               onClick={() => setIsDark(!isDark)}
               className="p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
             >
@@ -112,7 +135,7 @@ export default function NavBar() {
             <a
               href="/cart"
               className="relative p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]"
-              aria-label="Cart"
+              aria-label={t("navbar.cart")}
             >
               <FaShoppingCart />
               {noOfCartItems > 0 && (
@@ -137,10 +160,10 @@ export default function NavBar() {
               {showProfile && (
                 <div className="absolute right-0 mt-3 w-52 rounded-2xl bg-white dark:bg-[var(--color-dark-card)] border border-[var(--color-light-secondary)]/20 shadow-2xl p-3 space-y-2 z-20">
                   {[
-                    { label: "Profile", href: "/profile" },
-                    { label: "Login", href: "/login" },
-                    { label: "Register", href: "/register" },
-                    { label: "Logout", href: "/logout" },
+                    { label: t("navbar.profile"), href: "/profile" },
+                    { label: t("navbar.login"), href: "/login" },
+                    { label: t("navbar.register"), href: "/register" },
+                    { label: t("navbar.logout"), href: "/logout" },
                   ].map((item) => (
                     <a
                       key={item.label}
@@ -187,7 +210,14 @@ export default function NavBar() {
 
               <div className="flex items-center gap-3">
                 <button
-                  aria-label="Toggle theme"
+                  aria-label={t("navbar.toggleTheme")}
+                  onClick={toggleLanguage}
+                  className="p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] font-semibold text-sm"
+                >
+                  {i18n.language === "en" ? "عربي" : "EN"}
+                </button>
+                <button
+                  aria-label={t("navbar.toggleTheme")}
                   onClick={() => setIsDark(!isDark)}
                   className="p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm"
                 >
@@ -209,10 +239,10 @@ export default function NavBar() {
 
               <div className="bg-white dark:bg-[var(--color-dark-card)] border border-[var(--color-light-secondary)]/20 rounded-2xl p-3 space-y-2">
                 {[
-                  { label: "Profile", href: "/profile" },
-                  { label: "Login", href: "/login" },
-                  { label: "Register", href: "/register" },
-                  { label: "Logout", href: "/logout" },
+                  { label: t("navbar.profile"), href: "/profile" },
+                  { label: t("navbar.login"), href: "/login" },
+                  { label: t("navbar.register"), href: "/register" },
+                  { label: t("navbar.logout"), href: "/logout" },
                 ].map((item) => (
                   <a
                     key={item.label}

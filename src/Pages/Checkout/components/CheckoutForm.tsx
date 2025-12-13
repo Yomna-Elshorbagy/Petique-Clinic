@@ -9,7 +9,7 @@ import { z } from "zod";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
-// Zod validation schema
+// validation
 const checkoutSchema = z.object({
   fullName: z
     .string()
