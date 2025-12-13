@@ -1,6 +1,6 @@
 import React from "react";
 import { FaTimes, FaSyringe } from "react-icons/fa";
-import { usePetById, usePetVaccinations } from "../../../../Hooks/Pets/UsePets";
+import { usePetById } from "../../../../Hooks/Pets/UsePets";
 
 interface Props {
     petId: string | null;
@@ -10,12 +10,11 @@ interface Props {
 
 export default function PetDetailsModal({ petId, isOpen, onClose }: Props) {
     const { data: petData } = usePetById(petId || "");
-    const { data: vacData } = usePetVaccinations(petId || "");
 
     if (!isOpen || !petId) return null;
 
     const pet = petData;
-    const vaccinations = vacData?.data || [];
+    const vaccinations = pet?.vaccinationHistory || [];
 
     return (
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
@@ -57,7 +56,7 @@ export default function PetDetailsModal({ petId, isOpen, onClose }: Props) {
                                     <div key={index} className="p-3 bg-white rounded-xl border">
                                         <div className="flex justify-between">
                                             <span className="font-bold text-[#86654F]">
-                                                {v.vaccineName}
+                                                {v.vaccine?.name || "Unknown Vaccine"}
                                             </span>
                                             <FaSyringe className="text-[#A98770]" />
                                         </div>
