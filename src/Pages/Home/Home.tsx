@@ -15,9 +15,9 @@ export default function Home() {
       <ProductSlider2/>
       <Quote />
       <ServicesSection />
-       <Stuff />
-      <About />
-      <FAQ />
+       <section id="team"><Stuff /></section>
+       <section id="about"><About /></section>
+       <section id="faq"><FAQ /></section>
     </>
   );
 }

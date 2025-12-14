@@ -2,15 +2,19 @@ import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import ProductCard from "./ProductCard";
 import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
 import type { IProduct } from "../../Interfaces/IProducts";
 import { getAllProducts } from "../../Apis/ProductApis";
 
+
 const AUTOPLAY_DELAY = 3500;
 
 const ProductSlider2: React.FC = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.dir() === "rtl";
 
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -45,7 +49,9 @@ const ProductSlider2: React.FC = () => {
         if (e instanceof Error) {
           setError(e.message);
         } else {
-          setError("Failed to load products");
+          setError(
+          e instanceof Error ? e.message : t("products.errors.loadFailed")
+        );
         }
       } finally {
         setLoading(false);
@@ -119,7 +125,7 @@ const ProductSlider2: React.FC = () => {
   if (!products.length) return null;
 
   const slideWidth = 100 / slidesPerView;
-  const translateX = currentIndex * slideWidth;
+  const translateX = currentIndex * slideWidth * (isRTL ? -1 : 1);
 
   return (
     <motion.section
@@ -162,10 +168,10 @@ const ProductSlider2: React.FC = () => {
       {/* ================= Header ================= */}
       <div className="text-center mb-12 relative z-10">
         <h2 className="font-['Playfair_Display'] text-[#6c5136] uppercase tracking-widest font-semibold text-xl md:text-3xl mb-4">
-          Best Value Products
+          {t("productsSection.bestValue.title")}
         </h2>
         <p className="text-[#8A7A67] text-sm md:text-base max-w-2xl mx-auto">
-          Discover our lowest-priced premium products for your beloved pets
+           {t("productsSection.bestValue.subtitle")}
         </p>
       </div>
 
@@ -176,8 +182,8 @@ const ProductSlider2: React.FC = () => {
         onMouseLeave={() => setIsPaused(false)}
       >
         <motion.div
-          className="flex"
-          animate={{ x: `-${translateX}%` }}
+          className={`flex ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+          animate={{ x: `${translateX}%` }}
           transition={
             enableTransition
               ? { duration: 0.7, ease: "easeInOut" }
@@ -214,17 +220,46 @@ const ProductSlider2: React.FC = () => {
       </div>
 
       {/* ================= CTA ================= */}
-      <div className="flex justify-center mt-12 relative z-10">
-        <motion.button
-          onClick={() => navigate("/products")}
-          whileHover={{ scale: 1.05, x: 5 }}
-          whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#E5A85C] to-[#D98C33] text-white font-semibold text-lg rounded-full shadow-lg"
+      <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+          className="text-center"
         >
-          Shop Now
-          <ArrowRight className="w-5 h-5" />
-        </motion.button>
-      </div>
+          <motion.button
+            onClick={() => navigate("/products")}
+            whileHover={{ scale: 1.05, x: 5 }}
+            whileTap={{ scale: 0.95 }}
+            className="
+              inline-flex
+              items-center
+              gap-3
+              px-8
+              py-4
+              mt-12
+              bg-gradient-to-r
+              from-[#E5A85C]
+              to-[#D98C33]
+              text-white
+              font-semibold
+              text-lg
+              rounded-full
+              shadow-lg
+              hover:shadow-xl
+              transition-all
+              duration-300
+              group
+            "
+          >
+            <span>{t("productsSection.bestValue.cta")}</span>
+            <motion.div
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </motion.div>
+          </motion.button>
+        </motion.div>
     </motion.section>
   );
 };
