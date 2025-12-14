@@ -1,4 +1,3 @@
-// EditReservationModal.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
@@ -8,7 +7,6 @@ import { useAllPets } from "../../../../Hooks/Pets/UsePets";
 import { useAllDoctors } from "../../../../Hooks/Doctor/useDoctor";
 import { useServices } from "../../../../Hooks/Services/UseServices";
 import { useAvailableSlots } from "../../../../Hooks/Reservation/useReservation";
-import { TIME_SLOTS } from "../../../../Constants/timeSlots";
 
 interface ReservationEdit {
   _id: string;
@@ -42,10 +40,7 @@ export default function EditReservationModal({
 
   // normalize data shapes (support array or { data: [] })
   const pets = useMemo(() => petsData?.data ?? petsData ?? [], [petsData]);
-  const doctors = useMemo(
-    () => doctorsData?.data ?? doctorsData ?? [],
-    [doctorsData]
-  );
+  const doctors = useMemo(() => doctorsData ?? [], [doctorsData]);
   const services = useMemo(
     () => servicesData?.data ?? servicesData ?? [],
     [servicesData]
@@ -66,10 +61,12 @@ export default function EditReservationModal({
     doctor: string;
     date: string;
   } | null>(null);
+
   const { data: availableSlotsData } = useAvailableSlots(
     fetchSlotsKey?.doctor ?? "",
     fetchSlotsKey?.date ?? ""
   );
+
   const availableSlots = useMemo(
     () => availableSlotsData?.availableSlots ?? availableSlotsData ?? [],
     [availableSlotsData]
@@ -79,10 +76,23 @@ export default function EditReservationModal({
 
   useEffect(() => {
     if (reservation) {
+      const doctorId =
+        typeof reservation.doctor === "object"
+          ? reservation.doctor?._id
+          : reservation.doctor;
+      const petId =
+        typeof reservation.pet === "object"
+          ? reservation.pet?._id
+          : reservation.pet;
+      const serviceId =
+        typeof reservation.service === "object"
+          ? reservation.service?._id
+          : reservation.service;
+
       setForm({
-        pet: reservation.pet?._id ?? reservation.pet ?? "",
-        service: reservation.service?._id ?? reservation.service ?? "",
-        doctor: reservation.doctor?._id ?? reservation.doctor ?? "",
+        pet: petId ?? "",
+        service: serviceId ?? "",
+        doctor: doctorId ?? "",
         date: reservation.date
           ? new Date(reservation.date).toISOString().split("T")[0]
           : "",
@@ -93,18 +103,21 @@ export default function EditReservationModal({
       });
 
       // set slot fetch when modal opens
-      const doctorId = reservation.doctor?._id ?? reservation.doctor ?? "";
       const dt = reservation.date
         ? new Date(reservation.date).toISOString().split("T")[0]
         : "";
-      if (doctorId && dt) setFetchSlotsKey({ doctor: doctorId, date: dt });
+
+      if (doctorId && dt) {
+        setFetchSlotsKey({ doctor: doctorId, date: dt });
+      }
     }
   }, [reservation]);
 
   useEffect(() => {
-    // when doctor or date change fetch available slots
     if (form.doctor && form.date) {
       setFetchSlotsKey({ doctor: form.doctor, date: form.date });
+    } else {
+      setFetchSlotsKey(null);
     }
   }, [form.doctor, form.date]);
 
@@ -139,7 +152,7 @@ export default function EditReservationModal({
       {
         onSuccess(data) {
           toast.success("Reservation updated");
-          onUpdated?.(data);
+          onUpdated?.(data.data);
           onClose();
         },
         onError(err: any) {
@@ -149,9 +162,25 @@ export default function EditReservationModal({
     );
   };
 
-  // build timeslot list: prefer availableSlots, fallback to TIME_SLOTS
-  const timeslotOptions = availableSlots.length ? availableSlots : TIME_SLOTS;
+  let timeslotOptions = [...availableSlots];
 
+  const currentDoctorId =
+    typeof reservation.doctor === "object"
+      ? reservation.doctor?._id
+      : reservation.doctor;
+  const currentDateStr = reservation.date
+    ? new Date(reservation.date).toISOString().split("T")[0]
+    : "";
+
+  if (
+    form.doctor === currentDoctorId &&
+    form.date === currentDateStr &&
+    reservation.timeSlot
+  ) {
+    if (!timeslotOptions.includes(reservation.timeSlot)) {
+      timeslotOptions.push(reservation.timeSlot);
+    }
+  }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
       <motion.form
@@ -269,6 +298,11 @@ export default function EditReservationModal({
                 Showing available slots for selected doctor & date.
               </div>
             )}
+            {availableSlots.length === 0 && form.doctor && form.date && (
+              <div className="text-xs text-red-500 mt-2">
+                No available slots for this date/doctor
+              </div>
+            )}
           </div>
 
           {/* status / payment */}
@@ -323,7 +357,7 @@ export default function EditReservationModal({
               Cancel
             </button>
 
-           <button
+            <button
               type="submit"
               disabled={updateMutation.isPending}
               className="px-6 py-3 rounded-xl bg-[#86654F] text-white hover:bg-[#6d5240]"

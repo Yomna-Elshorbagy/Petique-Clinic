@@ -66,13 +66,13 @@ export default function ContactUs() {
 
   return (
     <>
-      <div className="relative min-h-screen bg-[#FCF9F4] flex items-center justify-center py-16 px-6 overflow-hidden">
+      <div className="relative min-h-screen bg-[var(--color-light-background)] flex items-center justify-center py-16 px-6 overflow-hidden transition-colors duration-300">
         <motion.div
           animate={{ y: [0, -20, 0] }}
           transition={{ duration: 4, repeat: Infinity }}
           className="absolute top-26 left-10 opacity-40 pointer-events-none"
         >
-          <Cat size={80} className="text-amber-800" />
+          <Cat size={80} className="text-[var(--color-light-secondary)]" />
         </motion.div>
 
         <motion.div
@@ -80,7 +80,7 @@ export default function ContactUs() {
           transition={{ duration: 4, repeat: Infinity }}
           className="absolute top-90 right-10 opacity-40 pointer-events-none"
         >
-          <Dog size={90} className="text-cyan-900" />
+          <Dog size={90} className="text-[var(--color-light-dark)]" />
         </motion.div>
 
         <div className="w-full max-w-6xl grid md:grid-cols-2 gap-8 relative z-10">
@@ -88,10 +88,10 @@ export default function ContactUs() {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white rounded-3xl shadow-xl p-6 border border-[#A98868]/30"
+            className="bg-[var(--color-bg-lighter)] rounded-3xl shadow-xl p-6 border border-[var(--color-border-medium)]/30"
           >
-            <h2 className="text-2xl font-bold text-[#443935] flex items-center gap-2 mb-4">
-              <MapPin className="text-[#C58D52]" /> {t("contactUs.ourLocation")}
+            <h2 className="text-2xl font-bold text-[var(--color-text-primary)] flex items-center gap-2 mb-4">
+              <MapPin className="text-[var(--color-light-accent)]" /> {t("contactUs.ourLocation")}
             </h2>
 
             <div className="rounded-2xl overflow-hidden shadow-lg mb-4">
@@ -103,17 +103,17 @@ export default function ContactUs() {
               ></iframe>
             </div>
 
-            <div className="space-y-3 text-[#443935]">
+            <div className="space-y-3 text-[var(--color-text-primary)]">
               <p className="flex items-center gap-3">
-                <Phone className="text-[#C58D52]" /> +20 0123456789
+                <Phone className="text-[var(--color-light-accent)]" /> +20 0123456789
               </p>
 
               <p className="flex items-center gap-3">
-                <Mail className="text-[#C58D52]" /> support@petique.com
+                <Mail className="text-[var(--color-light-accent)]" /> support@petique.com
               </p>
 
               <p className="flex items-center gap-3">
-                <PawPrint className="text-[#C58D52]" />{" "}
+                <PawPrint className="text-[var(--color-light-accent)]" />{" "}
                 {t("contactUs.openHours")}
               </p>
             </div>
@@ -123,10 +123,10 @@ export default function ContactUs() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white rounded-3xl shadow-xl p-8 border border-[#A98868]/30"
+            className="bg-[var(--color-bg-lighter)] rounded-3xl shadow-xl p-8 border border-[var(--color-border-medium)]/30"
           >
-            <h2 className="text-3xl font-bold text-[#443935] mb-2 flex items-center gap-2">
-              <PawPrint className="text-[#C58D52]" /> {t("contactUs.title")}
+            <h2 className="text-3xl font-bold text-[var(--color-text-primary)] mb-2 flex items-center gap-2">
+              <PawPrint className="text-[var(--color-light-accent)]" /> {t("contactUs.title")}
             </h2>
             {success && (
               <motion.div
@@ -146,7 +146,7 @@ export default function ContactUs() {
                   value={form.fullName}
                   onChange={handleChange}
                   placeholder={t("contactUs.fullName")}
-                  className="input-box"
+                  className="input-box bg-[var(--color-light-background)] border-[var(--color-border-medium)]/50 text-[var(--color-text-primary)] focus:border-[var(--color-light-accent)]"
                 />
 
                 <input
@@ -156,7 +156,7 @@ export default function ContactUs() {
                   value={form.email}
                   onChange={handleChange}
                   placeholder={t("contactUs.email")}
-                  className="input-box"
+                  className="input-box bg-[var(--color-light-background)] border-[var(--color-border-medium)]/50 text-[var(--color-text-primary)] focus:border-[var(--color-light-accent)]"
                 />
               </div>
 
@@ -165,7 +165,7 @@ export default function ContactUs() {
                   name="category"
                   value={form.category}
                   onChange={handleChange}
-                  className="input-box"
+                  className="input-box bg-[var(--color-light-background)] border-[var(--color-border-medium)]/50 text-[var(--color-text-primary)] focus:border-[var(--color-light-accent)]"
                 >
                   <option value="">{t("contactUs.category")}</option>
                   <option value="general">
@@ -189,7 +189,7 @@ export default function ContactUs() {
                   name="urgency"
                   value={form.urgency}
                   onChange={handleChange}
-                  className="input-box"
+                  className="input-box bg-[var(--color-light-background)] border-[var(--color-border-medium)]/50 text-[var(--color-text-primary)] focus:border-[var(--color-light-accent)]"
                 >
                   <option value="">{t("contactUs.urgency")}</option>
                   <option value="high">
@@ -212,7 +212,7 @@ export default function ContactUs() {
                 type="number"
                 value={form.petAge}
                 onChange={handleChange}
-                className="input-box"
+                className="input-box bg-[var(--color-light-background)] border-[var(--color-border-medium)]/50 text-[var(--color-text-primary)] focus:border-[var(--color-light-accent)]"
                 placeholder={t("contactUs.petAge")}
               />
 
@@ -223,7 +223,7 @@ export default function ContactUs() {
                 value={form.message}
                 onChange={handleChange}
                 placeholder={t("contactUs.describeIssue")}
-                className="input-box"
+                className="input-box bg-[var(--color-light-background)] border-[var(--color-border-medium)]/50 text-[var(--color-text-primary)] focus:border-[var(--color-light-accent)]"
               />
 
               <motion.button
@@ -231,8 +231,8 @@ export default function ContactUs() {
                 whileTap={{ scale: 0.97 }}
                 disabled={loading}
                 className="w-full py-3 rounded-xl text-white text-lg font-semibold shadow-lg
-                bg-gradient-to-r from-[#C58D52] to-[#C58D52]
-                hover:from-[#C58D52] hover:to-[#A98868]
+                bg-gradient-to-r from-[var(--color-light-accent)] to-[var(--color-accent-dark)]
+                hover:from-[var(--color-accent-dark)] hover:to-[var(--color-light-secondary)]
                 transition duration-300"
               >
                 {loading ? t("contactUs.sending") : t("contactUs.sendMessage")}

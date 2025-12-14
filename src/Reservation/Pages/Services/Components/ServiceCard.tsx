@@ -40,9 +40,14 @@ export default function ServiceCard({
         )}
       </div>
 
-      <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-[#E5A46C] transition-colors">
-        {service.title}
-      </h3>
+      <div className="flex items-center gap-2 mb-2">
+        <h3 className="text-xl font-bold text-gray-800 group-hover:text-[#E5A46C] transition-colors">
+          {service.title ?? (service as any).name}
+        </h3>
+        <span className="text-[10px] font-mono text-[#A98770] bg-[#F7F3EF] px-1.5 py-0.5 rounded-md border border-[#E9DFD5]">
+          #{service._id?.slice(-6).toUpperCase()}
+        </span>
+      </div>
       <p className="text-gray-500 text-sm mb-4 line-clamp-2 flex-grow">
         {service.description}
       </p>
@@ -74,7 +79,7 @@ export default function ServiceCard({
 
       {/* ===> actions */}
       <div className="mt-auto">
-        <button  onClick={() => onEdit(service._id)} className="w-full py-3 rounded-xl border border-[#E5A46C] text-[#86654F] font-semibold hover:bg-[#E5A46C] hover:text-white transition-all flex items-center justify-center gap-2 mb-3">
+        <button onClick={() => onEdit(service._id)} className="w-full py-3 rounded-xl border border-[#E5A46C] text-[#86654F] font-semibold hover:bg-[#E5A46C] hover:text-white transition-all flex items-center justify-center gap-2 mb-3">
           Edit Details
         </button>
 

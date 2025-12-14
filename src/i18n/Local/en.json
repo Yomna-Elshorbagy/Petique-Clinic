@@ -189,5 +189,161 @@
     "statusPlaced": "Placed",
     "statusShipped": "Shipped",
     "statusDelivered": "Delivered"
+  },
+   "quote": {
+    "text": "A dog is the only thing on earth that loves you more than he loves himself",
+    "button": "More Details"
+  },
+  "faq": {
+    "subtitle": "Feel free to ask details?",
+    "title": "Frequently Asked Questions",
+    "badge": "We Care",
+    "imageAlt": "Veterinarian caring for a happy pet",
+    "items": [
+      {
+        "question": "What are your operating hours?",
+        "answer": "We are open Monday through Friday from 8:00 AM to 6:00 PM, and Saturdays from 9:00 AM to 3:00 PM. We are closed on Sundays and public holidays."
+      },
+      {
+        "question": "Do you offer emergency services?",
+        "answer": "Yes, we provide 24/7 emergency veterinary services. For after-hours emergencies, please call our emergency hotline, and our on-call veterinarian will assist you immediately."
+      },
+      {
+        "question": "What types of pets do you treat?",
+        "answer": "We treat a wide variety of pets including dogs, cats, birds, rabbits, guinea pigs, hamsters, reptiles, and other small exotic animals."
+      },
+      {
+        "question": "Do you provide boarding services?",
+        "answer": "Yes, we offer comfortable boarding facilities for dogs and cats with daily care and supervision."
+      },
+      {
+        "question": "How can I prepare my pet for their visit?",
+        "answer": "Bring previous medical records, keep your pet fasted if needed, and ensure cats are in carriers and dogs on leashes."
+      },
+      {
+        "question": "How often should my pet have a check-up?",
+        "answer": "Annual check-ups are recommended for adult pets, while senior pets may need bi-annual visits."
+      }
+    ]
+  },
+   "productsSection": {
+    "bestValue": {
+      "title": "Best Value Products",
+      "subtitle": "Discover our lowest-priced premium products for your beloved pets",
+      "cta": "Shop Now"
+    },
+    "errors": {
+      "loadFailed": "Failed to load products"
+    }
+  },
+   "footer": {
+    "brand": {
+      "tagline": "Trusted Pet Care"
+    },
+    "description": "We're here to care for your pets and answer all your questions. Whether you're a new pet parent or want to schedule an appointment.",
+    "newsletter": {
+      "placeholder": "Email Address"
+    },
+    "services": {
+      "title": "Our Services",
+      "items": [
+        "Skin and Ear Cytology",
+        "Ultrasound Scan Services",
+        "Dental Care and Cleanings",
+        "Nutritional Counseling",
+        "Puppy Wellness Program",
+        "Pets Surgical Services"
+      ]
+    },
+     "quickLinks": {
+      "title": "Quick Links",
+      "items": {
+        "about": "About Us",
+        "faq": "FAQ",
+        "services": "Our Services",
+        "team": "Team",
+        "portfolio": "Portfolio",
+        "blog": "Blog"
+      }
+    },
+    "openingHours": {
+      "title": "Opening Hours",
+      "items": [
+        { "day": "Mon - Tues", "time": "09:00 AM - 06:00 PM" },
+        { "day": "Wed - Thu", "time": "09:00 AM - 06:00 PM" },
+        { "day": "Fri - Sat", "time": "09:00 AM - 06:00 PM" },
+        { "day": "Sunday", "time": "Emergency Only" }
+      ]
+    },
+    "images": {
+      "cat": "Cat",
+      "dog": "Dog"
+    },
+    "copyright":
+      "© Copyright 2024. All rights reserved. Petique. Designed by ITI Team."
+  },
+   "features": {
+    "items": [
+      {
+        "icon": "shopping",
+        "title": "Wide Selection",
+        "desc": "Wide variety of products for dogs, cats, and more"
+      },
+      {
+        "icon": "care",
+        "title": "Quality Care",
+        "desc": "Vet-approved products you can trust"
+      },
+      {
+        "icon": "happy",
+        "title": "Happy Pets",
+        "desc": "Making tails wag since 2024"
+      }
+    ]
+  },
+   "productsHero": {
+    "title": "Shop",
+    "imageAlt": "Relaxing cat"
+  },
+  "breadcrumbs": {
+    "home": "Home",
+    "shop": "Shop"
+  },
+  "products": {
+    "title": "Our Products",
+    "subtitle": "Discover premium quality products for your beloved pets",
+    "filters": {
+      "title": "Filter Products",
+      "active": "Filters Active",
+      "search": "Search",
+      "searchPlaceholder": "Search by name",
+      "category": "Category",
+      "allCategories": "All categories",
+      "priceMin": "Price (min)",
+      "priceMax": "Price (max)",
+      "min": "Min",
+      "max": "Max",
+      "stock": "Stock",
+      "all": "All",
+      "inStock": "In stock",
+      "outStock": "Out of stock"
+    },
+    "empty": {
+      "title": "No products found",
+      "subtitle": "Try adjusting your search criteria",
+      "clear": "Clear filters"
+    }
+  },
+  "pagination": {
+    "showing": "Showing",
+    "of": "of",
+    "products": "products",
+    "prev": "Prev",
+    "next": "Next"
+  },
+  "common": {
+    "reset": "Reset"
   }
+
+
 }

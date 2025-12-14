@@ -24,3 +24,4 @@ export interface IVaccination {
   updatedAt?: string;
 }
 export type VaccinationStatus = "scheduled" | "completed" | "overdue";
+export type VaccinationTab = "pet" | "all";

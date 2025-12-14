@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import SEO from "../../Components/SEO/SEO";
 import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
 import ProductCard from "../../Components/Products/ProductCard";
@@ -45,6 +46,7 @@ const initialFilters: FilterState = {
 const Products: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryFromUrl = searchParams.get("category");
+  const { t, i18n } = useTranslation();
 
   const [productsState, setProductsState] = useState<ProductsState>({
     items: [],
@@ -207,18 +209,18 @@ const Products: React.FC = () => {
         className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-amber-200/50 pt-6"
       >
         <p className="text-sm text-stone-600">
-          Showing{" "}
+          {t("pagination.showing")}{" "}
           <span className="font-semibold text-amber-950">
             {Math.min(
               totalFiltered - (pagination.currentPage - 1) * pagination.limit,
               pagination.limit
             )}
           </span>{" "}
-          of{" "}
+          {t("pagination.of")}{" "}
           <span className="font-semibold text-amber-950">
             {totalFiltered}
           </span>{" "}
-          products
+          {t("pagination.products")}
         </p>
 
         <div className="flex items-center gap-2">
@@ -228,7 +230,7 @@ const Products: React.FC = () => {
             disabled={pagination.currentPage <= 1}
             className="inline-flex h-9 items-center rounded-full border border-stone-300 bg-white px-4 text-xs font-medium text-amber-950 transition-all duration-300 hover:bg-amber-50 hover:border-amber-600 hover:shadow-sm disabled:cursor-not-allowed disabled:border-stone-200 disabled:bg-stone-50/50 disabled:text-stone-400"
           >
-            Prev
+            {t("pagination.prev")}
           </button>
 
           <div className="flex items-center gap-1 overflow-x-auto rounded-full bg-amber-50/50 px-2 py-1.5">
@@ -254,7 +256,7 @@ const Products: React.FC = () => {
             disabled={pagination.currentPage >= pageCount}
             className="inline-flex h-9 items-center rounded-full border border-stone-300 bg-white px-4 text-xs font-medium text-amber-950 transition-all duration-300 hover:bg-amber-50 hover:border-amber-600 hover:shadow-sm disabled:cursor-not-allowed disabled:border-stone-200 disabled:bg-stone-50/50 disabled:text-stone-400"
           >
-            Next
+            <button>{t("pagination.next")}</button>
           </button>
         </div>
       </nav>
@@ -277,13 +279,13 @@ const Products: React.FC = () => {
 
       <ProductsHero />
       
-      <section className=" py-4 text-center">
+      <section className=" py-4 text-center mt-16">
         <div className="container mx-auto px-4">
           <h1 className="mb-4 text-4xl font-bold md:text-5xl text-[#4C3A26] ">
-            Our Products
+            {t("products.title")}
           </h1>
           <p className="mx-auto max-w-2xl text-lg  text-[#8A7A67] ">
-            Discover premium quality products for your beloved pets
+            {t("products.subtitle")}
           </p>
         </div>
       </section>
@@ -298,12 +300,12 @@ const Products: React.FC = () => {
           >
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-base font-semibold text-amber-950 sm:text-lg font-['Playfair_Display']">
-                Filter Products
+                {t("products.filters.title")}
               </h2>
               <div className="flex items-center gap-2 text-xs">
                 {isFiltersDirty && (
                   <span className="inline-flex h-6 items-center rounded-full bg-amber-100 px-3 text-[11px] font-medium text-amber-900 ring-1 ring-amber-200 animate-fadeIn">
-                    Filters Active
+                    {t("products.filters.active")}
                   </span>
                 )}
                 <button
@@ -311,7 +313,7 @@ const Products: React.FC = () => {
                   onClick={handleResetFilters}
                   className="inline-flex items-center rounded-full border border-amber-200 bg-white px-3 py-1.5 text-[11px] font-medium text-amber-900 transition-all duration-300 hover:bg-amber-50 hover:border-amber-300 hover:shadow-sm"
                 >
-                  Reset
+                  {t("common.reset")}
                 </button>
               </div>
             </div>
@@ -322,14 +324,14 @@ const Products: React.FC = () => {
                   htmlFor="search"
                   className="text-[11px] font-semibold uppercase tracking-wider text-amber-900"
                 >
-                  Search
+                  {t("products.filters.search")}
                 </label>
                 <input
                   id="search"
                   type="text"
                   value={filters.search}
                   onChange={(event) => handleFilterChange("search", event.target.value)}
-                  placeholder="Search by name"
+                  placeholder={t("products.filters.searchPlaceholder")}
                   className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 placeholder:text-stone-500 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600"
                 />
               </div>
@@ -339,7 +341,7 @@ const Products: React.FC = () => {
                   htmlFor="category"
                   className="text-[11px] font-semibold uppercase tracking-wider text-amber-900"
                 >
-                  Category
+                   {t("products.filters.category")}
                 </label>
                 <select
                   id="category"
@@ -347,7 +349,7 @@ const Products: React.FC = () => {
                   onChange={(event) => handleFilterChange("category", event.target.value)}
                   className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600 cursor-pointer"
                 >
-                  <option value="all">All categories</option>
+                  <option value="all">{t("products.filters.allCategories")}</option>
                   {categories.map((category) => (
                     <option key={category._id} value={category.name}>
                       {category.name}
@@ -358,28 +360,28 @@ const Products: React.FC = () => {
 
               <div className="flex flex-col gap-2">
                 <label className="text-[11px] font-semibold uppercase tracking-wider text-amber-900">
-                  Price (min)
+                  {t("products.filters.priceMin")}
                 </label>
                 <input
                   type="number"
                   min={0}
                   value={filters.minPrice}
                   onChange={(event) => handleFilterChange("minPrice", event.target.value)}
-                  placeholder="Min"
+                  placeholder={t("products.filters.min")}
                   className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 placeholder:text-stone-500 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600"
                 />
               </div>
 
               <div className="flex flex-col gap-2">
                 <label className="text-[11px] font-semibold uppercase tracking-wider text-amber-900">
-                  Price (max)
+                  {t("products.filters.priceMax")}
                 </label>
                 <input
                   type="number"
                   min={0}
                   value={filters.maxPrice}
                   onChange={(event) => handleFilterChange("maxPrice", event.target.value)}
-                  placeholder="Max"
+                  placeholder={t("products.filters.priceMax")}
                   className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 placeholder:text-stone-500 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600"
                 />
               </div>
@@ -389,7 +391,7 @@ const Products: React.FC = () => {
                   htmlFor="stock"
                   className="text-[11px] font-semibold uppercase tracking-wider text-amber-900"
                 >
-                  Stock
+                  {t("products.filters.stock")}
                 </label>
                 <select
                   id="stock"
@@ -399,9 +401,9 @@ const Products: React.FC = () => {
                   }
                   className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600 cursor-pointer"
                 >
-                  <option value="all">All</option>
-                  <option value="in">In stock</option>
-                  <option value="out">Out of stock</option>
+                  <option value="all">{t("products.filters.all")}</option>
+                  <option value="in">{t("products.filters.inStock")}</option>
+                  <option value="out">{t("products.filters.outStock")}</option>
                 </select>
               </div>
             </div>
@@ -416,14 +418,14 @@ const Products: React.FC = () => {
 
             {!productsState.loading && !filteredItems.length && !productsState.error && (
               <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-amber-200 bg-white/80 py-12 text-center animate-fadeIn transition-all duration-300">
-                <p className="font-medium text-stone-600 mb-1">No products found for selected filters.</p>
-                <p className="text-xs text-stone-500 mb-4">Try adjusting your search criteria</p>
+                <p className="font-medium text-stone-600 mb-1">{t("products.empty.title")}</p>
+                <p className="text-xs text-stone-500 mb-4">{t("products.empty.subtitle")}</p>
                 <button
                   type="button"
                   onClick={handleResetFilters}
                   className="inline-flex items-center rounded-full bg-[#e6953a] px-5 py-2 text-xs font-semibold text-white shadow-md shadow-amber-600/30 transition-all duration-300 hover:bg-[#cc7422] hover:shadow-lg hover:scale-105"
                 >
-                  Clear filters
+                  {t("products.empty.clear")}
                 </button>
               </div>
             )}

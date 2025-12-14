@@ -129,6 +129,13 @@ export default function VaccinatePetModal({
                 </option>
               ))}
             </select>
+            {selectedPet && (
+              <div className="mt-1">
+                <span className="text-[10px] font-mono text-[#A98770] bg-[#F7F3EF] px-1.5 py-0.5 rounded-md border border-[#E9DFD5]">
+                  ID: #{selectedPet.slice(-6).toUpperCase()}
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Vaccine Selection */}
@@ -149,6 +156,13 @@ export default function VaccinatePetModal({
                 </option>
               ))}
             </select>
+            {selectedVaccineId && (
+              <div className="mt-1">
+                <span className="text-[10px] font-mono text-[#A98770] bg-[#F7F3EF] px-1.5 py-0.5 rounded-md border border-[#E9DFD5]">
+                  ID: #{selectedVaccineId.slice(-6).toUpperCase()}
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Dose Selection */}
