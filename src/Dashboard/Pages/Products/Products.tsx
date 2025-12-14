@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { TableColumn } from "react-data-table-component";
 import {
@@ -9,7 +9,15 @@ import {
 import type { IProduct } from "../../../Interfaces/IProducts";
 import DataTableComponent from "../../../Shared/Table/TableComponent";
 import toast from "react-hot-toast";
-import { FaEdit, FaEye, FaPlusCircle, FaTrash, FaUndo } from "react-icons/fa";
+import {
+  FaEdit,
+  FaEye,
+  FaPlusCircle,
+  FaTrash,
+  FaUndo,
+  FaSearch,
+  FaFilter,
+} from "react-icons/fa";
 import Swal from "sweetalert2";
 import ProductModal from "./Components/viewProductModle";
 import EditProductModal from "./Components/EditProductModel";
@@ -22,11 +30,100 @@ export default function ProductsDashboared() {
   const queryClient = useQueryClient();
   const [addOpen, setAddOpen] = useState(false);
 
+  // Filter states
+  const [searchId, setSearchId] = useState("");
+  const [searchName, setSearchName] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [minStock, setMinStock] = useState("");
+  const [maxStock, setMaxStock] = useState("");
+
   // ===> fetch products
   const { data, isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: () => getProducts(),
   });
+
+  // Filter products
+  const filteredProducts = useMemo(() => {
+    let filtered = data?.data || [];
+
+    // ID filter
+    if (searchId) {
+      const searchLower = searchId.toLowerCase();
+      filtered = filtered.filter((product: IProduct) =>
+        product._id?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Name filter
+    if (searchName) {
+      const searchLower = searchName.toLowerCase();
+      filtered = filtered.filter((product: IProduct) =>
+        product.title?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Category filter
+    if (categoryFilter) {
+      const searchLower = categoryFilter.toLowerCase();
+      filtered = filtered.filter((product: IProduct) =>
+        product.category?.name?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Status filter
+    if (statusFilter) {
+      filtered = filtered.filter((product: IProduct) => {
+        const isOut = product.stock === 0 || product.status === "out";
+        const isLow = product.stock > 0 && product.stock <= 5;
+        const isAvailable = product.stock > 5 && product.status !== "out";
+
+        if (statusFilter === "out") return isOut;
+        if (statusFilter === "low") return isLow;
+        if (statusFilter === "available") return isAvailable;
+        return true;
+      });
+    }
+
+    // Price filter
+    if (minPrice) {
+      filtered = filtered.filter(
+        (product: IProduct) => product.price >= Number(minPrice)
+      );
+    }
+    if (maxPrice) {
+      filtered = filtered.filter(
+        (product: IProduct) => product.price <= Number(maxPrice)
+      );
+    }
+
+    // Stock filter
+    if (minStock) {
+      filtered = filtered.filter(
+        (product: IProduct) => product.stock >= Number(minStock)
+      );
+    }
+    if (maxStock) {
+      filtered = filtered.filter(
+        (product: IProduct) => product.stock <= Number(maxStock)
+      );
+    }
+
+    return filtered;
+  }, [
+    data?.data,
+    searchId,
+    searchName,
+    categoryFilter,
+    statusFilter,
+    minPrice,
+    maxPrice,
+    minStock,
+    maxStock,
+  ]);
 
   // ====> action handlers
   const handleView = (product: IProduct) => {
@@ -143,7 +240,11 @@ export default function ProductsDashboared() {
       cell: (row) => (
         <div className="flex items-center">
           <img
-            src={row.imageCover?.secure_url || "/placeholder-100x100.png"}
+            src={
+              typeof row.imageCover === "string"
+                ? row.imageCover
+                : row.imageCover?.secure_url || "/placeholder-100x100.png"
+            }
             alt={row.title || "product"}
             style={{
               width: 48,
@@ -277,30 +378,199 @@ export default function ProductsDashboared() {
     },
   ];
 
-  const tableData = data?.data || [];
+  const resetFilters = () => {
+    setSearchId("");
+    setSearchName("");
+    setCategoryFilter("");
+    setStatusFilter("");
+    setMinPrice("");
+    setMaxPrice("");
+    setMinStock("");
+    setMaxStock("");
+  };
+
+  const hasActiveFilters =
+    searchId ||
+    searchName ||
+    categoryFilter ||
+    statusFilter ||
+    minPrice ||
+    maxPrice ||
+    minStock ||
+    maxStock;
 
   return (
     <div className="w-full max-w-full px-4 md:px-6">
-      <div className="flex justify-end mb-4">
-        <button
-          onClick={() => setAddOpen(true)}
-          className="
-      flex items-center gap-2 px-4 py-2 
-      bg-[var(--color-extra-1)] 
-      text-[var(--color-light-dark)]
-      font-semibold rounded-xl shadow-md
-      hover:bg-[var(--color-light-accent)]
-      transition-all duration-300 
-      hover:scale-105 active:scale-95
-      animate-fadeIn
-    "
-        >
-          <FaPlusCircle /> Add Product
-        </button>
-      </div>{" "}
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
+          Products Management
+        </h1>
+      </div>
+
+      {/* Filter Section */}
+      <div className="mb-4">
+        <div className="flex gap-4 flex-wrap items-center">
+          {/* ID Search */}
+          <div className="relative flex-1 min-w-[200px]">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaSearch className="text-gray-400" size={18} />
+            </div>
+            <input
+              type="text"
+              placeholder="Search by ID..."
+              value={searchId}
+              onChange={(e) => setSearchId(e.target.value)}
+              className="w-full pl-10 pr-10 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
+            />
+            {searchId && (
+              <button
+                onClick={() => setSearchId("")}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Name Search */}
+          <div className="relative flex-1 min-w-[200px]">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaSearch className="text-gray-400" size={18} />
+            </div>
+            <input
+              type="text"
+              placeholder="Search by name..."
+              value={searchName}
+              onChange={(e) => setSearchName(e.target.value)}
+              className="w-full pl-10 pr-10 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
+            />
+            {searchName && (
+              <button
+                onClick={() => setSearchName("")}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Category Search */}
+          <div className="relative flex-1 min-w-[200px]">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaFilter className="text-gray-400" size={14} />
+            </div>
+            <input
+              type="text"
+              placeholder="Search by category..."
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="w-full pl-10 pr-10 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
+            />
+            {categoryFilter && (
+              <button
+                onClick={() => setCategoryFilter("")}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Status Filter */}
+          <div className="relative min-w-[180px]">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaFilter className="text-gray-400" size={14} />
+            </div>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200 appearance-none cursor-pointer"
+            >
+              <option value="">All Status</option>
+              <option value="available">Available</option>
+              <option value="low">Low Stock</option>
+              <option value="out">Out of Stock</option>
+            </select>
+          </div>
+
+          {/* Reset Button */}
+          <button
+            onClick={resetFilters}
+            disabled={!hasActiveFilters}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium whitespace-nowrap"
+            title="Reset Filters"
+          >
+            Reset
+          </button>
+        </div>
+
+        {/* Second Row - Price and Stock */}
+        <div className="flex gap-4 flex-wrap items-center mt-4">
+          {/* Min Price */}
+          <div className="relative min-w-[150px]">
+            <input
+              type="number"
+              placeholder="Min Price"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+              className="w-full px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
+            />
+          </div>
+
+          {/* Max Price */}
+          <div className="relative min-w-[150px]">
+            <input
+              type="number"
+              placeholder="Max Price"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+              className="w-full px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
+            />
+          </div>
+
+          {/* Min Stock */}
+          <div className="relative min-w-[150px]">
+            <input
+              type="number"
+              placeholder="Min Stock"
+              value={minStock}
+              onChange={(e) => setMinStock(e.target.value)}
+              className="w-full px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
+            />
+          </div>
+
+          {/* Max Stock */}
+          <div className="relative min-w-[150px]">
+            <input
+              type="number"
+              placeholder="Max Stock"
+              value={maxStock}
+              onChange={(e) => setMaxStock(e.target.value)}
+              className="w-full px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
+            />
+          </div>
+
+          {/* Add Product Button */}
+          <button
+            onClick={() => setAddOpen(true)}
+            className="flex items-center gap-2 px-4 py-2.5 bg-[var(--color-extra-1)] text-[var(--color-light-dark)] font-semibold rounded-xl shadow-md hover:bg-[var(--color-light-accent)] transition-all duration-300 hover:scale-105 active:scale-95 whitespace-nowrap ml-auto"
+          >
+            <FaPlusCircle /> Add Product
+          </button>
+        </div>
+
+        {/* Results Counter */}
+        {hasActiveFilters && (
+          <p className="mt-2 text-sm text-gray-600">
+            Found {filteredProducts.length} product
+            {filteredProducts.length !== 1 ? "s" : ""}
+          </p>
+        )}
+      </div>
+
       <DataTableComponent<IProduct>
         columns={columns}
-        data={tableData}
+        data={filteredProducts}
         loading={isLoading}
         pagination
       />
