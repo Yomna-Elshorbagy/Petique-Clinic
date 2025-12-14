@@ -343,6 +343,131 @@
   },
   "common": {
     "reset": "Reset"
+  },
+  "about": {
+    "badge": "About Us",
+    "title": "We Providing The Best Pet Care Services",
+
+    "card": {
+      "title": "Trust By Clients",
+      "description": "Educate owners on reading ingredient lists, choosing quality foods, and recognizing harmful ingredients."
+    },
+
+    "features": {
+      "nutrition": "Nutrition and Diet",
+      "mental": "Mental & Emotional Well-Being",
+      "exercise": "Exercise and Physical Activity",
+      "preventive": "Preventive Health",
+      "grooming": "Grooming and Hygiene",
+      "specialNeeds": "Special Needs Pets"
+    },
+
+    "images": {
+      "bunnyAlt": "Bunny",
+      "petAlt": "Vet holding dog"
+    }
+  },
+  "stuff": {
+    "subtitle": "Our Specialists",
+    "title": "Meet Our Experienced Pet Care Team",
+    "loading": "Loading doctors...",
+    "error": "Failed to load doctors"
+  },
+  "auth": {
+    "common": {
+      "email": "your email",
+      "password": "your password",
+      "confirmPassword": "Confirm password",
+      "newPassword": "New password",
+      "repeatPassword": "Repeat password",
+      "name": "Your name",
+      "phone": "Phone number",
+      "otp" : "Enter OTP code",
+      "male": "Male",
+      "female": "Female",
+      "or": "OR",
+      "loading": "Loading...",
+      "backToLogin": "Back to Login",
+      "login": "Login",
+      "signup": "Sign Up",
+      "verify": "Verify",
+      "emailError":"Please enter a correct email",
+      "passwordError" : "Please enter a correct passwrod"
+    },
+
+    "login": {
+      "welcomeTitle": "Welcome Back!",
+      "welcomeSubtitle": "For better experience with your pets.",
+      "title": "Log in",
+      "submit": "Sign in",
+      "loading": "Logging in...",
+      "createAccount": "Create new account?",
+      "signupHere": "Sign up here",
+      "forgetPassword": "Forget Password?",
+      "forget": "forget password",
+      "successTitle": "Login Successful!",
+      "successText": "Welcome back to Petique 🐶",
+      "errorTitle": "Login Failed",
+      "errorDefault": "Invalid email or password"
+    },
+
+    "register": {
+      "title": "Sign Up",
+      "submit": "Sign Up",
+      "loading": "Creating...",
+      "alreadyHaveAccount": "Already have an account?",
+      "confirmOtp": "Confirm OTP",
+      "alreadyRegister":"Already Register ?",
+      "rightTitle": "Join Petique",
+      "rightSubtitle": "Create account and enjoy your pet world.",
+      "successTitle": "Account Created!",
+      "successText": "Check your mail Redirecting to login ... 🐱🐾",
+      "errorTitle": "Signup Error",
+      "errorDefault": "Signup failed!"
+    },
+
+    "forgetPassword": {
+      "title": "Reset Password",
+      "subtitle": "Follow the steps to recover your account securely.",
+
+      "step1": {
+        "title": "Enter your Email",
+        "submit": "Send OTP",
+        "successTitle": "OTP Sent! Check Your Email",
+        "errorTitle": "Failed to Send OTP ❌"
+      },
+
+      "step2": {
+        "title": "Enter OTP",
+        "submit": "Verify Code",
+        "invalidOtp": "Invalid OTP ❌",
+        "errorMsg": "OTP must be 6 digits"
+      },
+
+      "step3": {
+        "title": "New Password",
+        "submit": "Reset Password",
+        "successTitle": "🎉 Password Updated",
+        "successText": "Your password has been changed successfully.",
+        "errorTitle": "Failed to Update Password ❌"
+      },
+
+      "remember": "Remember your password?",
+      "defaultError" : "Something went wrong. Please try again."
+    },
+
+    "otp": {
+      "leftTitle": "Verify Your Email",
+      "leftSubtitle": "Enter the OTP sent to your email.",
+      "title": "OTP Verification",
+      "submit": "Verify",
+      "loading": "Verifying...",
+      "successTitle": "Account Verified!",
+      "successText": "Your account has been successfully activated.",
+      "errorTitle": "Verification Failed",
+      "errorDefault": "Invalid or expired OTP",
+      "required" : "OTP code is required"
+    }
   }
 
 

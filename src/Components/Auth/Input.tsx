@@ -1,3 +1,4 @@
+import i18n from "../../i18n";
 import type { InputProps } from "../../Interfaces/components/inputProps";
 
 const Input = ({
@@ -6,6 +7,7 @@ const Input = ({
   register,
   error,
 }: InputProps) => {
+  const isRTL = i18n.language === "ar";
   return (
     <div className="w-full">
       <input
@@ -13,7 +15,7 @@ const Input = ({
         type={type}
         placeholder={placeholder}
         className={`
-          w-full bg-transparent border-b outline-none py-2 pl-10 text-white
+          w-full bg-transparent border-b outline-none py-2 ${isRTL ? "pr-10" : "pl-10"} text-white
           focus:border-[#c18a5b]  focus:ring-1/4 focus:ring-[#b07d4f] focus:outline-none 
           transition duration-300 ease-in-out
           placeholder:text-gray-400 transition-all
