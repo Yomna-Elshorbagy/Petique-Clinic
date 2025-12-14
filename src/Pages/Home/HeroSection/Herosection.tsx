@@ -1,8 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaPaw } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const HeroSection = () => {
+  const { t } = useTranslation();
+
   // Grid configuration for the image reveal
   const rows = 6;
   const cols = 10;
@@ -67,7 +70,7 @@ const HeroSection = () => {
             className="flex items-center gap-2 mb-6"
           >
             <span className="bg-[var(--color-light-accent)] text-white px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-2 shadow-lg">
-              Welcome to Petique <FaPaw />
+              {t("heroSection.welcome")} <FaPaw />
             </span>
           </motion.div>
 
@@ -77,22 +80,24 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.8 }}
             >
-              Taking Care of
+              {t("heroSection.takingCareOf")}
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 2.0 }}
             >
-              <span className="text-[var(--color-light-accent)]">Pets</span> as
-              if they
+              <span className="text-[var(--color-light-accent)]">
+                {t("heroSection.pets")}
+              </span>{" "}
+              {t("heroSection.asIfThey")}
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 2.2 }}
             >
-              were Our Own
+              {t("heroSection.wereOurOwn")}
             </motion.div>
           </h1>
 
@@ -103,8 +108,7 @@ const HeroSection = () => {
             transition={{ duration: 1, delay: 2.5 }}
             className="text-lg text-gray-200 mb-10 max-w-lg leading-relaxed"
           >
-            We provide the best medical services for your beloved pets. From
-            grooming to surgeries, we have everything your furry friend needs.
+            {t("heroSection.description")}
           </motion.p>
 
           {/* Button */}

@@ -1,13 +1,17 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaPaw, FaTruck, FaCheckCircle, FaClock, FaBox } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const OrderDetails: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
+
   const orderData = location.state?.order?.data;
+
+  /* -------------------- Helpers -------------------- */
 
   const getStatusIcon = (status: string) => {
     switch (status?.toLowerCase()) {
@@ -19,6 +23,19 @@ const OrderDetails: React.FC = () => {
         return <FaCheckCircle className="text-green-500" />;
       default:
         return <FaBox className="text-gray-500" />;
+    }
+  };
+
+  const getStatusText = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case "placed":
+        return t("orderDetails.statusPlaced");
+      case "shipped":
+        return t("orderDetails.statusShipped");
+      case "delivered":
+        return t("orderDetails.statusDelivered");
+      default:
+        return status;
     }
   };
 
@@ -35,241 +52,152 @@ const OrderDetails: React.FC = () => {
     }
   };
 
+  /* -------------------- No Order Case -------------------- */
+
   if (!orderData) {
     return (
-      <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-12 px-4 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)]">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-            No Order Data Found
+          <h1 className="text-2xl font-bold mb-2">
+            {t("orderDetails.noOrderDataTitle")}
           </h1>
-          <p className="text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mt-2">
-            Please go back and select an order to view its details.
+          <p className="text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
+            {t("orderDetails.noOrderDataDesc")}
           </p>
           <button
             onClick={() => navigate("/")}
-            className="w-full mt-6 px-6 py-3 bg-[var(--color-light-accent)] hover:bg-[#d69560] text-white font-semibold rounded-lg transition-colors"
+            className="mt-6 px-6 py-3 bg-[var(--color-light-accent)] text-white rounded-lg"
           >
-            Go to Homepage
+            {t("orderDetails.goToHomepage")}
           </button>
         </div>
       </div>
     );
   }
 
+  /* -------------------- UI -------------------- */
+
   return (
-    <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-12 px-4 mt-15">
+    <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-[var(--color-dark-card)] rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 p-8 mb-8"
+          className="bg-white dark:bg-[var(--color-dark-card)] rounded-3xl p-8 mb-8"
         >
-          <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
-            <div className="max-w-full overflow-hidden">
-              <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] mb-2 whitespace-nowrap overflow-x-auto no-scrollbar">
-                Order #{orderData._id}
+          <div className="flex justify-between items-center flex-wrap gap-4">
+            <div>
+              <h1 className="text-2xl font-bold mb-1">
+                {t("orderDetails.orderNumber")} {orderData._id}
               </h1>
-              <p className="text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
-                Placed on {new Date(orderData.createdAt).toLocaleDateString()}
+              <p className="text-sm text-gray-500">
+                {t("orderDetails.placedOn")}{" "}
+                {new Date(orderData.createdAt).toLocaleDateString()}
               </p>
             </div>
-            <div className="flex items-center gap-3">
-              <div
-                className={`px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 ${getStatusColor(
-                  orderData.status
-                )}`}
-              >
-                {getStatusIcon(orderData.status)}
-                {orderData.status.charAt(0).toUpperCase() +
-                  orderData.status.slice(1).toLowerCase()}
-              </div>
+
+            <div
+              className={`px-4 py-2 rounded-full flex items-center gap-2 text-sm font-semibold ${getStatusColor(
+                orderData.status
+              )}`}
+            >
+              {getStatusIcon(orderData.status)}
+              {getStatusText(orderData.status)}
             </div>
           </div>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
+          {/* Customer Info */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Customer Information -------------------------------------------------------------------------*/}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6"
-            >
-              <h2 className="text-xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] mb-6 flex items-center gap-2">
-                <FaPaw className="text-[var(--color-light-accent)]" />
-                Customer Information
+            <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl p-6">
+              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <FaPaw />
+                {t("orderDetails.customerInfo")}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-1">
-                    {orderData.fullName}
-                  </p>
-                  <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                    {orderData.fullName}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-1">
-                    Phone Number
-                  </p>
-                  <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                    {orderData.phone}
-                  </p>
-                </div>
-                <div className="md:col-span-2">
-                  <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-1">
-                    Delivery Address
-                  </p>
-                  <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                    {orderData.address}
-                  </p>
-                </div>
+
+              <div className="space-y-4">
+                <p>
+                  <strong>{t("orderDetails.fullName")}:</strong>{" "}
+                  {orderData.fullName}
+                </p>
+                <p>
+                  <strong>{t("orderDetails.phoneNumber")}:</strong>{" "}
+                  {orderData.phone}
+                </p>
+                <p>
+                  <strong>{t("orderDetails.deliveryAddress")}:</strong>{" "}
+                  {orderData.address}
+                </p>
+
                 {orderData.note && (
-                  <div className="md:col-span-2">
-                    <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-1">
-                      Special Notes
-                    </p>
-                    <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                      {orderData.note}
-                    </p>
-                  </div>
+                  <p>
+                    <strong>{t("orderDetails.specialNotes")}:</strong>{" "}
+                    {orderData.note}
+                  </p>
                 )}
               </div>
-            </motion.div>
+            </div>
 
-            {/* Order Items---------------------------------------------------------------------------------------------- */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6"
-            >
-              <h2 className="text-xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] mb-6">
-                Order Items
+            {/* Order Items */}
+            <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl p-6">
+              <h2 className="text-xl font-bold mb-6">
+                {t("orderDetails.orderItems")}
               </h2>
-              <div className="space-y-4">
-                {orderData.products && orderData.products.length > 0 ? (
-                  orderData.products.map((item: any, index: number) => (
-                    <div
-                      //   key={index}
-                      className="flex items-center justify-between p-4 bg-gray-50 dark:bg-[var(--color-dark-background)] rounded-lg border border-gray-100 dark:border-gray-700"
-                    >
-                      <div className="flex items-center gap-4 flex-1">
-                        <img
+
+              {orderData.products?.length ? (
+                orderData.products.map((item: any, index: number) => (
+                  <div
+                    key={index}
+                    className="flex justify-between items-center mb-4"
+                  >
+                    <div className="flex items-center gap-4">
+                      <img
                         src={item.imageCover?.secure_url}
-
-                          alt={item.productId?.title}
-                          className="w-16 h-16 rounded-lg object-cover"
-                        />
-
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                            {item?.title}
-                          </h3>
-                          <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
-                            Qty: {item.quantity}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                          EGP {item.price}
-                        </p>
-
-                        <p className="text-sm text-green-600 dark:text-green-400">
-                          Save: {item.discount} EGP
+                        className="w-16 h-16 rounded-lg object-cover"
+                      />
+                      <div>
+                        <p className="font-semibold">{item.title}</p>
+                        <p className="text-sm">
+                          {t("orderDetails.qty")} {item.quantity}
                         </p>
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <p className="text-center text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] py-8">
-                    No items in this order
-                  </p>
-                )}
-              </div>
-            </motion.div>
+                    <p className="font-semibold">EGP {item.price}</p>
+                  </div>
+                ))
+              ) : (
+                <p>{t("orderDetails.noItems")}</p>
+              )}
+            </div>
           </div>
 
-          {/* Sidebar: Order Summary------------------------------------------------------------------------------------- */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="lg:col-span-1"
-          >
-            <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 sticky top-8">
-              <h2 className="text-xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] mb-6">
-                Order Summary
-              </h2>
+          {/* Summary */}
+          <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl p-6 h-fit">
+            <h2 className="text-xl font-bold mb-6">
+              {t("orderDetails.orderSummary")}
+            </h2>
 
-              <div className="space-y-4 mb-6">
-                <div className="flex justify-between text-sm">
-                  <span className="text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
-                    Subtotal
-                  </span>
-                  <span className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                    EGP {orderData.orderPrice}
-                  </span>
-                </div>
+            <p className="flex justify-between mb-2">
+              <span>{t("orderDetails.subtotal")}</span>
+              <span>EGP {orderData.orderPrice}</span>
+            </p>
 
-                {orderData.coupon && (
-                  <div className="flex justify-between text-sm text-green-600 dark:text-green-400">
-                    <span>Coupon {orderData.coupon.code} </span>
-                    <span>- EGP {orderData.coupon.amount}</span>
-                  </div>
-                )}
+            <p className="flex justify-between font-bold text-lg">
+              <span>{t("orderDetails.total")}</span>
+              <span className="text-[var(--color-light-accent)]">
+                EGP {orderData.finalPrice}
+              </span>
+            </p>
 
-                <div className="border-t border-gray-200 dark:border-gray-700 pt-4 flex justify-between">
-                  <span className="font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                    Total
-                  </span>
-                  <span className="font-bold text-lg text-[var(--color-light-accent)]">
-                    EGP {orderData.finalPrice}
-                  </span>
-                </div>
-              </div>
-
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-6 space-y-3">
-                <div>
-                  <p className="text-xs text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] uppercase mb-1">
-                    Payment Method
-                  </p>
-                  <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                    {orderData.payment}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-xs text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] uppercase mb-1">
-                    Order Date
-                  </p>
-                  <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                    {new Date(orderData.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-xs text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] uppercase mb-1">
-                    Status
-                  </p>
-                  <p className="font-semibold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-                    {orderData.status}
-                  </p>
-                </div>
-              </div>
-
-              <button
-                onClick={() => navigate("/cart")}
-                className="w-full mt-6 px-6 py-3 bg-[var(--color-light-accent)] hover:bg-[#d69560] text-white font-semibold rounded-lg transition-colors"
-              >
-                Continue Shopping
-              </button>
-            </div>
-          </motion.div>
+            <button
+              onClick={() => navigate("/cart")}
+              className="w-full mt-6 px-6 py-3 bg-[var(--color-light-accent)] text-white rounded-lg"
+            >
+              {t("orderDetails.continueShopping")}
+            </button>
+          </div>
         </div>
       </div>
     </div>
