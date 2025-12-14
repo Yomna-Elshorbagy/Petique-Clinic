@@ -9,9 +9,10 @@ import UserPets from "../../Components/UserProfile/UserPets";
 import UserOrders from "../../Components/UserProfile/Orders";
 import PetOrderTracking from "../../Components/UserProfile/OrderTracking";
 import UserUpdateData from "../../Components/UserProfile/UserUpdateData";
+import Appointments from "../../Components/UserProfile/Appointments";
 
 export default function UserPetClinicProfile() {
-  const [activeTab, setActiveTab] = useState("Personal Information");
+  const [activeTab, setActiveTab] = useState("Appointments");
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -26,6 +27,7 @@ export default function UserPetClinicProfile() {
   } = useUserProfile();
 
   const tabs = [
+    "Appointments",
     "Personal Information",
     "My Pets",
     "Add New Pet",
@@ -134,7 +136,11 @@ export default function UserPetClinicProfile() {
               setShowPassword={setShowPassword}
             />
           )}
-
+          {activeTab === "Appointments" && (
+            <div>
+              <Appointments />
+            </div>
+          )}
           {activeTab === "My Pets" && (
             <div>
               <UserPets />
