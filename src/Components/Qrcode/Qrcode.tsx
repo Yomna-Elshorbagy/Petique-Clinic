@@ -15,31 +15,31 @@ export default function QrSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="relative bg-white p-8 rounded-3xl shadow-2xl border border-[#C58D52]/20 overflow-visible"
+          className="relative bg-[var(--color-bg-lighter)] p-8 rounded-3xl shadow-2xl border border-[var(--color-light-accent)]/20 overflow-visible transition-colors duration-300"
         >
           <motion.div
             animate={{ y: [0, -15, 0] }}
             transition={{ duration: 4, repeat: Infinity }}
             className="absolute top-4 right-4 opacity-20 pointer-events-none"
           >
-            <PawPrint size={120} className="text-[#C58D52]" />
+            <PawPrint size={120} className="text-[var(--color-light-accent)]" />
           </motion.div>
 
-          <h2 className="text-3xl font-bold text-[#443935] flex items-center gap-3 mb-6">
-            <QrCode className="text-[#C58D52]" />
+          <h2 className="text-3xl font-bold text-[var(--color-text-primary)] flex items-center gap-3 mb-6">
+            <QrCode className="text-[var(--color-light-accent)]" />
             {t("qrSection.title")}
           </h2>
 
-          <p className="text-[#7A6F69] mb-6 max-w-xl">
+          <p className="text-[var(--color-text-muted)] mb-6 max-w-xl">
             {t("qrSection.description")}
           </p>
 
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="flex flex-col items-center">
-              <div className="bg-[#FCF9F4] p-4 rounded-2xl shadow-lg border border-[#C58D52]/20">
+              <div className="bg-[var(--color-light-background)] p-4 rounded-2xl shadow-lg border border-[var(--color-light-accent)]/20">
                 {isLoading && (
                   <div className="w-40 h-40 flex items-center justify-center">
-                    <div className="w-12 h-12 border-4 border-[#C58D52] border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-12 h-12 border-4 border-[var(--color-light-accent)] border-t-transparent rounded-full animate-spin"></div>
                   </div>
                 )}
 
@@ -60,16 +60,16 @@ export default function QrSection() {
 
               <button
                 onClick={() => refetch()}
-                className="mt-4 flex items-center gap-2 text-[#C58D52] hover:text-[#A98868] transition"
+                className="mt-4 flex items-center gap-2 text-[var(--color-light-accent)] hover:text-[var(--color-accent-dark)] transition"
               >
                 <RefreshCw size={18} /> {t("qrSection.refresh")}
               </button>
             </div>
 
-            <div className="flex-1 text-[#443935] space-y-3">
+            <div className="flex-1 text-[var(--color-text-primary)] space-y-3">
               <h3 className="text-xl font-semibold">{t("qrSection.whyUse")}</h3>
 
-              <ul className="space-y-2 list-disc list-inside text-[#6D625E]">
+              <ul className="space-y-2 list-disc list-inside text-[var(--color-text-muted)]">
                 <li>{t("qrSection.benefits.access")}</li>
                 <li>{t("qrSection.benefits.checkin")}</li>
                 <li>{t("qrSection.benefits.secure")}</li>
@@ -79,7 +79,7 @@ export default function QrSection() {
               <motion.div
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="text-sm text-[#A98868]"
+                className="text-sm text-[var(--color-light-secondary)]"
               >
                 {t("qrSection.autoRefresh")}
               </motion.div>

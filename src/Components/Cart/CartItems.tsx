@@ -7,6 +7,7 @@ import {
   deleteCartItem,
   updateCartQuantity,
 } from "../../Store/Slices/CartSlice";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   items: any[];
@@ -16,6 +17,7 @@ interface Props {
 
 const CartItems: React.FC<Props> = ({ items }) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   //===> update Quantity
   const handleUpdateQuantity = (
@@ -70,7 +72,9 @@ const CartItems: React.FC<Props> = ({ items }) => {
               <h3 className="font-semibold text-gray-800 text-lg">
                 {product.title}
               </h3>
-              <p className="text-sm text-gray-500">${product.price} each</p>
+              <p className="text-sm text-gray-500">
+                ${product.price} {t("cart.each")}
+              </p>
 
               <div className="flex items-center gap-3 mt-4">
                 <button

@@ -20,6 +20,9 @@ const handleAddToCart = async (dispatch: AppDispatch, productId: string) => {
       showConfirmButton: false,
       timer: 1500,
       toast: true,
+      customClass: {
+        popup: "swal-toast-custom",
+      },
     });
 
     return res;
@@ -31,6 +34,9 @@ const handleAddToCart = async (dispatch: AppDispatch, productId: string) => {
       showConfirmButton: false,
       timer: 1500,
       toast: true,
+      customClass: {
+        popup: "swal-toast-custom",
+      },
     });
     throw err;
   }
@@ -71,7 +77,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [isHovering, setIsHovering] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
-  const { title, imageCover, price, finalPrice, discount, subImages, rate } = product;
+  const { title, imageCover, price, finalPrice, discount, subImages, rate } =
+    product;
 
   const hasDiscount = !!discount && discount > 0;
 
@@ -91,7 +98,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       : subImage?.secure_url || "";
   };
 
-  const validSubImages = subImages?.filter(img => getSubImageSrc(img)) || [];
+  const validSubImages = subImages?.filter((img) => getSubImageSrc(img)) || [];
 
   return (
     <article
@@ -115,12 +122,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <img
             src={
               validSubImages.length > 0 && currentSubImageIndex >= 0
-                ? getSubImageSrc(validSubImages[currentSubImageIndex]) || imageSrc
+                ? getSubImageSrc(validSubImages[currentSubImageIndex]) ||
+                  imageSrc
                 : imageSrc
             }
             alt={title}
-            className={`${styles.mainImage} ${isHovering && validSubImages.length > 0 ? styles.mainImageHovering : ""
-              }`}
+            className={`${styles.mainImage} ${
+              isHovering && validSubImages.length > 0
+                ? styles.mainImageHovering
+                : ""
+            }`}
           />
 
           {/* Hover Overlay with Sub Images */}
@@ -135,8 +146,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                       e.stopPropagation();
                       setCurrentSubImageIndex(index);
                     }}
-                    className={`${styles.subImageButton} ${index === currentSubImageIndex ? styles.subImageButtonActive : ""
-                      }`}
+                    className={`${styles.subImageButton} ${
+                      index === currentSubImageIndex
+                        ? styles.subImageButtonActive
+                        : ""
+                    }`}
                   >
                     <img
                       src={getSubImageSrc(subImage)}
@@ -154,7 +168,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Content Section */}
       <div className={styles.content}>
         {/* Title */}
-        <h3 className={styles.title}>{title.split(" ").slice(0, 3).join(" ")}</h3>
+        <h3 className={styles.title}>
+          {title.split(" ").slice(0, 3).join(" ")}
+        </h3>
 
         {/* Rating */}
         {rate !== undefined && rate > 0 && (
@@ -187,8 +203,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           className={styles.addToCartButton}
         >
           <ShoppingCart
-            className={`${styles.cartIcon} ${isAddingToCart ? styles.cartIconBounce : ""
-              }`}
+            className={`${styles.cartIcon} ${
+              isAddingToCart ? styles.cartIconBounce : ""
+            }`}
           />
           {isAddingToCart ? "Adding..." : "Add to Cart"}
         </button>

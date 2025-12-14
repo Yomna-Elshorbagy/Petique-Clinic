@@ -41,7 +41,12 @@ export default function PetCard({
         </div>
 
         <div>
-          <h3 className="text-xl font-bold text-[#86654F] mb-1">{pet.name}</h3>
+          <div className="flex items-center gap-2 mb-1">
+            <h3 className="text-xl font-bold text-[#86654F]">{pet.name}</h3>
+            <span className="text-[10px] font-mono text-[#A98770] bg-[#F7F3EF] px-1.5 py-0.5 rounded-md border border-[#E9DFD5]">
+              #{pet._id?.slice(-6).toUpperCase()}
+            </span>
+          </div>
           <p className="text-[#A98770] text-sm flex items-center gap-1">
             <FaWeight size={12} /> {pet.weight} kg
           </p>

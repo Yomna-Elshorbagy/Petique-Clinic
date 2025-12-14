@@ -5,49 +5,50 @@
 @source "../node_modules/flowbite";
 
 .input-box {
-  @apply w-full p-3 rounded-xl border border-[#A98868]/50 
-  bg-[#FCF9F4] text-[#443935] 
-  focus:ring-2 focus:ring-[#C58D52] focus:border-[#C58D52]
-  outline-none transition;
+  @apply w-full p-3 rounded-xl border border-[#A98868]/50 bg-[#FCF9F4] text-[#443935] focus:ring-2 focus:ring-[#C58D52] focus:border-[#C58D52] outline-none transition;
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 @keyframes slideUp {
   from {
     transform: translateY(40px) scale(0.96);
     opacity: 0;
   }
+
   to {
     transform: translateY(0) scale(1);
     opacity: 1;
   }
 }
+
 /* ========= Import & Export Buttons ========= */
 .action-btn {
-  @apply px-4 py-2 rounded-xl text-sm font-medium
-  transition-all duration-300 ease-out
-  shadow-sm hover:shadow-md 
-  flex items-center gap-2;
+  @apply px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ease-out shadow-sm hover:shadow-md flex items-center gap-2;
 }
+
 .btn-export {
-  @apply bg-[#C58D52] text-white 
-  hover:bg-[#b67e46] active:scale-[0.97];
+  @apply bg-[#C58D52] text-white hover:bg-[#b67e46] active:scale-[0.97];
 }
+
 .btn-import {
-  @apply bg-[#FCF9F4] text-[#4f3f36] border border-[#A98868]/50
-  hover:bg-[#f3ede6] active:scale-[0.97];
+  @apply bg-[#FCF9F4] text-[#4f3f36] border border-[#A98868]/50 hover:bg-[#f3ede6] active:scale-[0.97];
 }
+
 .animate-soft {
   animation: fadeIn 0.25s ease-out, slideUp 0.35s ease-out;
 }
+
 /* /////////////////////////////////////////////// */
 .animate-slideUp {
   animation: slideUp 0.35s ease-out;
@@ -139,6 +140,39 @@
   --color-dark-border-light: #4a3f38;
   --color-dark-border-medium: #5a4d44;
   --color-dark-border-dark: #6b5d52;
+
+  /* global overides: Map Light Variables to Dark Values */
+
+  /* Background Overrides */
+  --color-light-background: var(--color-dark-background);
+  /* Main Page BG */
+  --color-bg-light: var(--color-dark-card);
+
+  --color-bg-lighter: var(--color-dark-card);
+
+  --color-bg-cream: var(--color-dark-bg-hover);
+  --color-bg-warm: var(--color-dark-bg-deep);
+
+  /* Text Overrides */
+  --color-text-primary: var(--color-dark-text);
+  --color-text-muted: var(--color-dark-text-muted);
+  --color-text-light: var(--color-dark-text-dimmed);
+  --color-light-textSecondary: var(--color-dark-textSecondary);
+  --color-light-dark: var(--color-dark-text);
+
+  /* Border Overrides */
+  --color-border-light: var(--color-dark-border-light);
+  --color-border-medium: var(--color-dark-border-medium);
+  --color-border-dark: var(--color-dark-border-dark);
+
+  /* Accent Overrides */
+  --color-light-accent: var(--color-dark-accent);
+}
+
+body {
+  background-color: var(--color-light-background);
+  color: var(--color-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 @keyframes fadeIn {
@@ -146,6 +180,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -162,6 +197,7 @@
     opacity: 0;
     transform: translateX(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -172,6 +208,7 @@
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(100%);
   }

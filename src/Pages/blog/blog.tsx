@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import gsap from "gsap";
 import { posts } from "./posts";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function Blog() {
+  const { t } = useTranslation();
   useEffect(() => {
     gsap.to(".bone-icon", {
       y: -10,
@@ -49,7 +51,7 @@ export default function Blog() {
     <>
       {/* Header */}
       <div className="bg-[#faf9f6]">
-        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-start mt-20 font-serif">
+        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-start font-serif">
           <div className="max-w-7xl text-center md:text-left w-full">
             <Bone
               className="bone-icon 
@@ -62,15 +64,15 @@ export default function Blog() {
               color="#e3e3e3"
             />
             <h1 className="text-white text-3xl md:text-5xl font-extrabold mt-4">
-              Latest Blog Articles
+              {t("blog.latestArticles")}
             </h1>
 
             <div className="mt-8 flex justify-center md:justify-start gap-6 text-[#e9a66f] font-medium text-1xl md:text-1xl">
               <Link to="/home" className="hover:text-white transition-colors">
-                Home
+                {t("blog.home")}
               </Link>
               <span className="text-[#e9a66f]"> &gt; </span>
-              <p className="text-white font-semibold">Blog</p>
+              <p className="text-white font-semibold">{t("blog.blog")}</p>
             </div>
           </div>
 

@@ -37,7 +37,7 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="relative py-20 bg-[#FAF8F4] overflow-hidden">
+    <section className="relative py-20 bg-[var(--color-light-background)] overflow-hidden w-full transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* ===> header */}
         <div className="text-center mb-16">
@@ -46,7 +46,7 @@ const ServicesSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-1.5 rounded-full shadow-sm mb-6"
+            className="inline-flex items-center gap-2 bg-[var(--color-bg-lighter)] border border-[var(--color-border-light)] px-4 py-1.5 rounded-full shadow-sm mb-6"
           >
             <span className="text-[var(--color-light-accent)] font-bold text-sm tracking-wide">
               {t("servicesSection.ourService")}
@@ -59,14 +59,14 @@ const ServicesSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl md:text-5xl font-extrabold text-[#3d2e25] leading-tight max-w-3xl mx-auto"
+            className="text-4xl md:text-5xl font-extrabold text-[var(--color-text-primary)] leading-tight max-w-3xl mx-auto"
           >
             {t("servicesSection.title")}
           </motion.h2>
         </div>
 
         {/* grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10 max-w-full overflow-hidden">
           {serviceCards.map((card, index) => (
             <div key={index} className="flex flex-col h-full gap-6">
               {/* ===> If Image is Top */}
@@ -76,7 +76,7 @@ const ServicesSection = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="relative h-64 w-full overflow-hidden shadow-lg rounded-t-[150px]"
+                  className="relative h-64 w-full overflow-hidden shadow-lg rounded-t-[150px] max-w-full"
                 >
                   <img
                     src={card.image}
@@ -92,21 +92,20 @@ const ServicesSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 + 0.2 }}
-                className={`flex-1 bg-white p-10 flex flex-col items-center text-center justify-center border border-gray-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 group
-                    ${
-                      card.type === "card-top"
-                        ? "rounded-t-[150px] border-b-4 border-b-[var(--color-light-accent)]"
-                        : "rounded-b-[150px] border-t-4 border-t-[var(--color-light-accent)]"
-                    }
+                className={`flex-1 bg-[var(--color-bg-lighter)] p-10 flex flex-col items-center text-center justify-center border border-[var(--color-border-light)] shadow-xl hover:shadow-2xl transition-all duration-300 group
+                    ${card.type === "card-top"
+                    ? "rounded-t-[150px] border-b-4 border-b-[var(--color-light-accent)]"
+                    : "rounded-b-[150px] border-t-4 border-t-[var(--color-light-accent)]"
+                  }
                 `}
               >
-                <div className="mb-6 p-4 rounded-full bg-orange-50 group-hover:bg-orange-100 transition-colors duration-300">
+                <div className="mb-6 p-4 rounded-full bg-[var(--color-light-secondary)]/10 group-hover:bg-[var(--color-light-accent)]/20 transition-colors duration-300">
                   {card.icon}
                 </div>
-                <h3 className="text-2xl font-bold text-[#3d2e25] mb-4">
+                <h3 className="text-2xl font-bold text-[var(--color-text-primary)] mb-4">
                   {card.title}
                 </h3>
-                <p className="text-gray-500 leading-relaxed text-sm">
+                <p className="text-[var(--color-text-muted)] leading-relaxed text-sm">
                   {card.description}
                 </p>
               </motion.div>
@@ -118,7 +117,7 @@ const ServicesSection = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.2 + 0.4 }}
-                  className="relative h-64 w-full overflow-hidden shadow-lg rounded-b-[150px]"
+                  className="relative h-64 w-full overflow-hidden shadow-lg rounded-b-[150px] max-w-full"
                 >
                   <img
                     src={card.image}
@@ -139,7 +138,7 @@ const ServicesSection = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mt-16 text-center"
         >
-          <button className="bg-[var(--color-light-accent)] hover:bg-[#e09e60] text-white px-8 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 mx-auto transition-all transform hover:-translate-y-1">
+          <button className="bg-[var(--color-light-accent)] hover:opacity-90 text-white px-8 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 mx-auto transition-all transform hover:-translate-y-1">
             {t("servicesSection.viewServices")} <FaPaw />
           </button>
         </motion.div>

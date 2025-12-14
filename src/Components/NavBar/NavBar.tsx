@@ -68,11 +68,10 @@ export default function NavBar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${isScrolled
           ? "bg-[var(--color-light-background)]/90 dark:bg-[var(--color-dark-background)]/90 backdrop-blur-xl shadow-lg"
           : "bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] shadow-md"
-      }`}
+        }`}
     >
       {/* Container */}
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-5 md:px-6 py-3 md:py-4">
@@ -152,9 +151,8 @@ export default function NavBar() {
               >
                 <FaUserCircle />
                 <FaChevronDown
-                  className={`transition-transform ${
-                    showProfile ? "rotate-180" : ""
-                  }`}
+                  className={`transition-transform ${showProfile ? "rotate-180" : ""
+                    }`}
                 />
               </button>
               {showProfile && (
@@ -219,9 +217,13 @@ export default function NavBar() {
                 <button
                   aria-label={t("navbar.toggleTheme")}
                   onClick={() => setIsDark(!isDark)}
-                  className="p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm"
+                  className="p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
                 >
-                  {isDark ? <FaSun /> : <FaMoon />}
+                  {isDark ? (
+                    <FaSun className="text-[var(--color-dark-accent)]" />
+                  ) : (
+                    <FaMoon className="text-[var(--color-light-dark)]" />
+                  )}
                 </button>
                 <a
                   href="/cart"

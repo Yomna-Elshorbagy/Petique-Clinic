@@ -45,8 +45,8 @@ export default function Services() {
 
   return (
     <>
-        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-start mt-20 font-serif">
-          <div className="max-w-7xl text-center md:text-left w-full">
+      <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-start font-serif">
+        <div className="max-w-7xl text-center md:text-left w-full">
           <Bone
             ref={boneRef}
             className="

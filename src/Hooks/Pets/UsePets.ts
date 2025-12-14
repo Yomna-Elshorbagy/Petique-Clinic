@@ -11,6 +11,8 @@ import {
   getPetVaccinations,
   getVaccinationRecords,
   addVaccinationToPet,
+  updatePetVaccination,
+  deletePetVaccination,
 } from "../../Apis/PetApis";
 
 export const useAllPets = () => {
@@ -126,5 +128,50 @@ export const usePetVaccinations = (id: string) => {
     queryKey: ["petVaccinations", id],
     queryFn: () => getPetVaccinations(id),
     enabled: !!id,
+  });
+};
+
+export const useUpdatePetVaccination = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      petId,
+      vaccinationId,
+      data,
+    }: {
+      petId: string;
+      vaccinationId: string;
+      data: any;
+    }) => updatePetVaccination(petId, vaccinationId, data),
+
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["petVaccinations", variables.petId],
+      });
+      queryClient.invalidateQueries({ queryKey: ["pet"] });
+      queryClient.invalidateQueries({ queryKey: ["vaccinationRecords"] });
+    },
+  });
+};
+export const useDeletePetVaccination = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      petId,
+      vaccinationId,
+    }: {
+      petId: string;
+      vaccinationId: string;
+    }) => deletePetVaccination(petId, vaccinationId),
+
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["petVaccinations", variables.petId],
+      });
+      queryClient.invalidateQueries({ queryKey: ["pet"] });
+      queryClient.invalidateQueries({ queryKey: ["vaccinationRecords"] });
+    },
   });
 };

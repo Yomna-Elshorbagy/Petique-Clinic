@@ -174,20 +174,22 @@ const TodayReservationsList: React.FC = () => {
                     {res.pet?.name}
                   </h2>
 
+                  {/* ID Badge */}
+                  <span className="text-[10px] font-mono text-[#A98770] bg-[#F7F3EF] px-1.5 py-0.5 rounded-md border border-[#E9DFD5]">
+                    #{res._id?.slice(-6).toUpperCase()}
+                  </span>
+
                   <span
                     className={`px-3 py-[4px] rounded-full text-xs capitalize font-medium
-                      ${
-                        res.status === "completed" &&
-                        "bg-green-100 text-green-700"
+                      ${res.status === "completed" &&
+                      "bg-green-100 text-green-700"
                       }
-                      ${
-                        res.status === "pending" &&
-                        "bg-orange-100 text-orange-700"
+                      ${res.status === "pending" &&
+                      "bg-orange-100 text-orange-700"
                       }
                       ${res.status === "cancelled" && "bg-red-100 text-red-700"}
-                      ${
-                        res.status === "confirmed" &&
-                        "bg-blue-100 text-blue-700"
+                      ${res.status === "confirmed" &&
+                      "bg-blue-100 text-blue-700"
                       }
                     `}
                   >
@@ -204,9 +206,19 @@ const TodayReservationsList: React.FC = () => {
                   <span className="font-medium text-[#4A3F35]">
                     {res.timeSlot}
                   </span>
+                  <div className="h-3 w-px bg-[#E5DCD3]"></div>
                   <span className="text-[#D29A84] font-medium">
-                    {res.service?.name}
+                    {res.service?.title ?? res.service?.name}
                   </span>
+                  {/* Category */}
+                  {res.service?.category && (
+                    <>
+                      <div className="h-3 w-px bg-[#E5DCD3]"></div>
+                      <span className="text-[#8C827A] italic text-xs">
+                        {res.service.category}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
