@@ -56,9 +56,14 @@ export default function DoctorCard({
             </div>
 
             <div>
-              <h3 className="font-bold text-[#86654F] text-lg">
-                Dr. {doctor.userName}
-              </h3>
+              <div className="flex items-center gap-2">
+                <h3 className="font-bold text-[#86654F] text-lg">
+                  Dr. {doctor.userName}
+                </h3>
+                <span className="text-[10px] font-mono text-[#A98770] bg-[#F7F3EF] px-1.5 py-0.5 rounded-md border border-[#E9DFD5]">
+                  #{doctor._id?.slice(-6).toUpperCase()}
+                </span>
+              </div>
 
               <div className="flex gap-4 text-sm text-[#A98770] mt-1">
                 <span className="flex items-center gap-1">
@@ -132,9 +137,14 @@ export default function DoctorCard({
               )}
             </div>
 
-            <h3 className="font-bold text-[#86654F] text-xl mb-1">
-              Dr. {doctor.userName}
-            </h3>
+            <div className="flex items-center gap-2 mb-1 justify-center">
+              <h3 className="font-bold text-[#86654F] text-xl">
+                Dr. {doctor.userName}
+              </h3>
+              <span className="text-[10px] font-mono text-[#A98770] bg-[#F7F3EF] px-1.5 py-0.5 rounded-md border border-[#E9DFD5]">
+                #{doctor._id?.slice(-6).toUpperCase()}
+              </span>
+            </div>
 
             <span className="text-sm text-[#E5A46C] font-medium mb-3">
               {doctor.doctorSpecialist || "Specialist"}
@@ -159,20 +169,23 @@ export default function DoctorCard({
             </button>
           </div>
         </div>
-      )}
+      )
+      }
 
       {/* EDIT MODAL */}
-      {editModalOpen && selectedDoctor && (
-        <EditDoctorModal
-          isOpen={editModalOpen}
-          doctor={selectedDoctor}
-          onClose={() => setEditModalOpen(false)}
-          onSuccess={() => {
-            setEditModalOpen(false);
-            onUpdate();
-          }}
-        />
-      )}
+      {
+        editModalOpen && selectedDoctor && (
+          <EditDoctorModal
+            isOpen={editModalOpen}
+            doctor={selectedDoctor}
+            onClose={() => setEditModalOpen(false)}
+            onSuccess={() => {
+              setEditModalOpen(false);
+              onUpdate();
+            }}
+          />
+        )
+      }
     </>
   );
 }
