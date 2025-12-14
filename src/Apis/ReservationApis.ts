@@ -157,3 +157,27 @@ export const getReservationsByStatus = async (status: string) => {
   });
   return data.data;
 };
+
+//===> get my reservations
+export const getMyReservations = async () => {
+  const { data } = await axios.get(`${BASE_URL}/my-reservations`, {
+    headers,
+  });
+  return data.data;
+};
+
+//===> get my upcoming reservations
+export const getMyUpcomingReservations = async () => {
+  const { data } = await axios.get(`${BASE_URL}/my-reservations/upcoming`, {
+    headers,
+  });
+  return data.data;
+};
+
+//===> get my past reservations
+export const getMyPastReservations = async () => {
+  const { data } = await axios.get(`${BASE_URL}/my-reservations/past`, {
+    headers,
+  });
+  return data.data;
+};
