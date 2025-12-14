@@ -35,8 +35,8 @@ export default function RelatedProductsSlider({ relatedProducts }: Props) {
     >
       {relatedProducts.map((product) => (
         <div key={product._id} className="p-4 ">
-          <Link to={`/product-details/${product._id}`}>
             <div className="bg-[#ebe1d7]  rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group border border-gray-100">
+              <Link to={`/product-details/${product._id}`}>
               <div className=" overflow-hidden bg-gray-50 ">
                 <img
                   src={product.imageCover.secure_url}
@@ -45,17 +45,17 @@ export default function RelatedProductsSlider({ relatedProducts }: Props) {
                 />
               </div>
               <div className="p-3">
-                <h3 className="text-center font-bold text-gray-800 text-lg mb-2 ">
+                <h3 className="text-center font-bold text-[var(--color-light-dark)] text-lg mb-2 ">
                   {product.title.split(" ").slice(0, 3).join(" ")}
                 </h3>
                 <div className="flex items-center justify-center gap-1 mb-2">
-                  {Array.from({ length: product.rate }).map((_, i) => (
+                  {Array.from({ length: 5 }).map((_, index) => (
                     <svg
-                      key={i}
+                      key={index}
                       xmlns="http://www.w3.org/2000/svg"
-                      fill="#f59e0b"
+                      fill={index<product.rate ?"#f59e0b" :"#d1d5db"}
                       viewBox="0 0 24 24"
-                      stroke="#f59e0b"
+                      stroke={index<product.rate ?"#f59e0b" :"#d1d5db"}
                       className="w-5 h-5"
                     >
                       <path
@@ -67,15 +67,35 @@ export default function RelatedProductsSlider({ relatedProducts }: Props) {
                     </svg>
                   ))}
                 </div>
-                <div className="flex items-center justify-center">
-                  <p className="text-2xl font-bold text-orange-400">
+                <div className="flex items-center justify-center gap-2">
+                  {product.price !== product.finalPrice &&(
+                    <p className="text-lg line-through text-[var(--color-extra-4)]">
+                    ${product.price}
+                  </p>
+                  )}
+                 <p className="text-xl font-bold text-[var(--color-accent-dark)]">
                     ${product.finalPrice}
                   </p>
                 </div>
+                </div>
+                </Link>
+                <div className="flex justify-center  mb-2">
+               <button
+               className=" bg-[var(--color-light-accent)] text-[var(--color-light-dark)]
+               w-80 py-2 rounded-full   font-bold rounded-xl
+                 hover:bg-[var(--color-accent-dark)]
+            transition-all duration-300 
+               "
+               
+               
+               >
+                Add to Cart
+               </button>
+                </div>
               </div>
             </div>
-          </Link>
-        </div>
+          
+        
       ))}
     </Slider>
   );
