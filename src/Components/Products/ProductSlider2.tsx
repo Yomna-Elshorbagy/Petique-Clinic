@@ -125,7 +125,7 @@ const ProductSlider2: React.FC = () => {
   if (!products.length) return null;
 
   const slideWidth = 100 / slidesPerView;
-  const translateX = currentIndex * slideWidth * (isRTL ? -1 : 1);
+  const translateX = currentIndex * slideWidth * (isRTL ? -1 : -1);
 
   return (
     <motion.section
