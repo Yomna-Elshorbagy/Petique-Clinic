@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { useForm, useFieldArray, type SubmitHandler, type SubmitErrorHandler } from "react-hook-form";
+import {
+  useForm,
+  useFieldArray,
+  type SubmitHandler,
+  type SubmitErrorHandler,
+} from "react-hook-form";
 import Swal from "sweetalert2";
 import { FaTimes, FaSpinner, FaPlus, FaTrash } from "react-icons/fa";
 import { useAddVaccination } from "../../../../Hooks/Vaccinations/useVaccinations";
@@ -30,12 +35,20 @@ export default function AddVaccinationModal({
   onClose,
   onSuccess,
 }: IAddVaccinationModalProps) {
-  const { register, control, handleSubmit, reset, formState: { errors } } = useForm<IFormInput>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<IFormInput>({
     defaultValues: {
       name: "",
       description: "",
       categories: [],
-      doses: [{ doseNumber: 1, ageInWeeks: 0, repeatAfterDays: 0, recurring: false }],
+      doses: [
+        { doseNumber: 1, ageInWeeks: 0, repeatAfterDays: 0, recurring: false },
+      ],
     },
   });
 
@@ -45,17 +58,24 @@ export default function AddVaccinationModal({
   });
 
   const { mutate, isPending } = useAddVaccination();
-  const { data: categoriesData } = useAnimalCategories(); // Fetch categories
+  const { data: categoriesData } = useAnimalCategories(); // fetch categories
   const categories = categoriesData?.data || categoriesData || [];
 
-  // Reset form when modal opens
+  // ===> reset form when modal opens
   useEffect(() => {
     if (isOpen) {
       reset({
         name: "",
         description: "",
         categories: [],
-        doses: [{ doseNumber: 1, ageInWeeks: 0, repeatAfterDays: 0, recurring: false }],
+        doses: [
+          {
+            doseNumber: 1,
+            ageInWeeks: 0,
+            repeatAfterDays: 0,
+            recurring: false,
+          },
+        ],
       });
     }
   }, [isOpen, reset]);
@@ -111,7 +131,10 @@ export default function AddVaccinationModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit, onError)} className="p-6 space-y-6">
+        <form
+          onSubmit={handleSubmit(onSubmit, onError)}
+          className="p-6 space-y-6"
+        >
           {/* Name & Description */}
           <div className="grid grid-cols-1 gap-6">
             <div>
@@ -123,7 +146,11 @@ export default function AddVaccinationModal({
                 placeholder="Vaccine Name"
                 {...register("name", { required: "Name is required" })}
               />
-              {errors.name && <span className="text-red-500 text-xs">{errors.name.message}</span>}
+              {errors.name && (
+                <span className="text-red-500 text-xs">
+                  {errors.name.message}
+                </span>
+              )}
             </div>
 
             <div>
@@ -133,9 +160,15 @@ export default function AddVaccinationModal({
               <textarea
                 className="w-full px-4 py-2 rounded-xl bg-white border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#86654F] min-h-[80px]"
                 placeholder="Description"
-                {...register("description", { required: "Description is required" })}
+                {...register("description", {
+                  required: "Description is required",
+                })}
               />
-              {errors.description && <span className="text-red-500 text-xs">{errors.description.message}</span>}
+              {errors.description && (
+                <span className="text-red-500 text-xs">
+                  {errors.description.message}
+                </span>
+              )}
             </div>
           </div>
 
@@ -146,27 +179,45 @@ export default function AddVaccinationModal({
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-40 overflow-y-auto p-2 border border-[#ECE7E2] rounded-xl bg-white">
               {categories.map((cat: any) => (
-                <label key={cat._id} className="flex items-center gap-2 cursor-pointer p-1 hover:bg-[#FAF6F1] rounded">
+                <label
+                  key={cat._id}
+                  className="flex items-center gap-2 cursor-pointer p-1 hover:bg-[#FAF6F1] rounded"
+                >
                   <input
                     type="checkbox"
                     value={cat._id}
-                    {...register("categories", { required: "Select at least one category" })}
+                    {...register("categories", {
+                      required: "Select at least one category",
+                    })}
                     className="checkbox checkbox-sm checkbox-primary"
                   />
                   <span className="text-sm text-[#86654F]">{cat.name}</span>
                 </label>
               ))}
             </div>
-            {errors.categories && <span className="text-red-500 text-xs">{errors.categories.message}</span>}
+            {errors.categories && (
+              <span className="text-red-500 text-xs">
+                {errors.categories.message}
+              </span>
+            )}
           </div>
 
           {/* Doses Section */}
           <div className="border-t border-[#ECE7E2] pt-4">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold text-[#86654F]">Doses Schedule</h3>
+              <h3 className="text-lg font-bold text-[#86654F]">
+                Doses Schedule
+              </h3>
               <button
                 type="button"
-                onClick={() => append({ doseNumber: fields.length + 1, ageInWeeks: 0, repeatAfterDays: 0, recurring: false })}
+                onClick={() =>
+                  append({
+                    doseNumber: fields.length + 1,
+                    ageInWeeks: 0,
+                    repeatAfterDays: 0,
+                    recurring: false,
+                  })
+                }
                 className="btn btn-sm bg-[#86654F] text-white border-none hover:bg-[#6d5240] gap-1"
               >
                 <FaPlus size={12} /> Add Dose
@@ -175,17 +226,26 @@ export default function AddVaccinationModal({
 
             <div className="space-y-4">
               {fields.map((item, index) => (
-                <div key={item.id} className="bg-white p-4 rounded-xl border border-[#ECE7E2] relative">
+                <div
+                  key={item.id}
+                  className="bg-white p-4 rounded-xl border border-[#ECE7E2] relative"
+                >
                   <div className="absolute top-2 right-2">
                     {fields.length > 1 && (
-                      <button type="button" onClick={() => remove(index)} className="text-red-400 hover:text-red-600">
+                      <button
+                        type="button"
+                        onClick={() => remove(index)}
+                        className="text-red-400 hover:text-red-600"
+                      >
                         <FaTrash size={14} />
                       </button>
                     )}
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
-                      <label className="text-xs font-semibold text-[#86654F] block mb-1">Dose #{index + 1}</label>
+                      <label className="text-xs font-semibold text-[#86654F] block mb-1">
+                        Dose #{index + 1}
+                      </label>
                       <input
                         type="number"
                         disabled
@@ -194,19 +254,29 @@ export default function AddVaccinationModal({
                       />
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-[#86654F] block mb-1">Age (Weeks)</label>
+                      <label className="text-xs font-semibold text-[#86654F] block mb-1">
+                        Age (Weeks)
+                      </label>
                       <input
                         type="number"
-                        {...register(`doses.${index}.ageInWeeks` as const, { valueAsNumber: true, required: true })}
+                        {...register(`doses.${index}.ageInWeeks` as const, {
+                          valueAsNumber: true,
+                          required: true,
+                        })}
                         className="w-full px-3 py-1.5 rounded-lg border border-[#ECE7E2] text-[#86654F] text-sm focus:ring-1 focus:ring-[#A98770]"
                         placeholder="e.g. 8"
                       />
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-[#86654F] block mb-1">Repeat After (Days)</label>
+                      <label className="text-xs font-semibold text-[#86654F] block mb-1">
+                        Repeat After (Days)
+                      </label>
                       <input
                         type="number"
-                        {...register(`doses.${index}.repeatAfterDays` as const, { valueAsNumber: true })}
+                        {...register(
+                          `doses.${index}.repeatAfterDays` as const,
+                          { valueAsNumber: true }
+                        )}
                         className="w-full px-3 py-1.5 rounded-lg border border-[#ECE7E2] text-[#86654F] text-sm focus:ring-1 focus:ring-[#A98770]"
                         placeholder="Optional"
                       />
@@ -222,7 +292,11 @@ export default function AddVaccinationModal({
             disabled={isPending}
             className="w-full py-3 bg-[#86654F] text-white rounded-xl font-bold hover:bg-[#6d5240] transition-colors shadow-md flex items-center justify-center gap-2"
           >
-            {isPending ? <FaSpinner className="animate-spin" /> : "Save Vaccine"}
+            {isPending ? (
+              <FaSpinner className="animate-spin" />
+            ) : (
+              "Save Vaccine"
+            )}
           </button>
         </form>
       </div>

@@ -1,4 +1,3 @@
-
 export interface IDose {
   doseNumber: number;
   ageInWeeks: number;
@@ -24,3 +23,4 @@ export interface IVaccination {
   createdAt?: string;
   updatedAt?: string;
 }
+export type VaccinationStatus = "scheduled" | "completed" | "overdue";

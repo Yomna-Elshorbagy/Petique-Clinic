@@ -1,19 +1,28 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { getVaccinationRecords } from "../../../../Apis/PetApis";
-import { AlertCircle, CheckCircle, Clock } from "lucide-react";
+import { AlertCircle, CheckCircle, Clock, Edit, Trash2 } from "lucide-react";
+import Swal from "sweetalert2";
 import Pagination from "../../../Componenst/Pagination/Pagination";
 import { useLocalPagination } from "../../../Componenst/Pagination/UsePagination";
+import {
+  useDeletePetVaccination,
+  useVaccinationRecords,
+} from "../../../../Hooks/Pets/UsePets";
+import EditVaccinationModal from "./EditVaccinationModal";
 
 interface VaccinationRecord {
   petId: string;
+  vaccinationId: string; 
+  _id?: string;
   category?: string;
   petName: string;
   petImage?: string;
   vaccineName?: string;
+  vaccineId?: string; 
   date: string;
   nextDose?: string;
   status: "completed" | "scheduled" | "overdue";
+  doseNumber?: number;
 }
 
 const statusConfig = {
@@ -38,28 +47,117 @@ const statusConfig = {
 };
 
 const VaccinationTable = () => {
-  const [records, setRecords] = useState<VaccinationRecord[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const { page, totalPages, paginatedItems, goToPage } = useLocalPagination(
-    records,
-    5
+  const { data: records = [], isLoading: loading } = useVaccinationRecords();
+  const [editingRecord, setEditingRecord] = useState<VaccinationRecord | null>(
+    null
   );
+  const deleteMutation = useDeletePetVaccination();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getVaccinationRecords();
-        setRecords(data);
-      } finally {
-        setLoading(false);
+  const { page, totalPages, paginatedItems, goToPage } =
+    useLocalPagination<VaccinationRecord>(records, 5);
+
+  const handleDelete = (record: VaccinationRecord) => {
+    const vaccinationId = record.vaccinationId || record._id;
+
+    if (!vaccinationId) {
+      console.error("Vaccination record structure:", record);
+      Swal.fire("Error", "Missing vaccination ID", "error");
+      return;
+    }
+
+    if (!record.petId) {
+      Swal.fire("Error", "Missing pet ID", "error");
+      return;
+    }
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#86654F",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteMutation.mutate(
+          {
+            petId: record.petId,
+            vaccinationId: vaccinationId,
+          },
+          {
+            onSuccess: () => {
+              Swal.fire("Deleted!", "Vaccination has been deleted.", "success");
+              // Data will auto-refresh via query invalidation in the hook
+            },
+            onError: (err: any) => {
+              Swal.fire(
+                "Error",
+                err?.response?.data?.message || "Failed to delete vaccination",
+                "error"
+              );
+            },
+          }
+        );
       }
-    };
-    fetchData();
-  }, []);
+    });
+  };
+
+  const handleEdit = (record: VaccinationRecord) => {
+    const vaccinationId = record.vaccinationId || record._id;
+
+    if (!vaccinationId) {
+      console.error("Vaccination record structure:", record);
+      Swal.fire(
+        "Error",
+        "Missing vaccination ID. Cannot edit this record.",
+        "error"
+      );
+      return;
+    }
+
+    if (!record.petId) {
+      Swal.fire("Error", "Missing pet ID. Cannot edit this record.", "error");
+      return;
+    }
+
+    setEditingRecord(record);
+  };
 
   return (
     <>
+      {/* Edit Modal */}
+      {editingRecord &&
+        (() => {
+          const vaccinationId =
+            editingRecord.vaccinationId || editingRecord._id || "";
+          const vaccineId = editingRecord.vaccineId || "";
+
+          if (!vaccinationId) {
+            console.error(
+              "Cannot edit - missing vaccination ID:",
+              editingRecord
+            );
+            return null;
+          }
+
+          return (
+            <EditVaccinationModal
+              isOpen={!!editingRecord}
+              onClose={() => setEditingRecord(null)}
+              petId={editingRecord.petId}
+              vaccinationId={vaccinationId}
+              currentVaccineId={vaccineId}
+              currentDoseNumber={editingRecord.doseNumber || 1}
+              currentDate={editingRecord.date}
+              onSuccess={() => {
+                setEditingRecord(null);
+                // Data will auto-refresh via query invalidation in the hook
+              }}
+            />
+          );
+        })()}
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -82,8 +180,9 @@ const VaccinationTable = () => {
 
           <tbody className="divide-y">
             {!loading &&
-              records.map((record, index) => {
-                const status = statusConfig[record.status];
+              paginatedItems.map((record, index) => {
+                const status =
+                  statusConfig[record.status as keyof typeof statusConfig];
 
                 return (
                   <motion.tr
@@ -147,10 +246,24 @@ const VaccinationTable = () => {
                     </td>
 
                     {/* ===> actions */}
-                    <td className="p-5 text-right">
-                      <button className="text-orange-500 hover:underline text-sm font-medium">
-                        View Details
-                      </button>
+                    <td className="p-5">
+                      <div className="flex items-center justify-end gap-3">
+                        <button
+                          onClick={() => handleEdit(record)}
+                          className="p-2 text-[#86654F] hover:bg-[#FCF9F4] rounded-lg transition-colors"
+                          title="Edit vaccination"
+                        >
+                          <Edit size={18} />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(record)}
+                          className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                          title="Delete vaccination"
+                          disabled={deleteMutation.isPending}
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
                     </td>
                   </motion.tr>
                 );
@@ -159,7 +272,7 @@ const VaccinationTable = () => {
             {/* ===> In case of no vaccinations*/}
             {!loading && records.length === 0 && (
               <tr>
-                <td colSpan={6} className="text-center p-10 text-gray-500">
+                <td colSpan={7} className="text-center p-10 text-gray-500">
                   No vaccination records found
                 </td>
               </tr>
