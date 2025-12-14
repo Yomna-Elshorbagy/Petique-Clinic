@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
 import { Bone } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import gsap from "gsap";
 
-
 const ProductsHero: React.FC = () => {
-    const boneRef = useRef(null);
+  const boneRef = useRef<SVGSVGElement | null>(null);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     if (boneRef.current) {
@@ -18,40 +19,51 @@ const ProductsHero: React.FC = () => {
       });
     }
   }, []);
-  return (
-    <div className="relative bg-[#1f1b22] h-auto px-10 py-10 overflow-visible flex flex-col md:flex-row items-center font-serif">
-        <div className="max-w-7xl text-center md:text-left md:pl-100">
-          <Bone
-            ref={boneRef}
-            className="
-        bone-icon 
-        w-30 h-30 
-        text-white 
-        drop-shadow-[0_0_10px_#ff9100]
-        ml-[-60px] md:ml-[-80px] 
-        mx-auto md:mx-0
-      "
-            strokeWidth={2.5}
-            color="#e3e3e3"
-          />
-          <h1 className="text-white text-4xl font-extrabold mt-4">
-            SHOP
-          </h1>
 
-          <div className="mt-8 flex justify-center md:justify-start gap-6 text-[#e9a66f] font-medium text-1xl">
-            <Link to="/home" className="hover:text-white transition-colors">
-              Home
-            </Link>
-            <span className="text-[#e9a66f]"> &gt; </span>
-            <p className="text-white font-semibold">Shop</p>
-          </div>
-        </div>
-        <img
-          src="/src/assets/images/cat-relaxing.png"
-          alt="cat"
-          className="hidden md:block absolute md:right-1 md:bottom-[-120px] w-[600px] z-10"
+  return (
+    <div
+      dir={i18n.dir()} 
+      className="relative bg-[#1f1b22] h-auto px-10 py-10 overflow-visible flex flex-col md:flex-row items-center font-serif"
+    >
+      <div className="max-w-7xl text-center md:text-start md:ps-24">
+        <Bone
+          ref={boneRef}
+          className="
+            w-24 h-24
+            text-white 
+            drop-shadow-[0_0_10px_#ff9100]
+            mx-auto md:mx-0
+          "
+          strokeWidth={2.5}
+          color="#e3e3e3"
         />
+
+        <h1 className="text-white text-4xl font-extrabold mt-4">
+          {t("productsHero.title")}
+        </h1>
+
+        {/* Breadcrumb */}
+        <div className="mt-8 flex justify-center md:justify-start gap-4 text-[#e9a66f] font-medium text-lg">
+          <Link to="/" className="hover:text-white transition-colors">
+            {t("breadcrumbs.home")}
+          </Link>
+
+          <span className="text-[#e9a66f]">
+            {i18n.dir() === "rtl" ? "<" : ">"}
+          </span>
+
+          <p className="text-white font-semibold">
+            {t("breadcrumbs.shop")}
+          </p>
+        </div>
       </div>
+
+      <img
+        src="/src/assets/images/cat-relaxing.png"
+        alt={t("productsHero.imageAlt")}
+        className="hidden md:block absolute md:end-1 md:bottom-[-120px] w-[600px] z-10"
+      />
+    </div>
   );
 };
 

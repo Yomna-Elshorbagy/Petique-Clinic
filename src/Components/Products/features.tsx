@@ -1,5 +1,6 @@
 import { ShoppingBag, Heart, PawPrint } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import styles from "./features.module.css";
 
 interface Feature {
@@ -8,24 +9,37 @@ interface Feature {
   desc: string;
 }
 
-const features: Feature[] = [
-  { icon: ShoppingBag, title: "Wide Selection", desc: "Wide variety of products for dogs, cats, and more" },
-  { icon: Heart, title: "Quality Care", desc: "Vet-approved products you can trust" },
-  { icon: PawPrint, title: "Happy Pets", desc: "Making tails wag since 2024" },
-];
+const ICON_MAP: Record<string, LucideIcon> = {
+  shopping: ShoppingBag,
+  care: Heart,
+  happy: PawPrint,
+};
 
 const Features = () => {
+  const { t, i18n } = useTranslation();
+
+  const features = t("features.items", {
+    returnObjects: true,
+  }) as { icon: string; title: string; desc: string }[];
+
   return (
-    <section className={styles.section}>
+    <section
+      className={styles.section}
+      dir={i18n.dir()}   
+    >
       <div className={styles.container}>
         <div className={styles.grid}>
-          {features.map((feature, idx) => (
-            <div key={idx} className={styles.card}>
-              <feature.icon className={styles.icon} />
-              <h3 className={styles.title}>{feature.title}</h3>
-              <p className={styles.description}>{feature.desc}</p>
-            </div>
-          ))}
+          {features.map((feature, idx) => {
+            const Icon = ICON_MAP[feature.icon];
+
+            return (
+              <div key={idx} className={styles.card}>
+                {Icon && <Icon className={styles.icon} />}
+                <h3 className={styles.title}>{feature.title}</h3>
+                <p className={styles.description}>{feature.desc}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
