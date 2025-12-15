@@ -6,6 +6,7 @@ import type { AppDispatch } from "../../../Store/store";
 import { addOrder } from "../../../Store/Slices/OrderSlice";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
+import { useTranslation } from "react-i18next";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
@@ -36,6 +37,7 @@ type CheckoutFormData = z.infer<typeof checkoutSchema>;
 const CheckoutForm = () => {
   const dispatch = useAppDispatch();
   const Navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState<CheckoutFormData>({
     fullName: "",
@@ -122,12 +124,14 @@ const CheckoutForm = () => {
           <FaPaw className="text-xl" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-            Pet & Contact Information
-          </h2>
-          <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
-            Tell us about you and your furry friend
-          </p>
+         <h2 className="text-xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
+  {t("checkout.title")}
+</h2>
+
+<p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
+  {t("checkout.description")}
+</p>
+
         </div>
       </div>
 
@@ -138,7 +142,7 @@ const CheckoutForm = () => {
             htmlFor="fullName"
             className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
           >
-            Full Name <span className="text-red-500">*</span>
+            {t("checkout.fullName")} <span className="text-red-500">{t("checkout.required")}</span>
           </label>
           <input
             onChange={(e) => handleChange("fullName", e.target.value)}
@@ -151,7 +155,7 @@ const CheckoutForm = () => {
                 ? "border-red-500 focus:ring-red-500"
                 : "border-gray-200 dark:border-gray-700 focus:ring-[var(--color-light-accent)]"
             } bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:border-transparent outline-none transition-all`}
-            placeholder="John Doe"
+            placeholder={t("checkout.fullNamePlaceholder")}
           />
           {errors.fullName && touched.fullName && (
             <p className="mt-1 text-sm text-red-500">{errors.fullName}</p>
@@ -164,7 +168,7 @@ const CheckoutForm = () => {
               htmlFor="address"
               className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
             >
-              Address <span className="text-red-500">*</span>
+              {t("checkout.address")} <span className="text-red-500">{t("checkout.required")}</span>
             </label>
             <input
               onChange={(e) => handleChange("address", e.target.value)}
@@ -177,7 +181,7 @@ const CheckoutForm = () => {
                   ? "border-red-500 focus:ring-red-500"
                   : "border-gray-200 dark:border-gray-700 focus:ring-[var(--color-light-accent)]"
               } bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:border-transparent outline-none transition-all`}
-              placeholder="123 Main St, City, Country"
+              placeholder={t("checkout.addressPlaceholder")}
             />
             {errors.address && touched.address && (
               <p className="mt-1 text-sm text-red-500">{errors.address}</p>
@@ -189,7 +193,7 @@ const CheckoutForm = () => {
               htmlFor="phone"
               className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
             >
-              Phone Number <span className="text-red-500">*</span>
+              {t("checkout.phone")} <span className="text-red-500">{t("checkout.required")}</span>
             </label>
             <input
               onChange={(e) => handleChange("phone", e.target.value)}
@@ -202,7 +206,7 @@ const CheckoutForm = () => {
                   ? "border-red-500 focus:ring-red-500"
                   : "border-gray-200 dark:border-gray-700 focus:ring-[var(--color-light-accent)]"
               } bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:border-transparent outline-none transition-all`}
-              placeholder="+20 1X XXX XXXX"
+              placeholder={t("checkout.phonePlaceholder")}
             />
             {errors.phone && touched.phone && (
               <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
@@ -216,7 +220,7 @@ const CheckoutForm = () => {
             htmlFor="note"
             className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
           >
-            Note (Optional)
+            {t("checkout.note")}
           </label>
           <textarea
             onChange={(e) => handleChange("note", e.target.value)}
@@ -224,7 +228,7 @@ const CheckoutForm = () => {
             id="note"
             rows={4}
             className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[var(--color-light-accent)] focus:border-transparent outline-none transition-all resize-none"
-            placeholder="Any special requests or information we should know..."
+            placeholder={t("checkout.notePlaceholder")}
           />
         </div>
 
@@ -235,7 +239,7 @@ const CheckoutForm = () => {
             type="button"
             className="px-8 py-3 bg-[var(--color-light-accent)] hover:bg-[#d69560] text-white font-semibold rounded-xl shadow-lg shadow-orange-200 dark:shadow-none transition-all transform hover:scale-105 flex items-center gap-2"
           >
-            Continue <FaCheckCircle />
+            {t("checkout.continue")} <FaCheckCircle />
           </button>
         </div>
       </form>

@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import i18n from "../../../i18n";
 
 interface OTPProps {
     value: string;
@@ -7,6 +8,7 @@ interface OTPProps {
 
 export default function OTPBlocks({ value, onChange }: OTPProps) {
     const inputs = useRef<(HTMLInputElement | null)[]>([]);
+    const isRTL = i18n.language === "ar";
 
     const handleChange = (val: string, index: number) => {
         const newOtp = value.split("");
@@ -26,7 +28,9 @@ export default function OTPBlocks({ value, onChange }: OTPProps) {
     };
 
     return (
-        <div className="flex gap-3 justify-center">
+        <div className={`flex gap-3 justify-center ${isRTL ? "flex-row-reverse" : "flex-row"
+            }`}
+            dir={isRTL ? "rtl" : "ltr"}>
             {Array.from({ length: 6 }).map((_, index) => (
                 <input
                     key={index}

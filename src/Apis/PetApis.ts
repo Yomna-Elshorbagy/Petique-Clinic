@@ -109,3 +109,33 @@ export const getPetVaccinations = async (id: string) => {
   });
   return data.data;
 };
+
+// ===> update specific vaccination for pet
+export const updatePetVaccination = async (
+  petId: string,
+  vaccinationId: string,
+  payload: any
+) => {
+  const { data } = await axios.put(
+    `${baseURL}/pet/${petId}/vaccination/${vaccinationId}`,
+    payload,
+    {
+      headers: getHeaders(),
+    }
+  );
+  return data.data;
+};
+
+// ===> delete specific vaccination for pet
+export const deletePetVaccination = async (
+  petId: string,
+  vaccinationId: string
+) => {
+  const { data } = await axios.delete(
+    `${baseURL}/pet/${petId}/vaccination/${vaccinationId}`,
+    {
+      headers: getHeaders(),
+    }
+  );
+  return data;
+};

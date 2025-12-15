@@ -164,9 +164,9 @@ export default function ProductDetails() {
   // jsx
   return (
     <>
-      <div className="bg-[#f7f4ef] min-h-screen  relative">
+      <div className="bg-[var(--color-light-background)] min-h-screen  relative">
         <BackButton />
-        <div className="max-w-6xl mx-auto pt-28">
+        <div className="max-w-6xl mx-auto pt-36">
           <div className="flex flex-col md:flex-row  gap-10 items-center md:items-start  md:justify-between">
             <div className="flex flex-col items-center">
               <div className=" bg-white rounded-2xl overflow-hidden flex items-center justify-center w-[400px] h-[400px] shadow-lg">
@@ -198,40 +198,54 @@ export default function ProductDetails() {
               </div>
             </div>
 
-            <div className="w-full  md:w-1/2 flex flex-col gap-4 bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-[0_4px_14px_rgba(0,0,0,0.1)]">
-              <h1 className="text-3xl font-bold text-orange-400">
+            <div className="w-full  md:w-1/2 flex flex-col gap-3 bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-[0_4px_14px_rgba(0,0,0,0.1)]">
+              <h1 className="text-3xl font-bold text-[var(--color-light-accent)] ">
                 {data.title}
               </h1>
 
-              <p className="text-[#3a342f] leading-relaxed">
+              <p className="text-[var(--color-light-dark)]leading-relaxed">
                 {showFull
                   ? data.description
                   : data.description.split(" ").slice(0, 20).join(" ") + "..."}
                 <span
-                  className="text-orange-400 cursor-pointer ml-1"
+                  className="text-[var(--color-light-accent)] cursor-pointer ml-1"
                   onClick={() => setShowFull(!showFull)}
                 >
                   {showFull ? "Show Less" : "Read More"}
                 </span>
               </p>
-
-              <p className="text-xl font-semibold text-orange-400">
+              <div className='flex items-center gap-1 '>
+                    {Array.from ({length:5}).map((_, index)=>(
+                      <svg
+                      key={index}
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill={index<data.rate ?"#f59e0b" :"#d1d5db"}
+                      viewBox="0 0 24 24"
+                  className="w-5 h-5"
+                  >
+                   <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.787 1.48 8.247L12 18.896l-7.416 4.444 1.48-8.247L0 9.306l8.332-1.151z"/>
+    
+                  </svg>
+                    ))}
+                     
+                     </div>
+              <p className="text-xl font-semibold text-[var(--color-light-dark)]">
                 Price:{" "}
-                <span className="  font-bold text-[#3a342f]">
+                <span className="  font-bold text-[var(--color-light-accent)]">
                   ${data.finalPrice}
                 </span>
               </p>
-
-              <p className="text-orange-400 font-semibold text-lg">
+                
+              <p className="text-[var(--color-light-dark)] font-semibold text-lg">
                 Category:{" "}
-                <span className="font-bold text-[#3a342f]">
+                <span className="font-bold text-[var(--color-light-accent)]">
                   {data.category.name}
                 </span>
               </p>
 
-              <div className="flex items-center gap-4 mt-4">
+              <div className="flex items-center gap-4 mt-3">
                 <button
-                  className="w-10 h-10 bg-gray-200 rounded-lg text-xl font-bold disabled:opacity-40"
+                  className="w-10 h-10 bg-[var(--color-light-accent)] rounded-lg text-xl font-bold disabled:opacity-40"
                   onClick={handleDecrease}
                   disabled={quantity <= 1}
                 >
@@ -241,7 +255,7 @@ export default function ProductDetails() {
                 <span className="text-lg font-medium">{quantity}</span>
 
                 <button
-                  className="w-10 h-10 bg-gray-200 rounded-lg text-xl font-bold disabled:opacity-40"
+                  className="w-10 h-10 bg-[var(--color-light-accent)] rounded-lg text-xl font-bold disabled:opacity-40"
                   onClick={handleIncrease}
                   disabled={quantity >= data.stock}
                 >
@@ -249,7 +263,7 @@ export default function ProductDetails() {
                 </button>
               </div>
 
-              <button className="mt-6 px-6 py-3 bg-orange-400 text-white text-lg font-bold rounded-xl shadow-md ">
+              <button className="mt-3 px-6 py-3 bg-[var(--color-light-accent)] text-[var(--color-light-dark)] text-lg font-bold rounded-xl shadow-md ">
                 Add to Cart
               </button>
             </div>
@@ -258,7 +272,7 @@ export default function ProductDetails() {
 
         <hr className="my-10 border-t border-gray-300" />
 
-        <h2 className="text-4xl  text-center font-bold text-orange-400 mb-5 flex items-center justify-center gap-2">
+        <h2 className="text-4xl  text-center font-bold text-[var(--color-light-accent)] mb-5 flex items-center justify-center gap-2">
           Proudct Reviews <FaPaw size={28} />
         </h2>
         {showReviews && (
@@ -266,22 +280,16 @@ export default function ProductDetails() {
             <ReviewButton isOpen={() => setIsModalOpen(true)} />
             {reviewloading && <Loader />}
             {reviewError && <ErrorMessage />}
+             
             {reviewdata &&
-              reviewdata.length > 0 &&
-              reviewdata.map((review) => {
-                const user = userdata?.find(
-                  (user) => user._id === review.user._id
-                );
-                if (!user) return null;
-                return (
+              reviewdata.length > 0 &&(
                   <ReviewCard
-                    key={review._id}
-                    review={review}
-                    user={user}
+                    reviews={reviewdata}
+                    users={userdata}
                     onDelete={(id) => deletereview.mutate(id)}
                   />
-                );
-              })}
+              
+              )}
           </>
         )}
 
@@ -291,7 +299,7 @@ export default function ProductDetails() {
         />
 
         <hr className="my-10 border-t border-gray-300" />
-        <h2 className="text-4xl  text-center font-bold text-orange-400 mb-6 flex items-center justify-center gap-2">
+        <h2 className="text-4xl  text-center font-bold text-[var(--color-light-accent)] mb-6 flex items-center justify-center gap-2">
           Related Products <FaPaw size={28} />
         </h2>
 

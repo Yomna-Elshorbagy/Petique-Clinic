@@ -1,13 +1,16 @@
+import { useTranslation } from 'react-i18next';
 import { FaPaw } from 'react-icons/fa';
 
 export default function FeaturesList() {
+    const { t } = useTranslation();
+
     const features = [
-        "Nutrition and Diet",
-        "Mental & Emotional Well-Being",
-        "Exercise and Physical Activity",
-        "Preventive Health",
-        "Grooming and Hygiene",
-        "Special Needs Pets",
+        t("about.features.nutrition"),
+        t("about.features.mental"),
+        t("about.features.exercise"),
+        t("about.features.preventive"),
+        t("about.features.grooming"),
+        t("about.features.specialNeeds"),
     ];
 
     return (

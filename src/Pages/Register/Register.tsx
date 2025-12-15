@@ -11,9 +11,13 @@ import Input from "../../Components/Auth/Input";
 import AuthBtn from "../../Components/Auth/AuthBtn";
 import pet from "../../assets/images/dog.jpg";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import i18n from "../../i18n";
 
 export default function Register() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const isRTL = i18n.language === "ar";
 
   const { register, handleSubmit, formState: { errors } } = useForm<SignUpSchemaType>({
     // defaultValues: signupDefaultValues,
@@ -26,8 +30,8 @@ export default function Register() {
     onSuccess: () => {
       Swal.fire({
         icon: "success",
-        title: "Account Created!",
-        text: "Check your mail Redirecting to login ... 🐱🐾",
+        title: t("auth.register.successTitle"),
+        text: t("auth.register.successText"),
         timer: 2000,
         showConfirmButton: false,
         willClose: () => navigate("/login"),
@@ -35,14 +39,14 @@ export default function Register() {
     },
 
     onError: (err) => {
-      let message = "Signup failed!";
+      let message = t("auth.register.errorDefault");
       if (axios.isAxiosError(err)) {
         message = err.response?.data?.message || message;
       }
 
       Swal.fire({
         icon: "error",
-        title: "Signup Error",
+        title: t("auth.register.errorTitle"),
         text: message,
         confirmButtonColor: "#f69946",
       });
@@ -80,63 +84,63 @@ export default function Register() {
        <div className="relative grid grid-cols-1 md:grid-cols-2">
           {/* FORM */}
           <div className="p-10 bg-black/40">
-            <h2 className="text-(--color-light-accent) font-['Playfair_Display'] text-3xl font-semibold mb-6">Sign Up</h2>
+            <h2 className="text-(--color-light-accent) font-['Playfair_Display'] text-3xl font-semibold mb-6">{t("auth.register.title")}</h2>
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
 
               <div className="relative">
-                <MdPerson className="absolute left-3 top-1/2 -translate-y-1/2 text-[#e0d0c1]" />
-                <Input placeholder="Your name" register={register("userName")}/>
+                <MdPerson className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} />
+                <Input placeholder={t("auth.common.name")} register={register("userName")}/>
               </div>
               {errors.userName && <p className="text-red-400 text-sm">{errors.userName.message}</p>}
 
               <div className="relative">
-                <MdEmail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#e0d0c1]" />
-                <Input placeholder="Your email" type="email" register={register("email")}/>
+                <MdEmail className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} />
+                <Input placeholder={t("auth.common.email")} type="email" register={register("email")}/>
               </div>
               {errors.email && <p className="text-red-400 text-sm">{errors.email.message}</p>}
 
               <div className="relative">
-                <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#d5c5b5]" />
-                <Input placeholder="Password" type="password" register={register("password")}/>
+                <MdLock className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} />
+                <Input placeholder={t("auth.common.password")} type="password" register={register("password")}/>
               </div>
               {errors.password && <p className="text-red-400 text-sm">{errors.password.message}</p>}
 
               <div className="relative">
-                <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#d5c5b5]" />
-                <Input placeholder="Confirm password" type="password" register={register("Cpassword")}/>
+                <MdLock className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} />
+                <Input placeholder={t("auth.common.confirmPassword")} type="password" register={register("Cpassword")}/>
               </div>
               {errors.Cpassword && <p className="text-red-400 text-sm">{errors.Cpassword.message}</p>}
 
               <div className="relative">
-                <MdPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-[#d5c5b5]" />
-                <Input placeholder="Phone number" register={register("mobileNumber")}/>
+                <MdPhone className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} />
+                <Input placeholder={t("auth.common.phone")} register={register("mobileNumber")}/>
               </div>
               {errors.mobileNumber && <p className="text-red-400 text-sm">{errors.mobileNumber.message}</p>}
 
               <div className="flex gap-4 text-white mt-2">
                 <label className="flex items-center gap-2">
                   <input type="radio" value="male" {...register("gender")} className="appearance-none w-5 h-5 border-3 border-(--color-light-accent) rounded-full"/>
-                  Male
+                  {t("auth.common.male")}
                 </label>
                 <label className="flex items-center gap-2">
                   <input type="radio" value="female" {...register("gender")} className="appearance-none w-5 h-5 border-3 border-(--color-light-accent) rounded-full"/>
-                  Female
+                  {t("auth.common.female")}
                 </label>
               </div>
               {errors.gender && <p className="text-red-400 text-sm">{errors.gender.message}</p>}
 
               <AuthBtn
-                name={isPending ? "Creating..." : "Sign Up"}
-                title="Already have an account?"
+                name={isPending ? t("auth.register.loading") : t("auth.register.submit")}
+                title={t("auth.register.alreadyHaveAccount")}
                 navTo="/login"
-                navName="Login"
+                navName={t("auth.login.title")}
                 isLoading={isPending}
               />
                 <p className="text-sm text-gray-400 text-center">
-                Already Register ? {" "}
+                {t("auth.register.alreadyRegister")} {" "}
                 <Link to="/otp" className="text-[#A88F7B] cursor-pointer hover:underline">
-                  Confirm OTP 
+                  {t("auth.register.confirmOtp")}
                 </Link>
               </p>
             </form>
@@ -144,17 +148,17 @@ export default function Register() {
 
           {isError && (
             <p className="text-red-500 text-sm mt-2">
-              {(error as any)?.response?.data?.message || "Signup failed"}
+              {(error as any)?.response?.data?.message || t("auth.register.errorDefault")}
             </p>
           )}
 
           {/* RIGHT SIDE */}
           <div className="p-10 flex flex-col justify-center items-start">
             <p className="text-4xl font-bold mb-4 font-['Playfair_Display'] text-(--color-light-accent) animate-pulse">
-              Join Petique
+              {t("auth.register.rightTitle")}
             </p>
-            <p className="text-[#443935] font-bold font-['Playfair_Display']">
-              Create account and enjoy your pet world.
+            <p className={`text-[#443935] font-bold font-['Playfair_Display'] ${isRTL ? "text-2xl" : ""}`}>
+              {t("auth.register.rightSubtitle")}
             </p>
           </div>
 

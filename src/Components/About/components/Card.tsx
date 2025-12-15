@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaPaw } from 'react-icons/fa';
+import { useTranslation } from "react-i18next";
 
 export default function Card() {
+    const { t } = useTranslation();
     const [count, setCount] = useState(0);
     useEffect(() => {
         let start = 0;
@@ -31,10 +33,10 @@ export default function Card() {
             {/* card */}
             <motion.div className="bg-(--color-light-background) p-6 rounded-lg shadow-md flex items-start justify-between group" whileHover="hover">
                 <div className="max-w-[80%]">
-                    <p className="text-(--color-light-dark) font-bold font-['Playfair_Display']">Trust By Clients</p>
+                    <p className="text-(--color-light-dark) font-bold font-['Playfair_Display']">{t("about.card.title")}</p>
                     <p className="text-2xl font-bold text-(--color-light-accent) font-['Playfair_Display']">{count}+</p>
                     <p className="text-(--color-light-textSecondary) text-sm font-['Playfair_Display']">
-                        Educate owners on reading ingredient lists, choosing quality foods, and recognizing harmful ingredients.
+                        {t("about.card.description")}
                     </p>
                 </div>
                 <motion.div

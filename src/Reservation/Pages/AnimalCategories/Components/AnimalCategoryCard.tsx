@@ -39,9 +39,8 @@ export default function AnimalCategoryCard({
 
   return (
     <div
-      className={`${
-        cardColors[index % cardColors.length]
-      } p-8 rounded-3xl shadow-sm hover:shadow-md transition-all relative group h-48 flex flex-col justify-between`}
+      className={`${cardColors[index % cardColors.length]
+        } p-8 rounded-3xl shadow-sm hover:shadow-md transition-all relative group h-48 flex flex-col justify-between`}
     >
       {/* ===> here hover buttons */}
       <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
@@ -119,9 +118,14 @@ export default function AnimalCategoryCard({
       </div>
 
       <div>
-        <h3 className="text-2xl font-bold text-[#86654F] mb-1">
-          {category.name}
-        </h3>
+        <div className="flex items-center gap-2 mb-1">
+          <h3 className="text-2xl font-bold text-[#86654F]">
+            {category.name}
+          </h3>
+          <span className="text-[10px] font-mono text-[#A98770] bg-[#F7F3EF] px-1.5 py-0.5 rounded-md border border-[#E9DFD5]">
+            #{category._id?.slice(-6).toUpperCase()}
+          </span>
+        </div>
         <p className="text-[#A98770] font-medium">
           <span className="text-3xl font-bold text-[#86654F] mr-2">
             {category.petCount || 0}

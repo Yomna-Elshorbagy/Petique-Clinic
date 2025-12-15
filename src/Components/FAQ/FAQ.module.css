@@ -231,6 +231,10 @@
 .accordionHeader:hover {
   background: hsla(var(--faq-orange-bg) / 0.5);
 }
+:global(html[dir="rtl"]) .accordionHeader {
+  flex-direction: row-reverse;
+  text-align: right;
+}
 
 .accordionNumber {
   width: 28px;
@@ -278,6 +282,10 @@
   color:#D98C33;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
+}
+:global(html[dir="rtl"]) .accordionIcon {
+  margin-left: 0;
+  margin-right: auto;
 }
 
 .accordionIconOpen {

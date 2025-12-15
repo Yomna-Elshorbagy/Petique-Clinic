@@ -15,6 +15,9 @@ import {
   filterReservations,
   getReservationsByStatus,
   getTodayReservations,
+  getMyReservations,
+  getMyUpcomingReservations,
+  getMyPastReservations,
 } from "../../Apis/ReservationApis";
 
 // 1) get all reservations
@@ -140,6 +143,30 @@ export const useTodayReservations = () => {
   return useQuery({
     queryKey: ["todayReservations"],
     queryFn: getTodayReservations,
+  });
+};
+
+// ===> get my reservations
+export const useMyReservations = () => {
+  return useQuery({
+    queryKey: ["my-reservations"],
+    queryFn: getMyReservations,
+  });
+};
+
+// ===> get my upcoming reservations
+export const useMyUpcomingReservations = () => {
+  return useQuery({
+    queryKey: ["my-upcoming-reservations"],
+    queryFn: getMyUpcomingReservations,
+  });
+};
+
+// ===> get my past reservations
+export const useMyPastReservations = () => {
+  return useQuery({
+    queryKey: ["my-past-reservations"],
+    queryFn: getMyPastReservations,
   });
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import DashboardHeader from "./Components/Navbar/DashboardHeader";
@@ -13,7 +13,10 @@ const DashboardEcoLayout = () => {
   const sidebarWidth = isCollapsed ? "80px" : "260px";
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-[var(--color-light-background)] via-white to-[var(--color-extra-5)]/30 dark:from-[var(--color-dark-background)] dark:via-[var(--color-dark-bg-deep)] dark:to-[var(--color-dark-background)] font-sans">
+    <div
+      dir="ltr"
+      className="min-h-screen w-full bg-gradient-to-br from-[var(--color-light-background)] via-white to-[var(--color-extra-5)]/30 dark:from-[var(--color-dark-background)] dark:via-[var(--color-dark-bg-deep)] dark:to-[var(--color-dark-background)] font-sans"
+    >
       <div
         className="fixed top-0 left-0 h-full z-30 transition-all duration-300"
         style={{ width: sidebarWidth }}

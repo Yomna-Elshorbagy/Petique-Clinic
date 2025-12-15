@@ -20,6 +20,8 @@ import { changePass, forgetPass } from "../../Apis/AuthApis";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import OTPBlocks from "./components/OTPBlocks";
+import { useTranslation } from "react-i18next";
+import i18n from "../../i18n";
 
 type Step = 1 | 2 | 3;
 
@@ -28,6 +30,10 @@ export default function ForgetPassword() {
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
+  const { t } = useTranslation();
+  const isRTL = i18n.language === "ar";
+  const [isSendingOtp, setIsSendingOtp] = useState(false);
+  const [isChangingPass, setIsChangingPass] = useState(false);
 
   const {
     register: regEmail,
@@ -55,7 +61,7 @@ export default function ForgetPassword() {
   const steps: StepItem[] = [
     {
       id: 1,
-      name: "Send Code",
+      name: t("auth.forgetPassword.step1.title"),
       icon: FaEnvelope,
       status:
         currentStep === 1
@@ -66,7 +72,7 @@ export default function ForgetPassword() {
     },
     {
       id: 2,
-      name: "Verify Code",
+      name: t("auth.forgetPassword.step2.title"),
       icon: FaKey,
       status:
         currentStep === 2
@@ -77,7 +83,7 @@ export default function ForgetPassword() {
     },
     {
       id: 3,
-      name: "Change Password",
+      name: t("auth.forgetPassword.step3.title"),
       icon: FaUnlock,
       status: currentStep === 3 ? "current" : "upcoming",
     },
@@ -85,11 +91,12 @@ export default function ForgetPassword() {
 
   const handleSendEmail = async (data: EmailForm) => {
     try {
+      setIsSendingOtp(true);
       await forgetPass(data.email);
       setEmail(data.email);
       Swal.fire({
         icon: "success",
-        title: "OTP Sent! Check Yor Email",
+        title:  t("auth.forgetPassword.step1.successTitle"),
         timer: 2000,
         timerProgressBar: true,
         showConfirmButton: false,
@@ -100,22 +107,24 @@ export default function ForgetPassword() {
       const message =
         error?.response?.data?.message ||
         error?.response?.data?.error ||
-        "Something went wrong. Please try again.";
+        t("auth.forgetPassword.defaultError");
 
       Swal.fire({
         icon: "error",
-        title: "Failed to Send OTP ❌",
+        title: t("auth.forgetPassword.step1.errorTitle"),
         text: message,
         confirmButtonColor: "#f69946",
       });
+    } finally {
+      setIsSendingOtp(false);
     }
   };
 
   const handleVerifyOtp = (data: OTPForm) => {
     if (data.otp.length !== 6) {
       Swal.fire({
-        title: "Invalid OTP ❌",
-        text: "OTP must be 6 digits",
+        title: t("auth.forgetPassword.step2.invalidOtp"),
+        text: t("auth.forgetPassword.step2.errorMsg"),
         icon: "error",
         confirmButtonColor: "#f69946",
       });
@@ -127,6 +136,7 @@ export default function ForgetPassword() {
 
   const handleResetPass = async (data: PassForm) => {
     try {
+      setIsChangingPass(true);
       await changePass({
         email,
         otp,
@@ -134,8 +144,8 @@ export default function ForgetPassword() {
       });
 
       Swal.fire({
-        title: "🎉 Password Updated",
-        text: "Your password has been changed successfully.",
+        title: t("auth.forgetPassword.step3.successTitle"),
+        text: t("auth.forgetPassword.step3.successText"),
         icon: "success",
         timer: 2000,
         timerProgressBar: true,
@@ -147,14 +157,16 @@ export default function ForgetPassword() {
       const message =
         error?.response?.data?.message ||
         error?.response?.data?.error ||
-        "Something went wrong. Please try again.";
+        t("auth.forgetPassword.defaultError");
 
       Swal.fire({
         icon: "error",
-        title: "Failed to Update Password ❌",
+        title: t("auth.forgetPassword.step3.errorTitle"),
         text: message,
         confirmButtonColor: "#f69946",
       });
+    } finally {
+      setIsChangingPass(false);
     }
   };
 
@@ -184,10 +196,10 @@ export default function ForgetPassword() {
             {/* LEFT TEXT */}
             <div className="p-10 flex flex-col justify-center">
               <p className="text-(--color-light-accent) text-4xl font-['Playfair_Display'] font-bold mb-4">
-                Reset Password
+                {t("auth.forgetPassword.title")}
               </p>
-              <p className="text-[#443935] font-['Playfair_Display']">
-                Follow the steps to recover your account securely.
+              <p className={`text-[#443935] font-['Playfair_Display'] ${isRTL ? "text-2xl" : ""}`}>
+                {t("auth.forgetPassword.subtitle")}
               </p>
 
               <div className="mt-8">
@@ -201,17 +213,17 @@ export default function ForgetPassword() {
               {currentStep === 1 && (
                 <form onSubmit={submitEmail(handleSendEmail)}>
                   <h2 className="text-(--color-light-accent) text-2xl mb-6">
-                    Enter your Email
+                    {t("auth.forgetPassword.step1.title")}
                   </h2>
 
                   <div className="relative mb-6">
                     <MdEmail
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-[#e0d0c1]"
+                      className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`}
                       size={20}
                     />
                     <Input
                       type="email"
-                      placeholder="Your email"
+                      placeholder={t("auth.common.email")}
                       register={regEmail("email")}
                     />
                   </div>
@@ -222,14 +234,14 @@ export default function ForgetPassword() {
                     </p>
                   )}
 
-                  <MyButton title="Send OTP" isLoading={false} type="submit" />
-                  <p className="text-sm text-white/80 text-center mt-4">
-                    Remember your password?{" "}
+                  <MyButton title={t("auth.forgetPassword.step1.submit")} isLoading={isSendingOtp} type="submit"/>
+                  <p className="text-sm text-gray-400 text-center mt-4">
+                    {t("auth.forgetPassword.remember")}{" "}
                     <span
-                      className="text-[#f69946] hover:underline cursor-pointer"
+                      className="text-[#A88F7B] hover:underline cursor-pointer"
                       onClick={() => navigate("/login")}
                     >
-                      Login
+                     {t("auth.login.title")}
                     </span>
                   </p>
                 </form>
@@ -239,7 +251,7 @@ export default function ForgetPassword() {
               {currentStep === 2 && (
                 <form onSubmit={submitOtp(handleVerifyOtp)}>
                   <h2 className="text-(--color-light-accent) text-2xl mb-6">
-                    Enter OTP
+                    {t("auth.forgetPassword.step2.title")}
                   </h2>
 
                   <div className="mb-6">
@@ -255,7 +267,7 @@ export default function ForgetPassword() {
                     )}
                   </div>
                   <MyButton
-                    title="Verify Code"
+                    title={t("auth.forgetPassword.step2.submit")}
                     isLoading={false}
                     type="submit"
                   />
@@ -266,14 +278,14 @@ export default function ForgetPassword() {
               {currentStep === 3 && (
                 <form onSubmit={submitPass(handleResetPass)}>
                   <h2 className="text-(--color-light-accent) text-2xl mb-6">
-                    New Password
+                    {t("auth.forgetPassword.step3.title")}
                   </h2>
 
                   <div className="relative mb-3">
-                    <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#d5c5b5]" />
+                    <MdLock className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} />
                     <Input
                       type="password"
-                      placeholder="New password"
+                      placeholder={t("auth.common.newPassword")}
                       register={regPass("newPass")}
                     />
                   </div>
@@ -284,10 +296,10 @@ export default function ForgetPassword() {
                   )}
 
                   <div className="relative mb-6">
-                    <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#d5c5b5]" />
+                    <MdLock className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} />
                     <Input
                       type="password"
-                      placeholder="Repeat password"
+                      placeholder={t("auth.common.repeatPassword")}
                       register={regPass("rePass")}
                     />
                   </div>
@@ -298,8 +310,8 @@ export default function ForgetPassword() {
                   )}
 
                   <MyButton
-                    title="Reset Password"
-                    isLoading={false}
+                    title={t("auth.forgetPassword.step3.submit")}
+                    isLoading={isChangingPass}
                     type="submit"
                   />
                 </form>
