@@ -42,6 +42,7 @@ import Reservation from "./Pages/reservation/reservation";
 import Blog from "./Pages/blog/blog";
 import ServiceDashbored from "./Reservation/Pages/Services/Service";
 import UserPetClinicProfile from "./Pages/UserProfile/UserProfile";
+import OverView from "./Dashboard/Pages/OverView/OverView";
 
 const router = createBrowserRouter([
   {
@@ -51,18 +52,18 @@ const router = createBrowserRouter([
       { path: "", element: <Home /> },
       { path: "home", element: <Home /> },
       { path: "contact", element: <ContactUs /> },
-      { path: "reservation", element: <Reservation/> },
-      { path: "service", element: <Services/> },
-      { path: "service/:id", element: <Servicesdetails/> },
-       { path:"blog", element: <Blog/> },
-       { path:"profile", element: <UserPetClinicProfile/> },
+      { path: "reservation", element: <Reservation /> },
+      { path: "service", element: <Services /> },
+      { path: "service/:id", element: <Servicesdetails /> },
+      { path: "blog", element: <Blog /> },
+      { path: "profile", element: <UserPetClinicProfile /> },
 
 
       { path: "checkout", element: <Checkout /> },
       { path: "products", element: <Products /> },
       { path: "cart", element: <Cart /> },
       { path: "product-details/:id", element: <ProductDetails /> },
-      {path:"orderdetails", element:<OrderDetails />},
+      { path: "orderdetails", element: <OrderDetails /> },
       { path: "clinicReviews", element: <ClinicReviews /> },
     ],
   },
@@ -89,6 +90,7 @@ const router = createBrowserRouter([
       { path: "users", element: <Users /> },
       { path: "emails", element: <Emails /> },
       { path: "reports", element: <Reports /> },
+      { path: "overview", element: <OverView /> },
     ],
   },
   {

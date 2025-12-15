@@ -83,8 +83,16 @@ export const getDeletedUsersAnalysis =
     return data;
   };
 
+export const getAllOrders = async (page = 1, limit = 1000) => {
+  const { data } = await axios.get(`${BASE_URL}/order/allorders`, {
+    headers: getHeaders(),
+    params: { page, limit },
+  });
+  return data;
+};
+
 export const getDemographics = async (): Promise<Demographics> => {
-  const { data } = await axios.get(`${baseURL}/user/analysis/demographics`, {
+  const { data } = await axios.get(`${BASE_URL}/user/analysis/demographics`, {
     headers: getHeaders(),
   });
   return data;
