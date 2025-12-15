@@ -38,8 +38,8 @@ import Users from "./Dashboard/Pages/Users/Users";
 import Reports from "./Dashboard/Pages/Reports/Reports";
 import Emails from "./Dashboard/Pages/Emails/Emails";
 import OrderDetails from "./Pages/OrderDetails/OrderDetails";
-import Reservation from "./Pages/reservation/reservation";
-import Blog from "./Pages/blog/blog";
+import Reservation from "./Pages/Reservation/reservation";
+import Blog from "./Pages/Blog/blog";
 import ServiceDashbored from "./Reservation/Pages/Services/Service";
 import UserPetClinicProfile from "./Pages/UserProfile/UserProfile";
 

@@ -108,13 +108,562 @@
     "clinicReview": "Clinic Review",
     "anonymous": "Anonymous"
   },
+
   "blog": {
     "latestArticles": "Latest Blog Articles",
     "home": "Home",
-    "blog": "Blog"
+    "blog": "Blog",
+    "search": "search",
+    "readMore": "readMore",
+    "showLess": "showLess",
+    "latestPosts": "latestPosts",
+    "AllCategories": "AllCategories",
+    "tags": "tags",
+    "posts": [
+      {
+        "id": 1,
+        "title": "How to Keep Your Pet Healthy and Happy",
+        "image": [
+          "https://i.postimg.cc/0ydhBn2c/1.jpg",
+          "https://i.postimg.cc/cLMPbh4Q/2.jpg",
+          "https://i.postimg.cc/JzcS2x4j/3.jpg"
+        ],
+        "description": "Simple steps every pet owner should follow to improve their pet’s daily health and wellbeing.",
+        "category": "Health",
+        "author": "Petique Clinic",
+        "date": "2024-11-25",
+        "tags": ["HappyPets", "HealthyPets"],
+        "content": {
+          "intro": "Keeping your pet healthy is not just about regular vet visits—it’s about building daily habits that protect them physically and emotionally. Many pet owners underestimate how simple routines like brushing, hydration, and regular playtime can significantly improve a pet’s lifespan. In this article, we’ll explore practical tips that fit easily into your daily schedule and make a real difference in your pet’s overall wellbeing.",
+          "head": "Tips to Apply That",
+          "tips": [
+            "Brush your pet’s coat at least 3–4 times a week.",
+            "Provide fresh, clean drinking water at all times.",
+            "Schedule short but consistent play sessions every day.",
+            "Check for fleas and ticks weekly.",
+            "Maintain a clean sleeping area."
+          ],
+          "body": "A healthy pet starts with a balanced combination of nutrition, exercise, hygiene, and emotional engagement. Good nutrition ensures that your pet gets the vitamins and minerals needed for growth, repair, and immunity. Regular exercise keeps their muscles strong and prevents obesity, which is one of the most common long-term health issues in pets today. In addition, maintaining proper hygiene reduces the risk of infections and skin conditions. Pets also require emotional care—regular interaction, affection, and mental stimulation help reduce stress and behavioral problems. These small actions may seem simple, but when combined, they create a stable and happy environment that supports long-term health.",
+          "conclusion": "Consistency is the key to raising a healthy pet. Small daily habits, when done regularly, can protect your pet from common illnesses and improve their quality of life. Remember—your pet relies on you, and every minute you invest in their care makes a meaningful difference."
+        }
+      },
+
+      {
+        "id": 2,
+        "title": "19 Healthy and Safe Foods You Can Feed Your Dog",
+        "image": [
+          "https://i.postimg.cc/zGS4c7Xk/4.jpg",
+          "https://i.postimg.cc/jSQBFcdD/5.jpg",
+          "https://i.postimg.cc/NjwWDSYR/6.jpg"
+        ],
+        "description": "A guide to 19 human foods that are safe, nutritious, and beneficial for dogs.",
+        "category": "Nutrition",
+        "author": "Petique Clinic",
+        "date": "2025-12-01",
+        "tags": ["PetHealth", "PetWellness"],
+        "content": {
+          "intro": "Looking for healthy treats for your pup? These 19 foods include meats, fruits, and vegetables that are nutritious for dogs. Always feed in moderation and monitor your dog’s tolerance to new foods.",
+          "head": "Tips to Apply That",
+          "body": "Dogs can benefit from a variety of human foods that are safe and healthy. Fruits like apples, bananas, and blueberries provide vitamins and antioxidants. Vegetables such as carrots, celery, cucumbers, green beans, and cauliflower offer fiber, vitamins, and help maintain digestive health. Proteins like cooked chicken, turkey, beef, eggs, and fish provide essential amino acids and support muscle growth. Other foods like pumpkin, yogurt, and white rice help with digestion and gut health. Nuts such as unsalted peanuts and peanut butter provide healthy fats, while fruits like mango and watermelon offer hydration and vitamins. Always remove seeds, pits, skins, or bones that could be harmful, and feed treats in moderation.",
+
+          "tips": [
+            "Treats should make up no more than 10% of your dog’s daily diet.",
+            "Introduce new foods gradually and monitor for any adverse reactions.",
+            "Remove seeds, pits, and bones before feeding to avoid choking or toxicity.",
+            "Consult your veterinarian if unsure about a particular food or portion size."
+          ],
+
+          "conclusion": "Feeding your dog safe and healthy human foods can supplement their diet and promote overall wellbeing. Consistency, moderation, and careful selection are key to keeping your dog happy, healthy, and thriving."
+        }
+      },
+
+      {
+        "id": 3,
+        "title": "Feeding Tips for Puppies",
+        "image": [
+          "https://i.postimg.cc/t4HLkwy6/7.jpg",
+          "https://i.postimg.cc/jSrGcmKW/8.jpg",
+          "https://i.postimg.cc/kgdksz9G/9.jpg"
+        ],
+        "description": "A guide on what, how much, and how often to feed your puppy for healthy growth.",
+        "category": "Nutrition",
+        "author": "Petique Clinic",
+        "date": "2025-12-01",
+        "tags": ["PetHealth", "VetApproved"],
+        "content": {
+          "intro": "Feeding your puppy correctly is essential for healthy growth, proper digestion, and long-term wellbeing. Puppies have smaller stomachs and specific nutritional needs, so understanding how to feed them, how often, and when to transition to adult food is important for every pet owner.",
+          "head": "Tips to Apply That",
+          "body": "Start by gradually transitioning your puppy to a new food. In the first one or two weeks after bringing your puppy home, continue feeding the food it was given before to avoid stressing its digestive system. Mix small amounts of the new food into the old food and slowly increase the proportion daily until fully transitioned. \n\nMeasure your puppy's food carefully to avoid overfeeding or underfeeding, which can affect growth. Follow recommended quantities based on age and breed, focusing on target adult weight rather than current weight. Puppies should be fed more frequently due to their small stomachs: up to 4 months old – 4 meals per day, up to 6 months – 3 meals per day, 6 months and older – 2 meals per day. \n\nSmall treats or parts of the daily food ration can be given between meals, but should be counted as part of the total daily intake. The length of time to feed puppy food depends on breed size: Small breeds (up to 10kg) – 9-12 months, Medium breeds (11-25kg) – 12-15 months, Giant breeds (over 26kg) – 15-18 months. Transition to adult food appropriate for the breed, activity level, and energy requirements.",
+          "tips": [
+            "Introduce new food gradually to prevent digestive upset.",
+            "Measure food based on recommended target weight for the breed and age.",
+            "Feed puppies 2–4 times daily depending on age.",
+            "Treats should be given sparingly and counted in the daily food allowance.",
+            "Switch to adult food according to breed size and growth milestones."
+          ],
+
+          "conclusion": "Proper feeding during puppyhood sets the foundation for a healthy adult dog. Consistency, gradual transitions, and attention to portion sizes ensure your puppy grows strong, healthy, and happy."
+        }
+      },
+
+      {
+        "id": 4,
+        "title": "Caring for Kittens: From Birth to Six Months",
+        "image": [
+          "https://i.postimg.cc/L8MrDwRX/10.jpg",
+          "https://i.postimg.cc/nht62gZc/11.jpg",
+          "https://i.postimg.cc/4xTrPqZJ/12.jpg"
+        ],
+        "description": "A step-by-step guide on raising kittens, covering socialisation, vaccinations, feeding, and training from birth to six months.",
+        "category": "Behavioral",
+        "author": "Petique Clinic",
+        "date": "2025-12-01",
+        "tags": ["HealthyPets", "VetApproved"],
+        "content": {
+          "intro": "Raising a kitten requires careful attention to socialisation, health care, feeding, and training. Early experiences shape future behaviour, so providing positive experiences and proper care is essential for developing a confident and healthy adult cat.",
+          "head": "Tips to Apply That",
+          "body": "Up to eight weeks: Before bringing your kitten home, ensure they have started their first vaccinations, litter box training, and early socialisation. Prepare your home with safe spaces to play and rest, toys, scratching posts, litter trays, and familiar blankets. Cat-proof your home and find a veterinarian and pet insurance.\n\nEight to 12 weeks: Continue socialisation by introducing your kitten to new people and pets, handling, grooming, and cat carriers. Establish a consistent routine and reward good behaviour. Maintain the same feeding routine with small, regular meals.\n\n12 weeks onwards: Kittens need their second vaccinations and should be booked for neutering at four months. Worming should also be discussed with the vet. Play and mental stimulation are important, so engage your kitten with games and training sessions. Allow adequate rest to support growth.\n\nSix months onwards: Keep experiences positive and continue monitoring behaviour and dietary needs. Consult your vet if any behavioural concerns arise. Positive early experiences help kittens grow into confident adult cats.",
+
+          "tips": [
+            "Start socialisation early by introducing kittens to new people and experiences.",
+            "Ensure kittens have received initial vaccinations before coming home.",
+            "Set up safe spaces, litter trays, toys, and scratching posts.",
+            "Maintain a consistent feeding routine with small, frequent meals.",
+            "Engage in short training sessions and playtime for mental stimulation.",
+            "Book neutering at around four months and follow up on worming schedules.",
+            "Monitor behaviour and consult your vet for any concerns."
+          ],
+
+          "conclusion": "By providing proper care, positive experiences, and consistent routines from day one, kittens can grow into healthy, confident adult cats. Early attention to socialisation, health, and enrichment makes life enjoyable for both you and your feline companion."
+        }
+      },
+
+      {
+        "id": 5,
+        "title": "Grooming for Dogs and Cats",
+        "image": [
+          "https://i.postimg.cc/bwjKgW8j/13.jpg",
+          "https://i.postimg.cc/sgRtmqy3/14.jpg",
+          "https://i.postimg.cc/7Zyp9d4F/15.jpg"
+        ],
+        "description": "Essential grooming tips for dogs and cats, covering bathing, brushing, nail trimming, haircuts, and professional grooming services.",
+        "category": "Grooming",
+        "author": "Petique Clinic",
+        "date": "2025-12-01",
+        "tags": ["HappyPets", "PetWellness"],
+        "content": {
+          "intro": "Regular grooming is essential for the health and wellbeing of your pets. It helps maintain skin and coat health, prevents matting, reduces shedding, and allows you to monitor your pet’s overall condition. Proper grooming varies by species and breed, so understanding the needs of your dog or cat is key.",
+          "head": "Tips to Apply That",
+          "body": "Grooming for Dogs: Dogs typically need bathing, brushing, nail trimming, and sometimes haircuts. Bathing removes dirt and debris, but should be done only once a month to once every three months to avoid skin irritation. Brushing removes dead hair, prevents matting, and reduces shedding; frequency depends on coat length. Nail trimming should be done with dog-specific clippers, or by a professional if needed. Haircuts vary by breed; start with a bath, towel dry, brush, trim face and feet, then use clippers for the rest.\n\nGrooming for Cats: Cats require brushing, occasional bathing, nail and paw care, ear care, dental care, and eye care. Brushing once or twice a week removes dirt and dead hair while stimulating circulation. Bathing is rarely needed unless the cat gets especially dirty; use cat-specific shampoo and warm water. Regularly check and clean paws, and trim nails carefully. Gradual desensitization helps cats tolerate nail trims.\n\nProfessional Grooming: If home grooming is difficult or time-consuming, professional services are available to maintain your pet’s hygiene and appearance. Animal Medical Centers offer appointments for both dogs and cats, ensuring safe and thorough grooming.",
+
+          "tips": [
+            "Bath dogs once a month to once every three months using dog-specific shampoo.",
+            "Brush dogs frequently depending on coat length; cats once or twice a week.",
+            "Trim nails carefully using species-specific clippers, or hire a professional.",
+            "Provide haircuts for dogs as needed, based on breed and coat type.",
+            "Check cat paws regularly and maintain proper nail and paw care.",
+            "Use cat-specific shampoo and warm water when bathing cats.",
+            "Consider professional grooming services if home grooming is challenging."
+          ],
+
+          "conclusion": "Grooming is more than cosmetic—it’s a key part of pet health and wellbeing. Regular care allows for early detection of skin, coat, and nail issues, and provides an opportunity for bonding. Consistency and proper techniques help dogs and cats remain happy, comfortable, and healthy."
+        }
+      },
+
+      {
+        "id": 6,
+        "title": "Why Should Your Dog or Cat Be Dewormed Regularly?",
+        "image": [
+          "https://i.postimg.cc/bNn7QpXq/16.jpg",
+          "https://i.postimg.cc/VLtxjmy1/17.jpg",
+          "https://i.postimg.cc/NfX31BhB/18.jpg"
+        ],
+        "description": "Learn why routine deworming is essential for your pet’s health and the recommended schedules for puppies, kittens, and adult pets.",
+        "category": "Health",
+        "author": "Petique Clinic",
+        "date": "2025-11-13",
+        "tags": ["PetHealth", "PetWellness", "VetApproved"],
+        "content": {
+          "intro": "Deworming is a crucial part of keeping your pets healthy. Worms can cause serious health issues for both your pets and your family. Frequency of deworming depends on age, lifestyle, and health. This guide provides key recommendations for routine parasite prevention.",
+          "head": "Tips In deworming your pet",
+          "body": "How Often Should Pets Be Dewormed?\n\n- Puppies and Kittens: Every 2–3 weeks until 12 weeks old, then monthly until 6 months of age.\n- Adult Dogs and Cats: At least every 3–6 months, or as recommended during wellness exams.\n- Pets Who Hunt or Roam Outdoors: May need more frequent deworming due to higher risk.\n- Year-Round Prevention: Many heartworm preventives also help control intestinal parasites.\n\nSchedules may vary depending on lifestyle and exposure risks, so it’s important to tailor recommendations to each individual pet.\n\nWhen Should You Be Concerned?\nWatch for signs such as visible worms in stool, scooting or licking their rear, unexplained weight loss, bloated belly, diarrhea, or vomiting. Prompt testing and treatment can usually resolve the issue quickly.",
+
+          "tips": [
+            "Puppies and kittens: Deworm every 2–3 weeks until 12 weeks, then monthly until 6 months.",
+            "Adult dogs and cats: Deworm every 3–6 months or as advised by your vet.",
+            "High-risk pets that hunt or roam outdoors may need more frequent deworming.",
+            "Watch for worms in stool, bloating, scooting, diarrhea, vomiting, or weight loss.",
+            "Consult your veterinarian if you’re unsure or notice symptoms."
+          ],
+
+          "conclusion": "Routine deworming protects your pets from parasites and supports their overall health. By following a proper schedule and watching for warning signs, you can keep your dog or cat happy and parasite-free. When in doubt, contact your veterinarian for guidance."
+        }
+      },
+
+      {
+        "id": 7,
+        "title": "Dental Care for Dogs and Cats",
+        "image": [
+          "https://i.postimg.cc/xTmwKnrr/19.jpg",
+          "https://i.postimg.cc/KvT6nF66/20.jpg",
+          "https://i.postimg.cc/4NcDzZDj/21.jpg"
+        ],
+        "description": "Dental health is crucial for your pet's overall wellbeing. Learn how to prevent and manage dental disease in cats and dogs.",
+        "category": "Health",
+        "author": "Petique Clinic",
+        "date": "2025-11-13",
+        "tags": ["PetHealth", "PetWellness"],
+        "content": {
+          "intro": "Bad breath in pets is not normal and can indicate dental disease. Untreated dental issues can lead to pain, discomfort, and even affect heart, liver, and kidney health. Regular dental care, including professional check-ups and at-home maintenance, helps prevent dental disease and keeps your pet healthy.",
+          "head": "Tips to Apply That",
+          "body": "Dental disease, or periodontal disease, is caused by plaque build-up on teeth and gums. Plaque calcifies into tartar if not removed, causing gingivitis and damage to supportive tissues of the teeth. Signs of dental disease include bad breath, discoloured or loose teeth, drooling, inflamed gums, pain, facial swelling, behavioural changes, and pawing at the mouth. Around 80% of cats and dogs over three years old have some form of dental disease.",
+
+          "tips": [
+            "Brush your pet’s teeth daily with pet-specific toothpaste and toothbrush.",
+            "Use special dog or cat toothbrushes, or toddler brushes for small pets.",
+            "Introduce teeth brushing gradually, starting with front teeth and short sessions.",
+            "Provide dental treats and chews like rawhide or Dentabones to help remove plaque.",
+            "Use dental diets or premium pet foods designed to maintain oral health.",
+            "Consider oral rinses or gels for pets with severe dental issues.",
+            "Offer dental toys like Kong or Gumabone to encourage chewing.",
+            "Schedule professional veterinary dental treatments including scaling, polishing, and dental x-rays if needed."
+          ],
+
+          "conclusion": "Preventing and managing dental disease in pets requires regular brushing, dental treats, proper diets, and professional veterinary care. If you suspect your pet has dental issues, consult your veterinarian for a tailored dental care plan to ensure your furry friend stays healthy and happy."
+        }
+      },
+
+      {
+        "id": 8,
+        "title": "Hot Weather Safety Tips for Pets",
+        "image": [
+          "https://i.postimg.cc/8Pv2hD2y/22.jpg",
+          "https://i.postimg.cc/HsMqQHq3/23.jpg",
+          "https://i.postimg.cc/zXhsn5sF/24.jpg"
+        ],
+        "description": "Ensure your pets stay safe and healthy during hot summer days with these essential safety tips from the ASPCA.",
+        "category": "Health",
+        "author": "Petique Clinic",
+        "date": "2025-12-01",
+        "tags": ["PetHealth", "PetWellness", "VetApproved"],
+        "content": {
+          "intro": "Summer brings long, sunny days to enjoy outdoors with your pets, but it also comes with hazards. Follow these expert tips to keep your furry friends safe, healthy, and happy during hot weather.",
+          "head": "Tips to Apply That",
+          "body": "Pets are more susceptible to heat-related illnesses, dehydration, and accidents during hot weather. High temperatures, direct sunlight, and summer activities can put them at risk. Animals with flat faces (like Pugs and Persian cats), elderly pets, overweight pets, and those with heart or lung conditions are especially vulnerable. Always provide shade, fresh water, and avoid over-exercising during extreme heat.",
+
+          "tips": [
+            "Visit your vet for an early-summer checkup and ensure heartworm prevention is in place.",
+            "Provide fresh, clean water and shady areas, and keep pets indoors during extreme heat.",
+            "Recognize symptoms of overheating: excessive panting, drooling, weakness, collapse, seizures, diarrhea, vomiting, or body temperature over 104°F.",
+            "Never leave pets in parked vehicles—heat stroke can be fatal.",
+            "Supervise pets around pools, lakes, or the ocean; introduce them gradually to water and use flotation devices if needed.",
+            "Keep unscreened windows and doors closed to prevent falls.",
+            "Trim longer hair but do not shave dogs; brush cats more often. Use pet-safe sunscreen and insect repellents if necessary.",
+            "Avoid letting dogs walk on hot asphalt; it can burn paw pads.",
+            "Use herbicides, insecticides, fertilizers, and citronella products cautiously; keep pets away until safe.",
+            "Be mindful of plants in your garden; some may be toxic or cause stomach upset.",
+            "Stick to your pet’s regular diet and treats; keep garbage, alcohol, and hazardous foods out of reach.",
+            "Never use fireworks around pets; loud noises and hazards can cause trauma or injury."
+          ],
+
+          "conclusion": "By following these summer safety tips, you can protect your pets from heatstroke, injuries, and toxic exposures, ensuring a fun and healthy season. If you suspect your pet ingested something harmful, contact your veterinarian or call the ASPCA Animal Poison Control Center immediately at (888) 426-4435."
+        }
+      },
+
+      {
+        "id": 9,
+        "title": "Cold Weather Safety Tips for Pets",
+        "image": [
+          "https://i.postimg.cc/h4NFzh52/25.jpg",
+          "https://i.postimg.cc/c1Pqg6b9/26.jpg",
+          "https://i.postimg.cc/xjBrJq4t/27.jpg"
+        ],
+        "description": "Keep your pets safe and comfortable during winter with these expert tips from the ASPCA Animal Poison Control Center.",
+        "category": "Health",
+        "author": "Petique Clinic",
+        "date": "2025-12-01",
+        "tags": ["PetHealth", "PetWellness", "VetApproved"],
+        "content": {
+          "intro": "Winter can be harsh for pets, with cold air, snow, ice, and chemicals posing risks to their health. Follow these tips to keep your furry friends warm, safe, and healthy during the colder months.",
+          "head": "Tips to Apply That",
+          "body": "Pets are vulnerable to cold weather hazards such as frostbite, hypothermia, chapped paws, dry skin, and chemical exposure from ice-melting agents. Elderly, sick, or small pets, as well as those with short hair, are particularly at risk.",
+
+          "tips": [
+            "If it’s too cold for you, it’s too cold for your pet—keep animals indoors.",
+            "Never leave pets alone in a car during winter; they can freeze quickly.",
+            "Keep your home humidified and towel dry pets after coming indoors to prevent dry skin.",
+            "Check paws after walks; remove snowballs and ice, and use petroleum jelly or vet-approved paw protectants. Booties provide extra protection.",
+            "Use pet-friendly ice melts when possible.",
+            "Do not shave dogs in winter; long hair provides warmth. Trim long-haired dogs to reduce clinging ice and salt. Short-haired dogs may need coats or sweaters.",
+            "Wash and dry your pet’s paws and stomach after walks to remove ice, salt, and chemicals. Check for cracks or redness."
+          ],
+
+          "conclusion": "By following these cold weather safety tips, you can protect your pets from frostbite, hypothermia, injuries, and toxins, ensuring a safe, healthy, and cozy winter. If your pet ingests antifreeze or any potential toxin, contact your veterinarian or call the ASPCA Animal Poison Control Center immediately at (888) 426-4435."
+        }
+      },
+
+      {
+        "id": 10,
+        "title": "Pet First Aid: The Basics",
+        "author": "Dr. Melody R. Conklin",
+        "category": "Health",
+        "description": "Learn essential pet first-aid techniques and how to create a first-aid kit for your dog or cat to manage emergencies effectively.",
+        "date": "2025-12-01",
+        "tags": ["PetHealth", "PetWellness"],
+        "image": [
+          "https://i.postimg.cc/T2B8Lh4c/28.jpg",
+          "https://i.postimg.cc/jqBVwCFH/29.jpg",
+          "https://i.postimg.cc/KcCXk4HB/30.jpg"
+        ],
+        "content": {
+          "intro": "Accidents and emergencies happen. Learning basic pet first-aid techniques and having a proper first-aid kit for your dog or cat will help you manage accidents more effectively. Knowing what you can handle at home confidently, what steps to take before seeking veterinary care, and when veterinary care is an emergency is essential for pet owners. Consider taking a cat and dog first aid course such as the Red Cross's \"Cat & Dog First Aid Online Training\" or a course offered at a local veterinary hospital.",
+          "head": "Tips to Apply That",
+          "body": "Basic first aid for dogs and cats is essentially the same. The important thing is having the right tools for the job. A pet first-aid kit, filled with the proper items and stored in an easily accessible location, will help you respond calmly in an emergency. Remember to keep the kit out of the reach of children. Start with a storage box clearly labeled as a pet first-aid kit. Every few months, make sure nothing has expired, batteries are working, and the kit is fully stocked.",
+
+          "tips": [
+            "Include absorbent, non-stick gauze pads, rolled gauze, adhesive medical tape, self-adhering bandage, cotton balls, and swabs.",
+            "Have disposable gloves, large and small towels, rectal thermometer with lubricant, diphenhydramine, and styptic powder (or corn starch).",
+            "Include alcohol wipes, 3% Hydrogen Peroxide (use cautiously), antibacterial spray or ointment, povidone-iodine or chlorhexidine wash, saline wound flush, and preservative-free saline eye wash.",
+            "Keep artificial tear drops, sterile lube, blunted-ended scissors, small trimmers, tweezers, magnifying glass, hemostats, small flashlight, instant-cold pack, oral syringe, liquid dish soap, water, hypoallergenic shampoo, soft muzzle, leash/collar, puppy pads, collapsible water bowl, and corn syrup.",
+            "Before administering first aid: assess the situation for safety, muzzle if necessary (not during vomiting), keep pet warm and quiet, minimize movement for trauma, and call your veterinarian, animal ER, or poison control for guidance."
+          ],
+
+          "conclusion": "Having a properly stocked first-aid kit and knowing the basic precautions allows pet owners to respond effectively in emergencies. Regularly check supplies, follow safety procedures, and seek professional advice when needed to ensure your pet's health and safety."
+        }
+      },
+
+      {
+        "id": 11,
+        "title": "Understanding Cat Behaviour: A Guide to Feline Body Language",
+        "author": "Lolley Samba",
+        "category": "Behavioral",
+        "description": "Decode your cat's body language with this comprehensive guide to understanding feline behaviour and communication.",
+        "date": "2025-03-26",
+        "tags": ["HappyPets", "HealthyPets"],
+        "image": [
+          "https://i.postimg.cc/RC2r6qDH/31.jpg",
+          "https://i.postimg.cc/XNtMGXzZ/32.jpg",
+          "https://i.postimg.cc/ZYXkB0MC/33.jpg"
+        ],
+        "content": {
+          "intro": "Cats have long been mysterious and fascinating companions to humans. Their behavior is a complex tapestry of signals, and decoding the intricacies of feline body language can deepen the bond between humans and their furry friends. Whether you’re a seasoned cat owner or a novice, understanding cat behavior can help you navigate the unique world of these enigmatic creatures.",
+          "head": "Tips and Tricks to know your pet",
+          "body": "The key to understanding your cat lies in observing their tail, ears, eyes, whiskers, posture, and vocalizations. Each of these features conveys specific emotions and intentions. For example, a straight-up tail signals confidence, while a puffed-up tail indicates fear. Forward-facing ears show curiosity, whereas flat ears suggest fear or anger. Eyes, whiskers, and posture all offer additional clues about your cat's mood and intentions.",
+
+          "tips": [
+            "Tail Talk: Straight-up tail = happy/confident; puffed-up tail = fear/agitation; twitching tail = excitement/irritation.",
+            "Ear Expressions: Forward ears = curiosity/excitement; flat ears = fear/anger/submission; twitching ears = irritation/anticipation.",
+            "Eye Contact: Slow blinking = trust/affection; dilated pupils = fear/excitement/aggression; staring without blinking = challenge/discomfort.",
+            "Whisker Wisdom: Whiskers back = fear/aggression; whiskers forward = content/relaxed; rapid whisker movement = excitement/anticipation.",
+            "Posture and Positioning: Arched back/raised fur = fear/aggression; relaxed/sprawled = content; crouched stance = fear or readiness to play.",
+            "Vocalisations: Purring = contentment or distress; hissing/growling = defensive; meowing = hunger, excitement, or distress."
+          ],
+
+          "conclusion": "Deciphering your cat’s body language is an ongoing process that deepens the bond between you and your feline friend. By understanding these subtle cues, you can ensure a harmonious relationship with your cat, fostering trust and clear communication. The next time your cat communicates with you, take a moment to decode their message—you’ll better understand their emotions and avoid potential issues."
+        }
+      },
+
+      {
+        "id": 12,
+        "title": "What Are the Benefits of Training My Dog?",
+        "author": "Petique Clinic",
+        "category": "Behavioral",
+        "date": "2025-01-15",
+        "tags": ["HappyPets"],
+        "image": [
+          "https://i.postimg.cc/NGZh9LzK/34.jpg",
+          "https://i.postimg.cc/gcxF23NJ/36.jpg",
+          "https://i.postimg.cc/y6D480v3/35.jpg"
+        ],
+        "description": "Discover why dog training is essential for safety, bonding, and preventing boredom, plus tips to help your dog learn effectively.",
+        "content": {
+          "intro": "Training your dog is more than just teaching commands—it’s a key part of keeping them safe, confident, mentally stimulated, and happy. Dogs are intelligent animals, and learning new things helps them avoid boredom and enjoy greater freedom.",
+          "head": "Tips to Train your dog correctly",
+          "body": "Basic obedience, such as sit, wait, and coming when called, gives your dog the freedom to enjoy activities safely—like running off-lead and socialising with people or other pets. Training is most effective when it’s reward-based. Using treats, toys, or praise to reinforce good behaviour makes your dog more likely to repeat it. It’s important to discover what motivates your dog most; many enjoy small pieces of cheese or meat, while others prefer their favourite toy. Effective training requires short, consistent sessions in environments free from distractions. Patience is crucial, as every dog learns at their own pace. Always end the session with something your dog already knows to reinforce confidence and keep training fun. Training also strengthens your bond with your dog, helping them trust you and understand what is expected of them. For more advanced techniques, such as clicker training, dog training classes or professional instructors can provide guidance.",
+          "tips": [
+            "Minimise distractions by starting training in a quiet room.",
+            "Keep sessions short but frequent to avoid overwhelming your dog.",
+            "Be patient—every dog learns at their own pace.",
+            "End each session with a behaviour your dog already knows.",
+            "Have fun! Training strengthens your bond."
+          ],
+          "conclusion": "Dog training is a valuable investment in your dog’s safety, behaviour, and happiness. Reward-based methods make learning enjoyable and strengthen your bond. For help with specific issues such as aggression, barking, or phobias, consider consulting a professional behaviourist or training instructor."
+        }
+      },
+
+      {
+        "id": 13,
+        "title": "Why Homemade Dog Food Is Healthier for Your Pet",
+        "author": "Petique Clinic",
+        "category": "Nutrition",
+        "date": "2025-01-20",
+        "tags": ["PetHealth", "PetWellness"],
+
+        "image": [
+          "https://i.postimg.cc/BZj9n2MX/37.jpg",
+          "https://i.postimg.cc/h4XWtVp4/38.jpg",
+          "https://i.postimg.cc/XNrSY9QS/39.jpg"
+        ],
+        "description": "Learn why homemade, human-grade dog food can improve your dog’s energy, longevity, gut health, and overall well-being — plus how to start safely.",
+        "content": {
+          "intro": "Switching to homemade dog food is easier than you think. You can start gradually—mixing just 25% fresh, whole food with your dog’s regular diet—and work up to 50/50 or even 100% homemade meals. Dogs thrive on human-grade ingredients, and many owners report better energy, better digestion, and fewer long-term health issues.",
+          "head": "Tips and Tricks",
+          "body": "Commercial dog foods often contain low-quality meat by-products, synthetic vitamins, excessive carbohydrates, and even 4D meats from dead, dying, diseased, or downed animals. Research shows rising cancer, obesity, and chronic disease rates in pets today compared to decades ago. Homemade feeding replaces these questionable ingredients with real protein, healthy fats, cooked vegetables, fruits, and safe grains. Even preparing half your dog’s meals at home can support gut health, reduce sensitivities, improve vitality, and increase lifespan. Basic canine nutrition includes quality protein as the base of the meal, followed by vegetables, grains, healthy fats, and small amounts of fruit. Dogs also need vitamins A, B-complex, C, D, E, K, and essential minerals such as calcium, phosphorus, zinc, and selenium—which can be naturally supplied by whole foods like liver, eggs, yogurt, or goat milk. New research shows that adding cooked vegetables three times a week reduces health risks, while fruits provide antioxidants. Grains such as oats, quinoa, or brown rice stabilize energy and support heart health. Garlic, despite common myths, is safe in small, appropriate doses and offers immune and cardiovascular benefits.",
+          "tips": [
+            "Start slow: introduce 25% homemade food for the first three days.",
+            "Increase to 50% on days 4–6, 75% on days 7–9, and reach 100% by day 10–14.",
+            "Lightly cook all vegetables—dogs can’t digest raw veggies well.",
+            "Vary protein and vegetables for complete nutrition.",
+            "Consult a veterinarian if your dog has health issues.",
+            "Observe weight, energy, and stool quality during transition."
+          ],
+
+          "conclusion": "Homemade dog food removes toxins found in many commercial diets and replaces them with clean, human-grade ingredients that support long-term health. Whether you choose 50/50 or fully homemade, any amount of real food improves vitality, immunity, and longevity. Start slow, keep meals simple, and enjoy the benefits for both you and your dog."
+        }
+      },
+
+      {
+        "id": 14,
+        "title": "Understanding Dog Body Language",
+        "image": [
+          "https://i.postimg.cc/xjXD1Lgh/40.jpg",
+          "https://i.postimg.cc/dQhPVGnf/41.jpg",
+          "https://i.postimg.cc/mkvSbvVj/42.jpg"
+        ],
+        "description": "A complete guide explaining tail-wagging, hackles, posture, facial expressions, and how to correctly read your dog’s emotions.",
+        "category": "Behavioral",
+        "author": "Petique Clinic",
+        "date": "2025-12-01",
+        "tags": ["HappyPets"],
+
+        "content": {
+          "intro": "Dog body language includes many subtle signals—from tail movements to facial expressions. Understanding these cues helps prevent misunderstandings and strengthens communication between you and your dog.",
+          "head": "Understand your dog",
+          "body": "Tail-wagging: A wagging tail does not always mean happiness. It simply shows emotional arousal. Speed, direction, and height indicate different feelings. Faster wags show higher arousal, while a tail held high signals confidence or possible aggression.\n\nRaised Hackles: When a dog’s back hair rises (piloerection), it signals arousal, which can be excitement, stress, or intense focus. It’s not always aggression—it can be an involuntary reaction like human goosebumps.\n\nPosture: A dog crouching low is showing fear or stress. Rolling on the back can be appeasement, not just an invitation for belly rubs. Dogs that lean forward may be showing interest or offensive intent. A play bow (chest down, rear up) signals a desire to play. A lifted paw may indicate uncertainty.\n\nFacial Expressions: Dogs yawn when stressed, not just tired. Lip-licking is often a sign of anxiety. Smiling can be either aggressive (snarl) or friendly (submissive grin), depending on posture and context.\n\nEyes: Soft eyes show calmness, while hard eyes signal tension. Avoiding eye contact means the dog is trying to calm a situation. Showing the whites of the eyes (whale eye) indicates stress.\n\nReading Signals Together: No body language cue stands alone. Understanding the whole combination—from tail to facial tension—helps you understand your dog’s emotional state and prevents misunderstandings.",
+
+          "tips": [
+            "Look at the whole body, not just one signal.",
+            "Fast tail-wags = higher emotional arousal, not necessarily happiness.",
+            "A raised paw often signals uncertainty.",
+            "Avoid pushing eye contact with stressed dogs.",
+            "Learn your dog’s natural tail position to spot emotional changes.",
+            "Raised hackles are arousal, not automatically aggression.",
+            "Yawning and lip-licking can be signs of stress."
+          ],
+
+          "conclusion": "Understanding your dog’s body language strengthens your bond and helps you respond appropriately to their needs. By reading signals as a complete picture, you can prevent problems, build trust, and support your dog’s emotional well-being."
+        }
+      },
+
+      {
+        "id": 15,
+        "title": "Preventing Aggression in Dogs: What to Know",
+        "image": [
+          "https://i.postimg.cc/vTJvQJXt/43.jpg",
+          "https://i.postimg.cc/sxkJVkK9/44.jpg",
+          "https://i.postimg.cc/ZnGLTGj8/45.jpg"
+        ],
+        "description": "A complete guide on understanding dog aggression, the role of socialisation, health, enrichment, and how to keep dogs safe and less reactive.",
+        "category": "Behavioral",
+        "author": "Stephanie Gibeault, MSc, CPDT",
+        "date": "2024-09-13",
+        "tags": ["PetHealth", "PetWellness", "VetApproved"],
+
+        "content": {
+          "intro": "Aggression in dogs can be incredibly stressful for owners, whether it's snarling, lunging, snapping, or biting. Although no dog owner can guarantee their dog will never show aggression, several proactive steps can significantly lower the risk and create a safer, more confident pet.",
+          "head": "Tips to Prevent Agression in Dog",
+          "body": "Dog aggression is a natural canine behaviour, and any dog can act aggressively in certain circumstances—whether out of fear, pain, or perceived threat. Experts describe aggression as behaviour aimed at increasing distance from or eliminating a perceived threat. For poorly socialised dogs, the list of 'threatening' situations is long and unpredictable, making them more vulnerable to reactivity and fear-based responses. Early positive exposure to people, environments, and everyday stimuli during puppyhood dramatically reduces the likelihood of future aggression.\n\nHealth also plays an essential role in preventing aggressive behaviour. Dogs often hide pain, making it easy to overlook underlying medical conditions that cause irritability or defensive aggression. Regular veterinary care and close monitoring of behavioural changes are critical for catching issues early.\n\nMental stimulation and physical activity are equally important in maintaining emotional balance. When dogs don't get enough exercise or enrichment suitable for their breed and temperament, frustration and behavioural problems—including aggression—are more likely to surface. Understanding a dog's natural instincts helps owners match the right activities to their dog’s needs.\n\nFinally, a major factor in preventing aggression is ensuring dogs feel safe. Advocacy means noticing early signs of discomfort—such as yawning, lip licking, tucked tails, or pulled-back ears—and stepping in before stress escalates. Recognising a dog's unique triggers and protecting them from overwhelming situations helps build trust and reduces reactive responses over time.",
+
+          "tips": [
+            "Prioritise early socialisation—positive exposure during puppyhood reduces fear-based aggression later.",
+            "Monitor your dog’s health closely, as pain and medical issues are common triggers for aggressive behaviour.",
+            "Provide daily enrichment, mental challenges, and suitable physical exercise based on your dog’s breed and needs.",
+            "Learn your dog’s unique body language and notice subtle signs of stress such as lip-licking, yawning, or whale eye.",
+            "Advocate for your dog’s safety by preventing overwhelming or threatening situations before they escalate.",
+            "Use desensitisation and counterconditioning (pairing scary things with treats) to help dogs build positive associations.",
+            "Seek help from qualified trainers or behaviour consultants for persistent fear or aggression concerns."
+          ],
+
+          "conclusion": "Although no dog can be guaranteed aggression-free, reducing stress, improving socialisation, maintaining good health, and ensuring emotional safety dramatically lower the chances. By supporting your dog with enrichment, empathy, and professional guidance when needed, you give them the best chance at a stable and confident life—and protect everyone around them."
+        }
+      },
+
+      {
+        "id": 16,
+        "title": "Canine Separation Anxiety: How to Help Your Dog",
+        "image": [
+          "https://i.postimg.cc/d3b9qbny/46.jpg",
+          "https://i.postimg.cc/br7Rz7Ls/47.jpg",
+          "https://i.postimg.cc/J0fQ1fKh/48.jpg"
+        ],
+        "description": "Learn about canine separation anxiety, its causes, symptoms, and effective strategies to help your dog feel secure and reduce stress when left alone.",
+        "category": "Behavioral",
+        "author": "Humane World for Animals",
+        "date": "2025-12-01",
+        "tags": ["PetHealth", "PetWellness"],
+
+        "content": {
+          "intro": "Canine separation anxiety occurs when a dog experiences distress upon being left alone. It can cause trembling, excessive vocalization, overgrooming, accidents indoors, and even destructive behavior. Understanding the causes and implementing proper strategies can help your dog feel secure and reduce anxiety.",
+          "head": "Tips to Help your Dog",
+          "body": "Separation anxiety is distinct from general anxiety or boredom, as it occurs specifically when a dog is left alone and manifests in excessive panic rather than casual misbehavior. Causes include changes in routine, moving homes, adoption from shelters, returning family members to work or school, the death of a family member or pet, or traumatic events such as abuse or neglect.\n\nSymptoms often include trembling, salivating, digging or scratching at doors, destructive chewing, howling, barking, whining, and indoor urination or defecation despite house training.\n\nAddressing separation anxiety involves both physical and mental preparation. Providing regular exercise, enrichment toys, and puzzle treats before leaving can help tire out your dog. Establishing a consistent routine for departures and arrivals reduces stress. Some dogs benefit from soothing music, safe rooms with toys and objects carrying their owner’s scent, or even doggy daycare, dog walkers, or pet sitters.\n\nIn severe cases, veterinarians may prescribe anti-anxiety medication alongside behavior modification techniques. Positive reinforcement training helps manage triggers, and punishing the dog should never be used as it worsens anxiety. Professional dog trainers can assist in gradually desensitizing dogs to being alone and building confidence.",
+
+          "tips": [
+            "Physically and mentally tire your dog before leaving using long walks and enrichment toys.",
+            "Maintain consistent routines for departures and arrivals to reduce stress.",
+            "Use safe rooms instead of crates, including toys and objects with your scent.",
+            "Consider doggy daycare, pet sitters, or mid-day check-ins for additional support.",
+            "Try soothing music but monitor your dog’s response, as preferences vary.",
+            "Never punish separation anxiety behaviors; use positive reinforcement instead.",
+            "Consult a veterinarian for anti-anxiety medication if the anxiety is severe.",
+            "Work with a certified professional dog trainer to gradually desensitize your dog."
+          ],
+
+          "conclusion": "Treating separation anxiety requires patience, consistency, and compassion. While progress can take months, most dogs improve with proper enrichment, routine, safe spaces, and professional guidance. Understanding and supporting your dog’s emotional needs fosters a calmer, more confident companion."
+        }
+      },
+
+      {
+        "id": 17,
+        "title": "Positive Reinforcement in Dog Training: A Guide",
+        "image": [
+          "https://i.postimg.cc/L5cVHcvY/49.jpg",
+          "https://i.postimg.cc/MHCYWCtc/50.jpg",
+          "https://i.postimg.cc/Gt8QnLPp/51.jpg"
+        ],
+        "description": "Understand positive reinforcement in dog training, how it differs from negative reinforcement, and practical tips to strengthen desirable behaviors in your pet.",
+        "category": "Behavioral",
+        "author": "Stephanie Gibeault, MSc, CPDT",
+        "date": "2025-12-01",
+        "tags": ["HealthyPets", "PetHealth", "PetWellness"],
+        "content": {
+          "intro": "Positive reinforcement is a method used to strengthen desirable behaviors in dogs by adding something the dog likes immediately after the behavior occurs. It builds trust, improves communication between pets and owners, and supports the behavioral health of dogs.",
+          "head": "Tips to Apply That",
+          "body": "Positive reinforcement adds something immediately after a behavior to increase the likelihood of that behavior occurring again. Examples include giving treats, praise, or play when a dog performs the desired action, such as sitting on cue or going to the potty outside. Success is measured by whether the behavior occurs more frequently or reliably.\n\nNegative reinforcement, in contrast, involves removing an unpleasant stimulus when the dog performs the behavior. While it can strengthen behavior, it often involves fear or discomfort and can erode trust, create anxiety, or lead to aggression. Positive reinforcement avoids these negative outcomes by focusing on rewarding desired behaviors rather than punishing unwanted ones.\n\nThe positive reinforcement movement emphasizes humane training methods that strengthen desirable behaviors rather than reacting with punishment. Using markers like clickers or verbal cues helps the dog understand exactly which behavior earned the reward. Repeated, consistent practice with the right reinforcers ensures that the dog reliably performs the behavior and enjoys the training process.",
+
+          "tips": [
+            "Track your training progress to ensure the behavior is improving.",
+            "Practice new behaviors in low-distraction environments.",
+            "Choose reinforcers carefully based on what your dog values.",
+            "Use markers, like clickers or words, to precisely signal desired behavior.",
+            "Keep training sessions short and fun—5–10 minutes per skill is ideal.",
+            "End sessions while your dog is still enjoying the activity.",
+            "Focus on strengthening the behavior you want rather than punishing unwanted behaviors.",
+            "Have fun and make training a positive experience for both you and your dog."
+          ],
+
+          "conclusion": "Positive reinforcement is an effective, humane, and enjoyable way to train dogs. By consistently rewarding desired behaviors, using appropriate reinforcers, and keeping training sessions fun, owners can foster reliable behaviors, build trust, and strengthen the bond with their dog."
+        }
+      }
+    ]
   },
+
   "services": {
     "ourServices": "Our Services",
+    "home": "Home",
+    "services": "Services"
+  },
+
+  "serviceDetails": {
     "home": "Home",
     "services": "Services"
   },
@@ -139,5 +688,50 @@
     "fastDelivery": "Fast Delivery",
     "freeConsultation": "Free veterinary consultation with orders over $100!",
     "consultationDesc": "Your pets deserve the best care. We're here to help."
+  },
+
+  "reservation": {
+    "title": "Book your pet's appointment with our expert veterinarians",
+    "steps": {
+      "pet": "Pet",
+      "service": "Service",
+      "doctor": "Doctor",
+      "dateTime": "Date / Time",
+      "notes": "Notes"
+    },
+    "selectPet": "Select Your Pet",
+    "choosePet": "Choose your pet",
+    "selectService": "Select Service",
+    "selectDoctor": "Select Doctor",
+    "selectDateTime": "Select Date & Time",
+    "notesLabel": "Notes",
+    "notesPlaceholder": "Optional notes",
+    "confirm": "Confirm",
+    "successTitle": "Success!",
+    "successMessage": "Reservation created successfully",
+    "modal": {
+      "title": "Confirm Reservation",
+      "pet": "Pet",
+      "service": "Service",
+      "doctor": "Doctor",
+      "date": "Date",
+      "time": "Time",
+      "notes": "Notes",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    },
+    "errors": {
+      "missingFields": "Please fill all required fields before submitting.",
+      "noPets": "You don't have any pets registered yet. Please add a pet first.",
+      "petNotSelected": "Please select a pet before submitting.",
+      "missingFieldTitle": "Missing Fields",
+      "noPetsTitle": "No Pets Found",
+      "nopetSelected": "Pet Not Selected"
+    }
+  },
+
+  "hero": {
+    "happyCustomersLine1": "Over 100,000 Happy Customers",
+    "happyCustomersLine2": "Through the Worldwide"
   }
 }

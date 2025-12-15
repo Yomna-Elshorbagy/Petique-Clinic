@@ -16,6 +16,7 @@ import { Autoplay } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 type ReservationPayload = {
   petOwner: string;
@@ -37,6 +38,19 @@ export default function Reservation() {
   const [notes, setNotes] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  console.log(i18n.language);
+  const isRTL = i18n.language === "ar";
+
+  const stepKeys = [
+    t("reservation.steps.pet"),
+    t("reservation.steps.service"),
+    t("reservation.steps.doctor"),
+    t("reservation.steps.dateTime"),
+    t("reservation.steps.notes"),
+  ];
+  const orderedSteps = isRTL ? [...stepKeys].reverse() : stepKeys;
+  const totalSteps = stepKeys.length;
 
   const token = localStorage.getItem("accessToken");
   let userId: string | null = null;
@@ -176,8 +190,8 @@ export default function Reservation() {
     },
     onSuccess: () => {
       Swal.fire({
-        title: "Success!",
-        text: "Reservation created successfully",
+        title: t("reservation.successTitle"),
+        text: t("reservation.successMessage"),
         icon: "success",
         confirmButtonColor: "#b89c86",
       });
@@ -224,6 +238,7 @@ export default function Reservation() {
     });
   };
 
+
   return (
     <>
       <div className="max-w-7xl mx-auto p-6 space-y-6 mt-10  font-serif">
@@ -235,7 +250,7 @@ export default function Reservation() {
         </div>
 
         <p className="text-2xl font-bold mb-6 text-center">
-          Book your pet's appointment with our expert veterinarians
+          {t("reservation.title")}
         </p>
 
         <div className="flex gap-6 rounded-xl p-6 shadow-lg bg-white border border-green-50">
@@ -251,20 +266,23 @@ export default function Reservation() {
           {/*right steps */}
           <div className="flex-1 space-y-6">
             {/* Step Indicator */}
-            <div className="flex justify-between items-center mb-6">
-              {["Pet", "Service", "Doctor", "Date/Time", "Notes"].map(
-                (label, index) => {
-                  const stepNum = index + 1;
-                  const isActive = step === stepNum;
-                  const isCompleted = step > stepNum;
+            <div
+              className={`flex items-center w-full ${
+                isRTL ? "flex-row-reverse" : ""
+              }`}
+            >
+              {orderedSteps.map((label, index) => {
+                const stepNum = isRTL ? totalSteps - index : index + 1;
+                const isActive = step === stepNum;
+                const isCompleted = step > stepNum;
 
-                  return (
+                return (
+                  <div
+                    key={label}
+                    className="flex-1 relative flex flex-col items-center"
+                  >
                     <div
-                      key={label}
-                      className="flex-1 relative flex flex-col items-center"
-                    >
-                      <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold 
+                      className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold 
           ${
             isCompleted
               ? "bg-green-500"
@@ -272,42 +290,39 @@ export default function Reservation() {
               ? "bg-[#e9a66f]"
               : "bg-gray-300"
           }`}
-                      >
-                        {stepNum}
-                      </div>
-                      {/* Label */}
-                      <span className="mt-2 text-xs text-gray-600">
-                        {label}
-                      </span>
-                      {/* Line */}
-                      {index < 4 && (
-                        <div
-                          className={`absolute top-3 left-1/2 w-full h-1 bg-gray-300 -z-10`}
-                          style={{
-                            marginLeft: "16px",
-                            marginRight: "-16px",
-                            zIndex: 0,
-                          }}
-                        >
-                          <div
-                            className={`h-1 ${
-                              isCompleted ? "bg-green-500" : "bg-gray-300"
-                            }`}
-                            style={{ width: "100%" }}
-                          />
-                        </div>
-                      )}
+                    >
+                      {stepNum}
                     </div>
-                  );
-                }
-              )}
+                    {/* Label */}
+                    <span className="mt-2 text-xs text-gray-600">{label}</span>
+                    {/* Line */}
+                    {index < 4 && (
+                      <div
+                        className={`absolute top-3 left-1/2 w-full h-1 bg-gray-300 -z-10`}
+                        style={{
+                          marginLeft: "16px",
+                          marginRight: "-16px",
+                          zIndex: 0,
+                        }}
+                      >
+                        <div
+                          className={`h-1 ${
+                            isCompleted ? "bg-green-500" : "bg-gray-300"
+                          }`}
+                          style={{ width: "100%" }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Step 1 */}
               <div className={`p-4 }`}>
                 <h2 className="text-lg font-medium mb-2 flex items-center gap-2">
-                  Select Your Pet{" "}
+                  {t("reservation.selectPet")}{" "}
                   <PawPrint className="w-5 h-5 text-[#e9a66f]" />
                 </h2>
                 <select
@@ -318,7 +333,7 @@ export default function Reservation() {
                     setStep(2);
                   }}
                 >
-                  <option value="">Choose your pet</option>
+                  <option value=""> {t("reservation.choosePet")}</option>
                   {pets?.map((p: IPet) => (
                     <option key={p._id} value={p._id}>
                       {p.name}
@@ -330,7 +345,7 @@ export default function Reservation() {
               {/* Step 2 */}
               <div className="p-4">
                 <h2 className="text-lg font-medium mb-2 flex items-center gap-2">
-                  Select Service
+                  {t("reservation.selectService")}
                   <PawPrint className="w-5 h-5 text-[#e9a66f]" />
                 </h2>
                 <select
@@ -341,7 +356,7 @@ export default function Reservation() {
                     setStep(3);
                   }}
                 >
-                  <option value="">Select a service</option>
+                  <option value=""> {t("reservation.selectService")}</option>
                   {services?.map((s: IService) => (
                     <option key={s._id} value={s._id}>
                       {s.title}
@@ -353,7 +368,7 @@ export default function Reservation() {
               {/* Step 3 */}
               <div className="p-4">
                 <h2 className="text-lg font-medium mb-2 flex items-center gap-2">
-                  Select Doctor
+                  {t("reservation.selectDoctor")}
                   <PawPrint className="w-5 h-5 text-[#e9a66f]" />
                 </h2>
                 <select
@@ -364,7 +379,7 @@ export default function Reservation() {
                     setStep(4);
                   }}
                 >
-                  <option value="">Select a doctor</option>
+                  <option value="">{t("reservation.selectDoctor")}</option>
                   {doctors?.map((d: IUser) => (
                     <option key={d._id} value={d._id}>
                       {d.userName}
@@ -408,7 +423,7 @@ export default function Reservation() {
               {step >= 4 && (
                 <div className="flex-1">
                   <h2 className="text-lg font-medium flex items-center gap-2 p-3">
-                    Select Date & Time
+                    {t("reservation.selectDateTime")}{" "}
                     <PawPrint className="w-5 h-5 text-[#e9a66f]" />
                   </h2>
 
@@ -476,14 +491,14 @@ export default function Reservation() {
               {/* Step 5 */}
               <div className={`p-4 }`}>
                 <h2 className="text-lg font-medium mb-2 flex items-center gap-2">
-                  Notes
+                  {t("reservation.notesLabel")}
                   <PawPrint className="w-5 h-5 text-[#e9a66f]" />
                 </h2>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   className="w-full border rounded"
-                  placeholder="Optional notes"
+                  placeholder={t("reservation.notesPlaceholder")}
                 />
 
                 {/* Confirm Button */}
@@ -492,24 +507,24 @@ export default function Reservation() {
                     onClick={() => {
                       if (!service || !doctor || !date || !timeSlot) {
                         showAlert(
-                          "Missing Fields",
-                          "Please fill all required fields before submitting."
+                          t("reservation.errors.missingFieldTitle"),
+                          t("reservation.errors.missingFields")
                         );
                         return;
                       }
 
                       if (!pets || pets.length === 0) {
                         showAlert(
-                          "No Pets Found",
-                          "You don't have any pets registered yet. Please add a pet first."
+                          t("reservation.errors.noPetsTitle"),
+                          t("reservation.errors.noPets")
                         );
                         return;
                       }
 
                       if (!pet) {
                         showAlert(
-                          "Pet Not Selected",
-                          "Please select a pet before submitting."
+                          t("reservation.errors.nopetSelected"),
+                          t("reservation.errors.petNotSelected")
                         );
                         return;
                       }
@@ -518,7 +533,7 @@ export default function Reservation() {
                     }}
                     className="bg-[#e9a66f] text-white py-2 px-4 rounded mt-4 w-full"
                   >
-                    Confirm
+                    {t("reservation.confirm")}{" "}
                   </button>
                 )}
               </div>
@@ -527,28 +542,31 @@ export default function Reservation() {
                 onRequestClose={() => setShowModal(false)}
                 className="max-w-lg mx-auto mt-20 p-6 bg-white rounded-xl shadow-lg"
               >
-                <h2 className="text-xl font-bold mb-4">Confirm Reservation</h2>
+                <h2 className="text-xl font-bold mb-4">
+                  {t("reservation.modal.title")}
+                </h2>
                 <div className="space-y-2">
                   <p>
-                    <strong>Pet:</strong>{" "}
+                    <strong>{t("reservation.modal.pet")}:</strong>{" "}
                     {pets?.find((p) => p._id === pet)?.name}
                   </p>
                   <p>
-                    <strong>Service:</strong>{" "}
+                    <strong>{t("reservation.modal.service")}:</strong>{" "}
                     {services?.find((s) => s._id === service)?.title}
                   </p>
                   <p>
-                    <strong>Doctor:</strong>{" "}
+                    <strong>{t("reservation.modal.doctor")}:</strong>{" "}
                     {doctors?.find((d) => d._id === doctor)?.userName}
                   </p>
                   <p>
-                    <strong>Date:</strong> {date}
+                    <strong>{t("reservation.modal.date")}:</strong> {date}
                   </p>
                   <p>
-                    <strong>Time:</strong> {timeSlot}
+                    <strong>{t("reservation.modal.time")}:</strong> {timeSlot}
                   </p>
                   <p>
-                    <strong>Notes:</strong> {notes || "None"}
+                    <strong>{t("reservation.modal.notes")}:</strong>{" "}
+                    {notes || "None"}
                   </p>
                 </div>
                 <div className="flex justify-end gap-4 mt-4">
@@ -580,11 +598,13 @@ export default function Reservation() {
 
       <div className="mt-32 bg-[#faf9f6] py-16 px-6  shadow-inner font-serif">
         <h2 className="text-5xl font-bold text-center mb-12 text-gray-900 leading-snug">
-          Over 100,000 Happy Customers <br />
-          Through the Worldwide
+          {t("hero.happyCustomersLine1")}
+          <br />
+          {t("hero.happyCustomersLine2")}
         </h2>
 
         <Swiper
+          key={i18n.language}
           modules={[Autoplay]}
           navigation={false}
           spaceBetween={20}
