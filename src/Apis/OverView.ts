@@ -29,7 +29,7 @@ export const getRevenueDistribution = async (): Promise<
 };
 
 export const getOrdersDistribution = async () => {
-  const { data } = await axios.get(`${BASE_URL}/orders/orderDistrbuted`, {
+  const { data } = await axios.get(`${BASE_URL}/order/orderDistrbuted`, {
     headers: getHeaders(),
   });
   return data.data;
@@ -42,8 +42,27 @@ export const getTopSellingProducts = async () => {
   return data.data;
 };
 
-export const getRevenuePerMonth = async (): Promise<any[]> => {
-  const { data } = await axios.get(`${BASE_URL}/orders/revenue`, {
+// ==> Export APIs
+export const exportOrdersToCSV = async () => {
+  const response = await axios.get(`${BASE_URL}/order/exportcsv`, {
+    headers: getHeaders(),
+    responseType: "blob",
+  });
+  return response.data;
+};
+
+export const exportOrdersToPDF = async () => {
+  const response = await axios.get(`${BASE_URL}/order/exportpdf`, {
+    headers: getHeaders(),
+    responseType: "blob",
+  });
+  return response.data;
+};
+
+export const getRevenuePerMonth = async (): Promise<
+  { _id: { year: number; month: number }; totalRevenue: number; totalOrders: number }[]
+> => {
+  const { data } = await axios.get(`${BASE_URL}/order/revenue`, {
     headers: getHeaders(),
   });
   return data.data;

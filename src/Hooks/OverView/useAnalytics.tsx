@@ -8,7 +8,42 @@ import {
   getRevenuePerMonth,
   getTopSellingProducts,
   getUsersOverview,
+  exportOrdersToCSV,
+  exportOrdersToPDF,
 } from "../../Apis/OverView";
+
+//===> Export Hooks
+export const useExportOrders = () => {
+  const downloadFile = (data: Blob, filename: string) => {
+    const url = window.URL.createObjectURL(new Blob([data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode?.removeChild(link);
+  };
+
+  const exportCSV = async () => {
+    try {
+      const data = await exportOrdersToCSV();
+      downloadFile(data, "orders-report.csv");
+    } catch (error) {
+      console.error("Failed to export CSV", error);
+    }
+  };
+
+  const exportPDF = async () => {
+    try {
+      const data = await exportOrdersToPDF();
+      downloadFile(data, `orders-report-${Date.now()}.pdf`);
+    } catch (error) {
+      console.error("Failed to export PDF", error);
+    }
+  };
+
+  return { exportCSV, exportPDF };
+};
 
 //===>category analysis
 export const useCategoryStats = () =>
