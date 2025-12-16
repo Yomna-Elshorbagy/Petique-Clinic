@@ -36,3 +36,20 @@ export const useUserOrders = (page: number, limit: number) => {
     enabled: !!token,
   });
 };
+
+export const useAllOrders = (page: number = 1, limit: number = 10) => {
+  const token = localStorage.getItem("accessToken");
+
+  return useQuery({
+    queryKey: ["allOrders", page, limit],
+    queryFn: async () => {
+      const res = await axios.get(`${baseURL}/order/allorders`, {
+        headers: { authentication: `bearer ${token}` },
+        params: { page, limit },
+      });
+
+      return res.data;
+    },
+    enabled: !!token,
+  });
+};
