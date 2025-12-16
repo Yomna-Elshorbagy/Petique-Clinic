@@ -344,6 +344,26 @@
   "common": {
     "reset": "إعادة تعيين"
   },
+  "ProductDetails":{
+    "price":"السعر",
+    "category":"الفئة",
+    "addTocart":"أضف الي السلة",
+    "addReview":"إضافة تقييم",
+    "readMore":"اقرأ المزيد",
+    "showLess":"عرض أقل",
+    "submit":"إرسال",
+    "cancel" : "إلغاء",
+    "addNewReview":"إضافة تقييم جديد",
+    "rating":"التقييم ",
+    "comment":"التعليق",
+    "productReview":"تقيممات المنتج",
+    "relatedProduct": "منتجات ذات صلة ",
+     "showReviews":"إظهار التقييمات",
+    "hideReviews":"إخفاء التقييمات",
+    "placeholder":"اكتب تقيممك هنا ....",
+    "deletemessage":" هل أنت تريد حذف هذا التقييم ؟",
+    "delete":"حذف"
+  },
   "about": {
     "badge": "من نحن",
     "title": "نقدم أفضل خدمات العناية بالحيوانات الأليفة",

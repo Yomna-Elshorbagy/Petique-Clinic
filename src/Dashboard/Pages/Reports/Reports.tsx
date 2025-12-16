@@ -4,6 +4,8 @@ import TopSellingProducts from "./Components/TopSellingProducts";
 import OrderStatusOverview from "./Components/OrderStatusOverview";
 import RecentOrders from "./Components/RecentOrders";
 import UserAnalysis from "./Components/UserAnalysis";
+import CategoryDistributionTable from "./Components/CategoryDistributionTable";
+import RevenueByCategoryTable from "./Components/RevenueByCategoryTable";
 
 export default function Reports() {
   return (
@@ -21,6 +23,10 @@ export default function Reports() {
       </div>
       <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-6">
         <UserAnalysis/>
+      </div>
+        <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <CategoryDistributionTable />
+        <RevenueByCategoryTable />
       </div>
     </div>
   );
