@@ -1,6 +1,8 @@
 import React from "react";
 import RevenueChart from "./Components/RevenueChart";
 import TopSellingProducts from "../Reports/Components/TopSellingProducts";
+import GenderPieChart from "./Components/GenderChart";
+import RolesBarChart from "./Components/RolesChart";
 
 const OverView = () => {
     return (
@@ -17,9 +19,11 @@ const OverView = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-3">
-                    <RevenueChart />
-                </div>
+                {/* <div className="lg:col-span-3"> */}
+                    {/* <RevenueChart /> */}
+                    <GenderPieChart/>
+                    <RolesBarChart/>
+                {/* </div> */}
             </div>
         </div>
     );
