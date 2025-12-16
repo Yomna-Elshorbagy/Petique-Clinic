@@ -13,10 +13,14 @@ import Swal from "sweetalert2";
 import Input from "../../Components/Auth/Input";
 import AuthBtn from "../../Components/Auth/AuthBtn";
 import AuthCardLayout from "../../Shared/AuthCardLayout/AuthCardLayout";
+import { useTranslation } from "react-i18next";
+import i18n from "../../i18n";
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const isRTL = i18n.language === "ar";
 
   const { register, handleSubmit, formState: { errors } } = useForm<LoginSchemaType>({
     defaultValues: loginDefaultValues,
@@ -31,8 +35,8 @@ export default function Login() {
       dispatch(insertUserToken(data.accessToken));
       Swal.fire({
         icon: "success",
-        title: "Login Successful!",
-        text: "Welcome back to Petique 🐶",
+        title: t("auth.login.successTitle"),
+        text: t("auth.login.successText"),
         timer: 2000,
         timerProgressBar: true,
         showConfirmButton: false,
@@ -41,13 +45,13 @@ export default function Login() {
     },
 
     onError: (err) => {
-      let message = "Something went wrong!";
+      let message = t("auth.login.errorDefault");
       if (axios.isAxiosError(err)) {
-        message = err.response?.data?.message || "Invalid email or password";
+        message = err.response?.data?.message || message;
       }
       Swal.fire({
         icon: "error",
-        title: "Login Failed",
+        title: t("auth.login.errorTitle"),
         text: message,
         confirmButtonColor: "#f69946",
       });
@@ -63,20 +67,20 @@ export default function Login() {
     motionKey="login"
     leftContent = {
       <>
-      <p className="text-4xl font-bold mb-4 font-['Playfair_Display'] text-(--color-light-accent) animate-pulse">Welcome Back!</p>
-      <p className="text-[#443935] font-bold font-['Playfair_Display'] p-2">For better experience with your pets.</p>
+      <p className="text-4xl font-bold mb-4 font-['Playfair_Display'] text-(--color-light-accent) animate-pulse">{t("auth.login.welcomeTitle")}</p>
+      <p className={`text-[#443935] font-bold font-['Playfair_Display'] p-2 ${isRTL ? "text-2xl" : ""}`}>{t("auth.login.welcomeSubtitle")}</p>
       </>
     }
     rightContent={
       <>
-      <h2 className="text-(--color-light-accent) font-['Playfair_Display'] text-3xl font-semibold mb-6">Log in</h2>
+      <h2 className="text-(--color-light-accent) font-['Playfair_Display'] text-3xl font-semibold mb-6">{t("auth.login.title")}</h2>
             <div className="space-y-4">
               <form onSubmit={handleSubmit(onSubmit)}>
 
                 <div className="flex flex-col gap-3 mb-6">
                   <div className="relative">
-                    <MdEmail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#e0d0c1]" size={20} />
-                    <Input placeholder="your email"
+                    <MdEmail className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} size={20} />
+                    <Input placeholder={t("auth.common.email")}
                     type="email" 
                     register={register("email")}
                     />
@@ -86,8 +90,8 @@ export default function Login() {
                   )}
 
                   <div className="relative">
-                    <MdLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#d5c5b5]" size={20} />
-                    <Input placeholder="Your password"
+                    <MdLock className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} size={20} />
+                    <Input placeholder={t("auth.common.password")}
                     type="password" 
                     register={register("password")} 
                     />
@@ -98,30 +102,30 @@ export default function Login() {
 
                 </div>
 
-                <AuthBtn name={isPending ? "Logging in..." : "Sign in"} 
-                  title="Create new account?" 
+                <AuthBtn name={isPending ? t("auth.login.loading") : t("auth.login.submit")} 
+                  title= {t("auth.login.createAccount")} 
                   navTo="/register" 
-                  navName="Sign up here" 
+                  navName={t("auth.login.signupHere")}
                   isLoading={isPending} />
               </form>
 
               <p className="text-sm text-gray-400 text-center">
-                Forget Password?{" "}
+                {t("auth.login.forgetPassword")}{" "}
                 <Link to="/forgetPass" className="text-[#A88F7B] cursor-pointer hover:underline">
-                  forget password
+                  {t("auth.login.forget")}
                 </Link>
               </p>
 
               {isError && (
                 <p className="text-red-400 text-sm mt-2">
-                  {(error as any)?.response?.data?.message || "Login failed"}
+                  {(error as any)?.response?.data?.message || t("auth.login.errorDefault")}
                 </p>
               )}
 
               {/* Divider */}
               <div className="flex items-center gap-3">
                 <div className="flex-1 h-px bg-white/20" />
-                <span className="text-gray-400 text-sm">OR</span>
+                <span className="text-gray-400 text-sm">{t("auth.common.or")}</span>
                 <div className="flex-1 h-px bg-white/20" />
               </div>
               <div className="flex justify-center gap-4">
