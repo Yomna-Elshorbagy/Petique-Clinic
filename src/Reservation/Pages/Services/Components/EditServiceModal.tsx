@@ -1,16 +1,36 @@
-import { useEffect, useState } from "react";
-import { FaTimes, FaCloudUploadAlt } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaTimes, FaCloudUploadAlt, FaSpinner } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useService,
   useUpdateService,
 } from "../../../../Hooks/Services/UseServices";
+import type { IService } from "../../../../Interfaces/IService";
 
 interface EditServiceModalProps {
   isOpen: boolean;
   onClose: () => void;
   serviceId: string | null;
 }
+// Schema
+const editServiceSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().optional(),
+  priceRange: z
+    .number({ message: "Price must be a number" })
+    .min(0, { message: "Price must be >= 0" }),
+  preparations: z.string().optional(),
+  benefits: z.string().optional(),
+  tips: z.string().optional(),
+  duration: z.string().optional(),
+  image: z.instanceof(File).optional(),
+  subImages: z.any().optional(),
+});
+
+type EditServiceFormData = z.infer<typeof editServiceSchema>;
 
 export default function EditServiceModal({
   isOpen,
@@ -19,84 +39,103 @@ export default function EditServiceModal({
 }: EditServiceModalProps) {
   const { data, isLoading } = useService(serviceId || "");
   const updateService = useUpdateService(serviceId || "");
-  interface ServiceForm {
-    title: string;
-    description: string;
-    priceRange: string;
-    preparations: string;
-    benefits: string;
-    tips: string;
-    duration: string;
-    image: File | null;
-    subImages: FileList | null;
-  }
-
-  const [form, setForm] = useState<ServiceForm>({
-    title: "",
-    description: "",
-    priceRange: "",
-    preparations: "",
-    benefits: "",
-    tips: "",
-    duration: "",
-    image: null,
-    subImages: null,
-  });
 
   const [preview, setPreview] = useState<string | null>(null);
 
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<EditServiceFormData>({
+    resolver: zodResolver(editServiceSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      priceRange: undefined,
+      preparations: "",
+      benefits: "",
+      tips: "",
+      duration: "",
+      image: undefined,
+      subImages: undefined,
+    },
+  });
+
+  const watchedImage = watch("image");
+
   useEffect(() => {
     if (data) {
-      const s: any = data;
-
-      setForm({
+      const s: IService = data;
+      reset({
         title: s.title || "",
         description: s.description || "",
-        priceRange: s.priceRange || "",
+        priceRange: s.priceRange ? Number(s.priceRange) : undefined,
         preparations: s.preparations || "",
         benefits: s.benefits || "",
         tips: s.tips || "",
-        duration: s.duration || "",
-        image: null,
-        subImages: null,
+        // duration: (s as any).duration ?? "",
+        image: undefined,
+        subImages: undefined,
       });
+      const imgUrl =
+        (s.image as { secure_url?: string; url?: string } | undefined)
+          ?.secure_url ||
+        (s.image as { secure_url?: string; url?: string } | undefined)?.url ||
+        null;
 
-      setPreview(s.image?.secure_url || s.image?.url || null);
+      setPreview(imgUrl);
     }
-  }, [data]);
+  }, [data, reset]);
 
-  if (!isOpen) return null;
-
-  const handleImageChange = (e: any) => {
-    if (e.target.files?.[0]) {
-      setForm({ ...form, image: e.target.files[0] });
-      setPreview(URL.createObjectURL(e.target.files[0]));
+  useEffect(() => {
+    if (watchedImage) {
+      setPreview(URL.createObjectURL(watchedImage));
     }
-  };
+  }, [watchedImage]);
 
-  const handleSubmit = async () => {
+  const onSubmit = (data: EditServiceFormData) => {
     if (!serviceId) {
       Swal.fire("Error", "No service selected to update", "error");
       return;
     }
 
     const fd = new FormData();
-    Object.entries(form).forEach(([key, value]: any) => {
-      if (value && key !== "subImages") fd.append(key, value);
-    });
-    if (form.subImages && form.subImages.length > 0) {
-      Array.from(form.subImages).forEach((file) => {
-        fd.append("subImages", file);
-      });
+    fd.append("title", data.title);
+    fd.append("description", data.description || "");
+    fd.append("priceRange", data.priceRange?.toString() || "0");
+    fd.append("preparations", data.preparations || "");
+    fd.append("benefits", data.benefits || "");
+    fd.append("tips", data.tips || "");
+    fd.append("duration", data.duration || "");
+    if (data.image) fd.append("image", data.image);
+    if (data.subImages) {
+      Array.from(data.subImages as FileList).forEach((file) =>
+        fd.append("subImages", file)
+      );
     }
 
     updateService.mutate(fd, {
       onSuccess: () => {
         Swal.fire("Success", "Service updated!", "success");
+        reset();
+        setPreview(null);
         onClose();
+      },
+      onError: (error: unknown) => {
+        const e = error as { response?: { data?: { message?: string } } };
+        Swal.fire(
+          "Error",
+          e.response?.data?.message || "Something went wrong",
+          "error"
+        );
       },
     });
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
@@ -113,7 +152,10 @@ export default function EditServiceModal({
         </div>
 
         {/* Content */}
-        <div className="px-8 pt-4 pb-8 overflow-y-auto space-y-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="px-8 pt-4 pb-8 overflow-y-auto space-y-6"
+        >
           {isLoading ? (
             <p className="text-center py-6 text-[#86654F] font-medium">
               Loading...
@@ -139,9 +181,18 @@ export default function EditServiceModal({
                 <input
                   type="file"
                   className="hidden"
-                  onChange={handleImageChange}
+                  onChange={(e) =>
+                    setValue("image", e.target.files?.[0], {
+                      shouldValidate: true,
+                    })
+                  }
                 />
               </label>
+              {errors.image && (
+                <span className="text-red-500 text-xs">
+                  {errors.image.message}
+                </span>
+              )}
 
               {/* Title */}
               <div>
@@ -149,10 +200,14 @@ export default function EditServiceModal({
                   Service Title
                 </label>
                 <input
-                  className="w-full p-4  bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
-                  value={form.title}
-                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                  className="w-full p-4  bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
+                  {...register("title")}
                 />
+                {errors.title && (
+                  <span className="text-red-500 text-xs">
+                    {errors.title.message}
+                  </span>
+                )}
               </div>
 
               {/* Price & SubImages */}
@@ -162,12 +217,16 @@ export default function EditServiceModal({
                     Price Range
                   </label>
                   <input
-                    className="w-full p-4  bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
-                    value={form.priceRange}
-                    onChange={(e) =>
-                      setForm({ ...form, priceRange: e.target.value })
-                    }
+                    type="number"
+                    min={0}
+                    className="w-full p-4  bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
+                    {...register("priceRange", { valueAsNumber: true })}
                   />
+                  {errors.priceRange && (
+                    <span className="text-red-500 text-xs">
+                      {errors.priceRange.message}
+                    </span>
+                  )}
                 </div>
                 <div>
                   <label className="font-semibold text-sm text-[#86654F]">
@@ -177,9 +236,7 @@ export default function EditServiceModal({
                     type="file"
                     multiple
                     className="w-full p-3 bg-[#FCF9F4] rounded-xl file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#A98770] file:text-white hover:file:bg-[#86654F]"
-                    onChange={(e) =>
-                      setForm({ ...form, subImages: e.target.files })
-                    }
+                    onChange={(e) => setValue("subImages", e.target.files)}
                   />
                 </div>
               </div>
@@ -190,12 +247,9 @@ export default function EditServiceModal({
                   Duration
                 </label>
                 <input
-                  className="w-full p-4 bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
-                  value={form.duration}
-                  onChange={(e) =>
-                    setForm({ ...form, duration: e.target.value })
-                  }
+                  className="w-full p-4 bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
                   placeholder="e.g., 30 mins"
+                  {...register("duration")}
                 />
               </div>
 
@@ -205,50 +259,61 @@ export default function EditServiceModal({
                   Description
                 </label>
                 <textarea
-                  className="w-full p-4 bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
-                  value={form.description}
-                  onChange={(e) =>
-                    setForm({ ...form, description: e.target.value })
-                  }
+                  className="w-full p-4 bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
+                  {...register("description")}
                 />
               </div>
 
               {/* Preparations / Benefits / Tips */}
-              <div className="grid grid-cols-3 gap-4">
-                <textarea
-                  className="p-4  bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
-                  placeholder="Preparations"
-                  value={form.preparations}
-                  onChange={(e) =>
-                    setForm({ ...form, preparations: e.target.value })
-                  }
-                />
-                <textarea
-                  className="p-4  bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
-                  placeholder="Benefits"
-                  value={form.benefits}
-                  onChange={(e) =>
-                    setForm({ ...form, benefits: e.target.value })
-                  }
-                />
-                <textarea
-                  className="p-4  bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
-                  placeholder="Tips"
-                  value={form.tips}
-                  onChange={(e) => setForm({ ...form, tips: e.target.value })}
-                />
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-[#86654F] mb-1">
+                    Preparations
+                  </label>
+                  <textarea
+                    className="w-full p-4 bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
+                    placeholder="Preparations"
+                    {...register("preparations")}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-[#86654F] mb-1">
+                    Benefits
+                  </label>
+                  <textarea
+                    className="w-full p-4 bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
+                    placeholder="Benefits"
+                    {...register("benefits")}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-[#86654F] mb-1">
+                    Tips
+                  </label>
+                  <textarea
+                    className="w-full p-4 bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
+                    placeholder="Tips"
+                    {...register("tips")}
+                  />
+                </div>
               </div>
 
               {/* Submit Button */}
               <button
-                onClick={handleSubmit}
-                className="w-full bg-[#86654F] text-white py-4 rounded-xl font-bold hover:bg-[#6d5240] transition-colors shadow-sm"
+                type="submit"
+                className="w-full bg-[#86654F] text-white py-4 rounded-xl font-bold hover:bg-[#6d5240] transition-colors shadow-sm flex items-center justify-center gap-2"
               >
-                Update Service
+                {updateService.isPending ? (
+                  <FaSpinner className="animate-spin" />
+                ) : (
+                  "Update Service"
+                )}
               </button>
             </>
           )}
-        </div>
+        </form>
       </div>
     </div>
   );

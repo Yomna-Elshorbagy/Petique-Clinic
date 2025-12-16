@@ -217,13 +217,23 @@ export default function Reservation() {
   );
   useEffect(() => {
     const today = new Date();
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu"];
-    const arr = days.map((abbr, idx) => {
-      const d = new Date(today);
-      const diff = (idx + 1 - today.getDay() + 7) % 7;
-      d.setDate(today.getDate() + diff);
-      return { abbr, iso: d.toISOString().split("T")[0] };
-    });
+    const clinicDays = ["Sun", "Mon", "Tue", "Wed", "Thu"];
+    const arr: { abbr: string; iso: string }[] = [];
+
+    let added = 0;
+    const checkDate = new Date(today);
+
+    while (added < 5) {
+      const dayAbbr = checkDate.toLocaleDateString("en-US", {
+        weekday: "short",
+      });
+      if (clinicDays.includes(dayAbbr)) {
+        arr.push({ abbr: dayAbbr, iso: checkDate.toISOString().split("T")[0] });
+        added++;
+      }
+      checkDate.setDate(checkDate.getDate() + 1);
+    }
+
     setTimeout(() => {
       setNext5Days(arr);
     }, 0);
@@ -237,7 +247,6 @@ export default function Reservation() {
       confirmButtonColor: "#b89c86",
     });
   };
-
 
   return (
     <>

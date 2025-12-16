@@ -9,11 +9,13 @@ import Swal from "sweetalert2";
 import { FaTimes, FaSpinner, FaPlus, FaTrash } from "react-icons/fa";
 import { useAddVaccination } from "../../../../Hooks/Vaccinations/useVaccinations";
 import { useAnimalCategories } from "../../../../Hooks/AnimalCategoey/UseAnimalCategory";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface IDoseForm {
   doseNumber: number;
-  ageInWeeks: number;
-  repeatAfterDays: number;
+  ageInWeeks?: number;
+  repeatAfterDays?: number;
   recurring: boolean;
 }
 
@@ -29,6 +31,33 @@ interface IAddVaccinationModalProps {
   onClose: () => void;
   onSuccess?: () => void;
 }
+
+interface ICategory {
+  _id: string;
+  name: string;
+}
+
+// Schema
+const doseSchema = z.object({
+  doseNumber: z.number(),
+  ageInWeeks: z
+    .union([z.number().min(1, "Age must be at least 1 week"), z.undefined()])
+    .optional(),
+  repeatAfterDays: z
+    .union([
+      z.number().min(0, "Repeat after days must be >= 0"),
+      z.undefined().or(z.literal(NaN)),
+    ])
+    .optional(),
+  recurring: z.boolean(),
+});
+
+const addVaccineSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  description: z.string().min(1, "Description is required"),
+  categories: z.array(z.string()).min(1, "Select at least one category"),
+  doses: z.array(doseSchema).min(1, "At least one dose is required"),
+});
 
 export default function AddVaccinationModal({
   isOpen,
@@ -47,9 +76,15 @@ export default function AddVaccinationModal({
       description: "",
       categories: [],
       doses: [
-        { doseNumber: 1, ageInWeeks: 0, repeatAfterDays: 0, recurring: false },
+        {
+          doseNumber: 1,
+          ageInWeeks: undefined,
+          repeatAfterDays: undefined,
+          recurring: false,
+        },
       ],
     },
+    resolver: zodResolver(addVaccineSchema),
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -58,10 +93,9 @@ export default function AddVaccinationModal({
   });
 
   const { mutate, isPending } = useAddVaccination();
-  const { data: categoriesData } = useAnimalCategories(); // fetch categories
-  const categories = categoriesData?.data || categoriesData || [];
+  const { data: categoriesData } = useAnimalCategories();
+  const categories: ICategory[] = categoriesData?.data || categoriesData || [];
 
-  // ===> reset form when modal opens
   useEffect(() => {
     if (isOpen) {
       reset({
@@ -71,8 +105,8 @@ export default function AddVaccinationModal({
         doses: [
           {
             doseNumber: 1,
-            ageInWeeks: 0,
-            repeatAfterDays: 0,
+            ageInWeeks: undefined,
+            repeatAfterDays: undefined,
             recurring: false,
           },
         ],
@@ -82,9 +116,10 @@ export default function AddVaccinationModal({
 
   const onSubmit: SubmitHandler<IFormInput> = (formData) => {
     const doses = formData.doses.map((d, index) => ({
-      ...d,
       doseNumber: index + 1,
-      repeatAfterDays: d.repeatAfterDays || undefined,
+      ageInWeeks: d.ageInWeeks ?? 0,
+      repeatAfterDays: d.repeatAfterDays ?? 0,
+      recurring: d.recurring ?? false,
     }));
 
     mutate(
@@ -98,13 +133,14 @@ export default function AddVaccinationModal({
         onSuccess: () => {
           Swal.fire("Done", "Vaccination Added", "success");
           reset();
-          if (onSuccess) onSuccess();
+          onSuccess?.();
           onClose();
         },
-        onError: (error: any) => {
+        onError: (error: unknown) => {
+          const e = error as { response?: { data?: { message?: string } } };
           Swal.fire(
             "Error",
-            error?.response?.data?.message || "Something went wrong",
+            e.response?.data?.message || "Something went wrong",
             "error"
           );
         },
@@ -113,7 +149,19 @@ export default function AddVaccinationModal({
   };
 
   const onError: SubmitErrorHandler<IFormInput> = (errors) => {
-    console.log("Form Errors:", errors);
+    let firstErrorMessage = "Fields are required";
+    const dosesError = errors.doses?.[0];
+    if (errors.name?.message) firstErrorMessage = errors.name.message;
+    else if (errors.description?.message)
+      firstErrorMessage = errors.description.message;
+    else if (errors.categories?.message)
+      firstErrorMessage = errors.categories.message;
+    else if (dosesError?.ageInWeeks?.message)
+      firstErrorMessage = dosesError.ageInWeeks.message;
+    else if (dosesError?.repeatAfterDays?.message)
+      firstErrorMessage = dosesError.repeatAfterDays.message;
+
+    Swal.fire("Error", firstErrorMessage, "error");
   };
 
   if (!isOpen) return null;
@@ -144,7 +192,7 @@ export default function AddVaccinationModal({
               <input
                 className="w-full px-4 py-2 rounded-xl bg-white border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#86654F]"
                 placeholder="Vaccine Name"
-                {...register("name", { required: "Name is required" })}
+                {...register("name")}
               />
               {errors.name && (
                 <span className="text-red-500 text-xs">
@@ -160,9 +208,7 @@ export default function AddVaccinationModal({
               <textarea
                 className="w-full px-4 py-2 rounded-xl bg-white border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#86654F] min-h-[80px]"
                 placeholder="Description"
-                {...register("description", {
-                  required: "Description is required",
-                })}
+                {...register("description")}
               />
               {errors.description && (
                 <span className="text-red-500 text-xs">
@@ -178,7 +224,7 @@ export default function AddVaccinationModal({
               Select Categories <span className="text-red-500">*</span>
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-40 overflow-y-auto p-2 border border-[#ECE7E2] rounded-xl bg-white">
-              {categories.map((cat: any) => (
+              {categories.map((cat: ICategory) => (
                 <label
                   key={cat._id}
                   className="flex items-center gap-2 cursor-pointer p-1 hover:bg-[#FAF6F1] rounded"
@@ -186,9 +232,7 @@ export default function AddVaccinationModal({
                   <input
                     type="checkbox"
                     value={cat._id}
-                    {...register("categories", {
-                      required: "Select at least one category",
-                    })}
+                    {...register("categories")}
                     className="checkbox checkbox-sm checkbox-primary"
                   />
                   <span className="text-sm text-[#86654F]">{cat.name}</span>
@@ -259,13 +303,18 @@ export default function AddVaccinationModal({
                       </label>
                       <input
                         type="number"
+                        min={1}
                         {...register(`doses.${index}.ageInWeeks` as const, {
                           valueAsNumber: true,
-                          required: true,
                         })}
                         className="w-full px-3 py-1.5 rounded-lg border border-[#ECE7E2] text-[#86654F] text-sm focus:ring-1 focus:ring-[#A98770]"
                         placeholder="e.g. 8"
                       />
+                      {errors.doses?.[index]?.ageInWeeks && (
+                        <span className="text-red-500 text-xs">
+                          {errors.doses[index]?.ageInWeeks?.message}
+                        </span>
+                      )}
                     </div>
                     <div>
                       <label className="text-xs font-semibold text-[#86654F] block mb-1">
@@ -273,13 +322,21 @@ export default function AddVaccinationModal({
                       </label>
                       <input
                         type="number"
+                        min={0}
                         {...register(
                           `doses.${index}.repeatAfterDays` as const,
-                          { valueAsNumber: true }
+                          {
+                            valueAsNumber: true,
+                          }
                         )}
                         className="w-full px-3 py-1.5 rounded-lg border border-[#ECE7E2] text-[#86654F] text-sm focus:ring-1 focus:ring-[#A98770]"
                         placeholder="Optional"
                       />
+                      {errors.doses?.[index]?.repeatAfterDays && (
+                        <span className="text-red-500 text-xs">
+                          {errors.doses[index]?.repeatAfterDays?.message}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>

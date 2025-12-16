@@ -1,14 +1,48 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FaTimes, FaSpinner } from "react-icons/fa";
 import { useUpdateAnimalCategory } from "../../../../Hooks/AnimalCategoey/UseAnimalCategory";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  category: any | null;
+  category: CategoryItem | null;
   onSuccess: () => void;
 }
+
+interface CategoryItem {
+  _id: string;
+  name: string;
+  description?: string;
+  petCount?: number;
+}
+
+interface FormValues {
+  name: string;
+  description: string;
+}
+
+const schema = z.object({
+  name: z
+    .string()
+    .refine((val) => val.trim() !== "", {
+      message: "Category name is required",
+    })
+    .refine((val) => val.trim().length >= 3, {
+      message: "Category name must be at least 3 characters",
+    }),
+  description: z
+    .string()
+    .refine((val) => val.trim() !== "", {
+      message: "Category description is required",
+    })
+    .refine((val) => val.trim().length >= 10, {
+      message: "Category description must be at least 10 characters",
+    }),
+});
 
 export default function EditAnimalCategoryModal({
   isOpen,
@@ -16,50 +50,54 @@ export default function EditAnimalCategoryModal({
   category,
   onSuccess,
 }: Props) {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-
   const { mutate, isPending, error } = useUpdateAnimalCategory(
     category?._id || ""
   );
 
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+    reset,
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    mode: "onBlur",
+  });
+
   useEffect(() => {
     if (category) {
-      setName(category.name);
-      setDescription(category.description);
+      setValue("name", category.name);
+      setValue("description", category.description || "");
     }
-  }, [category]);
+  }, [category, setValue]);
 
   if (!isOpen || !category) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-     mutate(
-      { name, description },
-      {
-        onSuccess: () => {
-          Swal.fire({
-            icon: "success",
-            title: "Updated!",
-            text: "Category updated successfully",
-            timer: 1500,
-            showConfirmButton: false,
-          });
+  const onSubmit = (data: FormValues) => {
+    mutate(data, {
+      onSuccess: () => {
+        Swal.fire({
+          icon: "success",
+          title: "Updated!",
+          text: "Category updated successfully",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        onSuccess();
+        onClose();
+        reset();
+      },
+      onError: (err: unknown) => {
+        const e = err as { response?: { data?: { message?: string } } };
 
-          onSuccess();
-          onClose();
-        },
-        onError: (error: any) => {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text:
-              error?.response?.data?.message ||
-              "Failed to update category",
-          });
-        },
-      }
-    );
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: e.response?.data?.message || "Failed to update category",
+        });
+      },
+    });
   };
 
   return (
@@ -75,10 +113,11 @@ export default function EditAnimalCategoryModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
           {error && (
             <div className="bg-red-50 p-3 text-red-600 rounded-lg">
-              {(error as any).response?.data?.message || "Update failed"}
+              {(error as { response?: { data?: { message?: string } } })
+                ?.response?.data?.message || "Update failed"}
             </div>
           )}
 
@@ -87,11 +126,13 @@ export default function EditAnimalCategoryModal({
               Category Name
             </label>
             <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="w-full px-4 py-2 rounded-xl bg-white border border-[#ECE7E2]"
+              {...register("name")}
+              className={`w-full px-4 py-2 rounded-xl bg-white border  focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none text-[#86654F]`}
+              placeholder="Category name"
             />
+            {errors.name && (
+              <p className="text-red-600 text-sm mt-1">{errors.name.message}</p>
+            )}
           </div>
 
           <div>
@@ -99,11 +140,15 @@ export default function EditAnimalCategoryModal({
               Category Description
             </label>
             <input
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-              className="w-full px-4 py-2 rounded-xl bg-white border border-[#ECE7E2]"
+              {...register("description")}
+              className={`w-full px-4 py-2 rounded-xl bg-white border focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none text-[#86654F]`}
+              placeholder="Category description"
             />
+            {errors.description && (
+              <p className="text-red-600 text-sm mt-1">
+                {errors.description.message}
+              </p>
+            )}
           </div>
 
           <button

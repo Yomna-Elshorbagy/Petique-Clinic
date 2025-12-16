@@ -1,94 +1,113 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { FaTimes, FaCloudUploadAlt } from "react-icons/fa";
+import { FaTimes, FaCloudUploadAlt, FaSpinner } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useAddService } from "../../../../Hooks/Services/UseServices";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface AddServiceModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+// Schema
+const serviceSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().optional(),
+  priceRange: z
+    .number({ message: "Price must be a number" })
+    .min(0, { message: "Price must be >= 0" }),
+  preparations: z.string().optional(),
+  benefits: z.string().optional(),
+  tips: z.string().optional(),
+  duration: z.string().optional(),
+  image: z
+    .instanceof(File, { message: "Main image is required" })
+    .refine((file) => file.size > 0, { message: "Image cannot be empty" }),
+  subImages: z.any().optional(),
+});
+
+type ServiceFormData = z.infer<typeof serviceSchema>;
+
 export default function AddServiceModal({
   isOpen,
   onClose,
 }: AddServiceModalProps) {
   const addService = useAddService();
+  const [preview, setPreview] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
-  const [form, setForm] = useState<{
-    title: string;
-    description: string;
-    priceRange: string;
-    preparations: string;
-    benefits: string;
-    tips: string;
-    image: File | null;
-    subImages: FileList | null;
-  }>({
-    title: "",
-    description: "",
-    priceRange: "",
-    preparations: "",
-    benefits: "",
-    tips: "",
-    image: null,
-    subImages: null,
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<ServiceFormData>({
+    resolver: zodResolver(serviceSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      priceRange: undefined,
+      preparations: "",
+      benefits: "",
+      tips: "",
+      duration: "",
+      image: undefined,
+      subImages: undefined,
+    },
   });
 
-  const [preview, setPreview] = useState<string | null>(null);
+  const watchedImage = watch("image");
 
-  if (!isOpen) return null;
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setForm({ ...form, image: e.target.files[0] });
-      setPreview(URL.createObjectURL(e.target.files[0]));
+  useEffect(() => {
+    if (watchedImage) {
+      setPreview(URL.createObjectURL(watchedImage));
+    } else {
+      setPreview(null);
     }
-  };
+  }, [watchedImage]);
 
-  const handleSubmit = async () => {
-    if (!form.title || !form.priceRange || !form.image) {
-      Swal.fire(
-        "Error",
-        "Please fill in all required fields and upload a main image.",
-        "error"
-      );
-      return;
-    }
-
+  const onSubmit = (data: ServiceFormData) => {
     const fd = new FormData();
-    fd.append("title", form.title);
-    fd.append("description", form.description);
-    fd.append("priceRange", form.priceRange);
-    fd.append("preparations", form.preparations);
-    fd.append("benefits", form.benefits);
-    fd.append("tips", form.tips);
+    fd.append("title", data.title);
+    fd.append("description", data.description || "");
+    fd.append("priceRange", data.priceRange.toString());
+    fd.append("preparations", data.preparations || "");
+    fd.append("benefits", data.benefits || "");
+    fd.append("duration", data.duration || "");
+    fd.append("tips", data.tips || "");
+    fd.append("image", data.image);
 
-    if (form.image) fd.append("image", form.image);
-
-    if (form.subImages) {
-      Array.from(form.subImages).forEach((file) => {
-        fd.append("subImages", file);
-      });
+    if (data.subImages) {
+      Array.from(data.subImages as FileList).forEach((file) =>
+        fd.append("subImages", file)
+      );
     }
 
     addService.mutate(fd, {
       onSuccess: () => {
-        setForm({
-          title: "",
-          description: "",
-          priceRange: "",
-          preparations: "",
-          benefits: "",
-          tips: "",
-          image: null,
-          subImages: null,
-        });
-        setPreview(null);
-        onClose();
         Swal.fire("Success", "Service added successfully!", "success");
+        reset();
+        setPreview(null);
+        queryClient.invalidateQueries({ queryKey: ["services"] });
+        onClose();
+      },
+      onError: (error: unknown) => {
+        const e = error as { response?: { data?: { message?: string } } };
+        Swal.fire(
+          "Error",
+          e.response?.data?.message || "Something went wrong",
+          "error"
+        );
       },
     });
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
@@ -105,7 +124,10 @@ export default function AddServiceModal({
         </div>
 
         {/* Content */}
-        <div className="px-8 pt-4 pb-8 overflow-y-auto space-y-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="px-8 pt-4 pb-8 overflow-y-auto space-y-6"
+        >
           {/* Main Image */}
           <label className="block w-full h-48 border-2 border-dashed border-[#A98770] rounded-2xl bg-[#FCF9F4] flex flex-col justify-center items-center cursor-pointer hover:bg-[#F5F0EC] transition-colors">
             {preview ? (
@@ -125,10 +147,16 @@ export default function AddServiceModal({
             <input
               type="file"
               className="hidden"
-              onChange={handleImageChange}
               accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) setValue("image", file, { shouldValidate: true });
+              }}
             />
           </label>
+          {errors.image && (
+            <span className="text-red-500 text-xs">{errors.image.message}</span>
+          )}
 
           {/* Title */}
           <div>
@@ -136,39 +164,44 @@ export default function AddServiceModal({
               Service Title
             </label>
             <input
-              className="w-full p-4 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
-              value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              className="w-full p-4 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
+              {...register("title")}
             />
+            {errors.title && (
+              <span className="text-red-500 text-xs">
+                {errors.title.message}
+              </span>
+            )}
           </div>
 
-          {/* Price & SubImages */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="font-semibold text-sm text-[#86654F]">
-                Price Range
-              </label>
-              <input
-                className="w-full p-4 bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
-                value={form.priceRange}
-                onChange={(e) =>
-                  setForm({ ...form, priceRange: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <label className="font-semibold text-sm text-[#86654F]">
-                Sub Images
-              </label>
-              <input
-                type="file"
-                multiple
-                className="w-full p-3 bg-[#FCF9F4] rounded-xl file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#A98770] file:text-white hover:file:bg-[#86654F]"
-                onChange={(e) =>
-                  setForm({ ...form, subImages: e.target.files })
-                }
-              />
-            </div>
+          {/* Price Range */}
+          <div>
+            <label className="font-semibold text-sm text-[#86654F]">
+              Price Range
+            </label>
+            <input
+              type="number"
+              min={0}
+              className="w-full p-4 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
+              {...register("priceRange", { valueAsNumber: true })}
+            />
+            {errors.priceRange && (
+              <span className="text-red-500 text-xs">
+                {errors.priceRange.message}
+              </span>
+            )}
+          </div>
+
+          {/* Duration */}
+          <div>
+            <label className="font-semibold text-sm text-[#86654F]">
+              Duration
+            </label>
+            <input
+              className="w-full p-4 bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
+              placeholder="e.g., 30 mins"
+              {...register("duration")}
+            />
           </div>
 
           {/* Description */}
@@ -178,44 +211,53 @@ export default function AddServiceModal({
             </label>
             <textarea
               className="w-full p-4 bg-[#FCF9F4] rounded-xl h-28 resize-none border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
-              value={form.description}
-              onChange={(e) =>
-                setForm({ ...form, description: e.target.value })
-              }
+              {...register("description")}
             />
           </div>
 
           {/* Preparations / Benefits / Tips */}
           <div className="grid grid-cols-3 gap-4">
             <textarea
-              className="p-4  bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
+              className="p-4 bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
               placeholder="Preparations"
-              value={form.preparations}
-              onChange={(e) =>
-                setForm({ ...form, preparations: e.target.value })
-              }
+              {...register("preparations")}
             />
             <textarea
-              className="p-4  bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
+              className="p-4 bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
               placeholder="Benefits"
-              value={form.benefits}
-              onChange={(e) => setForm({ ...form, benefits: e.target.value })}
+              {...register("benefits")}
             />
             <textarea
-              className="p-4  bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
+              className="p-4 bg-[#FCF9F4] rounded-xl border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
               placeholder="Tips"
-              value={form.tips}
-              onChange={(e) => setForm({ ...form, tips: e.target.value })}
+              {...register("tips")}
+            />
+          </div>
+
+          {/* Sub Images */}
+          <div>
+            <label className="font-semibold text-sm text-[#86654F]">
+              Sub Images
+            </label>
+            <input
+              type="file"
+              multiple
+              className="w-full p-3 bg-[#FCF9F4] rounded-xl file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#A98770] file:text-white hover:file:bg-[#86654F]"
+              onChange={(e) => setValue("subImages", e.target.files)}
             />
           </div>
 
           <button
-            onClick={handleSubmit}
-            className="w-full bg-[#86654F] text-white py-4 rounded-xl font-bold hover:bg-[#6d5240] transition-colors shadow-sm"
+            type="submit"
+            className="w-full bg-[#86654F] text-white py-4 rounded-xl font-bold hover:bg-[#6d5240] transition-colors shadow-sm flex items-center justify-center gap-2"
           >
-            {addService.isPending ? "Adding Service..." : "Create Service"}
+            {addService.isPending ? (
+              <FaSpinner className="animate-spin" />
+            ) : (
+              "Create Service"
+            )}
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );

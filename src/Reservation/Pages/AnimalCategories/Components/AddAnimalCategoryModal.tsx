@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaTimes, FaSpinner } from "react-icons/fa";
 import { addAnimalCategory } from "../../../../Apis/AnimalCategory";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Swal from "sweetalert2";
 
 interface AddAnimalCategoryModalProps {
   isOpen: boolean;
@@ -8,31 +12,83 @@ interface AddAnimalCategoryModalProps {
   onSuccess: () => void;
 }
 
+interface FormValues {
+  name: string;
+  description: string;
+}
+
+interface ApiError {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+  message?: string;
+}
+
+const schema = z.object({
+  name: z
+    .string()
+    .refine((val) => val.trim() !== "", {
+      message: "Category name is required",
+    })
+    .refine((val) => val.trim().length >= 3, {
+      message: "Category name must be at least 3 characters",
+    }),
+  description: z
+    .string()
+    .refine((val) => val.trim() !== "", {
+      message: "Category description is required",
+    })
+    .refine((val) => val.trim().length >= 10, {
+      message: "Category description must be at least 10 characters",
+    }),
+});
+
 export default function AddAnimalCategoryModal({
   isOpen,
   onClose,
   onSuccess,
 }: AddAnimalCategoryModalProps) {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    mode: "onBlur",
+  });
+
+  const onSubmit = async (data: FormValues) => {
     setLoading(true);
     setError("");
 
     try {
-      await addAnimalCategory({ name, description });
+      await addAnimalCategory(data);
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Category added successfully!",
+      });
+
       onSuccess();
       onClose();
-      setName("");
-      setDescription("");
-    } catch (err: any) {
-      setError(
-        err.response?.data?.message || err.message || "Failed to add category"
-      );
+      reset();
+    } catch (err: unknown) {
+      const error = err as ApiError;
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text:
+          error.response?.data?.message ||
+          error.message ||
+          "Failed to add category",
+      });
     } finally {
       setLoading(false);
     }
@@ -53,7 +109,7 @@ export default function AddAnimalCategoryModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
           {error && (
             <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">
               {error}
@@ -65,13 +121,13 @@ export default function AddAnimalCategoryModal({
               Category Name
             </label>
             <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="w-full px-4 py-2 rounded-xl bg-white border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none text-[#86654F]"
+              {...register("name")}
+              className={`w-full px-4 py-2 rounded-xl bg-white border focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none text-[#86654F]`}
               placeholder="e.g. Hamsters"
             />
+            {errors.name && (
+              <p className="text-red-600 text-sm mt-1">{errors.name.message}</p>
+            )}
           </div>
 
           <div>
@@ -79,13 +135,15 @@ export default function AddAnimalCategoryModal({
               Category Description
             </label>
             <input
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-              className="w-full px-4 py-2 rounded-xl bg-white border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none text-[#86654F]"
+              {...register("description")}
+              className={`w-full px-4 py-2 rounded-xl bg-white border  focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none text-[#86654F]`}
               placeholder="e.g. Hamsters category description"
             />
+            {errors.description && (
+              <p className="text-red-600 text-sm mt-1">
+                {errors.description.message}
+              </p>
+            )}
           </div>
 
           <button
