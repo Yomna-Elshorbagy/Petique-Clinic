@@ -20,7 +20,8 @@ import ReviewModal from "./ReviewModal";
 import ToggleButton from "./ToggleButton";
 import ReviewCard from "./ReviewCard";
 import ReviewButton from "./ReviewButton";
-
+import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -28,9 +29,9 @@ export default function ProductDetails() {
   const [showFull, setShowFull] = useState(false);
   const token = localStorage.getItem("accessToken");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [showReviews, setShowReviews] = useState(false);
   const queryClient = useQueryClient();
+  const {t} =useTranslation();
   //get product
   async function getproductdetails() {
     const { data } = await axios.get(`${baseURL}/products/${id}`);
@@ -166,7 +167,7 @@ export default function ProductDetails() {
     <>
       <div className="bg-[var(--color-light-background)] min-h-screen  relative">
         <BackButton />
-        <div className="max-w-6xl mx-auto pt-36">
+        <div className="max-w-6xl mx-auto pt-16">
           <div className="flex flex-col md:flex-row  gap-10 items-center md:items-start  md:justify-between">
             <div className="flex flex-col items-center">
               <div className=" bg-white rounded-2xl overflow-hidden flex items-center justify-center w-[400px] h-[400px] shadow-lg">
@@ -188,7 +189,7 @@ export default function ProductDetails() {
               transition-all duration-200 hover:scale-105
               ${
                 selectedImage === img.secure_url
-                  ? "border-[#e9a66f] border-2"
+                  ? "border-[var(--color-light-accent)] border-2"
                   : "border-gray-300"
               }
             `}
@@ -211,7 +212,7 @@ export default function ProductDetails() {
                   className="text-[var(--color-light-accent)] cursor-pointer ml-1"
                   onClick={() => setShowFull(!showFull)}
                 >
-                  {showFull ? "Show Less" : "Read More"}
+                  {showFull ? t("ProductDetails.showLess") : t("ProductDetails.readMore")}
                 </span>
               </p>
               <div className='flex items-center gap-1 '>
@@ -230,14 +231,14 @@ export default function ProductDetails() {
                      
                      </div>
               <p className="text-xl font-semibold text-[var(--color-light-dark)]">
-                Price:{" "}
+                {t("ProductDetails.price")}:{" "}
                 <span className="  font-bold text-[var(--color-light-accent)]">
                   ${data.finalPrice}
                 </span>
               </p>
                 
               <p className="text-[var(--color-light-dark)] font-semibold text-lg">
-                Category:{" "}
+                {t("ProductDetails.category")}:{" "}
                 <span className="font-bold text-[var(--color-light-accent)]">
                   {data.category.name}
                 </span>
@@ -264,7 +265,7 @@ export default function ProductDetails() {
               </div>
 
               <button className="mt-3 px-6 py-3 bg-[var(--color-light-accent)] text-[var(--color-light-dark)] text-lg font-bold rounded-xl shadow-md ">
-                Add to Cart
+                {t("ProductDetails.addTocart")}
               </button>
             </div>
           </div>
@@ -273,7 +274,7 @@ export default function ProductDetails() {
         <hr className="my-10 border-t border-gray-300" />
 
         <h2 className="text-4xl  text-center font-bold text-[var(--color-light-accent)] mb-5 flex items-center justify-center gap-2">
-          Proudct Reviews <FaPaw size={28} />
+          {t("ProductDetails.productReview")} <FaPaw size={28} />
         </h2>
         {showReviews && (
           <>
@@ -300,7 +301,7 @@ export default function ProductDetails() {
 
         <hr className="my-10 border-t border-gray-300" />
         <h2 className="text-4xl  text-center font-bold text-[var(--color-light-accent)] mb-6 flex items-center justify-center gap-2">
-          Related Products <FaPaw size={28} />
+          {t("ProductDetails.relatedProduct")} <FaPaw size={28} />
         </h2>
 
         {relatedLoading && <Loader />}

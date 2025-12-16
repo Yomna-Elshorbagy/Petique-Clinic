@@ -3,12 +3,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   relatedProducts: productdetails[];
 };
 
 export default function RelatedProductsSlider({ relatedProducts }: Props) {
+  const {t} = useTranslation();
   return (
     <Slider
       dots={true}
@@ -35,7 +37,7 @@ export default function RelatedProductsSlider({ relatedProducts }: Props) {
     >
       {relatedProducts.map((product) => (
         <div key={product._id} className="p-4 ">
-            <div className="bg-[#ebe1d7]  rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group border border-gray-100">
+            <div className="bg-[var(--color-bg-warm)]  rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group border border-gray-100">
               <Link to={`/product-details/${product._id}`}>
               <div className=" overflow-hidden bg-gray-50 ">
                 <img
@@ -86,10 +88,9 @@ export default function RelatedProductsSlider({ relatedProducts }: Props) {
                  hover:bg-[var(--color-accent-dark)]
             transition-all duration-300 
                "
-               
-               
+            
                >
-                Add to Cart
+                {t("ProductDetails.addTocart")}
                </button>
                 </div>
               </div>

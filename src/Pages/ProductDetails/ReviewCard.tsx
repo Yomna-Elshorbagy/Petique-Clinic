@@ -2,6 +2,7 @@ import React, { useState, useRef,useEffect } from 'react'
 import type { review, Users } from '../../Types/ProductDetailsType'
 import { MdDelete } from "react-icons/md";
 import ModelDelete from './ModalDelete';
+import { useTranslation } from 'react-i18next';
 type Props = {
   reviews: review[];
   users: Users[] | undefined;
@@ -11,10 +12,11 @@ export default function ReviewCard({ reviews, users, onDelete }: Props) {
 
 
 
- const [expandedId, setExpandedId] = useState<string | null>(null);
+ const [expandedId, setExpandedId] = useState<{ [key: string]: boolean }>({});
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const Max_Length = 5;
   const sliderRef = useRef<HTMLDivElement>(null);
+  const {t} =useTranslation();
 
   useEffect(()=>{
      const slider = sliderRef.current;
@@ -39,6 +41,7 @@ export default function ReviewCard({ reviews, users, onDelete }: Props) {
     <>
     <div
       ref={sliderRef}
+      dir="ltr"  
       className="flex items-start  overflow-x-hidden scroll-smooth no-scrollbar px-2"
     >
     {reviews.map((review) => {
@@ -46,7 +49,7 @@ export default function ReviewCard({ reviews, users, onDelete }: Props) {
                   (user) => user._id === review.user._id
                 );
                 if (!user) return null;
-                const isExpanded = expandedId === review._id;
+                
                 return(<div
     key={review._id}
       className='bg-white rounded-2xl max-w-[48%] md:w-72    p-5 ml-2 shadow-md mb-4 border border-gray-200 relative  flex-shrink-0'>
@@ -77,12 +80,15 @@ export default function ReviewCard({ reviews, users, onDelete }: Props) {
 
       </div>
 
-      <p className='text-gray-700 leading-relaxed '>{isExpanded ? review.comment : review.comment.split(" ").slice(0, Max_Length).join(" ")}{review.comment.split(" ").length > Max_Length && (
+      <p className='text-gray-700 leading-relaxed '>{expandedId[review._id] ? review.comment : review.comment.split(" ").slice(0, Max_Length).join(" ")}{review.comment.split(" ").length > Max_Length && (
         <span
           className='text-[var(--color-light-accent)]  cursor-pointer ml-1'
-          onClick={() => setExpandedId(isExpanded? null : review._id)}
+          onClick={() => setExpandedId(prev=>({
+            ...prev,
+            [review._id]: !prev[review._id]
+          }))}
         >
-          {isExpanded? " Show Less" : " Read More"}
+          {expandedId[review._id]? t("ProductDetails.showLess") : t("ProductDetails.readMore")}
         </span>
       )}</p>
      <ModelDelete isOpen={deleteId===review._id}
@@ -91,7 +97,7 @@ export default function ReviewCard({ reviews, users, onDelete }: Props) {
       onDelete(review._id)
      setDeleteId(null);
      }}
-    message='Are you sure you want to delete this review ?' />
+    message={t("ProductDetails.deletemessage")}/>
     </div>
    );
       })}
