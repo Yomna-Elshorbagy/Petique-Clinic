@@ -9,6 +9,9 @@ import {
   useVaccinationRecords,
 } from "../../../../Hooks/Pets/UsePets";
 import EditVaccinationModal from "./EditVaccinationModal";
+import { usePetVaccinationFilters } from "../../../../Hooks/SharedSearch/usePetVaccinationsFilters";
+import SharedSearch from "../../../../Shared/SharedSearch/SharedSearch";
+import type { VaccinationStatus } from "../../../../Interfaces/IVacination";
 
 interface VaccinationRecord {
   petId: string;
@@ -52,9 +55,22 @@ const VaccinationTable = () => {
     null
   );
   const deleteMutation = useDeletePetVaccination();
+  const {
+    filteredRecords,
+    petSearch,
+    setPetSearch,
+    vaccineSearch,
+    setVaccineSearch,
+    category,
+    setCategory,
+    status,
+    setStatus,
+    categoryOptions,
+    statusOptions
+  } = usePetVaccinationFilters(records);
 
   const { page, totalPages, paginatedItems, goToPage } =
-    useLocalPagination<VaccinationRecord>(records, 5);
+    useLocalPagination<VaccinationRecord>(filteredRecords, 5);
 
   const handleDelete = (record: VaccinationRecord) => {
     const vaccinationId = record.vaccinationId || record._id;
@@ -158,6 +174,18 @@ const VaccinationTable = () => {
           );
         })()}
 
+        {/* Shared Search */}
+        <SharedSearch
+          searches={[
+            { placeholder: "Search by Pet", value: petSearch, onChange: setPetSearch },
+            { placeholder: "Search by Vaccine", value: vaccineSearch, onChange: setVaccineSearch },
+          ]}
+          filters={[
+            { value: category, onChange: setCategory, options: categoryOptions },
+            { value: status, onChange: (v: string) => setStatus(v as VaccinationStatus), options: statusOptions },
+          ]}
+        />
+        
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

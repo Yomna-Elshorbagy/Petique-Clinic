@@ -8,6 +8,22 @@
   @apply w-full p-3 rounded-xl border border-[#A98868]/50 bg-[#FCF9F4] text-[#443935] focus:ring-2 focus:ring-[#C58D52] focus:border-[#C58D52] outline-none transition;
 }
 
+.shared-search-input {
+  @apply pl-11 pr-4 py-3 rounded-xl bg-[#FCF9F4] border-none text-[#86654F] placeholder:text-[#A98770]/70 shadow-sm focus:ring-2 focus:ring-[#A98770]/50 outline-none transition;
+}
+
+.shared-search-wrapper {
+  @apply relative;
+}
+
+.shared-search-icon {
+  @apply absolute left-4 top-1/2 -translate-y-1/2 text-[#A98770];
+}
+
+.shared-filter-select {
+  @apply px-4 py-3 rounded-xl bg-[#FCF9F4] text-[#86654F] shadow-sm focus:ring-2 focus:ring-[#A98770]/50 outline-none cursor-pointer border-none;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

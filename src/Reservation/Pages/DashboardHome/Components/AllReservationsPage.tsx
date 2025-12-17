@@ -11,16 +11,33 @@ import Pagination from "../../../Componenst/Pagination/Pagination";
 import ViewReservationModal from "../../ResevationPet/Components/ViewReservationModal";
 import EditReservationModal from "../../ResevationPet/Components/EditReservationModal";
 import ReservationTable from "./ReservationTable";
+import { useReservationFilters } from "../../../../Hooks/SharedSearch/useReservationFilters";
+import SharedSearch from "../../../../Shared/SharedSearch/SharedSearch";
+import { useServices } from "../../../../Hooks/Services/UseServices";
 
 const AllReservationsPage = () => {
   const { data = [], isLoading } = useReservations({});
   const { mutate: softDelete } = useSoftDeleteReservation();
   const { mutate: hardDelete } = useHardDeleteReservation();
+  const { data: servicesData } = useServices();
+  const services = servicesData?.data ?? [];
 
   const reservations = useMemo(() => data?.data ?? data ?? [], [data]);
 
+  const {
+    filteredReservations,
+    petSearch,
+    setPetSearch,
+    ownerSearch,
+    setOwnerSearch,
+    serviceId,
+    setServiceId,
+    status,
+    setStatus,
+  } = useReservationFilters(reservations);
+
   const { page, totalPages, paginatedItems, goToPage } = useLocalPagination(
-    reservations,
+    filteredReservations,
     7
   );
 
@@ -58,6 +75,33 @@ const AllReservationsPage = () => {
       <h1 className="text-2xl font-bold text-[#4A3F35] mb-4">
         All Reservations
       </h1>
+      <SharedSearch
+        searches={[
+          { placeholder: "Search by Pet", value: petSearch, onChange: setPetSearch },
+          { placeholder: "Search by Owner", value: ownerSearch, onChange: setOwnerSearch },
+        ]}
+        filters={[
+          {
+            value: serviceId,
+            onChange: setServiceId,
+            options: [
+              { label: "All Services", value: "all" },
+              ...services.map((s: any) => ({ label: s.title, value: s._id })),
+            ],
+          },
+          {
+            value: status,
+            onChange: setStatus,
+            options: [
+              { label: "All Status", value: "all" },
+              { label: "Pending", value: "pending" },
+              { label: "Upcoming", value: "upcoming" },
+              { label: "Completed", value: "completed" },
+              { label: "Cancelled", value: "cancelled" },
+            ],
+          },
+        ]}
+      />
 
       <ReservationTable
         items={paginatedItems}
