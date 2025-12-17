@@ -17,7 +17,7 @@ export default function DoctorCard({
   view,
   onSoftDelete,
   onHardDelete,
-  onViewDetails,
+  // onViewDetails,
   onUpdate,
 }: DoctorCardProps) {
   const [editModalOpen, setEditModalOpen] = useState(false);

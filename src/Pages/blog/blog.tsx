@@ -6,16 +6,19 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export default function Blog() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === "ar";
+
   useEffect(() => {
     gsap.to(".bone-icon", {
       y: -10,
+      x: isRTL ? -10 : 10,
       duration: 1.2,
       repeat: -1,
       yoyo: true,
       ease: "power1.inOut",
     });
-  }, []);
+  }, [isRTL]);
 
   const [expandedPostId, setExpandedPostId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -24,13 +27,40 @@ export default function Blog() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const postsPerPage = 3;
-  const categories = [...new Set(posts.map((post) => post.category))];
 
-  const allTags = [...new Set(posts.flatMap((post) => post.tags))];
 
-  const latestPosts = posts.slice(0, 5);
+const getTranslatedPost = (post: typeof posts[0]) => {
+  const id = post.id;
+  const tTitle = t(`blog.posts.${id}.title`);
+  const tDescription = t(`blog.posts.${id}.description`);
+  const tCategory = t(`blog.posts.${id}.category`);
+  const tTags = t(`blog.posts.${id}.tags`, { returnObjects: true }) as string[] | undefined;
+  const tContent = t(`blog.posts.${id}.content`, { returnObjects: true }) as typeof post.content | undefined;
 
-  const filteredPosts = posts.filter((post) => {
+  return {
+    title: tTitle.startsWith("blog.posts") ? post.title : tTitle,
+    description: tDescription.startsWith("blog.posts") ? post.description : tDescription,
+    category: tCategory.startsWith("blog.posts") ? post.category : tCategory,
+     tags: Array.isArray(tTags) ? tTags : post.tags || [],
+    content: tContent?.intro ? tContent : post.content,
+  };
+};
+
+
+const translatedPosts = posts.map((post) => ({
+  id: post.id,
+  date: post.date,
+  image: post.image,
+  ...getTranslatedPost(post),
+}));
+  console.log(translatedPosts)
+
+  const categories = [...new Set(translatedPosts.map((post) => post.category))];
+  console.log(categories);
+  const allTags = [...new Set(translatedPosts.flatMap((post) => post.tags))];
+  const latestPosts = translatedPosts.slice(0, 6);
+
+  const filteredPosts = translatedPosts.filter((post) => {
     const matchesSearch = post.title
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
@@ -51,23 +81,25 @@ export default function Blog() {
     <>
       {/* Header */}
       <div className="bg-[#faf9f6]">
-        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-start font-serif">
+        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
           <div className="max-w-7xl text-center md:text-left w-full">
             <Bone
-              className="bone-icon 
-      w-30 h-30
-       text-white 
-       drop-shadow-[0_0_10px_#ff9100]         
-      ml-[-20px] md:ml-[-40px] 
-"
+              key={i18n.language}
+              className={`bone-icon w-30 h-30 text-white drop-shadow-[0_0_10px_#ff9100] ${
+                isRTL ? "ml-0 mr-[-30px] scale-y-[-1]" : "ml-[-30px] mr-0 scale-y-[1]"
+              }`}
               strokeWidth={2.5}
               color="#e3e3e3"
             />
-            <h1 className="text-white text-3xl md:text-5xl font-extrabold mt-4">
+            <h1
+              className={`text-white text-3xl md:text-5xl font-extrabold mt-4 ${
+                isRTL ? "text-right" : "text-left"
+              }`}
+            >
               {t("blog.latestArticles")}
             </h1>
 
-            <div className="mt-8 flex justify-center md:justify-start gap-6 text-[#e9a66f] font-medium text-1xl md:text-1xl">
+            <div className="mt-8 flex justify-start md:justify-start gap-6 text-[#e9a66f] font-medium text-1xl md:text-1xl">
               <Link to="/home" className="hover:text-white transition-colors">
                 {t("blog.home")}
               </Link>
@@ -79,11 +111,14 @@ export default function Blog() {
           <img
             src="/src/assets/images/cat-relaxing.png"
             alt="cat"
-            className="hidden md:block absolute right-0 bottom-[-120px] w-[600px] z-10"
+            className={`hidden md:block absolute bottom-[-120px] w-[600px] z-10 ${
+              isRTL ? "left-0" : "right-0"
+            }`}
           />
         </div>
 
-        <div className="container mx-auto flex flex-col md:flex-row gap-6 mt-20 justify-center font-serif p-3 mb-10 ">
+        <div className="container mx-auto flex flex-col md:flex-row gap-6 mt-20 justify-center font-serif p-3 mb-10">
+          {/* Posts Column */}
           <div className="w-full md:w-1/2">
             {expandedPostId === null ? (
               <>
@@ -108,7 +143,7 @@ export default function Blog() {
                         className="text-white bg-[#e9a66f] rounded-full w-50 mt-5 p-3 text-[18px]"
                         onClick={() => setExpandedPostId(post.id)}
                       >
-                        Read More
+                        {t("blog.readMore")}
                       </button>
                     </div>
                   </div>
@@ -132,8 +167,8 @@ export default function Blog() {
                 </div>
               </>
             ) : (
-              /* POST VIEW */
-              posts
+              /* Expanded Post View */
+              translatedPosts
                 .filter((post) => post.id === expandedPostId)
                 .map((post) => (
                   <div key={post.id} className="mb-6">
@@ -149,22 +184,14 @@ export default function Blog() {
                       <h1 className="text-4xl font-bold mt-6">{post.title}</h1>
 
                       {post.content.intro && (
-                        <p className="mt-6 leading-relaxed">
-                          {post.content.intro}
-                        </p>
+                        <p className="mt-6 leading-relaxed">{post.content.intro}</p>
                       )}
                       {post.content.body && (
-                        <p className="mt-6 leading-relaxed">
-                          {post.content.body}
-                        </p>
+                        <p className="mt-6 leading-relaxed">{post.content.body}</p>
                       )}
-
                       {post.content.head && (
-                        <h2 className="text-3xl font-bold mt-6">
-                          {post.content.head}
-                        </h2>
+                        <h2 className="text-3xl font-bold mt-6">{post.content.head}</h2>
                       )}
-
                       {post.content.tips && (
                         <ul className="pl-6 mt-4 space-y-2">
                           {post.content.tips.map((tip, idx) => (
@@ -177,16 +204,15 @@ export default function Blog() {
                           ))}
                         </ul>
                       )}
-
                       {post.content.conclusion && (
-                        <p className="mt-6 ">{post.content.conclusion}</p>
+                        <p className="mt-6">{post.content.conclusion}</p>
                       )}
 
                       <button
                         className="bg-black text-white rounded-full px-6 py-2 mt-6"
                         onClick={() => setExpandedPostId(null)}
                       >
-                        Show Less
+                        {t("blog.showLess")}
                       </button>
                     </div>
 
@@ -208,25 +234,25 @@ export default function Blog() {
             )}
           </div>
 
-          {/* right sidbar */}
+          {/* Sidebar */}
           <div className="w-full md:w-1/3 mt-6 md:mt-0 space-y-6 p-3">
-            {/* search */}
+            {/* Search */}
             <div className="w-full max-w-md flex rounded-full overflow-hidden shadow-md">
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder={t("blog.search")}
                 className="flex-1 p-2 bg-white text-gray-800 outline-none border-0"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               <button className="bg-[#e9a66f] text-white px-4 font-semibold hover:bg-orange-600 transition-colors">
-                Search
+                {t("blog.search")}
               </button>
             </div>
 
             {/* Latest Posts */}
             <div>
-              <h3 className="font-bold mb-2 text-black">Latest Posts</h3>
+              <h3 className="font-bold mb-2 text-black">{t("blog.latestPosts")}</h3>
               {latestPosts.map((post) => (
                 <div
                   key={post.id}
@@ -237,18 +263,11 @@ export default function Blog() {
                     setSelectedTag(null);
                   }}
                 >
-                  <img
-                    src={post.image[0]}
-                    className="w-20 h-20 object-cover rounded"
-                  />
+                  <img src={post.image[0]} className="w-20 h-20 object-cover rounded" />
                   <div>
-                    <p className="text-sm font-semibold text-black">
-                      {post.title}
-                    </p>
+                    <p className="text-sm font-semibold text-black">{post.title}</p>
                     <p className="text-xs text-gray-400 mt-1">{post.date}</p>
-                    <p className="text-xs text-gray-400 mt-1">
-                      {post.category}
-                    </p>
+                    <p className="text-xs text-gray-400 mt-1">{post.category}</p>
                   </div>
                 </div>
               ))}
@@ -256,7 +275,7 @@ export default function Blog() {
 
             {/* Categories */}
             <div>
-              <h3 className="font-bold mb-2 text-white">Categories</h3>
+              {/* <h3 className="font-bold mb-2 text-white">{t("blog.AllCategories")}</h3> */}
               <ul>
                 <li
                   className={`cursor-pointer mb-1 font-semibold ${
@@ -268,9 +287,9 @@ export default function Blog() {
                     setSelectedTag(null);
                   }}
                 >
-                  All Categories
+               {t("blog.AllCategories")}
                 </li>
-                {categories.map((cat) => (
+                {categories ?.map((cat) => (
                   <li
                     key={cat}
                     className={`cursor-pointer mb-1 ${
@@ -290,28 +309,28 @@ export default function Blog() {
 
             {/* Tags */}
             <div className="mt-4">
-              <h3 className="font-bold mb-2 text-white">Tags</h3>
+              <h3 className="font-bold mb-2 text-[#e9a66f]">{t("blog.tags")}</h3>
               <div className="flex flex-wrap gap-2">
-                {(expandedPostId
-                  ? posts.find((p) => p.id === expandedPostId)?.tags
-                  : allTags
-                )?.map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className={`text-xs px-3 py-1 rounded-full cursor-pointer ${
-                      selectedTag === tag
-                        ? "bg-[#e9a66f] text-white"
-                        : "bg-gray-200 text-gray-800"
-                    }`}
-                    onClick={() => {
-                      setSelectedTag(tag);
-                      setExpandedPostId(null);
-                      setSelectedCategory(null);
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
+               {((expandedPostId
+    ? translatedPosts.find((p) => p.id === expandedPostId)?.tags
+    : allTags) || []
+).map((tag, idx) => (
+  <span
+    key={idx}
+    className={`text-xs px-3 py-1 rounded-full cursor-pointer ${
+      selectedTag === tag
+        ? "bg-[#e9a66f] text-white"
+        : "bg-gray-200 text-gray-800"
+    }`}
+    onClick={() => {
+      setSelectedTag(tag);
+      setExpandedPostId(null);
+      setSelectedCategory(null);
+    }}
+  >
+    {tag}
+  </span>
+))}
                 {selectedTag && (
                   <span
                     className="text-xs px-3 py-1 bg-gray-500 text-white rounded-full cursor-pointer ml-2"

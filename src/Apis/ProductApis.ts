@@ -4,11 +4,14 @@ import { baseURL } from "./BaseUrl";
 
 const BASE_URL = `${baseURL}/products`;
 
-const token = localStorage.getItem("accessToken");
+const getHeaders = () => {
+  const token = localStorage.getItem("accessToken");
+  if (!token) throw new Error("No auth token");
 
-const headers = {
-  authentication: `bearer ${token}`,
-  "Content-Type": "application/json",
+  return {
+    authentication: `bearer ${token}`,
+    "Content-Type": "application/json",
+  };
 };
 
 export interface ProductFilters {
@@ -51,8 +54,41 @@ export const getAllProducts = async (
 
   const { data } = await axios.get(`${BASE_URL}`, {
     params,
-    headers,
+    headers: getHeaders(),
   });
 
   return data;
 };
+export interface PriceAlertResponse {
+  success: boolean;
+  message: string;
+  subscribedProductIds: string[];
+}
+
+/* ================= PRICE ALERT ================= */
+
+export const subscribeToPriceAlerts = async (productId: string) => {
+  const { data } = await axios.post(
+    `${BASE_URL}/subscribe-price/${productId}`,
+    {},
+    { headers: getHeaders() }
+  );
+  return data;
+};
+
+export const unsubscribeFromPriceAlerts = async (productId: string) => {
+  const { data } = await axios.delete(
+    `${BASE_URL}/unsubscribe-price/${productId}`,
+    { headers: getHeaders() }
+  );
+  return data;
+};
+
+export const getUserPriceAlertSubscriptions =
+  async (): Promise<PriceAlertResponse> => {
+    const { data } = await axios.get(
+      `${BASE_URL}/get-subscribed-prices`,
+      { headers: getHeaders() }
+    );
+    return data;
+  };

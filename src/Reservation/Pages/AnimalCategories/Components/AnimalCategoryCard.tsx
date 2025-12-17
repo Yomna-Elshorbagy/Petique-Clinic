@@ -1,12 +1,22 @@
 import { FaDog, FaCat, FaDove, FaFish, FaPaw } from "react-icons/fa";
 import { GiRabbit, GiTortoise } from "react-icons/gi";
 
+
+interface CategoryItem {
+  _id: string;
+  name: string;
+  description?: string;
+  petCount?: number;
+
+}
+
+
 interface Props {
-  category: any;
+  category: CategoryItem;
   index: number;
   onSoftDelete: (id: string) => void;
   onHardDelete: (id: string) => void;
-  onEdit: (category: any) => void;
+  onEdit: (category: CategoryItem) => void;
 }
 
 export default function AnimalCategoryCard({

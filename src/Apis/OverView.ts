@@ -72,7 +72,8 @@ export const getUsersOverview = async (): Promise<UsersOverview> => {
   const { data } = await axios.get(`${baseURL}/user/analysis/overview`, {
     headers: getHeaders(),
   });
-  return data;
+  console.log(data.data)
+  return data.data;
 };
 
 export const getDeletedUsersAnalysis =

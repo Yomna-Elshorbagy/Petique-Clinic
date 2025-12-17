@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { PawPrint } from "lucide-react";
+import { useTranslation } from "react-i18next";
+
+
 
 const fetchServices = async (): Promise<IService[]> => {
   const res = await axios.get("http://localhost:3000/service");
@@ -22,6 +25,8 @@ const fetchServiceById = async (id: string): Promise<IService> => {
 
 export default function Servicesdetails() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === "ar";
 
   const {
     data: services = [],
@@ -93,23 +98,21 @@ export default function Servicesdetails() {
 
   return (
     <>
-      <div className=" bg-[#faf9f6]">
-        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-start mt-20 font-serif">
+      <div className="bg-[#faf9f6]">
+        <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
           <div className="max-w-7xl text-center md:text-left w-full">
             <Bone
+              key={i18n.language}
               ref={boneRef}
-              className="
-        bone-icon 
-        w-30 h-30 
-        text-white 
-        drop-shadow-[0_0_10px_#ff9100]
-        ml-[-30px] md:ml-[-40px] 
-        mx-auto md:mx-0
-      "
+              className={`bone-icon w-30 h-30 text-white drop-shadow-[0_0_10px_#ff9100] ${
+                isRTL ? "ml-0 mr-[-30px] scale-y-[-1]" : "ml-[-30px] mr-0 scale-y-[1]"
+              }`}
               strokeWidth={2.5}
               color="#e3e3e3"
             />
-            <h1 className="text-white text-4xl font-extrabold text-center md:text-left">
+            <h1  className={`text-white text-3xl md:text-5xl font-extrabold mt-4 ${
+                isRTL ? "text-right" : "text-left"
+              }`}>
               {service.title}
             </h1>
             <div className="mt-8 flex flex-wrap items-center gap-2 text-1xl justify-center md:justify-start">
@@ -117,14 +120,15 @@ export default function Servicesdetails() {
                 to="/home"
                 className="text-[#e9a66f] hover:text-white transition-colors"
               >
-                Home
+            {t("serviceDetails.home")}
+
               </Link>
               <span className="text-[#e9a66f]"> &gt; </span>
               <Link
                 to="/service"
                 className="text-[#e9a66f] hover:text-white transition-colors"
               >
-                Services
+                {t("serviceDetails.services")}
               </Link>
               <span className="text-[#e9a66f]"> &gt; </span>
               <p className="text-white font-semibold">{service.title}</p>
@@ -134,7 +138,9 @@ export default function Servicesdetails() {
           <img
             src="/src/assets/images/cat-relaxing.png"
             alt="cat"
-            className="hidden md:block absolute right-1 bottom-[-120px] w-[600px] z-10"
+            className={`hidden md:block absolute bottom-[-120px] w-[600px] z-10 ${
+              isRTL ? "left-0" : "right-0"
+            }`}
           />
         </div>
 
@@ -143,7 +149,7 @@ export default function Servicesdetails() {
           <div className="flex flex-col md:flex-row gap-8 p-6 ">
             {/* Left Side*/}
             <div className="w-full md:w-1/4 space-y-4">
-              <h1 className="font-bold text-4xl">Services</h1>
+      <h1 className="font-bold text-4xl">{isRTL ? "الخدمات" : "Services"}</h1>
               {services.map((s) => {
                 const serviceImg =
                   s.subImages?.[2]?.secure_url || s.image.secure_url;
@@ -166,7 +172,7 @@ export default function Servicesdetails() {
                       alt={s.title}
                       className="w-16 h-16 object-cover rounded-full"
                     />
-                    <span className="ml-3 font-semibold">{s.title}</span>
+                    <span className={`ml-3 font-semibold ${isRTL ? "mr-3 ml-0" : "ml-3"}`}>{s.title}</span>
                   </div>
                 );
               })}
@@ -174,7 +180,9 @@ export default function Servicesdetails() {
 
             {/* Right Side */}
 
-            <div className="w-full md:w-3/4 bg-white p-6 rounded-lg shadow space-y-4">
+            <div  className={`w-full md:w-3/4 bg-white p-6 rounded-lg shadow space-y-4 ${
+    isRTL ? "text-right" : "text-left"
+  }`}>
               <img
                 src={img1}
                 alt={service.title}
