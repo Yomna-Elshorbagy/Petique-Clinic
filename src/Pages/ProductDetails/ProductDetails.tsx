@@ -103,15 +103,32 @@ export default function ProductDetails() {
       });
     },
     onSuccess: () => {
-      toast.success("Review deleted successfully", {
-        position: "top-center",
-        autoClose: 1000,
-      });
+       Swal.fire({
+            position: "top-end",
+            icon:  "success" ,
+            title: t("ProductDetails.successdelReviewTitle") ,
+            showConfirmButton: false,
+            timer: 1500,
+            toast: true,
+            customClass: {
+              popup: "swal-toast-custom",
+            },
+          });
       queryClient.invalidateQueries({ queryKey: ["Reviews", id] });
     },
-    onError: (error) => {
+    onError: (error:any) => {
       console.log("delete review error:", error);
-      toast.error("Failed to delete Review ", { position: "top-center" });
+       Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: t("ProductDetails.faildelReviewTitle"),
+            showConfirmButton: false,
+            timer: 1500,
+            toast: true,
+            customClass: {
+              popup: "swal-toast-custom",
+            },
+          });
     },
   });
   // add review
@@ -135,15 +152,35 @@ export default function ProductDetails() {
       return data;
     },
     onSuccess: () => {
-      toast.success("Review added successfully", {
-        position: "top-center",
-        autoClose: 1000,
-      });
+      
+      Swal.fire({
+            position: "top-end",
+            icon:  "success" ,
+            title: t("ProductDetails.successAddReviewTitle") ,
+            showConfirmButton: false,
+            timer: 1500,
+            toast: true,
+            customClass: {
+              popup: "swal-toast-custom",
+            },
+          });
+      
       queryClient.invalidateQueries({ queryKey: ["Reviews", id] });
     },
-    onError: (error) => {
+    onError: (error:any) => {
       console.log("add review error", error);
-      toast.error("Failed to add review", { position: "top-center" });
+      
+      Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title:  t("ProductDetails.failAddReviewTitle"),
+            showConfirmButton: false,
+            timer: 1500,
+            toast: true,
+            customClass: {
+              popup: "swal-toast-custom",
+            },
+          });
     },
   });
   if (isLoading) return <Loader />;
@@ -199,7 +236,7 @@ export default function ProductDetails() {
               </div>
             </div>
 
-            <div className="w-full  md:w-1/2 flex flex-col gap-3 bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-[0_4px_14px_rgba(0,0,0,0.1)]">
+            <div className="w-full  md:w-1/2 flex flex-col gap-3 bg-[var(--color-bg-light)] p-6 rounded-2xl shadow-[0_4px_14px_rgba(0,0,0,0.1)]">
               <h1 className="text-3xl font-bold text-[var(--color-light-accent)] ">
                 {data.title}
               </h1>
@@ -310,7 +347,7 @@ export default function ProductDetails() {
         {relatedProducts && relatedProducts.length > 0 && (
           <RelatedProductsSlider relatedProducts={relatedProducts} />
         )}
-        <ToastContainer />
+      
 
         {isModalOpen && (
           <ReviewModal
