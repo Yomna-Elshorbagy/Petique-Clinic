@@ -20,14 +20,15 @@ const editServiceSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
   priceRange: z
-    .number({ message: "Price must be a number" })
+    .number({ message: "Price is required" })
     .min(0, { message: "Price must be >= 0" }),
   preparations: z.string().optional(),
   benefits: z.string().optional(),
   tips: z.string().optional(),
   duration: z.string().optional(),
   image: z.instanceof(File).optional(),
-  subImages: z.any().optional(),
+  subImages: z.array(z.instanceof(File))
+.optional(),
 });
 
 type EditServiceFormData = z.infer<typeof editServiceSchema>;
@@ -80,6 +81,7 @@ export default function EditServiceModal({
         image: undefined,
         subImages: undefined,
       });
+      
       const imgUrl =
         (s.image as { secure_url?: string; url?: string } | undefined)
           ?.secure_url ||
@@ -112,9 +114,7 @@ export default function EditServiceModal({
     fd.append("duration", data.duration || "");
     if (data.image) fd.append("image", data.image);
     if (data.subImages) {
-      Array.from(data.subImages as FileList).forEach((file) =>
-        fd.append("subImages", file)
-      );
+      data.subImages.forEach((file) => fd.append("subImages", file));
     }
 
     updateService.mutate(fd, {
@@ -236,7 +236,10 @@ export default function EditServiceModal({
                     type="file"
                     multiple
                     className="w-full p-3 bg-[#FCF9F4] rounded-xl file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#A98770] file:text-white hover:file:bg-[#86654F]"
-                    onChange={(e) => setValue("subImages", e.target.files)}
+                     onChange={(e) => {
+                       const files = e.target.files ? Array.from(e.target.files) : [];
+                      setValue("subImages", files, { shouldValidate: true });
+                         }}
                   />
                 </div>
               </div>
