@@ -47,8 +47,8 @@ export default function Services() {
   if (isError) return <p>Something went wrong</p>;
 
   return (
-    <div className="bg-[#faf9f6]">
-      <div className="relative bg-[#1f1b22] h-[360px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
+    <div className="bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] transition-colors duration-300">
+      <div className="relative bg-[#1f1b22] dark:bg-[var(--color-dark-card)] h-[360px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
         <div className="max-w-7xl text-center md:text-left w-full">
           <Bone
             key={i18n.language}
@@ -100,9 +100,9 @@ export default function Services() {
               <div
                 key={service._id}
                 onClick={() => navigate(`/service/${service._id}`)}
-                className="bg-amber-20 rounded-lg shadow-md overflow-hidden 
+                className="bg-white dark:bg-[var(--color-dark-card)] rounded-lg shadow-md overflow-hidden 
              w-full sm:w-[45%] lg:w-[25%] flex flex-col items-center group
-             cursor-pointer"
+             cursor-pointer transition-colors duration-300"
               >
                 <div className="relative w-full h-90 overflow-hidden rounded-t-lg">
                   <img
@@ -124,14 +124,14 @@ export default function Services() {
 
                 <div className="text-center">
                   <h3
-                    className="text-lg font-bold mb-2 text-black text-ellipsis overflow-hidden line-clamp-1 mt-3
+                    className="text-lg font-bold mb-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] text-ellipsis overflow-hidden line-clamp-1 mt-3
              transition-colors duration-300 group-hover:text-[#e9a66f]"
                     style={{ fontSize: 20 }}
                   >
                     {service.title}
                   </h3>
                   <p
-                    className="text-gray-400 mb-4 text-sm text-ellipsis overflow-hidden line-clamp-2 mt-3"
+                    className="text-gray-500 dark:text-gray-400 mb-4 text-sm text-ellipsis overflow-hidden line-clamp-2 mt-3"
                     style={{ fontSize: 15 }}
                   >
                     {service.description}
