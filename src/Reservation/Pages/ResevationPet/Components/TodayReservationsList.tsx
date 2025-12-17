@@ -14,6 +14,8 @@ import {
 
 import ViewReservationModal from "./ViewReservationModal";
 import EditReservationModal from "./EditReservationModal";
+import { useTodayReservationFilters } from "../../../../Hooks/SharedSearch/useTodayReservations";
+import SharedSearch from "../../../../Shared/SharedSearch/SharedSearch";
 
 const TodayReservationsList: React.FC = () => {
   const { data: allReservations = [], isLoading } = useTodayReservations();
@@ -25,8 +27,21 @@ const TodayReservationsList: React.FC = () => {
     [allReservations]
   );
 
+  const {
+    filteredReservations,
+    petSearch,
+    setPetSearch,
+    ownerSearch,
+    setOwnerSearch,
+    status,
+    setStatus,
+    timeSlot,
+    setTimeSlot,
+    timeSlotOptions
+  } = useTodayReservationFilters(reservations);
+
   const { page, totalPages, paginatedItems, goToPage } = useLocalPagination(
-    reservations,
+    filteredReservations,
     5
   );
 
@@ -153,6 +168,40 @@ const TodayReservationsList: React.FC = () => {
           setEditOpen(false);
         }}
       />
+
+      <SharedSearch
+        searches={[
+          {
+            placeholder: "Search by Pet",
+            value: petSearch,
+            onChange: setPetSearch,
+          },
+          {
+            placeholder: "Search by Owner",
+            value: ownerSearch,
+            onChange: setOwnerSearch,
+          },
+        ]}
+        filters={[
+          {
+            value: status,
+            onChange: setStatus,
+            options: [
+              { label: "All Status", value: "all" },
+              { label: "Pending", value: "pending" },
+              { label: "Upcoming", value: "upcoming" },
+              { label: "Completed", value: "completed" },
+              { label: "Cancelled", value: "cancelled" },
+            ],
+          },
+          {
+            value: timeSlot,
+            onChange: setTimeSlot,
+            options: timeSlotOptions,
+          }
+        ]}
+      />
+
 
       <div className="mt-6 flex flex-col gap-4">
         {paginatedItems.map((res: any, i: number) => (
