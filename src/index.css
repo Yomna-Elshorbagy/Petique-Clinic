@@ -100,11 +100,11 @@
 
 .dark {
   --color-dark-primary: #e8d8c4;
-  --color-dark-background: #2b2521;
+  --color-dark-background: #3a342f;
   --color-dark-card: #3a342f;
-  --color-dark-text: #f7f4ef;
+  --color-dark-text: #c3b09a;
   --color-dark-textSecondary: #c6bcb3;
-  --color-dark-accent: #e9a66f;
+  --color-dark-accent: #b57551;
 
   --color-dark-extra-1: #f9be91;
   --color-dark-extra-2: #a98770;
@@ -140,6 +140,80 @@
   --color-dark-border-light: #4a3f38;
   --color-dark-border-medium: #5a4d44;
   --color-dark-border-dark: #6b5d52;
+
+  /* ========== EXTENDED WARM PALETTE ========== */
+  
+  /* More Brown Shades */
+  --color-dark-brown-lighter: #9d8470;
+  --color-dark-brown-light: #8a7260;
+  --color-dark-brown-medium: #6f5d4f;
+  --color-dark-brown-dark: #584a3e;
+  --color-dark-brown-darker: #3f352c;
+  --color-dark-brown-deepest: #2a2219;
+
+  /* Tan & Beige Family */
+  --color-dark-tan-lighter: #d9c6b0;
+  --color-dark-tan-light: #c7b299;
+  --color-dark-tan-medium: #b69e84;
+  --color-dark-tan-dark: #a08b73;
+  --color-dark-tan-muted: #8a7662;
+
+  /* Terracotta & Clay Tones */
+  --color-dark-terracotta-light: #d8976f;
+  --color-dark-terracotta: #c68660;
+  --color-dark-terracotta-medium: #b57551;
+  --color-dark-terracotta-dark: #9f6447;
+  --color-dark-terracotta-deep: #8a543c;
+
+  /* Warm Cream & Ivory */
+  --color-dark-cream-lightest: #f5ede3;
+  --color-dark-cream-lighter: #ebe0d4;
+  --color-dark-cream-light: #dfd2c3;
+  --color-dark-cream-medium: #d0c1af;
+  --color-dark-cream-warm: #c3b09a;
+
+  /* Caramel & Honey Tones */
+  --color-dark-caramel-light: #daa367;
+  --color-dark-caramel: #c89156;
+  --color-dark-caramel-medium: #b67f47;
+  --color-dark-caramel-dark: #a46e39;
+  --color-dark-caramel-deep: #8f5e2e;
+
+  /* Warm Sand & Desert */
+  --color-dark-sand-light: #d6c4a8;
+  --color-dark-sand: #c5b195;
+  --color-dark-sand-medium: #b39f84;
+  --color-dark-sand-dark: #9f8a70;
+  --color-dark-sand-muted: #8b7760;
+
+  /* Muted Warm Accents */
+  --color-dark-peach-muted: #e5b088;
+  --color-dark-apricot: #dda379;
+  --color-dark-burnt-orange: #cf8f5d;
+  --color-dark-rust: #b77a4d;
+  --color-dark-copper: #a56942;
+
+  /* Soft Warm Highlights */
+  --color-dark-highlight-warm: #f9d5b5;
+  --color-dark-highlight-gold: #f2c897;
+  --color-dark-highlight-amber: #ebb670;
+  --color-dark-highlight-bronze: #d9a564;
+
+  /* Warm Gray & Taupe */
+  --color-dark-taupe-lightest: #c4b5a8;
+  --color-dark-taupe-light: #b3a295;
+  --color-dark-taupe-medium: #9f8f81;
+  --color-dark-taupe-dark: #8a7a6d;
+  --color-dark-taupe-deeper: #756659;
+  --color-dark-taupe-deepest: #5f5449;
+
+  /* Warm Overlay & Shadow Colors */
+  --color-dark-overlay-light: rgba(122, 112, 103, 0.15);
+  --color-dark-overlay-medium: rgba(79, 63, 54, 0.25);
+  --color-dark-overlay-dark: rgba(42, 33, 25, 0.4);
+  --color-dark-shadow-soft: rgba(31, 27, 24, 0.2);
+  --color-dark-shadow-medium: rgba(31, 27, 24, 0.35);
+  --color-dark-shadow-strong: rgba(31, 27, 24, 0.5);
 
   /* global overides: Map Light Variables to Dark Values */
 
