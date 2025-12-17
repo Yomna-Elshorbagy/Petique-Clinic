@@ -3,6 +3,7 @@ import type { review, Users } from '../../Types/ProductDetailsType'
 import { MdDelete } from "react-icons/md";
 import ModelDelete from './ModalDelete';
 import { useTranslation } from 'react-i18next';
+import Swal from "sweetalert2";
 type Props = {
   reviews: review[];
   users: Users[] | undefined;
@@ -13,7 +14,6 @@ export default function ReviewCard({ reviews, users, onDelete }: Props) {
 
 
  const [expandedId, setExpandedId] = useState<{ [key: string]: boolean }>({});
-  const [deleteId, setDeleteId] = useState<string | null>(null);
   const Max_Length = 5;
   const sliderRef = useRef<HTMLDivElement>(null);
   const {t} =useTranslation();
@@ -35,7 +35,31 @@ export default function ReviewCard({ reviews, users, onDelete }: Props) {
     }, 3000);
 
     return () => clearInterval(interval);
-  },[])
+  },[]);
+
+  const handleDeleteReview = async(id: string) => {
+  
+          const result = await Swal.fire({
+            title: t("ProductDetails.deleteReviewTitle"),
+            text: t("ProductDetails.deleteReviewText"),
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonText: t("ProductDetails.deleteReviewConfirm"),
+            cancelButtonText: t("ProductDetails.deleteReviewCancel"),
+            reverseButtons: true,
+            confirmButtonColor: "red",
+          });
+    
+          if (!result.isConfirmed) return;
+    
+          Swal.fire({
+            title:t("ProductDetails.deleteReviewloading"),
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading(),
+          });
+    
+          await onDelete (id);
+        }
   
   return (
     <>
@@ -53,7 +77,7 @@ export default function ReviewCard({ reviews, users, onDelete }: Props) {
                 return(<div
     key={review._id}
       className='bg-white rounded-2xl max-w-[48%] md:w-72    p-5 ml-2 shadow-md mb-4 border border-gray-200 relative  flex-shrink-0'>
-      <button onClick={() => setDeleteId(review._id)} className='absolute top-5 right-3 text-red-500 hover:text-red-600  z-20'>
+      <button onClick={() => handleDeleteReview(review._id)} className='absolute top-5 right-3 text-red-500 hover:text-red-600  z-20'>
         <MdDelete className="text-xl" />
       </button>
       <div className='flex items-center gap-3 mb-3'>
@@ -91,13 +115,7 @@ export default function ReviewCard({ reviews, users, onDelete }: Props) {
           {expandedId[review._id]? t("ProductDetails.showLess") : t("ProductDetails.readMore")}
         </span>
       )}</p>
-     <ModelDelete isOpen={deleteId===review._id}
-     onClose={()=>setDeleteId(null)}
-     onConfirm={()=>{
-      onDelete(review._id)
-     setDeleteId(null);
-     }}
-    message={t("ProductDetails.deletemessage")}/>
+    
     </div>
    );
       })}

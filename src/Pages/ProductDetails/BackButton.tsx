@@ -6,11 +6,11 @@ export default function BackButton() {
     <Link 
   to="/products"
   className="absolute top-2 left-10
-  bg-white w-12 h-12 flex items-center justify-center 
-  rounded-full shadow-lg hover:bg-orange-100 
+  bg-[var(--color-bg-light)] w-12 h-12 flex items-center justify-center 
+  rounded-full shadow-lg 
   transition"
 >
-  <IoArrowBack className="text-orange-500 text-2xl" />
+  <IoArrowBack className="text-[var(--color-light-accent)] text-2xl" />
 </Link>
   )
 }

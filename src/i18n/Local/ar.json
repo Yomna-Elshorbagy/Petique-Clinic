@@ -930,7 +930,7 @@
     "category":"الفئة",
     "addTocart":"أضف الي السلة",
     "addReview":"إضافة تقييم",
-    "readMore":"اقرأ المزيد",
+    "readMore":"قراءة المزيد",
     "showLess":"عرض أقل",
     "submit":"إرسال",
     "cancel" : "إلغاء",
@@ -943,7 +943,21 @@
     "hideReviews":"إخفاء التقييمات",
     "placeholder":"اكتب تقيممك هنا ....",
     "deletemessage":" هل أنت تريد حذف هذا التقييم ؟",
-    "delete":"حذف"
+    "delete":"حذف",
+    "priceDropNotification": "تلقي إشعار عند انخفاض السعر",
+    "update":"جاري التحديث...",
+     "unsubscribe":"إلغاء الإشتراك",
+     "notifyMe":"أرسل لي إشعار عند إنخفاض السعر",
+     "deleteReviewTitle":"حذف نهائي؟",
+     "deleteReviewText":"هذا سيقوم بحذف التعليق نهائيا ولا يمكن التراجع عنه.",
+     "deleteReviewConfirm":"نعم، احذف نهائيا",
+     "deleteReviewCancel":"إلغاء",
+     "deleteReviewloading":"جاري الحذف...",
+     "successdelReviewTitle":"تم حذف التعليق بنجاح",
+    "faildelReviewTitle":"فشل حذف التعليق",
+    "successAddReviewTitle":"تم إضافة التعليق بنجاح",
+    "failAddReviewTitle":"فشل إضافة تعليق"
+
   },
   "about": {
     "badge": "من نحن",
