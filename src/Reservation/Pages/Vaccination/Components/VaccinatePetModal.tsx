@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { FaTimes, FaSpinner } from "react-icons/fa";
 import {
@@ -8,11 +8,27 @@ import {
 import type { IDose } from "../../../../Interfaces/IVacination";
 import type { IPet } from "../../../../Interfaces/Ipet";
 
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 interface IVaccinatePetModalProps {
   pets: IPet[];
   isOpen: boolean;
   onClose: () => void;
 }
+
+const vaccinateSchema = z.object({
+  petId: z.string().min(1, "Pet is required"),
+  vaccineId: z.string().min(1, "Vaccine is required"),
+  doseNumber: z.coerce.number().min(1, "Dose is required"),
+  date: z
+    .string()
+    .min(1, "Date is required")
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format"),
+});
+
+type VaccinateFormData = z.infer<typeof vaccinateSchema>;
 
 export default function VaccinatePetModal({
   pets,
@@ -22,74 +38,60 @@ export default function VaccinatePetModal({
   const { data: vaccines } = useVaccinations();
   const vaccinateMutation = useVaccinatePet();
 
-  const [selectedPet, setSelectedPet] = useState("");
-  const [selectedVaccineId, setSelectedVaccineId] = useState("");
-  const [selectedDoseNumber, setSelectedDoseNumber] = useState<number>(0);
   const [availableDoses, setAvailableDoses] = useState<IDose[]>([]);
-  const [date, setDate] = useState("");
 
-  // Update available doses when vaccine is selected
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(vaccinateSchema),
+    defaultValues: {
+      petId: "",
+      vaccineId: "",
+      doseNumber: 1,
+      date: "",
+    },
+  });
+
+  const selectedVaccineId = watch("vaccineId");
+
   useEffect(() => {
     if (selectedVaccineId && vaccines) {
-      const v = vaccines.find((x) => x._id === selectedVaccineId);
-      if (v?.doses?.length) {
-        setAvailableDoses(v.doses);
-        setSelectedDoseNumber(v.doses[0].doseNumber);
+      const vaccine = vaccines.find((v) => v._id === selectedVaccineId);
+      if (vaccine?.doses?.length) {
+        setAvailableDoses(vaccine.doses);
       } else {
         setAvailableDoses([]);
-        setSelectedDoseNumber(0);
       }
     } else {
       setAvailableDoses([]);
-      setSelectedDoseNumber(0);
     }
   }, [selectedVaccineId, vaccines]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!selectedPet || !selectedVaccineId || !date || !selectedDoseNumber) {
-      Swal.fire("Error", "Please fill all fields", "error");
-      return;
-    }
-
-    // Ensure date is in YYYY-MM-DD format (backend expects this format)
-    // HTML date input provides this format, but we validate it
-    const dateValue = date.trim();
-
-    // Validate date format (YYYY-MM-DD)
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateValue)) {
-      Swal.fire("Error", "Invalid date format", "error");
-      return;
-    }
-
-    // Backend will handle status computation:
-    // - Future date → "scheduled"
-    // - Today or past → "completed"
-    // - If nextDose is missed → "overdue"
+  const onSubmit = (data: VaccinateFormData) => {
     vaccinateMutation.mutate(
       {
-        petId: selectedPet,
-        vaccineId: selectedVaccineId,
-        doseNumber: selectedDoseNumber,
-        date: dateValue, // Send date in YYYY-MM-DD format
+        petId: data.petId,
+        vaccineId: data.vaccineId,
+        doseNumber: data.doseNumber,
+        date: data.date,
       },
       {
         onSuccess: () => {
           Swal.fire("Done", "Pet vaccinated successfully", "success");
+          reset();
           onClose();
-          setSelectedPet("");
-          setSelectedVaccineId("");
-          setDate("");
-          setSelectedDoseNumber(0);
         },
-        onError: (err: any) => {
-          const errorMessage =
-            err?.response?.data?.message ||
-            err?.message ||
-            "Failed to vaccinate";
-          console.error("Vaccination error:", err);
-          Swal.fire("Error", errorMessage, "error");
+        onError: (error: unknown) => {
+          const e = error as { response?: { data?: { message?: string } } };
+          Swal.fire(
+            "Error",
+            e.response?.data?.message || "failed to vaccinate",
+            "error"
+          );
         },
       }
     );
@@ -110,17 +112,15 @@ export default function VaccinatePetModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          {/* Pet Selection */}
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
+          {/* Pet */}
           <div>
             <label className="block text-sm font-medium text-[#86654F] mb-1">
               Select Pet
             </label>
             <select
+              {...register("petId")}
               className="w-full px-4 py-2 rounded-xl bg-white border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#86654F]"
-              value={selectedPet}
-              onChange={(e) => setSelectedPet(e.target.value)}
-              required
             >
               <option value="">-- Choose Pet --</option>
               {pets.map((p) => (
@@ -129,25 +129,21 @@ export default function VaccinatePetModal({
                 </option>
               ))}
             </select>
-            {selectedPet && (
-              <div className="mt-1">
-                <span className="text-[10px] font-mono text-[#A98770] bg-[#F7F3EF] px-1.5 py-0.5 rounded-md border border-[#E9DFD5]">
-                  ID: #{selectedPet.slice(-6).toUpperCase()}
-                </span>
-              </div>
+            {errors.petId && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.petId.message}
+              </p>
             )}
           </div>
 
-          {/* Vaccine Selection */}
+          {/* Vaccine */}
           <div>
             <label className="block text-sm font-medium text-[#86654F] mb-1">
               Select Vaccine
             </label>
             <select
+              {...register("vaccineId")}
               className="w-full px-4 py-2 rounded-xl bg-white border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#86654F]"
-              value={selectedVaccineId}
-              onChange={(e) => setSelectedVaccineId(e.target.value)}
-              required
             >
               <option value="">-- Choose Vaccine --</option>
               {vaccines?.map((v) => (
@@ -156,53 +152,50 @@ export default function VaccinatePetModal({
                 </option>
               ))}
             </select>
-            {selectedVaccineId && (
-              <div className="mt-1">
-                <span className="text-[10px] font-mono text-[#A98770] bg-[#F7F3EF] px-1.5 py-0.5 rounded-md border border-[#E9DFD5]">
-                  ID: #{selectedVaccineId.slice(-6).toUpperCase()}
-                </span>
-              </div>
+            {errors.vaccineId && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.vaccineId.message}
+              </p>
             )}
           </div>
 
-          {/* Dose Selection */}
+          {/* Dose */}
           <div>
             <label className="block text-sm font-medium text-[#86654F] mb-1">
               Select Dose
             </label>
             <select
-              className="w-full px-4 py-2 rounded-xl bg-white border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#86654F]"
-              value={selectedDoseNumber}
-              onChange={(e) => setSelectedDoseNumber(Number(e.target.value))}
+              {...register("doseNumber")}
               disabled={availableDoses.length === 0}
-              required
+              className="w-full px-4 py-2 rounded-xl bg-white border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#86654F]"
             >
-              <option value="0">-- Choose Dose --</option>
+              <option value={0}>-- Choose Dose --</option>
               {availableDoses.map((dose) => (
                 <option key={dose.doseNumber} value={dose.doseNumber}>
                   Dose {dose.doseNumber} (Age: {dose.ageInWeeks} weeks)
                 </option>
               ))}
             </select>
+            {errors.doseNumber && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.doseNumber.message}
+              </p>
+            )}
           </div>
 
-          {/* Date Selection */}
+          {/* Date */}
           <div>
             <label className="block text-sm font-medium text-[#86654F] mb-1">
               Vaccination Date
             </label>
             <input
               type="date"
+              {...register("date")}
               className="w-full px-4 py-2 rounded-xl bg-white border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#86654F]"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              // No min/max restrictions - allow both past and future dates
-              // Backend will compute status: past dates = "completed", future = "scheduled"
-              required
             />
-            <p className="text-xs text-gray-500 mt-1">
-              You can select past dates to record historical vaccinations
-            </p>
+            {errors.date && (
+              <p className="text-xs text-red-500 mt-1">{errors.date.message}</p>
+            )}
           </div>
 
           <button

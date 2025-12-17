@@ -2,6 +2,9 @@ import { useState } from "react";
 import { FaTimes, FaCamera, FaSpinner } from "react-icons/fa";
 import { addNewDoctor } from "../../../../Apis/DoctoresApis";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface AddDoctorModalProps {
   isOpen: boolean;
@@ -9,22 +12,57 @@ interface AddDoctorModalProps {
   onSuccess: () => void;
 }
 
+const doctorSchema = z.object({
+  userName: z
+    .string()
+    .refine((val) => val.trim() !== "", {
+      message: "Full Name is required",
+    })
+    .refine((val) => val.trim().length >= 3, {
+      message: "Full Name must be at least 3 characters",
+    }),
+  email: z.string().email("Invalid email"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  mobileNumber: z
+    .string()
+    .refine((val) => val.trim() !== "", {
+      message: "Mobile Number is required",
+    })
+    .refine((val) => /^01[0125][0-9]{8}$/.test(val), {
+      message: "Enter a valid Egyptian mobile number",
+    }),
+  gender: z.enum(["male", "female"]),
+  doctorSpecialist: z.enum([
+    "generalVeterinary",
+    "surgery",
+    "dermatology",
+    "dentistry",
+  ]),
+});
+
+type FormValues = z.infer<typeof doctorSchema>;
+
 export default function AddDoctorModal({
   isOpen,
   onClose,
   onSuccess,
 }: AddDoctorModalProps) {
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    userName: "",
-    email: "",
-    password: "",
-    mobileNumber: "",
-    gender: "female",
-    doctorSpecialist: "generalVeterinary",
-  });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormValues>({
+    resolver: zodResolver(doctorSchema),
+    defaultValues: {
+      gender: "female",
+      doctorSpecialist: "generalVeterinary",
+    },
+  });
 
   if (!isOpen) return null;
 
@@ -35,23 +73,24 @@ export default function AddDoctorModal({
       setPreviewUrl(URL.createObjectURL(file));
     }
   };
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
 
+  const onSubmit = async (data: FormValues) => {
+    setLoading(true);
+    setLoading(true);
     try {
       const payload = new FormData();
-      payload.append("userName", formData.userName);
-      payload.append("email", formData.email);
-      payload.append("password", formData.password);
-      payload.append("mobileNumber", formData.mobileNumber);
-      payload.append("gender", formData.gender);
+      payload.append("userName", data.userName);
+      payload.append("email", data.email);
+      payload.append("password", data.password);
+      payload.append("mobileNumber", data.mobileNumber);
+      payload.append("gender", data.gender);
+      payload.append("doctorSpecialist", data.doctorSpecialist);
 
       if (imageFile) payload.append("image", imageFile);
 
-      const response = await addNewDoctor(payload);
+      await addNewDoctor(payload);
 
-      const secureUrl = response?.data?.image?.secure_url;
+      // const secureUrl = response?.data?.image?.secure_url;
 
       Swal.fire({
         icon: "success",
@@ -68,24 +107,15 @@ export default function AddDoctorModal({
 
       onSuccess();
       onClose();
-
-      // ==> reset form
-      setFormData({
-        userName: "",
-        email: "",
-        password: "",
-        mobileNumber: "",
-        gender: "female",
-        doctorSpecialist: "generalVeterinary",
-      });
+      reset();
       setImageFile(null);
       setPreviewUrl(null);
-    } catch (error: any) {
-      console.error("Add doctor error:", error);
+    } catch (error: unknown) {
+      const e = error as { response?: { data?: { message?: string } } };
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: error?.response?.data?.message || "Failed to add doctor",
+        text: e.response?.data?.message || "Failed to add doctor",
       });
     } finally {
       setLoading(false);
@@ -106,8 +136,8 @@ export default function AddDoctorModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
-          {/*===> image upload */}
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-5">
+          {/*image */}
           <div className="flex justify-center">
             <div className="relative group cursor-pointer">
               <div className="w-28 h-28 rounded-full bg-[#FCF9F4] border-2 border-dashed border-[#A98770] flex items-center justify-center overflow-hidden">
@@ -141,14 +171,15 @@ export default function AddDoctorModal({
               </label>
               <input
                 type="text"
-                required
-                value={formData.userName}
-                onChange={(e) =>
-                  setFormData({ ...formData, userName: e.target.value })
-                }
-                className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
+                {...register("userName")}
+                className={`w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2]  focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]`}
                 placeholder="Ex. John Doe"
               />
+              {errors.userName && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.userName.message}
+                </p>
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -158,14 +189,15 @@ export default function AddDoctorModal({
                 </label>
                 <input
                   type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
+                  {...register("email")}
+                  className={`w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2]  focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]`}
                   placeholder="doctor@example.com"
                 />
+                {errors.email && (
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#86654F] mb-1">
@@ -173,14 +205,15 @@ export default function AddDoctorModal({
                 </label>
                 <input
                   type="tel"
-                  required
-                  value={formData.mobileNumber}
-                  onChange={(e) =>
-                    setFormData({ ...formData, mobileNumber: e.target.value })
-                  }
-                  className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
+                  {...register("mobileNumber")}
+                  className={`w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]`}
                   placeholder="+20 123 456 789"
                 />
+                {errors.mobileNumber && (
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.mobileNumber.message}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -190,14 +223,15 @@ export default function AddDoctorModal({
               </label>
               <input
                 type="password"
-                required
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-                className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]"
+                {...register("password")}
+                className={`w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2]  focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none transition-all text-[#6D5240]`}
                 placeholder="••••••••"
               />
+              {errors.password && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -206,18 +240,19 @@ export default function AddDoctorModal({
               </label>
 
               <select
-                value={formData.doctorSpecialist}
-                onChange={(e) =>
-                  setFormData({ ...formData, doctorSpecialist: e.target.value })
-                }
-                className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] 
-      focus:ring-2 focus:ring-[#A98770] outline-none text-[#6D5240]"
+                {...register("doctorSpecialist")}
+                className={`w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2]  focus:ring-2 focus:ring-[#A98770] outline-none text-[#6D5240]`}
               >
                 <option value="generalVeterinary">General Veterinary</option>
                 <option value="surgery">Surgery</option>
                 <option value="dermatology">Dermatology</option>
                 <option value="dentistry">Dentistry</option>
               </select>
+              {errors.doctorSpecialist && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.doctorSpecialist.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -228,12 +263,8 @@ export default function AddDoctorModal({
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
-                    name="gender"
                     value="male"
-                    checked={formData.gender === "male"}
-                    onChange={(e) =>
-                      setFormData({ ...formData, gender: e.target.value })
-                    }
+                    {...register("gender")}
                     className="accent-[#86654F]"
                   />
                   <span className="text-[#6D5240]">Male</span>
@@ -241,17 +272,18 @@ export default function AddDoctorModal({
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
-                    name="gender"
                     value="female"
-                    checked={formData.gender === "female"}
-                    onChange={(e) =>
-                      setFormData({ ...formData, gender: e.target.value })
-                    }
+                    {...register("gender")}
                     className="accent-[#86654F]"
                   />
                   <span className="text-[#6D5240]">Female</span>
                 </label>
               </div>
+              {errors.gender && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.gender.message}
+                </p>
+              )}
             </div>
           </div>
 

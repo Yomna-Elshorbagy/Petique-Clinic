@@ -1,4 +1,3 @@
-import React from "react";
 import { FaDog, FaCat, FaDove, FaFish, FaPaw } from "react-icons/fa";
 import { GiRabbit, GiTortoise } from "react-icons/gi";
 import type { IAnimalCategory } from "../../../../Interfaces/IAnimalCategory";

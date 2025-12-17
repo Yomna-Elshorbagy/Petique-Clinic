@@ -3,6 +3,9 @@ import { FaTimes, FaCamera, FaSpinner } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { useUpdateDoctor } from "../../../../Hooks/Doctor/useDoctor";
 import type { IUser } from "../../../../Interfaces/IUser";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface EditDoctorModalProps {
   isOpen: boolean;
@@ -10,6 +13,33 @@ interface EditDoctorModalProps {
   doctor: IUser;
   onSuccess: () => void;
 }
+
+const doctorSchema = z
+  .object({
+    userName: z.string().min(3, "Full Name must be at least 3 characters"),
+    mobileNumber: z
+      .string()
+      .refine((val) => val.trim() !== "", {
+        message: "Mobile Number is required",
+      })
+      .refine((val) => /^01[0125][0-9]{8}$/.test(val), {
+        message: "Enter a valid Egyptian mobile number",
+      }),
+    gender: z.enum(["male", "female"]),
+    newPassword: z
+      .string()
+      .min(
+        6,
+        "Password must contain letters and numbers and be at least 6 characters"
+      ),
+    confirmPassword: z.string(),
+  })
+  .refine((obj) => obj.newPassword === obj.confirmPassword, {
+    message: "Passwords must match",
+    path: ["confirmpassword"],
+  });
+
+type FormValues = z.infer<typeof doctorSchema>;
 
 export default function EditDoctorModal({
   isOpen,
@@ -19,48 +49,58 @@ export default function EditDoctorModal({
 }: EditDoctorModalProps) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
-  const [formData, setFormData] = useState({
-    userName: "",
-    mobileNumber: "",
-    gender: "female",
-    newPassword: "",
-    confirmPassword: "",
-  });
-
   const { mutate, isPending } = useUpdateDoctor();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(doctorSchema),
+    defaultValues: {
+      userName: doctor.userName,
+      mobileNumber: doctor.mobileNumber,
+      gender: "female",
+      newPassword: "",
+      confirmPassword: "",
+    },
+  });
 
   useEffect(() => {
     if (doctor) {
-      setFormData({
-        userName: doctor.userName || "",
-        mobileNumber: doctor.mobileNumber || "",
-        gender: doctor.gender?.toLowerCase() || "female",
-        newPassword: "",
-        confirmPassword: "",
-      });
-      setPreviewUrl(doctor.image?.secure_url || null);
+      const gender =
+        doctor.gender?.toLowerCase() === "male" ? "male" : "female";
+
+      setTimeout(() => {
+        reset({
+          userName: doctor.userName || "",
+          mobileNumber: doctor.mobileNumber || "",
+          gender,
+          newPassword: "",
+          confirmPassword: "",
+        });
+        setPreviewUrl(doctor.image?.secure_url || null);
+      }, 0);
     }
-  }, [doctor]);
+  }, [doctor, reset]);
 
   if (!isOpen) return null;
 
-  const handleImageChange = (e: any) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
       setImageFile(e.target.files[0]);
       setPreviewUrl(URL.createObjectURL(e.target.files[0]));
     }
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-
+  const onSubmit = (data: FormValues) => {
     const fd = new FormData();
-    fd.append("userName", formData.userName);
-    fd.append("mobileNumber", formData.mobileNumber);
-    fd.append("gender", formData.gender);
-    fd.append("newPassword", formData.newPassword);
-    fd.append("confirmPassword", formData.confirmPassword);
+    fd.append("userName", data.userName);
+    fd.append("mobileNumber", data.mobileNumber);
+    fd.append("gender", data.gender);
+    if (data.newPassword) fd.append("newPassword", data.newPassword);
+    if (data.newPassword) fd.append("confirmPassword", data.confirmPassword);
 
     if (imageFile) fd.append("image", imageFile);
 
@@ -78,11 +118,12 @@ export default function EditDoctorModal({
           onSuccess();
           onClose();
         },
-        onError: (error: any) => {
+        onError: (error: unknown) => {
+          const e = error as { response?: { data?: { message?: string } } };
           Swal.fire({
             icon: "error",
             title: "Error",
-            text: error?.response?.data?.message || "Update failed",
+            text: e.response?.data?.message || "Failed to add doctor",
           });
         },
       }
@@ -92,7 +133,6 @@ export default function EditDoctorModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden animate-fade-in">
-        
         {/* ===> Header */}
         <div className="bg-[#86654F] px-6 py-4 flex items-center justify-between">
           <h2 className="text-xl font-bold text-white">Edit Doctor Profile</h2>
@@ -104,8 +144,7 @@ export default function EditDoctorModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
-          
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-5">
           {/* ===> Image Upload */}
           <div className="flex justify-center">
             <div className="relative group cursor-pointer">
@@ -133,7 +172,6 @@ export default function EditDoctorModal({
 
           {/* ===> Fields */}
           <div className="space-y-4">
-
             {/* Full Name */}
             <div>
               <label className="block text-sm font-medium text-[#86654F] mb-1">
@@ -141,12 +179,14 @@ export default function EditDoctorModal({
               </label>
               <input
                 type="text"
-                value={formData.userName}
-                onChange={(e) =>
-                  setFormData({ ...formData, userName: e.target.value })
-                }
+                {...register("userName")}
                 className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#6D5240]"
               />
+              {errors.userName && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.userName.message}
+                </p>
+              )}
             </div>
 
             {/* Mobile Number */}
@@ -156,12 +196,14 @@ export default function EditDoctorModal({
               </label>
               <input
                 type="tel"
-                value={formData.mobileNumber}
-                onChange={(e) =>
-                  setFormData({ ...formData, mobileNumber: e.target.value })
-                }
+                {...register("mobileNumber")}
                 className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#6D5240]"
               />
+              {errors.mobileNumber && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.mobileNumber.message}
+                </p>
+              )}
             </div>
 
             {/* Gender */}
@@ -173,12 +215,8 @@ export default function EditDoctorModal({
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
-                    name="gender"
                     value="male"
-                    checked={formData.gender === "male"}
-                    onChange={(e) =>
-                      setFormData({ ...formData, gender: e.target.value })
-                    }
+                    {...register("gender")}
                     className="accent-[#86654F]"
                   />
                   <span className="text-[#6D5240]">Male</span>
@@ -187,17 +225,18 @@ export default function EditDoctorModal({
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
-                    name="gender"
                     value="female"
-                    checked={formData.gender === "female"}
-                    onChange={(e) =>
-                      setFormData({ ...formData, gender: e.target.value })
-                    }
+                    {...register("gender")}
                     className="accent-[#86654F]"
                   />
                   <span className="text-[#6D5240]">Female</span>
                 </label>
               </div>
+              {errors.gender && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.gender.message}
+                </p>
+              )}
             </div>
 
             {/* New Password */}
@@ -207,29 +246,35 @@ export default function EditDoctorModal({
               </label>
               <input
                 type="password"
-                value={formData.newPassword}
-                onChange={(e) =>
-                  setFormData({ ...formData, newPassword: e.target.value })
-                }
-                className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#6D5240]"
                 placeholder="••••••••"
+                {...register("newPassword")}
+                className={`w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#6D5240]`}
               />
+              {errors.newPassword && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.newPassword.message}
+                </p>
+              )}
             </div>
 
             {/* Confirm Password */}
             <div>
-              <label className="block text-sm font-medium text-[#86654F] mb-1">
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                value={formData.confirmPassword}
-                onChange={(e) =>
-                  setFormData({ ...formData, confirmPassword: e.target.value })
-                }
-                className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#6D5240]"
-                placeholder="••••••••"
-              />
+              <div>
+                <label className="block text-sm font-medium text-[#86654F] mb-1">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  {...register("confirmPassword")}
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#6D5240]"
+                />
+                {errors.confirmPassword && (
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
