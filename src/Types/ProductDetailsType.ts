@@ -4,11 +4,12 @@ export type productdetails = {
   description: string;
   price: number;
   finalPrice: number;
-  imageCover: { secure_url: string; };
-  subImages: { secure_url: string; }[];
+  imageCover: { secure_url: string };
+  subImages: { secure_url: string }[];
   stock: number;
   rate: number;
-  category: { name: string; };
+  category: { name: string };
+  isDeleted: boolean;
 };
 
 export type review = {
@@ -23,11 +24,11 @@ export type review = {
   product: {
     _id: string;
     title: string;
-  }
-}
+  };
+};
 export type Users = {
   _id: string;
   userName: string;
   email: string;
-  image: { secure_url: string; }
-}
+  image: { secure_url: string };
+};

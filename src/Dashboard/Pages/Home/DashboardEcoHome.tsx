@@ -1,5 +1,6 @@
 import React from "react";
 import { FaShoppingBag, FaUsers, FaDollarSign, FaChartLine } from "react-icons/fa";
+import OverView from "../OverView/OverView";
 
 const StatCard = ({ title, value, change, icon: Icon, color }: any) => (
   <div className="bg-white dark:bg-[var(--color-dark-card)] p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow">
@@ -53,7 +54,7 @@ const DashboardEcoHome = () => {
           color="bg-gradient-to-br from-purple-400 to-purple-600"
         />
       </div>
-
+      <OverView/>
      
     </div>
   );

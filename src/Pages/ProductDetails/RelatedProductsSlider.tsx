@@ -1,102 +1,185 @@
 import type { productdetails } from "../../Types/ProductDetailsType";
+import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import {
+  subscribeToPriceAlerts,
+  unsubscribeFromPriceAlerts,
+  getUserPriceAlertSubscriptions,
+} from "../../Apis/ProductApis";
 
-type Props = {
-  relatedProducts: productdetails[];
-};
+/* ================= SINGLE CARD ================= */
+function RelatedProductCard({
+  product,
+  subscribedProducts,
+  setSubscribedProducts,
+  loadingSubs,
+  setLoadingSubs,
+}: any) {
+  const [activeImage, setActiveImage] = useState(
+    product.imageCover.secure_url
+  );
 
-export default function RelatedProductsSlider({ relatedProducts }: Props) {
+  const isSubscribed = subscribedProducts.includes(product._id);
+  const isLoading = loadingSubs === product._id;
+
+  const handleToggleSubscription = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setLoadingSubs(product._id);
+
+    try {
+      if (isSubscribed) {
+        const res = await unsubscribeFromPriceAlerts(product._id);
+        if (!res.success) throw new Error(res.message);
+
+        setSubscribedProducts((prev: string[]) =>
+          prev.filter((id) => id !== product._id)
+        );
+        toast.success("Unsubscribed from price drop alerts");
+      } else {
+        const res = await subscribeToPriceAlerts(product._id);
+        if (!res.success) throw new Error(res.message);
+
+        setSubscribedProducts((prev: string[]) => [...prev, product._id]);
+        toast.success("Subscribed to price drop alerts 🔔");
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Subscription failed");
+    } finally {
+      setLoadingSubs(null);
+    }
+  };
+
   return (
-    <Slider
-      dots={true}
-      infinite={true}
-      speed={500}
-      slidesToShow={4}
-      slidesToScroll={1}
-      autoplay={true}
-      autoplaySpeed={3000}
-      responsive={[
-        {
-          breakpoint: 1024,
-          settings: { slidesToShow: 3 },
-        },
-        {
-          breakpoint: 768,
-          settings: { slidesToShow: 2 },
-        },
-        {
-          breakpoint: 640,
-          settings: { slidesToShow: 1 },
-        },
-      ]}
-    >
-      {relatedProducts.map((product) => (
-        <div key={product._id} className="p-4 ">
-            <div className="bg-[#ebe1d7]  rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group border border-gray-100">
-              <Link to={`/product-details/${product._id}`}>
-              <div className=" overflow-hidden bg-gray-50 ">
-                <img
-                  src={product.imageCover.secure_url}
-                  alt={product.title}
-                  className="w-full h-64   group-hover:scale-105 transition-transform duration-500"
-                />
+    <div className="px-5 py-4">
+      <div className="group h-full rounded-3xl overflow-hidden bg-[var(--color-bg-cream)] border border-[var(--color-border-light)] shadow-sm hover:shadow-lg transition-all duration-300">
+
+        <Link to={`/product-details/${product._id}`}>
+          <div className="relative overflow-hidden bg-[var(--color-bg-warm)] rounded-t-3xl">
+            <img
+              src={activeImage}
+              alt={product.title}
+              className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+
+            {product.subImages?.length > 0 && (
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {product.subImages.slice(0, 4).map((img: any, i: number) => (
+                  <button
+                    key={i}
+                    onMouseEnter={() => setActiveImage(img.secure_url)}
+                    className="w-2.5 h-2.5 rounded-full bg-[var(--color-border-medium)] hover:bg-[var(--color-accent-dark)] transition"
+                  />
+                ))}
               </div>
-              <div className="p-3">
-                <h3 className="text-center font-bold text-[var(--color-light-dark)] text-lg mb-2 ">
-                  {product.title.split(" ").slice(0, 3).join(" ")}
-                </h3>
-                <div className="flex items-center justify-center gap-1 mb-2">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <svg
-                      key={index}
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill={index<product.rate ?"#f59e0b" :"#d1d5db"}
-                      viewBox="0 0 24 24"
-                      stroke={index<product.rate ?"#f59e0b" :"#d1d5db"}
-                      className="w-5 h-5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 17.27L18.18 21 16.54 13.97 22 9.24 14.81 8.63 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21 12 17.27z"
-                      />
-                    </svg>
-                  ))}
-                </div>
-                <div className="flex items-center justify-center gap-2">
-                  {product.price !== product.finalPrice &&(
-                    <p className="text-lg line-through text-[var(--color-extra-4)]">
-                    ${product.price}
-                  </p>
-                  )}
-                 <p className="text-xl font-bold text-[var(--color-accent-dark)]">
-                    ${product.finalPrice}
-                  </p>
-                </div>
-                </div>
-                </Link>
-                <div className="flex justify-center  mb-2">
-               <button
-               className=" bg-[var(--color-light-accent)] text-[var(--color-light-dark)]
-               w-80 py-2 rounded-full   font-bold rounded-xl
-                 hover:bg-[var(--color-accent-dark)]
-            transition-all duration-300 
-               "
-               
-               
-               >
-                Add to Cart
-               </button>
-                </div>
-              </div>
-            </div>
-          
-        
-      ))}
-    </Slider>
+            )}
+          </div>
+        </Link>
+
+        <div className="px-4 pt-3 pb-2 text-center space-y-2">
+          <h3 className="text-base font-semibold text-[var(--color-text-primary)] line-clamp-2">
+            {product.title}
+          </h3>
+
+          <div className="flex justify-center gap-1">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <span
+                key={i}
+                className={`w-3.5 h-3.5 ${
+                  i < product.rate
+                    ? "text-[var(--color-accent-dark)]"
+                    : "text-[var(--color-border-medium)]"
+                }`}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+
+          <div className="flex justify-center gap-2">
+            {product.price !== product.finalPrice && (
+              <span className="line-through text-sm text-[var(--color-text-muted)]">
+                ${product.price}
+              </span>
+            )}
+            <span className="text-lg font-bold text-[var(--color-accent-dark)]">
+              ${product.finalPrice}
+            </span>
+          </div>
+
+          <p className="text-[11px] text-[var(--color-text-muted)]">
+            Get notified when price drops
+          </p>
+        </div>
+
+        <div className="px-4 pb-4">
+          <button
+            onClick={handleToggleSubscription}
+            disabled={isLoading}
+            className={`w-full py-2.5 rounded-xl font-semibold text-sm transition-all
+              ${
+                isSubscribed
+                  ? "bg-red-600 hover:bg-red-700 text-white"
+                  : "bg-[var(--color-light-accent)] text-[var(--color-light-dark)] hover:bg-[var(--color-accent-dark)] hover:text-white"
+              }
+              ${isLoading && "opacity-60 cursor-not-allowed"}
+            `}
+          >
+            {isLoading
+              ? "Updating..."
+              : isSubscribed
+              ? "Unsubscribe"
+              : "Notify me on price drop"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ================= MAIN SLIDER ================= */
+export default function RelatedProductsSlider({ relatedProducts }: any) {
+  const safeProducts = relatedProducts.filter((p: any) => !p.isDeleted);
+
+  const [subscribedProducts, setSubscribedProducts] = useState<string[]>([]);
+  const [loadingSubs, setLoadingSubs] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadSubscriptions = async () => {
+      try {
+        const res = await getUserPriceAlertSubscriptions();
+        if (res.success) {
+          setSubscribedProducts(res.subscribedProductIds);
+        }
+      } catch {
+        console.error("Failed to fetch subscriptions");
+      }
+    };
+
+    loadSubscriptions();
+  }, []);
+
+  return (
+    <section className="px-6 md:px-10 lg:px-16 py-8">
+      <Slider dots infinite speed={500} slidesToShow={4} slidesToScroll={1} autoplay>
+        {safeProducts.map((product: any) => (
+          <RelatedProductCard
+            key={product._id}
+            product={product}
+            subscribedProducts={subscribedProducts}
+            setSubscribedProducts={setSubscribedProducts}
+            loadingSubs={loadingSubs}
+            setLoadingSubs={setLoadingSubs}
+          />
+        ))}
+      </Slider>
+    </section>
   );
 }

@@ -10,10 +10,11 @@ import {
 import type { TableColumn } from "react-data-table-component";
 import type { ICategory } from "../../../Interfaces/categryInterfaces";
 import DataTableComponent from "../../../Shared/Table/TableComponent";
-import { FaEdit, FaPlus, FaTrash, FaUndo } from "react-icons/fa";
+import { FaEdit, FaPlus, FaPlusCircle, FaTrash, FaUndo } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import CategoryModal from "./Components/CategoryModal";
 import DeleteModel from "./Components/DeleteModel";
+import Swal from "sweetalert2";
 
 export default function CategoriesDashboared() {
   const [showmodal, Setshowmodal] = useState(false);
@@ -34,16 +35,24 @@ export default function CategoriesDashboared() {
   const addmutation = useMutation({
     mutationFn: addCategory,
     onSuccess: () => {
-      toast.success("Category added successfully", {
-        position: "top-center",
-        autoClose: 1000,
+     Swal.fire({
+        title: "Success",
+        text: "Category added successfully!",
+        icon: "success",
+        timer: 1400,
+        showConfirmButton: false,
       });
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       resetForm();
       Setshowmodal(false);
     },
-    onError: () => {
-      toast.error("Failed to add Category ", { position: "top-center" });
+    onError: (error:any) => {
+       console.error("add category failed", error);
+      Swal.fire({
+      title: "Error",
+      text: error?.response?.data?.message || "Failed to add Category",
+      icon: "error",
+    });
     },
   });
 
@@ -64,16 +73,24 @@ export default function CategoriesDashboared() {
     mutationFn: ({ id, formData }: { id: string; formData: FormData }) =>
       updateCategory(id, formData),
     onSuccess: () => {
-      toast.success("Category updated successfully", {
-        position: "top-center",
-        autoClose: 1000,
+      Swal.fire({
+        title: "Success",
+        text: "Category updated successfully!",
+        icon: "success",
+        timer: 1400,
+        showConfirmButton: false,
       });
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       Setshowmodal(false);
       setUpdateId(null);
     },
-    onError: () => {
-      toast.error("Failed to update Category ", { position: "top-center" });
+    onError: (error:any) => {
+        console.error("update category failed", error);
+     Swal.fire({
+      title: "Error",
+      text: error?.response?.data?.message || "Failed to update Category",
+      icon: "error",
+    });
     },
   });
   const handleUpdatecategory = () => {
@@ -107,40 +124,104 @@ export default function CategoriesDashboared() {
   // delete category
   const deletemutation = useMutation({
     mutationFn: deleteCategory,
-    onSuccess: () => {
-      toast.success("Category deleted  successfully", {
-        position: "top-center",
-        autoClose: 1000,
-      });
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-    },
-    onError: () => {
-      toast.error("Failed to delete Category ", { position: "top-center" });
-    },
+    
+    
   });
 
-  const handleDeleteCategory = (id: string) => {
-    setDeleteId(id);
+  const handleDeleteCategory = async(id: string) => {
+    try {
+          const result = await Swal.fire({
+            title: "Delete permanently?",
+            text: "This will permanently remove the category and cannot be undone.",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete permanently",
+            cancelButtonText: "Cancel",
+            reverseButtons: true,
+            confirmButtonColor: "red",
+          });
+    
+          if (!result.isConfirmed) return;
+    
+          Swal.fire({
+            title: "Deleting...",
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading(),
+          });
+    
+          await deletemutation.mutateAsync (id);
+    
+          Swal.close();
+          await Swal.fire({
+            title: "Deleted",
+            text: "Category was permanently deleted.",
+            icon: "success",
+            timer: 1400,
+            showConfirmButton: false,
+          });
+        queryClient.invalidateQueries({ queryKey: ["categories"] });
+        } catch (error: any) {
+          console.error("Hard delete failed", error);
+          Swal.close();
+          Swal.fire({
+            title: "Error",
+            text: error?.response?.data?.message || "Failed to delete category.",
+            icon: "error",
+          });
+        }
+   
   };
 
   // soft delete
   const softdeletemutation = useMutation({
     mutationFn: ({ id, token }: { id: string; token: string }) =>
       softDeleteCategories(id, token),
-    onSuccess: () => {
-      toast.success("Category archived successfully", {
-        position: "top-center",
-        autoClose: 1000,
-      });
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-    },
-    onError() {
-      toast.error("Failed to archive Category ", { position: "top-center" });
-    },
+   
   });
-  const handleSoftdeletecategory = (id: string) => {
-    const token = localStorage.getItem("accessToken") || "";
-    softdeletemutation.mutate({ id, token });
+  const handleSoftdeletecategory = async(id: string) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) return toast.error("Unauthorized");
+      const result = await Swal.fire({
+        title: "Archive category?",
+        text: "This will soft-delete (archive) the category.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, archive",
+        cancelButtonText: "Cancel",
+        reverseButtons: true,
+        confirmButtonColor: "#F9BE91",
+      });
+
+      if (!result.isConfirmed) return;
+
+      Swal.fire({
+        title: "Archiving...",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+      });
+
+      await softdeletemutation.mutateAsync({ id, token });
+
+      Swal.close();
+      await Swal.fire({
+        title: "Archived",
+        text: "Category was archived successfully.",
+        icon: "success",
+        timer: 1400,
+        showConfirmButton: false,
+      });
+       queryClient.invalidateQueries({ queryKey: ["categories"] });
+    } catch (error: any) {
+      console.error("Soft delete failed", error);
+      Swal.close();
+      Swal.fire({
+        title: "Error",
+        text: error?.response?.data?.message || "Failed to archive category.",
+        icon: "error",
+      });
+    }
+   
   };
 
   const categorycolumns: TableColumn<ICategory>[] = [
@@ -210,10 +291,10 @@ export default function CategoriesDashboared() {
       cell: (row) => (
         <div className="flex items-center gap-3">
           <button
-            className="p-2 rounded-lg bg-blue-50 text-blue-600 
-               hover:bg-blue-100 transition-all duration-200
+            className="p-2 rounded-lg bg-green-50 text-green-600 
+               hover:bg-green-100 transition-all duration-200
                hover:scale-[1.07] active:scale-[0.96]
-               shadow-sm hover:shadow-md border border-blue-100"
+               shadow-sm hover:shadow-md border border-green-100"
             onClick={() => openUpdateModal(row)}
           >
             <FaEdit size={15} />
@@ -262,7 +343,7 @@ export default function CategoriesDashboared() {
             Setshowmodal(true);
           }}
         >
-          <FaPlus size={16} /> Add Category
+          <FaPlusCircle /> Add Category
         </button>
       </div>
       <DataTableComponent<ICategory>
@@ -291,18 +372,8 @@ export default function CategoriesDashboared() {
         />
       )}
 
-      {deleteId && (
-        <DeleteModel
-          title="Delete Category"
-          message="Are you sure you want to delete this category?"
-          onClose={() => setDeleteId(null)}
-          onConfirm={() => {
-            deletemutation.mutate(deleteId);
-            setDeleteId(null);
-          }}
-        />
-      )}
-      <ToastContainer />
+      
+      
     </>
   );
 }
