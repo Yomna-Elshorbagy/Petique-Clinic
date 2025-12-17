@@ -25,7 +25,7 @@ export default function Register() {
     mode: "all",
   });
 
-  const { mutate , isPending, isError, error} = useMutation({
+  const { mutate , isPending } = useMutation({
     mutationFn: userSignup,
     onSuccess: () => {
       Swal.fire({
@@ -145,12 +145,6 @@ export default function Register() {
               </p>
             </form>
           </div>
-
-          {isError && (
-            <p className="text-red-500 text-sm mt-2">
-              {(error as any)?.response?.data?.message || t("auth.register.errorDefault")}
-            </p>
-          )}
 
           {/* RIGHT SIDE */}
           <div className="p-10 flex flex-col justify-center items-start">
