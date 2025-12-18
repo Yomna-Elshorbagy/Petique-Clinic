@@ -199,11 +199,11 @@ export default function PastReservations() {
                           <div className="flex items-center gap-4 text-sm text-[var(--color-text-muted)]">
                             <span className="flex items-center gap-1">
                               <FaStethoscope className="text-xs" />
-                              {reservation.service?.name || "N/A"}
+                              {reservation.service?.title || "N/A"}
                             </span>
                             <span className="flex items-center gap-1">
                               <FaClock className="text-xs" />
-                              {formatTime(reservation.time)}
+                              {formatTime(reservation.timeSlot)}
                             </span>
                           </div>
                         </div>
@@ -246,11 +246,11 @@ export default function PastReservations() {
                                 Service
                               </p>
                               <p className="text-sm font-semibold text-[var(--color-text-primary)]">
-                                {reservation.service?.name || "N/A"}
+                                {reservation.service?.title || "N/A"}
                               </p>
-                              {reservation.service?.price && (
+                              {reservation.service?.priceRange && (
                                 <p className="text-xs text-[var(--color-light-accent)] mt-0.5">
-                                  {reservation.service.price} EGP
+                                  {reservation.service.priceRange} EGP
                                 </p>
                               )}
                             </div>
@@ -289,7 +289,7 @@ export default function PastReservations() {
                                 Time
                               </p>
                               <p className="text-sm font-semibold text-[var(--color-text-primary)]">
-                                {formatTime(reservation.time)}
+                                {formatTime(reservation.timeSlot)}
                               </p>
                             </div>
                           </div>

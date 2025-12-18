@@ -10,6 +10,9 @@ import {
   useVaccinationStatus,
 } from "../../../Hooks/Reservation/useanalytics";
 import TopVaccinatedCategoriesChart from "./Components/TopVaccinatedCategoriesChart";
+import DoctorWorkloadChart from "./Components/DoctorWorkloadChart";
+import MonthlyReservationsTrendChart from "./Components/MonthlyReservationsTrend";
+import RevenueChart from "../../../Dashboard/Pages/OverView/Components/RevenueChart";
 
 // ===== Base options for all pies =====
 export const pieBaseOptions = {
@@ -109,7 +112,7 @@ const MedicalHistory: React.FC = () => {
           </h3>
           <ReactECharts option={petsCategoryOption} style={{ height: 320 }} />
         </div>
-        <TopVaccinatedCategoriesChart />
+        <MonthlyReservationsTrendChart />
 
         <div className="rounded-2xl p-6 bg-white shadow-sm">
           <h3 className="text-lg font-semibold mb-4 text-[#3E2C1C]">
@@ -120,6 +123,18 @@ const MedicalHistory: React.FC = () => {
             style={{ height: 320 }}
           />
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+        <div className="rounded-2xl p-6 bg-white shadow-sm">
+          <DoctorWorkloadChart />
+        </div>
+        <div className="rounded-2xl p-6 bg-white shadow-sm">
+          <TopVaccinatedCategoriesChart />
+        </div>
+      </div>
+      <div className="pt-8">
+        <RevenueChart />
       </div>
     </div>
   );

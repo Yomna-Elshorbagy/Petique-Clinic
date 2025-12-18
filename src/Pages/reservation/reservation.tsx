@@ -627,7 +627,7 @@ export default function Reservation() {
       </div>
 
       <div className="mt-32 bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-16 px-6 shadow-inner font-serif transition-colors duration-300">
-        <h2 className="text-5xl font-bold text-center mb-12 text-gray-900 dark:text-[var(--color-dark-text)] leading-snug">
+        <h2 className="text-5xl font-bold text-center mb-12 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] leading-snug">
           {t("hero.happyCustomersLine1")}
           <br />
           {t("hero.happyCustomersLine2")}

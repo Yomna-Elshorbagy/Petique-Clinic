@@ -237,7 +237,7 @@ export default function AllReservations() {
                       Time
                     </p>
                     <p className="text-sm font-semibold text-[var(--color-text-primary)]">
-                      {formatTime(reservation.time)}
+                      {formatTime(reservation.timeSlot)}
                     </p>
                   </div>
                 </div>
@@ -254,11 +254,11 @@ export default function AllReservations() {
                       Service
                     </p>
                     <p className="text-sm font-semibold text-[var(--color-text-primary)]">
-                      {reservation.service?.name || "N/A"}
+                      {reservation.service?.title || "N/A"}
                     </p>
-                    {reservation.service?.price && (
+                    {reservation.service?.priceRange && (
                       <p className="text-xs text-[var(--color-light-accent)] mt-0.5">
-                        {reservation.service.price} EGP
+                        {reservation.service.priceRange} EGP
                       </p>
                     )}
                   </div>
