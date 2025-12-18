@@ -1,7 +1,7 @@
 export interface Reservation {
   _id: string;
   date: string;
-  time: string;
+  timeSlot: string;
   status: string;
 
   petOwner: {
@@ -20,8 +20,8 @@ export interface Reservation {
 
   service: {
     _id: string;
-    name: string;
-    price: number;
+    title: string;
+    priceRange: number;
   };
 
   doctor: {

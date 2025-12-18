@@ -187,7 +187,7 @@ export default function UpcomingReservations() {
                         <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--color-bg-cream)] dark:bg-[var(--color-dark-bg-hover)]">
                           <FaClock className="text-[var(--color-light-accent)]" />
                           <span className="text-lg font-semibold text-[var(--color-text-primary)]">
-                            {formatTime(reservation.time)}
+                            {formatTime(reservation.timeSlot)}
                           </span>
                         </div>
                       </div>
@@ -221,11 +221,11 @@ export default function UpcomingReservations() {
                               Service
                             </p>
                             <p className="text-lg font-bold text-[var(--color-text-primary)]">
-                              {reservation.service?.name || "N/A"}
+                              {reservation.service?.title || "N/A"}
                             </p>
-                            {reservation.service?.price && (
+                            {reservation.service?.priceRange && (
                               <p className="text-sm text-[var(--color-light-accent)] font-semibold">
-                                {reservation.service.price} EGP
+                                {reservation.service.priceRange} EGP
                               </p>
                             )}
                           </div>
