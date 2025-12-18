@@ -14,11 +14,11 @@ export default function CartHeader({
 }: CartHeaderProps) {
   const { t } = useTranslation();
   return (
-    <header className="sticky top-0 z-50 bg-[#faf9f6]/80 backdrop-blur-md border-b border-[#e8d8c4]/30">
+    <header className="sticky top-0 z-50 bg-[var(--color-light-background)]/80 dark:bg-[var(--color-dark-background)]/80 backdrop-blur-md border-b border-[#e8d8c4]/30 dark:border-[var(--color-dark-accent)]/20 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link
           to="/"
-          className="flex items-center gap-2 text-[#7a7067] hover:text-[#4f3f36] transition-colors group"
+          className="flex items-center gap-2 text-[#7a7067] dark:text-gray-400 hover:text-[#4f3f36] dark:hover:text-[var(--color-dark-accent)] transition-colors group"
         >
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
           <span className="font-medium">{t("cart.continueShopping")}</span>
@@ -29,9 +29,9 @@ export default function CartHeader({
             animate={{ rotate: [0, 10, -10, 0] }}
             transition={{ repeat: Infinity, repeatDelay: 5, duration: 1 }}
           >
-            <ShoppingBag className="w-6 h-6 text-[#e9a66f]" />
+            <ShoppingBag className="w-6 h-6 text-[#e9a66f] dark:text-[var(--color-dark-accent)]" />
           </motion.div>
-          <h1 className="text-2xl font-serif font-bold text-[#4f3f36]">
+          <h1 className="text-2xl font-serif font-bold text-[#4f3f36] dark:text-[var(--color-dark-text)]">
             {t("cart.myCart")}
           </h1>
           <motion.span
@@ -46,7 +46,7 @@ export default function CartHeader({
 
         <button
           onClick={onClearCart}
-          className="text-xs font-medium bg-[#e8d8c4]/30 px-3 py-1.5 rounded-full text-[#7a7067] hover:bg-[#e8d8c4] transition-colors"
+          className="text-xs font-medium bg-[#e8d8c4]/30 dark:bg-[var(--color-dark-accent)]/20 px-3 py-1.5 rounded-full text-[#7a7067] dark:text-gray-400 hover:bg-[#e8d8c4] dark:hover:bg-[var(--color-dark-accent)]/30 transition-colors"
         >
           {t("cart.showEmpty")}
         </button>
