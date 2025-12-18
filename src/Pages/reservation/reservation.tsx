@@ -478,6 +478,31 @@ export default function Reservation() {
                 : "bg-gray-100 dark:bg-[var(--color-dark-background)] border-gray-300 dark:border-[var(--color-dark-accent)]/30 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
             }`}
                             onClick={() => {
+                              const today = new Date();
+                              const selectedDate = new Date(date);
+
+                              if (
+                                selectedDate.getFullYear() ===
+                                  today.getFullYear() &&
+                                selectedDate.getMonth() === today.getMonth() &&
+                                selectedDate.getDate() === today.getDate()
+                              ) {
+                                showAlert(
+                                  "Invalid date",
+                                  "You cannot book for today. Please choose a future date."
+                                );
+                                return;
+                              }
+
+                              const selectedDateTime = new Date(`${date} ${t}`);
+                              if (selectedDateTime <= today) {
+                                showAlert(
+                                  "Invalid time",
+                                  "This time is in the past."
+                                );
+                                return;
+                              }
+
                               if (isAvailable) {
                                 setTimeSlot(t);
                                 if (step === 4) setStep(5);
