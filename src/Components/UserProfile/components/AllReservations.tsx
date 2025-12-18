@@ -12,9 +12,13 @@ import {
 import LoaderPage from "../../../Shared/LoaderPage/LoaderPage";
 import { useMyReservations } from "../../../Hooks/Reservation/useReservation";
 import type { Reservation } from "../../../Interfaces/IReservations";
+import SharedPagination from "./SharedPagination";
 
 const getStatusConfig = (status: string) => {
-  const configs: Record<string, { icon: React.ReactNode; color: string; bg: string }> = {
+  const configs: Record<
+    string,
+    { icon: React.ReactNode; color: string; bg: string }
+  > = {
     confirmed: {
       icon: <FaCheckCircle />,
       color: "text-green-600 dark:text-green-400",
@@ -61,6 +65,8 @@ const formatTime = (timeString: string) => {
 
 export default function AllReservations() {
   const { data: reservations = [], isLoading, isError } = useMyReservations();
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const itemsPerPage = 5;
 
   if (isLoading)
     return (
@@ -96,6 +102,19 @@ export default function AllReservations() {
       </div>
     );
 
+  // Pagination logic
+  const totalPages = Math.ceil(reservations.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedReservations = reservations.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="space-y-6">
       {/* Stats Summary */}
@@ -125,8 +144,7 @@ export default function AllReservations() {
               <p className="text-3xl font-bold text-green-600 dark:text-green-400">
                 {
                   reservations.filter(
-                    (r: Reservation) =>
-                      r.status?.toLowerCase() === "confirmed"
+                    (r: Reservation) => r.status?.toLowerCase() === "confirmed"
                   ).length
                 }
               </p>
@@ -160,7 +178,7 @@ export default function AllReservations() {
 
       {/* Reservations Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {reservations.map((reservation: Reservation) => {
+        {paginatedReservations.map((reservation: Reservation) => {
           const statusConfig = getStatusConfig(reservation.status);
           return (
             <div
@@ -264,7 +282,13 @@ export default function AllReservations() {
           );
         })}
       </div>
+
+      {/* Pagination */}
+      <SharedPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }
-
