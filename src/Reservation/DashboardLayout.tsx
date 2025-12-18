@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Componenst/NavBar/Navbar";
 import Sidebar from "./Componenst/SideBar/Sidebar";
+import SEO from "../Components/SEO/SEO";
 
 const DashboardLayout: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -14,6 +15,10 @@ const DashboardLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full bg-[#ECE7E2] font-['Inter']">
+      <SEO
+        title="Reservation Overview | Dashboard Petique Clinic"
+        description="Overview of all reservations, schedules, and booking activity at Petique Clinic."
+      />
       <div
         className="fixed top-0 left-0 h-full z-30 transition-all duration-300"
         style={{ width: sidebarWidth }}

@@ -22,6 +22,7 @@ import { toast, ToastContainer } from "react-toastify";
 import CategoryModal from "./Components/CategoryModal";
 import DeleteModel from "./Components/DeleteModel";
 import Swal from "sweetalert2";
+import SEO from "../../../Components/SEO/SEO";
 
 export default function CategoriesDashboared() {
   const [showmodal, Setshowmodal] = useState(false);
@@ -360,6 +361,11 @@ export default function CategoriesDashboared() {
 
   return (
     <>
+      <SEO
+        title="Categories | Dashboard Petique Clinic "
+        description="Manage service and product categories for veterinary care and pet services in Petique Clinic."
+      />
+
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold text-[#86654f]">Categories</h2>
         <button

@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import SEO from "../../Components/SEO/SEO";
 
 type ReservationPayload = {
   petOwner: string;
@@ -124,18 +125,6 @@ export default function Reservation() {
   });
 
   // Create Reservation
-
-  console.log("User ID:", userId);
-  console.log({
-    petOwner: userId,
-    pet,
-    service,
-    doctor,
-    date,
-    timeSlot,
-    notes,
-  });
-
   const [availableTimes, setAvailableTimes] = useState<string[]>(timeOptions);
 
   const { data: allReservations } = useQuery<IAppointment[]>({
@@ -250,6 +239,11 @@ export default function Reservation() {
 
   return (
     <>
+      <SEO
+        title="Reservations | Petique Clinic"
+        description="Reserve veterinary services and pet care treatments easily with Petique Clinic."
+      />
+
       <div className="max-w-7xl mx-auto p-6 space-y-6 mt-10 font-serif">
         <div className="flex items-center gap-2 mb-6 justify-center">
           <h1 className="text-3xl font-bold flex items-center gap-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">

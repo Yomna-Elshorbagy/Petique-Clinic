@@ -10,6 +10,7 @@ import { useLocalPagination } from "../../Componenst/Pagination/UsePagination";
 import Pagination from "../../Componenst/Pagination/Pagination";
 import EditPetModal from "./Components/EditPetModal";
 import PetDetailsModal from "./Components/PetDetailsModal";
+import SEO from "../../../Components/SEO/SEO";
 
 export default function Animals() {
   const [pets, setPets] = useState<IPet[]>([]);
@@ -193,6 +194,11 @@ export default function Animals() {
 
   return (
     <div className="min-h-screen bg-[#ECE7E2] p-6 font-['Inter']">
+      <SEO
+        title="Animals | Dashboard Petique Clinic"
+        description="Manage animal for reservations and veterinary services at Petique Clinic."
+      />
+
       <AddPetModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

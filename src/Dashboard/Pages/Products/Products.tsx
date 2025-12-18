@@ -22,6 +22,7 @@ import Swal from "sweetalert2";
 import ProductModal from "./Components/viewProductModle";
 import EditProductModal from "./Components/EditProductModel";
 import AddProductModal from "./Components/AddProductModel";
+import SEO from "../../../Components/SEO/SEO";
 
 export default function ProductsDashboared() {
   const [openModal, setOpenModal] = useState(false);
@@ -385,6 +386,11 @@ export default function ProductsDashboared() {
 
   return (
     <div className="w-full max-w-full px-4 md:px-6">
+      <SEO
+        title="Products | Dashboard Petique Clinic"
+        description="Manage pet products, medicines, and supplies available at Petique Clinic."
+      />
+
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
           Products Management

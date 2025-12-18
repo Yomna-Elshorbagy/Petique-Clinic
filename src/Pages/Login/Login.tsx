@@ -1,7 +1,11 @@
 import { FcGoogle } from "react-icons/fc";
 import { MdEmail, MdLock } from "react-icons/md";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { loginDefaultValues, loginSchema, type LoginSchemaType } from "../../Utils/Schema/loginSchema";
+import {
+  loginDefaultValues,
+  loginSchema,
+  type LoginSchemaType,
+} from "../../Utils/Schema/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { userLogin } from "../../Apis/AuthApis";
@@ -15,6 +19,7 @@ import AuthBtn from "../../Components/Auth/AuthBtn";
 import AuthCardLayout from "../../Shared/AuthCardLayout/AuthCardLayout";
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
+import SEO from "../../Components/SEO/SEO";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -22,7 +27,11 @@ export default function Login() {
   const { t } = useTranslation();
   const isRTL = i18n.language === "ar";
 
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginSchemaType>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginSchemaType>({
     defaultValues: loginDefaultValues,
     resolver: zodResolver(loginSchema),
     mode: "all",
@@ -64,78 +73,115 @@ export default function Login() {
 
   return (
     <AuthCardLayout
-    motionKey="login"
-    leftContent = {
-      <>
-      <p className="text-4xl font-bold mb-4 font-['Playfair_Display'] text-(--color-light-accent) animate-pulse">{t("auth.login.welcomeTitle")}</p>
-      <p className={`text-[#443935] font-bold font-['Playfair_Display'] p-2 ${isRTL ? "text-2xl" : ""}`}>{t("auth.login.welcomeSubtitle")}</p>
-      </>
-    }
-    rightContent={
-      <>
-      <h2 className="text-(--color-light-accent) font-['Playfair_Display'] text-3xl font-semibold mb-6">{t("auth.login.title")}</h2>
-            <div className="space-y-4">
-              <form onSubmit={handleSubmit(onSubmit)}>
+      motionKey="login"
+      leftContent={
+        <>
+          <p className="text-4xl font-bold mb-4 font-['Playfair_Display'] text-(--color-light-accent) animate-pulse">
+            {t("auth.login.welcomeTitle")}
+          </p>
+          <p
+            className={`text-[#443935] font-bold font-['Playfair_Display'] p-2 ${
+              isRTL ? "text-2xl" : ""
+            }`}
+          >
+            {t("auth.login.welcomeSubtitle")}
+          </p>
+        </>
+      }
+      rightContent={
+        <>
+          <SEO
+            title="Petique Clinic | Login"
+            description="Log in to your Petique Clinic account to manage appointments, orders, and pet health records."
+          />
 
-                <div className="flex flex-col gap-3 mb-6">
-                  <div className="relative">
-                    <MdEmail className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} size={20} />
-                    <Input placeholder={t("auth.common.email")}
-                    type="email" 
+          <h2 className="text-(--color-light-accent) font-['Playfair_Display'] text-3xl font-semibold mb-6">
+            {t("auth.login.title")}
+          </h2>
+          <div className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="flex flex-col gap-3 mb-6">
+                <div className="relative">
+                  <MdEmail
+                    className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${
+                      isRTL ? "right-3" : "left-3"
+                    }`}
+                    size={20}
+                  />
+                  <Input
+                    placeholder={t("auth.common.email")}
+                    type="email"
                     register={register("email")}
-                    />
-                  </div>
-                  {errors.email && (
-                    <p className="text-red-400 text-sm">{errors.email.message}</p>
-                  )}
-
-                  <div className="relative">
-                    <MdLock className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} size={20} />
-                    <Input placeholder={t("auth.common.password")}
-                    type="password" 
-                    register={register("password")} 
-                    />
-                  </div>
-                  {errors.password && (
-                    <p className="text-red-400 text-sm">{errors.password.message}</p>
-                  )}
-
+                  />
                 </div>
+                {errors.email && (
+                  <p className="text-red-400 text-sm">{errors.email.message}</p>
+                )}
 
-                <AuthBtn name={isPending ? t("auth.login.loading") : t("auth.login.submit")} 
-                  title= {t("auth.login.createAccount")} 
-                  navTo="/register" 
-                  navName={t("auth.login.signupHere")}
-                  isLoading={isPending} />
-              </form>
+                <div className="relative">
+                  <MdLock
+                    className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${
+                      isRTL ? "right-3" : "left-3"
+                    }`}
+                    size={20}
+                  />
+                  <Input
+                    placeholder={t("auth.common.password")}
+                    type="password"
+                    register={register("password")}
+                  />
+                </div>
+                {errors.password && (
+                  <p className="text-red-400 text-sm">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
 
-              <p className="text-sm text-gray-400 text-center">
-                {t("auth.login.forgetPassword")}{" "}
-                <Link to="/forgetPass" className="text-[#A88F7B] cursor-pointer hover:underline">
-                  {t("auth.login.forget")}
-                </Link>
+              <AuthBtn
+                name={
+                  isPending ? t("auth.login.loading") : t("auth.login.submit")
+                }
+                title={t("auth.login.createAccount")}
+                navTo="/register"
+                navName={t("auth.login.signupHere")}
+                isLoading={isPending}
+              />
+            </form>
+
+            <p className="text-sm text-gray-400 text-center">
+              {t("auth.login.forgetPassword")}{" "}
+              <Link
+                to="/forgetPass"
+                className="text-[#A88F7B] cursor-pointer hover:underline"
+              >
+                {t("auth.login.forget")}
+              </Link>
+            </p>
+
+            {isError && (
+              <p className="text-red-400 text-sm mt-2">
+                {(error as any)?.response?.data?.message ||
+                  t("auth.login.errorDefault")}
               </p>
+            )}
 
-              {isError && (
-                <p className="text-red-400 text-sm mt-2">
-                  {(error as any)?.response?.data?.message || t("auth.login.errorDefault")}
-                </p>
-              )}
-
-              {/* Divider */}
-              <div className="flex items-center gap-3">
-                <div className="flex-1 h-px bg-white/20" />
-                <span className="text-gray-400 text-sm">{t("auth.common.or")}</span>
-                <div className="flex-1 h-px bg-white/20" />
-              </div>
-              <div className="flex justify-center gap-4">
-                <button className="w-10 h-10 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 transition">
-                  <FcGoogle size={20} />
-                </button>
-              </div>
+            {/* Divider */}
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-white/20" />
+              <span className="text-gray-400 text-sm">
+                {t("auth.common.or")}
+              </span>
+              <div className="flex-1 h-px bg-white/20" />
             </div>
-      </>
-    }
+            <div className="flex justify-center gap-4">
+              <button className="w-10 h-10 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 transition">
+                <FcGoogle size={20} />
+              </button>
+            </div>
+          </div>
+        </>
+      }
     />
   );
 }

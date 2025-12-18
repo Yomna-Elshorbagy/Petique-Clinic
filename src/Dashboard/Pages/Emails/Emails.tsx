@@ -16,6 +16,7 @@ import EditModal from "./Components/Statusmodel";
 import PreviewModal from "./Components/previewModel";
 import { FaEye, FaReply, FaEdit, FaUndo, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import SEO from "../../../Components/SEO/SEO";
 
 const token = localStorage.getItem("accessToken");
 
@@ -228,6 +229,11 @@ const ContactsDashboard = () => {
 
   return (
     <div className="w-full max-w-full overflow-x-hidden px-4 md:px-6">
+      <SEO
+        title="Emails | Dashboard Petique Clinic"
+        description="Manage Replaying emails, and Support Replies for Petique Clinic."
+      />
+
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
           Contacts Dashboard

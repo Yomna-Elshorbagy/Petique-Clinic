@@ -18,6 +18,7 @@ import {
   FaTrash,
 } from "react-icons/fa";
 import OrderDetailsModal from "./OrderDetailsModal";
+import SEO from "../../../Components/SEO/SEO";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
@@ -448,6 +449,11 @@ export default function Orders() {
 
   return (
     <div className="w-full max-w-full overflow-x-hidden px-4 md:px-6">
+      <SEO
+        title="Orders | Dashboard Petique Clinic"
+        description="View and manage customer orders, payments, and service requests."
+      />
+
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
           Orders Management

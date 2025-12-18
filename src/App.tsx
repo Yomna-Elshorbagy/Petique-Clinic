@@ -1,48 +1,86 @@
+import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Layout from "./Shared/Layout/layout";
-import Home from "./Pages/Home/Home";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Provider } from "react-redux";
 import { store } from "./Store/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AuthLayout from "./Shared/AuthLayout/AuthLayout";
-import Login from "./Pages/Login/Login";
-import Register from "./Pages/Register/Register";
-import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
-import OtpConfirmation from "./Pages/Otp/OtpConfirmation";
-import ContactUs from "./Pages/ContactUs/ContactUs";
-import Services from "./Pages/Services/services";
-import Servicesdetails from "./Pages/Servicedetails/servicedetails";
 
-import Checkout from "./Pages/Checkout/Checkout";
-import DashboardEcoLayout from "./Dashboard/DashboardEcoLayout";
-import DashboardEcoHome from "./Dashboard/Pages/Home/DashboardEcoHome";
-import Products from "./Pages/Products/Products";
-import ProductDetails from "./Pages/ProductDetails/ProductDetails";
-import DashboardHome from "./Reservation/Pages/DashboardHome/DashboardHome";
-import DashboardLayout from "./Reservation/DashboardLayout";
-import Cart from "./Pages/Cart/Cart";
-import ClinicReviews from "./Pages/ClinicReviews/ClinicReviews";
-import Animals from "./Reservation/Pages/Animals/Animals";
-import AnimalCategories from "./Reservation/Pages/AnimalCategories/AnimalCategories";
-import Doctors from "./Reservation/Pages/Doctors/Doctors";
-import Vaccinations from "./Reservation/Pages/Vaccination/Vaccinations";
-import ProductsDashboared from './Dashboard/Pages/Products/Products';
-import Orders from "./Dashboard/Pages/Orders/Orders";
-import Coupons from "./Dashboard/Pages/Coupons/Coupons";
-import MedicalHistory from "./Reservation/Pages/MedicalHistory/MedicalHistory";
-import Reservationpet from './Reservation/Pages/ResevationPet/Reservationpet';
-import CategoriesDashboared from "./Dashboard/Pages/Categories/Categories";
-import Users from "./Dashboard/Pages/Users/Users";
-import Reports from "./Dashboard/Pages/Reports/Reports";
-import Emails from "./Dashboard/Pages/Emails/Emails";
-import OrderDetails from "./Pages/OrderDetails/OrderDetails";
-import Reservation from "./Pages/Reservation/reservation";
-import Blog from "./Pages/Blog/blog";
-import ServiceDashbored from "./Reservation/Pages/Services/Service";
-import UserPetClinicProfile from "./Pages/UserProfile/UserProfile";
-import OverView from "./Dashboard/Pages/OverView/OverView";
+import ProtectedRoutes from "./Shared/ProtectedRoutes/ProtectedRoutes";
+import AdminProtectedRoute from "./Shared/ProtectedRoutes/AdminProtectedRoutes";
+import DoctorProtectedRoute from "./Shared/ProtectedRoutes/DoctorProtectedRoutes";
+
+// ===> Lazy imports
+const Layout = lazy(() => import("./Shared/Layout/layout"));
+const Home = lazy(() => import("./Pages/Home/Home"));
+const ContactUs = lazy(() => import("./Pages/ContactUs/ContactUs"));
+const Services = lazy(() => import("./Pages/Services/services"));
+const Servicesdetails = lazy(
+  () => import("./Pages/Servicedetails/servicedetails")
+);
+const Blog = lazy(() => import("./Pages/blog/blog"));
+const Reservation = lazy(() => import("./Pages/reservation/reservation"));
+const UserPetClinicProfile = lazy(
+  () => import("./Pages/UserProfile/UserProfile")
+);
+const Checkout = lazy(() => import("./Pages/Checkout/Checkout"));
+const Products = lazy(() => import("./Pages/Products/Products"));
+const Cart = lazy(() => import("./Pages/Cart/Cart"));
+const ProductDetails = lazy(
+  () => import("./Pages/ProductDetails/ProductDetails")
+);
+const OrderDetails = lazy(() => import("./Pages/OrderDetails/OrderDetails"));
+const ClinicReviews = lazy(() => import("./Pages/ClinicReviews/ClinicReviews"));
+
+// ==> Auth
+const AuthLayout = lazy(() => import("./Shared/AuthLayout/AuthLayout"));
+const Login = lazy(() => import("./Pages/Login/Login"));
+const Register = lazy(() => import("./Pages/Register/Register"));
+const ForgetPassword = lazy(
+  () => import("./Pages/ForgetPassword/ForgetPassword")
+);
+const OtpConfirmation = lazy(() => import("./Pages/Otp/OtpConfirmation"));
+
+// ===> Dashboards
+const DashboardEcoLayout = lazy(() => import("./Dashboard/DashboardEcoLayout"));
+const DashboardEcoHome = lazy(
+  () => import("./Dashboard/Pages/Home/DashboardEcoHome")
+);
+const Orders = lazy(() => import("./Dashboard/Pages/Orders/Orders"));
+const ProductsDashboared = lazy(
+  () => import("./Dashboard/Pages/Products/Products")
+);
+const CategoriesDashboared = lazy(
+  () => import("./Dashboard/Pages/Categories/Categories")
+);
+const Coupons = lazy(() => import("./Dashboard/Pages/Coupons/Coupons"));
+const Users = lazy(() => import("./Dashboard/Pages/Users/Users"));
+const Emails = lazy(() => import("./Dashboard/Pages/Emails/Emails"));
+const Reports = lazy(() => import("./Dashboard/Pages/Reports/Reports"));
+const OverView = lazy(() => import("./Dashboard/Pages/OverView/OverView"));
+
+// ==> Reservation Dashboard
+const DashboardLayout = lazy(() => import("./Reservation/DashboardLayout"));
+const DashboardHome = lazy(
+  () => import("./Reservation/Pages/DashboardHome/DashboardHome")
+);
+const Animals = lazy(() => import("./Reservation/Pages/Animals/Animals"));
+const Reservationpet = lazy(
+  () => import("./Reservation/Pages/ResevationPet/Reservationpet")
+);
+const AnimalCategories = lazy(
+  () => import("./Reservation/Pages/AnimalCategories/AnimalCategories")
+);
+const Doctors = lazy(() => import("./Reservation/Pages/Doctors/Doctors"));
+const Vaccinations = lazy(
+  () => import("./Reservation/Pages/Vaccination/Vaccinations")
+);
+const MedicalHistory = lazy(
+  () => import("./Reservation/Pages/MedicalHistory/MedicalHistory")
+);
+const ServiceDashbored = lazy(
+  () => import("./Reservation/Pages/Services/Service")
+);
 
 const router = createBrowserRouter([
   {
@@ -52,19 +90,66 @@ const router = createBrowserRouter([
       { path: "", element: <Home /> },
       { path: "home", element: <Home /> },
       { path: "contact", element: <ContactUs /> },
-      { path: "reservation", element: <Reservation /> },
+      {
+        path: "reservation",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <Reservation />{" "}
+          </ProtectedRoutes>
+        ),
+      },
       { path: "service", element: <Services /> },
       { path: "service/:id", element: <Servicesdetails /> },
       { path: "blog", element: <Blog /> },
-      { path: "profile", element: <UserPetClinicProfile /> },
+      {
+        path: "profile",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <UserPetClinicProfile />{" "}
+          </ProtectedRoutes>
+        ),
+      },
 
-
-      { path: "checkout", element: <Checkout /> },
+      {
+        path: "checkout",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <Checkout />
+          </ProtectedRoutes>
+        ),
+      },
       { path: "products", element: <Products /> },
-      { path: "cart", element: <Cart /> },
+      {
+        path: "cart",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <Cart />
+          </ProtectedRoutes>
+        ),
+      },
       { path: "product-details/:id", element: <ProductDetails /> },
-      { path: "orderdetails", element: <OrderDetails /> },
-      { path: "clinicReviews", element: <ClinicReviews /> },
+      {
+        path: "orderdetails",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <OrderDetails />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "clinicReviews",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <ClinicReviews />{" "}
+          </ProtectedRoutes>
+        ),
+      },
     ],
   },
   {
@@ -75,36 +160,165 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "forgetPass", element: <ForgetPassword /> },
       { path: "otp", element: <OtpConfirmation /> },
-
     ],
   },
   {
     path: "ecoDashboard",
     element: <DashboardEcoLayout />,
     children: [
-      { path: "", element: <DashboardEcoHome /> },
-      { path: "orders", element: <Orders /> },
-      { path: "Categories", element: <CategoriesDashboared /> },
-      { path: "products", element: <ProductsDashboared /> },
-      { path: "coupons", element: <Coupons /> },
-      { path: "users", element: <Users /> },
-      { path: "emails", element: <Emails /> },
-      { path: "reports", element: <Reports /> },
-      { path: "overview", element: <OverView /> },
+      {
+        path: "",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <DashboardEcoHome />
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "orders",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <Orders />{" "}
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "Categories",
+        element: (
+          <AdminProtectedRoute>
+            <CategoriesDashboared />
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "products",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <ProductsDashboared />{" "}
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "coupons",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <Coupons />{" "}
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "users",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <Users />
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "emails",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <Emails />
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "reports",
+        element: (
+          <AdminProtectedRoute>
+            <Reports />
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "overview",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <OverView />
+          </AdminProtectedRoute>
+        ),
+      },
     ],
   },
   {
     path: "resDashboard",
     element: <DashboardLayout />,
     children: [
-      { path: "", element: <DashboardHome /> },
-      { path: "animals", element: <Animals /> },
-      { path: "reserv", element: <Reservationpet /> },
-      { path: "animalCategory", element: <AnimalCategories /> },
-      { path: "doctors", element: <Doctors /> },
-      { path: "vaccinations", element: <Vaccinations /> },
-      { path: "medical", element: <MedicalHistory /> },
-      { path: "service", element: <ServiceDashbored /> },
+      {
+        path: "",
+        element: (
+          <DoctorProtectedRoute>
+            <DashboardHome />{" "}
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "animals",
+        element: (
+          <DoctorProtectedRoute>
+            {" "}
+            <Animals />
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "reserv",
+        element: (
+          <DoctorProtectedRoute>
+            {" "}
+            <Reservationpet />{" "}
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "animalCategory",
+        element: (
+          <DoctorProtectedRoute>
+            <AnimalCategories />
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "doctors",
+        element: (
+          <DoctorProtectedRoute>
+            <Doctors />
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "vaccinations",
+        element: (
+          <DoctorProtectedRoute>
+            <Vaccinations />
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "medical",
+        element: (
+          <DoctorProtectedRoute>
+            {" "}
+            <MedicalHistory />
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "service",
+        element: (
+          <DoctorProtectedRoute>
+            {" "}
+            <ServiceDashbored />
+          </DoctorProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
@@ -116,7 +330,15 @@ export default function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
-          <RouterProvider router={router} />
+          <Suspense
+            fallback={
+              <div className="flex items-center justify-center h-screen text-lg font-semibold">
+                Loading...
+              </div>
+            }
+          >
+            <RouterProvider router={router} />
+          </Suspense>
         </Provider>
       </QueryClientProvider>
     </>
