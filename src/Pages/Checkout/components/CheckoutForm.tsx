@@ -30,6 +30,7 @@ const checkoutSchema = z.object({
     .min(10, "Address must be at least 10 characters")
     .max(200, "Address must be less than 200 characters"),
   note: z.string(),
+  payment: z.string(),
 });
 
 type CheckoutFormData = z.infer<typeof checkoutSchema>;
@@ -44,6 +45,7 @@ const CheckoutForm = () => {
     phone: "",
     address: "",
     note: "",
+    payment: "visa",
   });
 
   const [errors, setErrors] = useState<
@@ -124,14 +126,13 @@ const CheckoutForm = () => {
           <FaPaw className="text-xl" />
         </div>
         <div>
-         <h2 className="text-xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-  {t("checkout.title")}
-</h2>
+          <h2 className="text-xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
+            {t("checkout.title")}
+          </h2>
 
-<p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
-  {t("checkout.description")}
-</p>
-
+          <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
+            {t("checkout.description")}
+          </p>
         </div>
       </div>
 
@@ -142,7 +143,8 @@ const CheckoutForm = () => {
             htmlFor="fullName"
             className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
           >
-            {t("checkout.fullName")} <span className="text-red-500">{t("checkout.required")}</span>
+            {t("checkout.fullName")}{" "}
+            <span className="text-red-500">{t("checkout.required")}</span>
           </label>
           <input
             onChange={(e) => handleChange("fullName", e.target.value)}
@@ -168,7 +170,8 @@ const CheckoutForm = () => {
               htmlFor="address"
               className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
             >
-              {t("checkout.address")} <span className="text-red-500">{t("checkout.required")}</span>
+              {t("checkout.address")}{" "}
+              <span className="text-red-500">{t("checkout.required")}</span>
             </label>
             <input
               onChange={(e) => handleChange("address", e.target.value)}
@@ -193,7 +196,8 @@ const CheckoutForm = () => {
               htmlFor="phone"
               className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
             >
-              {t("checkout.phone")} <span className="text-red-500">{t("checkout.required")}</span>
+              {t("checkout.phone")}{" "}
+              <span className="text-red-500">{t("checkout.required")}</span>
             </label>
             <input
               onChange={(e) => handleChange("phone", e.target.value)}
