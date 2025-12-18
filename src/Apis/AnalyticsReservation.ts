@@ -87,3 +87,12 @@ export const getTopCategoriesApi = async () => {
   );
   return data;
 };
+
+// ==> top vaccinated categories
+export const getTopVaccinatedCategoriesApi = async () => {
+  const { data } = await axios.get<TopCategoriesResponse>(
+    `${BASE_URL}/vaccinations/top-categories`,
+    { headers }
+  );
+  return data;
+};

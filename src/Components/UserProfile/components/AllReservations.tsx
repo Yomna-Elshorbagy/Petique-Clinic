@@ -66,7 +66,7 @@ const formatTime = (timeString: string) => {
 export default function AllReservations() {
   const { data: reservations = [], isLoading, isError } = useMyReservations();
   const [currentPage, setCurrentPage] = React.useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 4;
 
   if (isLoading)
     return (

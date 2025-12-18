@@ -70,6 +70,7 @@ export interface UpcomingVaccinationResponse {
 /* ================= CATEGORY ================= */
 
 export interface TopCategory {
+  _id: string;
   categoryName: string;
   totalPets: number;
 }

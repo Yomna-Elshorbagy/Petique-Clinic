@@ -6,7 +6,6 @@ import {
   FaPaw,
   FaStethoscope,
   FaArrowRight,
-  FaMapMarkerAlt,
 } from "react-icons/fa";
 import LoaderPage from "../../../Shared/LoaderPage/LoaderPage";
 import { useMyUpcomingReservations } from "../../../Hooks/Reservation/useReservation";
@@ -53,7 +52,7 @@ export default function UpcomingReservations() {
     isError,
   } = useMyUpcomingReservations();
   const [currentPage, setCurrentPage] = React.useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 3;
 
   if (isLoading)
     return (

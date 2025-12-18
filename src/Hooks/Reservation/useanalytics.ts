@@ -4,6 +4,7 @@ import {
   getPetsPerCategoryApi,
   getPetsPerUserApi,
   getTopCategoriesApi,
+  getTopVaccinatedCategoriesApi,
   getTotalPetsApi,
   getUpcomingVaccinationsApi,
   getVaccinationStatusApi,
@@ -62,4 +63,11 @@ export const useTopCategories = () =>
   useQuery({
     queryKey: ["analytics", "topCategories"],
     queryFn: getTopCategoriesApi,
+  });
+
+// ==> Top vaccinated categories
+export const useTopVaccinatedCategories = () =>
+  useQuery({
+    queryKey: ["analytics", "topVaccinatedCategories"],
+    queryFn: getTopVaccinatedCategoriesApi,
   });
