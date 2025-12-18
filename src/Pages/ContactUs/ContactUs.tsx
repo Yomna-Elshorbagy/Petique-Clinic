@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
 import type { ContactForm } from "../../Interfaces/IContact ";
 import QrSection from "../../Components/Qrcode/Qrcode";
+import SEO from "../../Components/SEO/SEO";
 
 export default function ContactUs() {
   const { t } = useTranslation();
@@ -66,6 +67,11 @@ export default function ContactUs() {
 
   return (
     <>
+      <SEO
+        title=" Contact Us | Petique Clinic"
+        description="Get in touch with Petique Clinic for appointments, inquiries, or emergency veterinary support."
+      />
+
       <div className="relative min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] flex items-center justify-center py-16 px-6 overflow-hidden transition-colors duration-300">
         <motion.div
           animate={{ y: [0, -20, 0] }}

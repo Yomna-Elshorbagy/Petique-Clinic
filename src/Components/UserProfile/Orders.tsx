@@ -2,6 +2,7 @@ import { useState } from "react";
 import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
 import type { Order } from "../../Types/OrderType";
 import { useUserOrders } from "../../Hooks/Orders/useOrderTracking";
+import SEO from "../SEO/SEO";
 
 export default function UserOrders() {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -38,6 +39,10 @@ export default function UserOrders() {
 
   return (
     <div className="space-y-10">
+      <SEO
+        title="Orders History | Pet Clinic"
+        description="Manage your personal info, pets, and appointments."
+      />
       <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
         Your Orders
       </h2>

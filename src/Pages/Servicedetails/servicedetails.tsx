@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { PawPrint } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import SEO from "../../Components/SEO/SEO";
 
 const fetchServices = async (): Promise<IService[]> => {
   const res = await axios.get("http://localhost:3000/service");
@@ -95,12 +96,13 @@ export default function Servicesdetails() {
 
   const limitedGallery = gallery.slice(0, 4);
 
-  console.log("BANNER:", img1);
-  console.log("GALLERY:", gallery);
-  console.log("LIMITED GALLERY:", limitedGallery);
-
   return (
     <>
+      <SEO
+        title="Services Detai;s | Petique Clinic"
+        description="Explore our full range of veterinary services including checkups, vaccinations, grooming, diagnostics, and emergency care."
+      />
+
       <div className="bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] transition-colors duration-300">
         <div className="relative bg-[var(--color-accent-darker)] dark:bg-[var(--color-dark-card)] h-[290px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
           <div className="max-w-7xl text-center md:text-left w-full">

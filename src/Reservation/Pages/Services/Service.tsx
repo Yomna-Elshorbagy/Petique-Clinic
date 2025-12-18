@@ -12,6 +12,7 @@ import { useServiceSearch } from "./Hooks/useServiceSearch";
 import StatsCards from "./Components/StatesCard";
 import Pagination from "../../Componenst/Pagination/Pagination";
 import EditServiceModal from "./Components/EditServiceModal";
+import SEO from "../../../Components/SEO/SEO";
 
 export default function ServiceDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -86,6 +87,11 @@ export default function ServiceDashboard() {
 
   return (
     <div className="min-h-screen bg-[#ECE7E2] p-6">
+      <SEO
+        title="Services | Dashboard Petique Clinic"
+        description="Manage veterinary services offered for reservations at Petique Clinic."
+      />
+
       {/* ===> model */}
       <AddServiceModal
         isOpen={isModalOpen}

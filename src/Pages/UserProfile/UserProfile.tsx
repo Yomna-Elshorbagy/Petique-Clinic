@@ -47,7 +47,7 @@ export default function UserPetClinicProfile() {
   return (
     <div className="relative min-h-screen py-10 px-5 text-[#443935] dark:text-[var(--color-dark-text)] bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] transition-colors duration-300">
       <SEO
-        title="Pet Clinic | Profile"
+        title="Profile | Pet Clinic"
         description="Manage your personal info, pets, and appointments."
       />
 

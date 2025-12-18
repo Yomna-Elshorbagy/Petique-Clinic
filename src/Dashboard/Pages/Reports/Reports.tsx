@@ -6,10 +6,16 @@ import RecentOrders from "./Components/RecentOrders";
 import UserAnalysis from "./Components/UserAnalysis";
 import CategoryDistributionTable from "./Components/CategoryDistributionTable";
 import RevenueByCategoryTable from "./Components/RevenueByCategoryTable";
+import SEO from "../../../Components/SEO/SEO";
 
 export default function Reports() {
   return (
     <div className="p-4 space-y-6">
+      <SEO
+        title="Reports | Dashboard Petique Clinic"
+        description="Generate and review detailed reports on clinic operations, sales, and veterinary services."
+      />
+
       <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">
         Reports & Analytics
       </h1>
@@ -22,9 +28,9 @@ export default function Reports() {
         <RecentOrders />
       </div>
       <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <UserAnalysis/>
+        <UserAnalysis />
       </div>
-        <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-6">
         <CategoryDistributionTable />
         <RevenueByCategoryTable />
       </div>

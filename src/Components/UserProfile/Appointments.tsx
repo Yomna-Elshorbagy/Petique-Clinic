@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import AllReservations from "./components/AllReservations";
 import UpcomingReservations from "./components/UpcomingReservations";
 import PastReservations from "./components/PastReservations";
+import SEO from "../SEO/SEO";
 
 type TabType = "all" | "upcoming" | "past";
 
@@ -17,6 +18,10 @@ export default function Appointments() {
 
   return (
     <div className="w-full">
+      <SEO
+        title="Appointments | Pet Clinic"
+        description="Manage your personal info, pets, and appointments."
+      />
       {/* Header */}
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-[var(--color-text-primary)] mb-2">

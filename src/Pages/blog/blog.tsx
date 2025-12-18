@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { posts } from "./posts";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import SEO from "../../Components/SEO/SEO";
 
 export default function Blog() {
   const { t, i18n } = useTranslation();
@@ -83,6 +84,11 @@ export default function Blog() {
 
   return (
     <>
+      <SEO
+        title=" Blogs | Petique Clinic"
+        description="Read expert pet care tips, veterinary advice, and the latest updates from Petique Clinic."
+      />
+
       {/* Header */}
       <div className="bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] transition-colors duration-300">
         <div className="relative bg-[var(--color-accent-darker)] dark:bg-[var(--color-dark-card)] h-[290px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
