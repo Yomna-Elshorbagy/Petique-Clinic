@@ -31,6 +31,8 @@ const ProductDetails = lazy(
 );
 const OrderDetails = lazy(() => import("./Pages/OrderDetails/OrderDetails"));
 const ClinicReviews = lazy(() => import("./Pages/ClinicReviews/ClinicReviews"));
+const PaymentSuccess = lazy(() => import("./Pages/PaymentStatus/PaymentSuccess"));
+const PaymentFailed = lazy(() => import("./Pages/PaymentStatus/PaymentFailed"));
 
 // ==> Auth
 const AuthLayout = lazy(() => import("./Shared/AuthLayout/AuthLayout"));
@@ -150,6 +152,8 @@ const router = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
+      { path: "payment-success", element: <PaymentSuccess /> },
+      { path: "payment-failed", element: <PaymentFailed /> },
     ],
   },
   {
