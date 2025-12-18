@@ -57,7 +57,7 @@ function RelatedProductCard({
   };
 
   return (
-    <div className="px-5 py-4">
+    <div className="px-6 py-4">
       <div className="group h-full rounded-3xl overflow-hidden bg-[var(--color-bg-cream)] border border-[var(--color-border-light)] shadow-sm hover:shadow-lg transition-all duration-300">
         <Link to={`/product-details/${product._id}`}>
           <div className="relative overflow-hidden bg-[var(--color-bg-warm)] rounded-t-3xl aspect-[4/3]">
@@ -82,7 +82,7 @@ function RelatedProductCard({
         </Link>
 
         <div className="px-1 py-1 text-center space-y-1">
-          <h3 className="text-base font-semibold text-[25px] text-[var(--color-text-primary)] line-clamp-2">
+          <h3 className="text-base font-semibold text-[15px] text-[var(--color-text-primary)] line-clamp-2">
             {product.title}
           </h3>
 
