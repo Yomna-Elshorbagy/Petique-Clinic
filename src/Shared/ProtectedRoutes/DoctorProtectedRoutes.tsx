@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-interface AdminProtectedRouteProps {
+interface DoctorProtectedRouteProps {
   children: ReactNode;
 }
 
@@ -12,9 +12,9 @@ interface JwtPayload {
   [key: string]: unknown;
 }
 
-export default function AdminProtectedRoute({
+export default function DoctorProtectedRoute({
   children,
-}: AdminProtectedRouteProps) {
+}: DoctorProtectedRouteProps) {
   const token = localStorage.getItem("accessToken");
 
   if (!token) {
@@ -30,7 +30,7 @@ export default function AdminProtectedRoute({
       return <Navigate to="/login" />;
     }
 
-    if (userRole !== "admin" && userRole !== "owner") {
+    if (userRole !== "doctor" && userRole !== "owner") {
       return <Navigate to="/" />;
     }
 

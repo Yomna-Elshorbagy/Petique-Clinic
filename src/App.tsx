@@ -28,11 +28,11 @@ import Animals from "./Reservation/Pages/Animals/Animals";
 import AnimalCategories from "./Reservation/Pages/AnimalCategories/AnimalCategories";
 import Doctors from "./Reservation/Pages/Doctors/Doctors";
 import Vaccinations from "./Reservation/Pages/Vaccination/Vaccinations";
-import ProductsDashboared from './Dashboard/Pages/Products/Products';
+import ProductsDashboared from "./Dashboard/Pages/Products/Products";
 import Orders from "./Dashboard/Pages/Orders/Orders";
 import Coupons from "./Dashboard/Pages/Coupons/Coupons";
 import MedicalHistory from "./Reservation/Pages/MedicalHistory/MedicalHistory";
-import Reservationpet from './Reservation/Pages/ResevationPet/Reservationpet';
+import Reservationpet from "./Reservation/Pages/ResevationPet/Reservationpet";
 import CategoriesDashboared from "./Dashboard/Pages/Categories/Categories";
 import Users from "./Dashboard/Pages/Users/Users";
 import Reports from "./Dashboard/Pages/Reports/Reports";
@@ -43,6 +43,9 @@ import UserPetClinicProfile from "./Pages/UserProfile/UserProfile";
 import OverView from "./Dashboard/Pages/OverView/OverView";
 import Reservation from "./Pages/reservation/reservation";
 import Blog from "./Pages/blog/blog";
+import ProtectedRoutes from "./Shared/ProtectedRoutes/ProtectedRoutes";
+import AdminProtectedRoute from "./Shared/ProtectedRoutes/AdminProtectedRoutes";
+import DoctorProtectedRoute from "./Shared/ProtectedRoutes/DoctorProtectedRoutes";
 
 const router = createBrowserRouter([
   {
@@ -52,19 +55,66 @@ const router = createBrowserRouter([
       { path: "", element: <Home /> },
       { path: "home", element: <Home /> },
       { path: "contact", element: <ContactUs /> },
-      { path: "reservation", element: <Reservation /> },
+      {
+        path: "reservation",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <Reservation />{" "}
+          </ProtectedRoutes>
+        ),
+      },
       { path: "service", element: <Services /> },
       { path: "service/:id", element: <Servicesdetails /> },
       { path: "blog", element: <Blog /> },
-      { path: "profile", element: <UserPetClinicProfile /> },
+      {
+        path: "profile",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <UserPetClinicProfile />{" "}
+          </ProtectedRoutes>
+        ),
+      },
 
-
-      { path: "checkout", element: <Checkout /> },
+      {
+        path: "checkout",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <Checkout />
+          </ProtectedRoutes>
+        ),
+      },
       { path: "products", element: <Products /> },
-      { path: "cart", element: <Cart /> },
+      {
+        path: "cart",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <Cart />
+          </ProtectedRoutes>
+        ),
+      },
       { path: "product-details/:id", element: <ProductDetails /> },
-      { path: "orderdetails", element: <OrderDetails /> },
-      { path: "clinicReviews", element: <ClinicReviews /> },
+      {
+        path: "orderdetails",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <OrderDetails />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "clinicReviews",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <ClinicReviews />{" "}
+          </ProtectedRoutes>
+        ),
+      },
     ],
   },
   {
@@ -75,36 +125,165 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "forgetPass", element: <ForgetPassword /> },
       { path: "otp", element: <OtpConfirmation /> },
-
     ],
   },
   {
     path: "ecoDashboard",
     element: <DashboardEcoLayout />,
     children: [
-      { path: "", element: <DashboardEcoHome /> },
-      { path: "orders", element: <Orders /> },
-      { path: "Categories", element: <CategoriesDashboared /> },
-      { path: "products", element: <ProductsDashboared /> },
-      { path: "coupons", element: <Coupons /> },
-      { path: "users", element: <Users /> },
-      { path: "emails", element: <Emails /> },
-      { path: "reports", element: <Reports /> },
-      { path: "overview", element: <OverView /> },
+      {
+        path: "",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <DashboardEcoHome />
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "orders",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <Orders />{" "}
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "Categories",
+        element: (
+          <AdminProtectedRoute>
+            <CategoriesDashboared />
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "products",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <ProductsDashboared />{" "}
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "coupons",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <Coupons />{" "}
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "users",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <Users />
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "emails",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <Emails />
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "reports",
+        element: (
+          <AdminProtectedRoute>
+            <Reports />
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "overview",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <OverView />
+          </AdminProtectedRoute>
+        ),
+      },
     ],
   },
   {
     path: "resDashboard",
     element: <DashboardLayout />,
     children: [
-      { path: "", element: <DashboardHome /> },
-      { path: "animals", element: <Animals /> },
-      { path: "reserv", element: <Reservationpet /> },
-      { path: "animalCategory", element: <AnimalCategories /> },
-      { path: "doctors", element: <Doctors /> },
-      { path: "vaccinations", element: <Vaccinations /> },
-      { path: "medical", element: <MedicalHistory /> },
-      { path: "service", element: <ServiceDashbored /> },
+      {
+        path: "",
+        element: (
+          <DoctorProtectedRoute>
+            <DashboardHome />{" "}
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "animals",
+        element: (
+          <DoctorProtectedRoute>
+            {" "}
+            <Animals />
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "reserv",
+        element: (
+          <DoctorProtectedRoute>
+            {" "}
+            <Reservationpet />{" "}
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "animalCategory",
+        element: (
+          <DoctorProtectedRoute>
+            <AnimalCategories />
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "doctors",
+        element: (
+          <DoctorProtectedRoute>
+            <Doctors />
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "vaccinations",
+        element: (
+          <DoctorProtectedRoute>
+            <Vaccinations />
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "medical",
+        element: (
+          <DoctorProtectedRoute>
+            {" "}
+            <MedicalHistory />
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "service",
+        element: (
+          <DoctorProtectedRoute>
+            {" "}
+            <ServiceDashbored />
+          </DoctorProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
