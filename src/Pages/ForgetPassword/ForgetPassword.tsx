@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import OTPBlocks from "./components/OTPBlocks";
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
+import SEO from "../../Components/SEO/SEO";
 
 type Step = 1 | 2 | 3;
 
@@ -96,7 +97,7 @@ export default function ForgetPassword() {
       setEmail(data.email);
       Swal.fire({
         icon: "success",
-        title:  t("auth.forgetPassword.step1.successTitle"),
+        title: t("auth.forgetPassword.step1.successTitle"),
         timer: 2000,
         timerProgressBar: true,
         showConfirmButton: false,
@@ -172,6 +173,11 @@ export default function ForgetPassword() {
 
   return (
     <>
+      <SEO
+        title="Forgot Password | Petique Clinic"
+        description="Reset your Petique Clinic account password securely and regain access to your profile."
+      />
+
       <div className="relative min-h-screen bg-[#FAF8F4] flex items-center justify-center p-4">
         {/* Background */}
         <div
@@ -198,7 +204,11 @@ export default function ForgetPassword() {
               <p className="text-(--color-light-accent) text-4xl font-['Playfair_Display'] font-bold mb-4">
                 {t("auth.forgetPassword.title")}
               </p>
-              <p className={`text-[#443935] font-['Playfair_Display'] ${isRTL ? "text-2xl" : ""}`}>
+              <p
+                className={`text-[#443935] font-['Playfair_Display'] ${
+                  isRTL ? "text-2xl" : ""
+                }`}
+              >
                 {t("auth.forgetPassword.subtitle")}
               </p>
 
@@ -218,7 +228,9 @@ export default function ForgetPassword() {
 
                   <div className="relative mb-6">
                     <MdEmail
-                      className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`}
+                      className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${
+                        isRTL ? "right-3" : "left-3"
+                      }`}
                       size={20}
                     />
                     <Input
@@ -234,14 +246,18 @@ export default function ForgetPassword() {
                     </p>
                   )}
 
-                  <MyButton title={t("auth.forgetPassword.step1.submit")} isLoading={isSendingOtp} type="submit"/>
+                  <MyButton
+                    title={t("auth.forgetPassword.step1.submit")}
+                    isLoading={isSendingOtp}
+                    type="submit"
+                  />
                   <p className="text-sm text-gray-400 text-center mt-4">
                     {t("auth.forgetPassword.remember")}{" "}
                     <span
                       className="text-[#A88F7B] hover:underline cursor-pointer"
                       onClick={() => navigate("/login")}
                     >
-                     {t("auth.login.title")}
+                      {t("auth.login.title")}
                     </span>
                   </p>
                 </form>
@@ -282,7 +298,11 @@ export default function ForgetPassword() {
                   </h2>
 
                   <div className="relative mb-3">
-                    <MdLock className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} />
+                    <MdLock
+                      className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${
+                        isRTL ? "right-3" : "left-3"
+                      }`}
+                    />
                     <Input
                       type="password"
                       placeholder={t("auth.common.newPassword")}
@@ -296,7 +316,11 @@ export default function ForgetPassword() {
                   )}
 
                   <div className="relative mb-6">
-                    <MdLock className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"}`} />
+                    <MdLock
+                      className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${
+                        isRTL ? "right-3" : "left-3"
+                      }`}
+                    />
                     <Input
                       type="password"
                       placeholder={t("auth.common.repeatPassword")}

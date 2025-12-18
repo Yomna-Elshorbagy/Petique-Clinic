@@ -22,6 +22,7 @@ import ReviewCard from "./ReviewCard";
 import ReviewButton from "./ReviewButton";
 import { useTranslation } from "react-i18next";
 import Swal from "sweetalert2";
+import SEO from "../../Components/SEO/SEO";
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -31,7 +32,7 @@ export default function ProductDetails() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showReviews, setShowReviews] = useState(false);
   const queryClient = useQueryClient();
-  const {t} =useTranslation();
+  const { t } = useTranslation();
   //get product
   async function getproductdetails() {
     const { data } = await axios.get(`${baseURL}/products/${id}`);
@@ -103,32 +104,32 @@ export default function ProductDetails() {
       });
     },
     onSuccess: () => {
-       Swal.fire({
-            position: "top-end",
-            icon:  "success" ,
-            title: t("ProductDetails.successdelReviewTitle") ,
-            showConfirmButton: false,
-            timer: 1500,
-            toast: true,
-            customClass: {
-              popup: "swal-toast-custom",
-            },
-          });
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: t("ProductDetails.successdelReviewTitle"),
+        showConfirmButton: false,
+        timer: 1500,
+        toast: true,
+        customClass: {
+          popup: "swal-toast-custom",
+        },
+      });
       queryClient.invalidateQueries({ queryKey: ["Reviews", id] });
     },
-    onError: (error:any) => {
+    onError: (error: any) => {
       console.log("delete review error:", error);
-       Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: t("ProductDetails.faildelReviewTitle"),
-            showConfirmButton: false,
-            timer: 1500,
-            toast: true,
-            customClass: {
-              popup: "swal-toast-custom",
-            },
-          });
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: t("ProductDetails.faildelReviewTitle"),
+        showConfirmButton: false,
+        timer: 1500,
+        toast: true,
+        customClass: {
+          popup: "swal-toast-custom",
+        },
+      });
     },
   });
   // add review
@@ -152,35 +153,34 @@ export default function ProductDetails() {
       return data;
     },
     onSuccess: () => {
-      
       Swal.fire({
-            position: "top-end",
-            icon:  "success" ,
-            title: t("ProductDetails.successAddReviewTitle") ,
-            showConfirmButton: false,
-            timer: 1500,
-            toast: true,
-            customClass: {
-              popup: "swal-toast-custom",
-            },
-          });
-      
+        position: "top-end",
+        icon: "success",
+        title: t("ProductDetails.successAddReviewTitle"),
+        showConfirmButton: false,
+        timer: 1500,
+        toast: true,
+        customClass: {
+          popup: "swal-toast-custom",
+        },
+      });
+
       queryClient.invalidateQueries({ queryKey: ["Reviews", id] });
     },
-    onError: (error:any) => {
+    onError: (error: any) => {
       console.log("add review error", error);
-      
+
       Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title:  t("ProductDetails.failAddReviewTitle"),
-            showConfirmButton: false,
-            timer: 1500,
-            toast: true,
-            customClass: {
-              popup: "swal-toast-custom",
-            },
-          });
+        position: "top-end",
+        icon: "error",
+        title: t("ProductDetails.failAddReviewTitle"),
+        showConfirmButton: false,
+        timer: 1500,
+        toast: true,
+        customClass: {
+          popup: "swal-toast-custom",
+        },
+      });
     },
   });
   if (isLoading) return <Loader />;
@@ -202,6 +202,10 @@ export default function ProductDetails() {
   // jsx
   return (
     <>
+      <SEO
+        title="Product Details | Petique Clinic"
+        description="Browse our curated pet products."
+      />
       <div className="bg-[var(--color-light-background)] min-h-screen  relative">
         <BackButton />
         <div className="max-w-6xl mx-auto pt-16">
@@ -249,31 +253,31 @@ export default function ProductDetails() {
                   className="text-[var(--color-light-accent)] cursor-pointer ml-1"
                   onClick={() => setShowFull(!showFull)}
                 >
-                  {showFull ? t("ProductDetails.showLess") : t("ProductDetails.readMore")}
+                  {showFull
+                    ? t("ProductDetails.showLess")
+                    : t("ProductDetails.readMore")}
                 </span>
               </p>
-              <div className='flex items-center gap-1 '>
-                    {Array.from ({length:5}).map((_, index)=>(
-                      <svg
-                      key={index}
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill={index<data.rate ?"#f59e0b" :"#d1d5db"}
-                      viewBox="0 0 24 24"
-                  className="w-5 h-5"
+              <div className="flex items-center gap-1 ">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <svg
+                    key={index}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill={index < data.rate ? "#f59e0b" : "#d1d5db"}
+                    viewBox="0 0 24 24"
+                    className="w-5 h-5"
                   >
-                   <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.787 1.48 8.247L12 18.896l-7.416 4.444 1.48-8.247L0 9.306l8.332-1.151z"/>
-    
+                    <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.787 1.48 8.247L12 18.896l-7.416 4.444 1.48-8.247L0 9.306l8.332-1.151z" />
                   </svg>
-                    ))}
-                     
-                     </div>
+                ))}
+              </div>
               <p className="text-xl font-semibold text-[var(--color-light-dark)]">
                 {t("ProductDetails.price")}:{" "}
                 <span className="  font-bold text-[var(--color-light-accent)]">
                   ${data.finalPrice}
                 </span>
               </p>
-                
+
               <p className="text-[var(--color-light-dark)] font-semibold text-lg">
                 {t("ProductDetails.category")}:{" "}
                 <span className="font-bold text-[var(--color-light-accent)]">
@@ -318,16 +322,14 @@ export default function ProductDetails() {
             <ReviewButton isOpen={() => setIsModalOpen(true)} />
             {reviewloading && <Loader />}
             {reviewError && <ErrorMessage />}
-             
-            {reviewdata &&
-              reviewdata.length > 0 &&(
-                  <ReviewCard
-                    reviews={reviewdata}
-                    users={userdata}
-                    onDelete={(id) => deletereview.mutate(id)}
-                  />
-              
-              )}
+
+            {reviewdata && reviewdata.length > 0 && (
+              <ReviewCard
+                reviews={reviewdata}
+                users={userdata}
+                onDelete={(id) => deletereview.mutate(id)}
+              />
+            )}
           </>
         )}
 
@@ -347,7 +349,6 @@ export default function ProductDetails() {
         {relatedProducts && relatedProducts.length > 0 && (
           <RelatedProductsSlider relatedProducts={relatedProducts} />
         )}
-      
 
         {isModalOpen && (
           <ReviewModal

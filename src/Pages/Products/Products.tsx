@@ -153,15 +153,21 @@ const Products: React.FC = () => {
     }
 
     // price range
-    const min = filters.minPrice.trim() !== "" ? Number(filters.minPrice) : undefined;
-    const max = filters.maxPrice.trim() !== "" ? Number(filters.maxPrice) : undefined;
+    const min =
+      filters.minPrice.trim() !== "" ? Number(filters.minPrice) : undefined;
+    const max =
+      filters.maxPrice.trim() !== "" ? Number(filters.maxPrice) : undefined;
 
     if (typeof min === "number" && !Number.isNaN(min)) {
-      items = items.filter((product) => (product.finalPrice ?? product.price) >= min);
+      items = items.filter(
+        (product) => (product.finalPrice ?? product.price) >= min
+      );
     }
 
     if (typeof max === "number" && !Number.isNaN(max)) {
-      items = items.filter((product) => (product.finalPrice ?? product.price) <= max);
+      items = items.filter(
+        (product) => (product.finalPrice ?? product.price) <= max
+      );
     }
 
     // stock status
@@ -183,7 +189,10 @@ const Products: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleFilterChange = <K extends keyof FilterState>(key: K, value: FilterState[K]) => {
+  const handleFilterChange = <K extends keyof FilterState>(
+    key: K,
+    value: FilterState[K]
+  ) => {
     setFilters((prev) => ({
       ...prev,
       [key]: value,
@@ -196,7 +205,6 @@ const Products: React.FC = () => {
     setIsFiltersDirty(false);
     setSearchParams({});
   };
-  
 
   const renderPagination = (pageCount: number, totalFiltered: number) => {
     if (pageCount <= 1) return null;
@@ -217,16 +225,16 @@ const Products: React.FC = () => {
             )}
           </span>{" "}
           {t("pagination.of")}{" "}
-          <span className="font-semibold text-amber-950">
-            {totalFiltered}
-          </span>{" "}
+          <span className="font-semibold text-amber-950">{totalFiltered}</span>{" "}
           {t("pagination.products")}
         </p>
 
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => handlePageChange(pagination.currentPage - 1, pageCount)}
+            onClick={() =>
+              handlePageChange(pagination.currentPage - 1, pageCount)
+            }
             disabled={pagination.currentPage <= 1}
             className="inline-flex h-9 items-center rounded-full border border-stone-300 bg-white px-4 text-xs font-medium text-amber-950 transition-all duration-300 hover:bg-amber-50 hover:border-amber-600 hover:shadow-sm disabled:cursor-not-allowed disabled:border-stone-200 disabled:bg-stone-50/50 disabled:text-stone-400"
           >
@@ -252,7 +260,9 @@ const Products: React.FC = () => {
 
           <button
             type="button"
-            onClick={() => handlePageChange(pagination.currentPage + 1, pageCount)}
+            onClick={() =>
+              handlePageChange(pagination.currentPage + 1, pageCount)
+            }
             disabled={pagination.currentPage >= pageCount}
             className="inline-flex h-9 items-center rounded-full border border-stone-300 bg-white px-4 text-xs font-medium text-amber-950 transition-all duration-300 hover:bg-amber-50 hover:border-amber-600 hover:shadow-sm disabled:cursor-not-allowed disabled:border-stone-200 disabled:bg-stone-50/50 disabled:text-stone-400"
           >
@@ -275,10 +285,12 @@ const Products: React.FC = () => {
 
   return (
     <>
-      <SEO title="Products | Petique Clinic" description="Browse our curated pet products." />
-
+      <SEO
+        title="Products | Petique Clinic"
+        description="Browse our curated pet products."
+      />
       <ProductsHero />
-      
+
       <section className=" py-4 text-center mt-16">
         <div className="container mx-auto px-4">
           <h1 className="mb-4 text-4xl font-bold md:text-5xl text-[#4C3A26] ">
@@ -330,7 +342,9 @@ const Products: React.FC = () => {
                   id="search"
                   type="text"
                   value={filters.search}
-                  onChange={(event) => handleFilterChange("search", event.target.value)}
+                  onChange={(event) =>
+                    handleFilterChange("search", event.target.value)
+                  }
                   placeholder={t("products.filters.searchPlaceholder")}
                   className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 placeholder:text-stone-500 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600"
                 />
@@ -341,15 +355,19 @@ const Products: React.FC = () => {
                   htmlFor="category"
                   className="text-[11px] font-semibold uppercase tracking-wider text-amber-900"
                 >
-                   {t("products.filters.category")}
+                  {t("products.filters.category")}
                 </label>
                 <select
                   id="category"
                   value={filters.category}
-                  onChange={(event) => handleFilterChange("category", event.target.value)}
+                  onChange={(event) =>
+                    handleFilterChange("category", event.target.value)
+                  }
                   className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600 cursor-pointer"
                 >
-                  <option value="all">{t("products.filters.allCategories")}</option>
+                  <option value="all">
+                    {t("products.filters.allCategories")}
+                  </option>
                   {categories.map((category) => (
                     <option key={category._id} value={category.name}>
                       {category.name}
@@ -366,7 +384,9 @@ const Products: React.FC = () => {
                   type="number"
                   min={0}
                   value={filters.minPrice}
-                  onChange={(event) => handleFilterChange("minPrice", event.target.value)}
+                  onChange={(event) =>
+                    handleFilterChange("minPrice", event.target.value)
+                  }
                   placeholder={t("products.filters.min")}
                   className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 placeholder:text-stone-500 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600"
                 />
@@ -380,7 +400,9 @@ const Products: React.FC = () => {
                   type="number"
                   min={0}
                   value={filters.maxPrice}
-                  onChange={(event) => handleFilterChange("maxPrice", event.target.value)}
+                  onChange={(event) =>
+                    handleFilterChange("maxPrice", event.target.value)
+                  }
                   placeholder={t("products.filters.priceMax")}
                   className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 placeholder:text-stone-500 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600"
                 />
@@ -397,7 +419,10 @@ const Products: React.FC = () => {
                   id="stock"
                   value={filters.stock}
                   onChange={(event) =>
-                    handleFilterChange("stock", event.target.value as FilterState["stock"])
+                    handleFilterChange(
+                      "stock",
+                      event.target.value as FilterState["stock"]
+                    )
                   }
                   className="h-10 rounded-lg border border-stone-300 bg-amber-50/50 px-3 text-sm text-amber-950 outline-none ring-stone-300/30 transition-all duration-300 focus:bg-white focus:ring-2 focus:ring-amber-600/50 focus:border-amber-600 cursor-pointer"
                 >
@@ -416,19 +441,25 @@ const Products: React.FC = () => {
               </div>
             )}
 
-            {!productsState.loading && !filteredItems.length && !productsState.error && (
-              <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-amber-200 bg-white/80 py-12 text-center animate-fadeIn transition-all duration-300">
-                <p className="font-medium text-stone-600 mb-1">{t("products.empty.title")}</p>
-                <p className="text-xs text-stone-500 mb-4">{t("products.empty.subtitle")}</p>
-                <button
-                  type="button"
-                  onClick={handleResetFilters}
-                  className="inline-flex items-center rounded-full bg-[#e6953a] px-5 py-2 text-xs font-semibold text-white shadow-md shadow-amber-600/30 transition-all duration-300 hover:bg-[#cc7422] hover:shadow-lg hover:scale-105"
-                >
-                  {t("products.empty.clear")}
-                </button>
-              </div>
-            )}
+            {!productsState.loading &&
+              !filteredItems.length &&
+              !productsState.error && (
+                <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-amber-200 bg-white/80 py-12 text-center animate-fadeIn transition-all duration-300">
+                  <p className="font-medium text-stone-600 mb-1">
+                    {t("products.empty.title")}
+                  </p>
+                  <p className="text-xs text-stone-500 mb-4">
+                    {t("products.empty.subtitle")}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleResetFilters}
+                    className="inline-flex items-center rounded-full bg-[#e6953a] px-5 py-2 text-xs font-semibold text-white shadow-md shadow-amber-600/30 transition-all duration-300 hover:bg-[#cc7422] hover:shadow-lg hover:scale-105"
+                  >
+                    {t("products.empty.clear")}
+                  </button>
+                </div>
+              )}
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {pagedItems.map((product) => (

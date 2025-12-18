@@ -14,6 +14,7 @@ import AnimalCategoryCard from "./Components/AnimalCategoryCard";
 import { useLocalPagination } from "../../Componenst/Pagination/UsePagination";
 import Pagination from "../../Componenst/Pagination/Pagination";
 import EditAnimalCategoryModal from "./Components/EditAnimalCategoryModal";
+import SEO from "../../../Components/SEO/SEO";
 
 export default function AnimalCategories() {
   const [categories, setCategories] = useState<IAnimalCategory[]>([]);
@@ -171,6 +172,11 @@ export default function AnimalCategories() {
 
   return (
     <div className="min-h-screen bg-[#ECE7E2] p-6 font-['Inter']">
+      <SEO
+        title="Animal Category | Dashboard Petique Clinic"
+        description="Manage animal categories for reservations and veterinary services at Petique Clinic."
+      />
+
       <AddAnimalCategoryModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

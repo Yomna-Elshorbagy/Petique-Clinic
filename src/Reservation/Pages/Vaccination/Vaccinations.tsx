@@ -7,6 +7,7 @@ import AddVaccinationModal from "./Components/AddVaccinationModal";
 import VaccinatePetModal from "./Components/VaccinatePetModal";
 import { useAllPets } from "../../../Hooks/Pets/UsePets";
 import AllVaccinationsTable from "./Components/AllVaccinationsTable";
+import SEO from "../../../Components/SEO/SEO";
 
 type VaccinationTab = "pet" | "all";
 
@@ -20,6 +21,11 @@ export default function Vaccinations() {
 
   return (
     <>
+      <SEO
+        title="Vaccinations | Dashboard Petique Clinic"
+        description="Manage vaccination services, schedules, and pet immunization records."
+      />
+
       {/* ===== Modals ===== */}
       <AddVaccinationModal isOpen={addOpen} onClose={() => setAddOpen(false)} />
 

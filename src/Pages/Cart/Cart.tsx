@@ -14,6 +14,7 @@ import {
   deleteCartItem,
   clearCartApi,
 } from "../../Store/Slices/CartSlice.ts";
+import SEO from "../../Components/SEO/SEO.tsx";
 
 const Cart: React.FC = () => {
   const { t } = useTranslation();
@@ -45,66 +46,75 @@ const Cart: React.FC = () => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="min-h-screen bg-[var(--color-light-background)] text-[var(--color-text-primary)] font-sans pb-20 pt-24 transition-colors duration-300"
-    >
-      <CartHeader totalItems={noOfCartItems} onClearCart={handleClearCart} />
+    <>
+      <SEO
+        title="Cart | Petique Clinic"
+        description="Review your selected pet services, products, and appointments before checkout at Petique Clinic."
+      />
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <Banner />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="min-h-screen bg-[var(--color-light-background)] text-[var(--color-text-primary)] font-sans pb-20 pt-24 transition-colors duration-300"
+      >
+        <CartHeader totalItems={noOfCartItems} onClearCart={handleClearCart} />
 
-        {products.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring", duration: 0.5 }}
-            className="flex flex-col items-center justify-center py-20 text-center"
-          >
-            <div className="bg-[var(--color-bg-lighter)] p-8 rounded-full shadow-sm mb-6 relative">
-              <ShoppingBag className="w-16 h-16 text-[var(--color-light-accent)]" />
-              <motion.div
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-                className="absolute top-0 right-0 bg-[var(--color-text-primary)] w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold"
-              >
-                0
-              </motion.div>
-            </div>
-            <h2 className="text-3xl font-serif font-bold mb-4 text-[var(--color-text-primary)]">
-              {t("cart.emptyTitle")}
-            </h2>
-            <p className="text-[var(--color-text-muted)] mb-8">{t("cart.emptyDesc")}</p>
-            <Link
-              to="/products"
-              className="bg-[var(--color-light-accent)] text-white px-8 py-3 rounded-xl font-bold hover:bg-[var(--color-accent-dark)] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 inline-block"
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <Banner />
+
+          {products.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="flex flex-col items-center justify-center py-20 text-center"
             >
-              {t("cart.startShopping")}
-            </Link>
-          </motion.div>
-        ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-8">
-              <CartItems
-                items={products}
-                onUpdateQuantity={handleUpdateQuantity}
-                onRemoveItem={handleRemoveItem}
-              />
-            </div>
+              <div className="bg-[var(--color-bg-lighter)] p-8 rounded-full shadow-sm mb-6 relative">
+                <ShoppingBag className="w-16 h-16 text-[var(--color-light-accent)]" />
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                  className="absolute top-0 right-0 bg-[var(--color-text-primary)] w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold"
+                >
+                  0
+                </motion.div>
+              </div>
+              <h2 className="text-3xl font-serif font-bold mb-4 text-[var(--color-text-primary)]">
+                {t("cart.emptyTitle")}
+              </h2>
+              <p className="text-[var(--color-text-muted)] mb-8">
+                {t("cart.emptyDesc")}
+              </p>
+              <Link
+                to="/products"
+                className="bg-[var(--color-light-accent)] text-white px-8 py-3 rounded-xl font-bold hover:bg-[var(--color-accent-dark)] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 inline-block"
+              >
+                {t("cart.startShopping")}
+              </Link>
+            </motion.div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className="lg:col-span-8">
+                <CartItems
+                  items={products}
+                  onUpdateQuantity={handleUpdateQuantity}
+                  onRemoveItem={handleRemoveItem}
+                />
+              </div>
 
-            <div className="lg:col-span-4">
-              <OrderSummary
-                totalItems={noOfCartItems}
-                subtotal={totalPrice}
-                total={totalPrice}
-              />
+              <div className="lg:col-span-4">
+                <OrderSummary
+                  totalItems={noOfCartItems}
+                  subtotal={totalPrice}
+                  total={totalPrice}
+                />
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-    </motion.div>
+          )}
+        </div>
+      </motion.div>
+    </>
   );
 };
 
