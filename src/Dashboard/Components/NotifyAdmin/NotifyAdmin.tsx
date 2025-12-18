@@ -62,9 +62,6 @@ const OrderNotificationBell: React.FC = () => {
     };
 
     fetchOrders();
-
-    const interval = setInterval(fetchOrders, 10000);
-    return () => clearInterval(interval);
   }, []);
 
   // ===> handle click outside

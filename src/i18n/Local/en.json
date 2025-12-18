@@ -774,7 +774,12 @@
     "haveCoupon": "Have a coupon code?",
     "hideCoupon": "Hide coupon",
     "enterCoupon": "Enter coupon code",
-    "apply": "Apply"
+    "apply": "Apply",
+    "paymentMethod": "Payment Method",
+    "cashOnDelivery": "Cash on Delivery",
+    "cashOnDeliveryDesc": "Pay when you receive your order",
+    "visaPayment": "Card Payment",
+    "visaPaymentDesc": "Pay securely with Visa, Mastercard, etc."
   },
   "orderDetails": {
     "noOrderDataTitle": "No Order Data Found",

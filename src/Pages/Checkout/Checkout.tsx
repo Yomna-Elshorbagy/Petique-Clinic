@@ -4,6 +4,8 @@ import OrderSummary from "./components/OrderSummary";
 import SEO from "../../Components/SEO/SEO";
 
 const Checkout = () => {
+  const [couponCode, setCouponCode] = React.useState("");
+
   return (
     <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] transition-colors duration-300 font-sans mt-20">
       <SEO
@@ -14,10 +16,10 @@ const Checkout = () => {
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-x-8 lg:items-start">
           {/* Left Column: Form */}
-          <CheckoutForm />
+          <CheckoutForm couponCode={couponCode} />
 
           {/* Right Column: Order Summary */}
-          <OrderSummary />
+          <OrderSummary onApplyCoupon={setCouponCode} />
         </div>
       </div>
     </div>

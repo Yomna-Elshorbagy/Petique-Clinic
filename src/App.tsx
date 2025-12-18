@@ -33,6 +33,7 @@ const OrderDetails = lazy(() => import("./Pages/OrderDetails/OrderDetails"));
 const ClinicReviews = lazy(() => import("./Pages/ClinicReviews/ClinicReviews"));
 const PaymentSuccess = lazy(() => import("./Pages/PaymentStatus/PaymentSuccess"));
 const PaymentFailed = lazy(() => import("./Pages/PaymentStatus/PaymentFailed"));
+const PaymentCancel = lazy(() => import("./Pages/PaymentStatus/PaymentCancel"));
 
 // ==> Auth
 const AuthLayout = lazy(() => import("./Shared/AuthLayout/AuthLayout"));
@@ -154,6 +155,7 @@ const router = createBrowserRouter([
       },
       { path: "payment-success", element: <PaymentSuccess /> },
       { path: "payment-failed", element: <PaymentFailed /> },
+      { path: "payment-cancel", element: <PaymentCancel /> },
     ],
   },
   {
@@ -327,8 +329,19 @@ const router = createBrowserRouter([
   },
 ]);
 
+// Configure QueryClient outside component to avoid recreation on every render
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // Don't refetch when window regains focus
+      refetchOnReconnect: false,   // Don't refetch on network reconnect
+      staleTime: 5 * 60 * 1000,    // Data is fresh for 5 minutes
+      retry: 1,                     // Only retry failed requests once
+    },
+  },
+});
+
 export default function App() {
-  const queryClient = new QueryClient();
 
   return (
     <>

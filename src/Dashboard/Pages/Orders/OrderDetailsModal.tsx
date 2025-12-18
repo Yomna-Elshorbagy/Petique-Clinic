@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   FaTimes,
   FaEdit,
@@ -14,7 +14,6 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import {
   updateOrderDetails,
-  getAllOrders,
 } from "../../../Store/Slices/OrderSlice";
 import type { AppDispatch } from "../../../Store/store";
 
@@ -100,7 +99,6 @@ export default function OrderDetailsModal({
           color: "#4f3f36",
           iconColor: "#C58D52",
         });
-        dispatch(getAllOrders());
         setIsEditing(false);
         onClose();
       } else {

@@ -761,7 +761,12 @@
     "haveCoupon": "لديك كود خصم؟",
     "hideCoupon": "إخفاء الكوبون",
     "enterCoupon": "أدخل رمز الكوبون",
-    "apply": "تطبيق"
+    "apply": "تطبيق",
+    "paymentMethod": "طريقة الدفع",
+    "cashOnDelivery": "الدفع عند الاستلام",
+    "cashOnDeliveryDesc": "ادفع عند استلام طلبك",
+    "visaPayment": "الدفع بالبطاقة",
+    "visaPaymentDesc": "ادفع بأمان باستخدام فيزا، ماستركارد، إلخ."
   },
   "orderDetails": {
     "noOrderDataTitle": "لم يتم العثور على بيانات الطلب",

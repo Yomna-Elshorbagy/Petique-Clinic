@@ -33,3 +33,12 @@ export const getAllOrders = async (
     pagination: data.pagination,
   };
 };
+
+export const verifyPayment = async (sessionId: string) => {
+  const { data } = await axios.post(
+    `${baseURL}/order/verify-payment/${sessionId}`,
+    {},
+    { headers: getHeaders() }
+  );
+  return data;
+};

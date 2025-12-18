@@ -1,8 +1,41 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import SEO from "../../Components/SEO/SEO";
+import { useAppDispatch } from "../../Store/store";
+import { getOrderById } from "../../Store/Slices/OrderSlice";
+import { clearCart } from "../../Store/Slices/CartSlice";
+import { verifyPayment } from "../../Apis/OrderApi";
+
 
 const PaymentSuccess: React.FC = () => {
+
+  const [searchParams] = useSearchParams();
+  const orderId = searchParams.get('order_id');
+  const sessionId = searchParams.get('session_id');
+  const dispatch = useAppDispatch();
+  const [order, setOrder] = useState<any>(null);
+
+  useEffect(() => {
+    if (sessionId) {
+      verifyPayment(sessionId)
+        .then((data) => {
+          if (data.success) {
+            setOrder(data.data);
+            dispatch(clearCart());
+          } else {
+            console.error("Payment verification failed:", data.message);
+          }
+        })
+        .catch((err) => console.error("Error verifying payment:", err));
+    } else if (orderId) {
+      dispatch(getOrderById(orderId))
+        .unwrap()
+        .then((data) => setOrder(data))
+        .catch((err) => console.error("Failed to fetch order:", err));
+    }
+  }, [dispatch, orderId, sessionId]);
+
+
   return (
     <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] flex items-center justify-center p-4 transition-colors duration-300">
       <SEO
@@ -125,7 +158,7 @@ const PaymentSuccess: React.FC = () => {
           {/* Order Number */}
           <div className="bg-[#f9ebe0] dark:bg-[#3a342f] rounded-xl p-4 mb-6 border border-[#e8d8c4] dark:border-[#5a4d44]">
             <p className="text-sm text-[#7a7067] dark:text-[#c6bcb3]">Order Number</p>
-            <p className="text-lg font-semibold text-[#C58D52]">#PQ-{Math.random().toString(36).substring(2, 8).toUpperCase()}</p>
+            <p className="text-lg font-semibold text-[#C58D52]">#{orderId || order?._id}</p>
           </div>
 
           {/* Action Button */}
@@ -138,7 +171,8 @@ const PaymentSuccess: React.FC = () => {
 
           {/* Secondary action */}
           <Link
-            to="/orderdetails"
+            to="/OrderDetails"
+            state={{ order: order }}
             className="inline-block mt-4 text-[#A98770] hover:text-[#86654F] dark:text-[#c9b499] dark:hover:text-[#e8d8c4] transition-colors duration-200 underline-offset-2 hover:underline"
           >
             View Order Details

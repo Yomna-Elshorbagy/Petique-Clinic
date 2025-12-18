@@ -37,7 +37,7 @@ export const useReservationsNotifications = () => {
 
   useEffect(() => {
     fetchReservations();
-    const interval = setInterval(fetchReservations, 10000);
+    const interval = setInterval(fetchReservations, 60000); // Poll every 60 seconds instead of 10
     return () => clearInterval(interval);
   }, []);
 
