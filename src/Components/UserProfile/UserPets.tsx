@@ -2,10 +2,18 @@ import { FaPaw, FaWeight, FaCalendar, FaSyringe } from "react-icons/fa";
 import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
 import { useUserPets } from "../../Hooks/UserProfile/useUserPets";
 import SEO from "../SEO/SEO";
+import SharedPagination from "./components/SharedPagination";
+import React, { useState } from "react";
 
 export default function UserPets() {
   const { data: pets = [], isLoading, isError } = useUserPets();
+  const [currentPage, setCurrentPage] = useState(1);
 
+  const itemsPerPage = 3;
+  const totalPages = Math.ceil(pets.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentPets = pets.slice(startIndex, endIndex);
   if (isLoading) return <LoaderPage />;
   if (isError)
     return (
@@ -34,7 +42,7 @@ export default function UserPets() {
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {pets.map((pet: any) => (
+          {currentPets.map((pet: any) => (
             <div
               key={pet._id}
               className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-200"
@@ -104,6 +112,12 @@ export default function UserPets() {
           ))}
         </div>
       </div>
+      <SharedPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        maxVisiblePages={5}
+      />
     </>
   );
 }

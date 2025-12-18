@@ -12,6 +12,7 @@ import {
 import LoaderPage from "../../../Shared/LoaderPage/LoaderPage";
 import { useMyPastReservations } from "../../../Hooks/Reservation/useReservation";
 import type { Reservation } from "../../../Interfaces/IReservations";
+import SharedPagination from "./SharedPagination";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -47,6 +48,8 @@ export default function PastReservations() {
     isError,
   } = useMyPastReservations();
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   if (isLoading)
     return (
@@ -105,6 +108,20 @@ export default function PastReservations() {
     {}
   );
 
+  // Pagination logic for months
+  const monthKeys = Object.keys(groupedByMonth);
+  const totalPages = Math.ceil(monthKeys.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedMonthKeys = monthKeys.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="space-y-8">
       {/* Summary Card */}
@@ -125,8 +142,9 @@ export default function PastReservations() {
       </div>
 
       {/* Grouped Reservations */}
-      {(Object.entries(groupedByMonth) as [string, Reservation[]][]).map(
-        ([month, monthReservations]) => (
+      {paginatedMonthKeys.map((month) => {
+        const monthReservations = groupedByMonth[month];
+        return (
           <div key={month} className="space-y-4">
             {/* month Header */}
             <div className="sticky top-0 z-10 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] py-3 px-4 rounded-xl border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] shadow-sm">
@@ -181,11 +199,11 @@ export default function PastReservations() {
                           <div className="flex items-center gap-4 text-sm text-[var(--color-text-muted)]">
                             <span className="flex items-center gap-1">
                               <FaStethoscope className="text-xs" />
-                              {reservation.service?.name || "N/A"}
+                              {reservation.service?.title || "N/A"}
                             </span>
                             <span className="flex items-center gap-1">
                               <FaClock className="text-xs" />
-                              {formatTime(reservation.time)}
+                              {formatTime(reservation.timeSlot)}
                             </span>
                           </div>
                         </div>
@@ -228,11 +246,11 @@ export default function PastReservations() {
                                 Service
                               </p>
                               <p className="text-sm font-semibold text-[var(--color-text-primary)]">
-                                {reservation.service?.name || "N/A"}
+                                {reservation.service?.title || "N/A"}
                               </p>
-                              {reservation.service?.price && (
+                              {reservation.service?.priceRange && (
                                 <p className="text-xs text-[var(--color-light-accent)] mt-0.5">
-                                  {reservation.service.price} EGP
+                                  {reservation.service.priceRange} EGP
                                 </p>
                               )}
                             </div>
@@ -271,7 +289,7 @@ export default function PastReservations() {
                                 Time
                               </p>
                               <p className="text-sm font-semibold text-[var(--color-text-primary)]">
-                                {formatTime(reservation.time)}
+                                {formatTime(reservation.timeSlot)}
                               </p>
                             </div>
                           </div>
@@ -283,8 +301,15 @@ export default function PastReservations() {
               })}
             </div>
           </div>
-        )
-      )}
+        );
+      })}
+
+      {/* Pagination */}
+      <SharedPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }

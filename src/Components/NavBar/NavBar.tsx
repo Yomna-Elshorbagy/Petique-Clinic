@@ -10,7 +10,6 @@ import {
   FaSun,
   FaUserCircle,
   FaChevronDown,
-  FaGlobe,
   FaLanguage,
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
@@ -32,6 +31,10 @@ export default function NavBar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { noOfCartItems } = useSelector((state: RootState) => state.cart);
   const { t, i18n } = useTranslation();
+  const accessToken =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+  const isAuthenticated = Boolean(accessToken);
 
   const navLinks = [
     { label: t("navbar.home"), href: "/" },
@@ -147,19 +150,20 @@ export default function NavBar() {
                 <FaMoon className="text-[var(--color-light-dark)]" />
               )}
             </button>
-
-            <Link
-              to="/cart"
-              className="relative p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
-              aria-label={t("navbar.cart")}
-            >
-              <FaShoppingCart className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
-              {noOfCartItems > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-[var(--color-light-accent)] text-white text-[11px] font-bold flex items-center justify-center">
-                  {noOfCartItems}
-                </span>
-              )}
-            </Link>
+            {isAuthenticated && (
+              <Link
+                to="/cart"
+                className="relative p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
+                aria-label={t("navbar.cart")}
+              >
+                <FaShoppingCart className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
+                {noOfCartItems > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-[var(--color-light-accent)] text-white text-[11px] font-bold flex items-center justify-center">
+                    {noOfCartItems}
+                  </span>
+                )}
+              </Link>
+            )}
 
             <div className="relative">
               <button
@@ -176,19 +180,34 @@ export default function NavBar() {
               {showProfile && (
                 <div className="absolute right-0 mt-3 w-52 rounded-2xl bg-white dark:bg-[var(--color-dark-card)] border border-[var(--color-light-secondary)]/20 shadow-2xl p-3 space-y-2 z-20">
                   {[
-                    { label: t("navbar.profile"), href: "/profile" },
-                    { label: t("navbar.login"), href: "/login" },
-                    { label: t("navbar.register"), href: "/register" },
-                    { label: t("navbar.logout"), href: "/logout" },
-                  ].map((item) => (
-                    <Link
-                      key={item.label}
-                      to={item.href}
-                      className="block px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
+                    {
+                      label: t("navbar.profile"),
+                      href: "/profile",
+                      auth: true,
+                    },
+                    {
+                      label: t("navbar.reviews"),
+                      href: "/clinicReviews",
+                      auth: true,
+                    },
+                    { label: t("navbar.login"), href: "/login", auth: false },
+                    {
+                      label: t("navbar.register"),
+                      href: "/register",
+                      auth: false,
+                    },
+                    { label: t("navbar.logout"), href: "/logout", auth: true },
+                  ]
+                    .filter((item) => item.auth === isAuthenticated)
+                    .map((item) => (
+                      <Link
+                        key={item.label}
+                        to={item.href}
+                        className="block px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
                 </div>
               )}
             </div>
@@ -259,20 +278,31 @@ export default function NavBar() {
 
               <div className="bg-white dark:bg-[var(--color-dark-card)] border border-[var(--color-light-secondary)]/20 rounded-2xl p-3 space-y-2">
                 {[
-                  { label: t("navbar.profile"), href: "/profile" },
-                  { label: t("navbar.login"), href: "/login" },
-                  { label: t("navbar.register"), href: "/register" },
-                  { label: t("navbar.logout"), href: "/logout" },
-                ].map((item) => (
-                  <Link
-                    key={item.label}
-                    to={item.href}
-                    className="block px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
-                    onClick={() => setOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+                  { label: t("navbar.profile"), href: "/profile", auth: true },
+                  {
+                    label: t("navbar.reviews"),
+                    href: "/clinicReviews",
+                    auth: true,
+                  },
+                  { label: t("navbar.login"), href: "/login", auth: false },
+                  {
+                    label: t("navbar.register"),
+                    href: "/register",
+                    auth: false,
+                  },
+                  { label: t("navbar.logout"), href: "/logout", auth: true },
+                ]
+                  .filter((item) => item.auth === isAuthenticated)
+                  .map((item) => (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      className="block px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
+                      onClick={() => setOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
               </div>
             </div>
           </motion.div>
