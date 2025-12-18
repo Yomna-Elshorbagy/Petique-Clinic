@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import {
+  getDoctorWorkloadApi,
+  getMonthlyReservationsTrendApi,
   getPetsAgeDistributionApi,
   getPetsPerCategoryApi,
   getPetsPerUserApi,
+  getRevenueAnalysisApi,
   getTopCategoriesApi,
   getTopVaccinatedCategoriesApi,
   getTotalPetsApi,
@@ -71,3 +74,25 @@ export const useTopVaccinatedCategories = () =>
     queryKey: ["analytics", "topVaccinatedCategories"],
     queryFn: getTopVaccinatedCategoriesApi,
   });
+
+// ==> Doctor workload
+export const useDoctorWorkload = () =>
+  useQuery({
+    queryKey: ["analytics", "doctorWorkload"],
+    queryFn: getDoctorWorkloadApi,
+  });
+
+// ==> Monthly reservations trend
+export const useMonthlyReservationsTrend = () =>
+  useQuery({
+    queryKey: ["analytics", "monthlyTrend"],
+    queryFn: getMonthlyReservationsTrendApi,
+  });
+
+  
+export const useRevenueAnalysis = () => {
+  return useQuery({
+    queryKey: ["analytics", "revenue"],
+    queryFn: getRevenueAnalysisApi,
+  });
+};

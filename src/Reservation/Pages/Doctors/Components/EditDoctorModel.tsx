@@ -17,6 +17,7 @@ interface EditDoctorModalProps {
 const doctorSchema = z
   .object({
     userName: z.string().min(3, "Full Name must be at least 3 characters"),
+
     mobileNumber: z
       .string()
       .refine((val) => val.trim() !== "", {
@@ -25,19 +26,24 @@ const doctorSchema = z
       .refine((val) => /^01[0125][0-9]{8}$/.test(val), {
         message: "Enter a valid Egyptian mobile number",
       }),
+
     gender: z.enum(["male", "female"]),
-    newPassword: z
-      .string()
-      .min(
-        6,
-        "Password must contain letters and numbers and be at least 6 characters"
-      ),
-    confirmPassword: z.string(),
+
+    newPassword: z.string().optional(),
+    confirmPassword: z.string().optional(),
   })
-  .refine((obj) => obj.newPassword === obj.confirmPassword, {
-    message: "Passwords must match",
-    path: ["confirmpassword"],
-  });
+  .refine(
+    (data) => {
+      if (!data.newPassword && !data.confirmPassword) return true;
+      if (data.newPassword && data.newPassword.length < 6) return false;
+      return data.newPassword === data.confirmPassword;
+    },
+    {
+      message:
+        "Password must be at least 6 characters and passwords must match",
+      path: ["confirmPassword"],
+    }
+  );
 
 type FormValues = z.infer<typeof doctorSchema>;
 
@@ -100,7 +106,9 @@ export default function EditDoctorModal({
     fd.append("mobileNumber", data.mobileNumber);
     fd.append("gender", data.gender);
     if (data.newPassword) fd.append("newPassword", data.newPassword);
-    if (data.newPassword) fd.append("confirmPassword", data.confirmPassword);
+    if (data.newPassword && data.confirmPassword) {
+      fd.append("confirmPassword", data.confirmPassword);
+    }
 
     if (imageFile) fd.append("image", imageFile);
 

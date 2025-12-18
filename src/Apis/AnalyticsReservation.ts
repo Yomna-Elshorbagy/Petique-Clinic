@@ -96,3 +96,25 @@ export const getTopVaccinatedCategoriesApi = async () => {
   );
   return data;
 };
+
+// ======> Reservation
+
+// ==> doctor workload
+export const getDoctorWorkloadApi = async () => {
+  const { data } = await axios.get(`${BASE_URL}/doctor-workload`, { headers });
+  return data;
+};
+
+// ==> monthly reservations trend
+export const getMonthlyReservationsTrendApi = async () => {
+  const { data } = await axios.get(`${BASE_URL}/monthly-trend`, { headers });
+  return data;
+};
+
+export const getRevenueAnalysisApi = async () => {
+  const { data } = await axios.get(`${BASE_URL}/revenue`, {
+    headers,
+  });
+
+  return data;
+};

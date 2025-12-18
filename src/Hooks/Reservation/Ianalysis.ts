@@ -79,3 +79,29 @@ export interface TopCategoriesResponse {
   success: boolean;
   data: TopCategory[];
 }
+/* ========= DOCTOR WORKLOAD ========= */
+export interface DoctorWorkload {
+  _id: string;
+  totalAppointments: number;
+  doctor: {
+    _id: string;
+    userName: string;
+    email: string;
+  };
+}
+
+export interface DoctorWorkloadResponse {
+  success: boolean;
+  data: DoctorWorkload[];
+}
+
+/* ========= MONTHLY TREND ========= */
+export interface MonthlyTrend {
+  _id: number; // month number (1–12)
+  total: number;
+}
+
+export interface MonthlyTrendResponse {
+  success: boolean;
+  data: MonthlyTrend[];
+}
