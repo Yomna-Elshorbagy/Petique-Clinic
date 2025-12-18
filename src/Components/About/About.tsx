@@ -12,7 +12,7 @@ export default function About() {
     const isRTL = i18n.language === "ar";
     return (
         <>
-            <section className='relative px-6 py-20 bg-[#FAF8F4]'>
+            <section className='relative px-6 py-20 bg-[var(--color-light-background)]'>
 
                 <motion.img
                     src={bunny}

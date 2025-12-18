@@ -10,7 +10,14 @@ import {
 import type { TableColumn } from "react-data-table-component";
 import type { ICategory } from "../../../Interfaces/categryInterfaces";
 import DataTableComponent from "../../../Shared/Table/TableComponent";
-import { FaEdit, FaPlus, FaPlusCircle, FaTrash, FaUndo } from "react-icons/fa";
+import {
+  FaEdit,
+  FaPlus,
+  FaPlusCircle,
+  FaTrash,
+  FaUndo,
+  FaSearch,
+} from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import CategoryModal from "./Components/CategoryModal";
 import DeleteModel from "./Components/DeleteModel";
@@ -18,6 +25,8 @@ import Swal from "sweetalert2";
 
 export default function CategoriesDashboared() {
   const [showmodal, Setshowmodal] = useState(false);
+  const [searchId, setSearchId] = useState("");
+  const [searchName, setSearchName] = useState("");
   const [newcategoryName, SetnewcategoryName] = useState("");
   const [newcategoryImage, SetnewcategoryImage] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -30,12 +39,40 @@ export default function CategoriesDashboared() {
     queryFn: getAllCategories,
   });
 
+  // Filter categories
+  const filteredCategories = React.useMemo(() => {
+    let filtered = data || [];
+
+    if (searchId) {
+      const searchLower = searchId.toLowerCase();
+      filtered = filtered.filter((category: ICategory) =>
+        category._id?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    if (searchName) {
+      const searchLower = searchName.toLowerCase();
+      filtered = filtered.filter((category: ICategory) =>
+        category.name?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    return filtered;
+  }, [data, searchId, searchName]);
+
+  const resetFilters = () => {
+    setSearchId("");
+    setSearchName("");
+  };
+
+  const hasActiveFilters = searchId || searchName;
+
   // add category
   const queryClient = useQueryClient();
   const addmutation = useMutation({
     mutationFn: addCategory,
     onSuccess: () => {
-     Swal.fire({
+      Swal.fire({
         title: "Success",
         text: "Category added successfully!",
         icon: "success",
@@ -46,13 +83,13 @@ export default function CategoriesDashboared() {
       resetForm();
       Setshowmodal(false);
     },
-    onError: (error:any) => {
-       console.error("add category failed", error);
+    onError: (error: any) => {
+      console.error("add category failed", error);
       Swal.fire({
-      title: "Error",
-      text: error?.response?.data?.message || "Failed to add Category",
-      icon: "error",
-    });
+        title: "Error",
+        text: error?.response?.data?.message || "Failed to add Category",
+        icon: "error",
+      });
     },
   });
 
@@ -84,13 +121,13 @@ export default function CategoriesDashboared() {
       Setshowmodal(false);
       setUpdateId(null);
     },
-    onError: (error:any) => {
-        console.error("update category failed", error);
-     Swal.fire({
-      title: "Error",
-      text: error?.response?.data?.message || "Failed to update Category",
-      icon: "error",
-    });
+    onError: (error: any) => {
+      console.error("update category failed", error);
+      Swal.fire({
+        title: "Error",
+        text: error?.response?.data?.message || "Failed to update Category",
+        icon: "error",
+      });
     },
   });
   const handleUpdatecategory = () => {
@@ -124,61 +161,57 @@ export default function CategoriesDashboared() {
   // delete category
   const deletemutation = useMutation({
     mutationFn: deleteCategory,
-    
-    
   });
 
-  const handleDeleteCategory = async(id: string) => {
+  const handleDeleteCategory = async (id: string) => {
     try {
-          const result = await Swal.fire({
-            title: "Delete permanently?",
-            text: "This will permanently remove the category and cannot be undone.",
-            icon: "error",
-            showCancelButton: true,
-            confirmButtonText: "Yes, delete permanently",
-            cancelButtonText: "Cancel",
-            reverseButtons: true,
-            confirmButtonColor: "red",
-          });
-    
-          if (!result.isConfirmed) return;
-    
-          Swal.fire({
-            title: "Deleting...",
-            allowOutsideClick: false,
-            didOpen: () => Swal.showLoading(),
-          });
-    
-          await deletemutation.mutateAsync (id);
-    
-          Swal.close();
-          await Swal.fire({
-            title: "Deleted",
-            text: "Category was permanently deleted.",
-            icon: "success",
-            timer: 1400,
-            showConfirmButton: false,
-          });
-        queryClient.invalidateQueries({ queryKey: ["categories"] });
-        } catch (error: any) {
-          console.error("Hard delete failed", error);
-          Swal.close();
-          Swal.fire({
-            title: "Error",
-            text: error?.response?.data?.message || "Failed to delete category.",
-            icon: "error",
-          });
-        }
-   
+      const result = await Swal.fire({
+        title: "Delete permanently?",
+        text: "This will permanently remove the category and cannot be undone.",
+        icon: "error",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete permanently",
+        cancelButtonText: "Cancel",
+        reverseButtons: true,
+        confirmButtonColor: "red",
+      });
+
+      if (!result.isConfirmed) return;
+
+      Swal.fire({
+        title: "Deleting...",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+      });
+
+      await deletemutation.mutateAsync(id);
+
+      Swal.close();
+      await Swal.fire({
+        title: "Deleted",
+        text: "Category was permanently deleted.",
+        icon: "success",
+        timer: 1400,
+        showConfirmButton: false,
+      });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+    } catch (error: any) {
+      console.error("Hard delete failed", error);
+      Swal.close();
+      Swal.fire({
+        title: "Error",
+        text: error?.response?.data?.message || "Failed to delete category.",
+        icon: "error",
+      });
+    }
   };
 
   // soft delete
   const softdeletemutation = useMutation({
     mutationFn: ({ id, token }: { id: string; token: string }) =>
       softDeleteCategories(id, token),
-   
   });
-  const handleSoftdeletecategory = async(id: string) => {
+  const handleSoftdeletecategory = async (id: string) => {
     try {
       const token = localStorage.getItem("accessToken");
       if (!token) return toast.error("Unauthorized");
@@ -211,7 +244,7 @@ export default function CategoriesDashboared() {
         timer: 1400,
         showConfirmButton: false,
       });
-       queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
     } catch (error: any) {
       console.error("Soft delete failed", error);
       Swal.close();
@@ -221,7 +254,6 @@ export default function CategoriesDashboared() {
         icon: "error",
       });
     }
-   
   };
 
   const categorycolumns: TableColumn<ICategory>[] = [
@@ -346,10 +378,78 @@ export default function CategoriesDashboared() {
           <FaPlusCircle /> Add Category
         </button>
       </div>
+
+      {/* Search Filters */}
+      <div className="mb-4">
+        <div className="flex gap-4 flex-wrap items-center">
+          {/* ID Search */}
+          <div className="relative flex-1 min-w-[200px]">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaSearch className="text-gray-400" size={18} />
+            </div>
+            <input
+              type="text"
+              placeholder="Search by ID..."
+              value={searchId}
+              onChange={(e) => setSearchId(e.target.value)}
+              className="w-full pl-10 pr-10 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
+            />
+            {searchId && (
+              <button
+                onClick={() => setSearchId("")}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Name Search */}
+          <div className="relative flex-1 min-w-[200px]">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaSearch className="text-gray-400" size={18} />
+            </div>
+            <input
+              type="text"
+              placeholder="Search by name..."
+              value={searchName}
+              onChange={(e) => setSearchName(e.target.value)}
+              className="w-full pl-10 pr-10 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
+            />
+            {searchName && (
+              <button
+                onClick={() => setSearchName("")}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Reset Button */}
+          <button
+            onClick={resetFilters}
+            disabled={!hasActiveFilters}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium whitespace-nowrap"
+            title="Reset Filters"
+          >
+            Reset
+          </button>
+        </div>
+
+        {/* Results Counter */}
+        {hasActiveFilters && (
+          <p className="mt-2 text-sm text-gray-600">
+            Found {filteredCategories.length} categor
+            {filteredCategories.length !== 1 ? "ies" : "y"}
+          </p>
+        )}
+      </div>
+
       <DataTableComponent<ICategory>
         columns={categorycolumns}
         loading={isLoading}
-        data={data || []}
+        data={filteredCategories}
         pagination
       />
 
@@ -371,9 +471,6 @@ export default function CategoriesDashboared() {
           loading={addmutation.isPending || updatemutation.isPending}
         />
       )}
-
-      
-      
     </>
   );
 }

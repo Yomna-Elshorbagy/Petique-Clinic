@@ -29,7 +29,7 @@ export default function Stuff() {
 
   return (
     <motion.section
-      className="py-20 bg-[#FAF8F4]"
+      className="py-20 bg-[var(--color-light-background)]"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}

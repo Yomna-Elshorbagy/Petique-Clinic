@@ -719,8 +719,9 @@
 
   "hero": {
     "happyCustomersLine1": "أكثر من 100,000 عميل سعيد",
-    "happyCustomersLine2": "حول العالم"},
-    
+    "happyCustomersLine2": "حول العالم"
+  },
+
   "heroSection": {
     "welcome": "مرحباً بك في بتيك",
     "takingCareOf": "نعتني بـ",
@@ -729,6 +730,11 @@
     "wereOurOwn": "ملكنا الخاص",
     "description": "نقدم أفضل الخدمات الطبية لحيواناتك الأليفة الحبيبة. من العناية إلى العمليات الجراحية، لدينا كل ما يحتاجه صديقك ذو الفراء.",
     "contactUs": "اتصل بنا"
+  },
+  "categorySlider": {
+    "title": "تسوق الفئات الشائعة",
+    "explore": "استكشف كل",
+    "error": "خطأ في تحميل الفئات"
   },
   "checkout": {
     "title": "معلومات الحيوان الأليف والتواصل",
@@ -742,7 +748,20 @@
     "addressPlaceholder": "123 شارع الرئيسي، المدينة، الدولة",
     "phonePlaceholder": "+20 1X XXX XXXX",
     "notePlaceholder": "أي طلبات خاصة أو معلومات يجب أن نعرفها...",
-    "continue": "المتابعة"
+    "continue": "المتابعة",
+    "orderSummary": "ملخص الطلب",
+    "subtotal": "المجموع الفرعي",
+    "tax": "الضريبة (8%)",
+    "delivery": "التوصيل",
+    "free": "مجاني",
+    "total": "المجموع",
+    "secure": "آمن",
+    "fastDelivery": "توصيل سريع",
+    "petFriendly": "صديق للحيوانات",
+    "haveCoupon": "لديك كود خصم؟",
+    "hideCoupon": "إخفاء الكوبون",
+    "enterCoupon": "أدخل رمز الكوبون",
+    "apply": "تطبيق"
   },
   "orderDetails": {
     "noOrderDataTitle": "لم يتم العثور على بيانات الطلب",
@@ -807,7 +826,7 @@
       }
     ]
   },
-   "productsSection": {
+  "productsSection": {
     "bestValue": {
       "title": "منتجات عالية الجودة بأسعار تنافسية",
       "subtitle": "اكتشف أفضل المنتجات المميزة بأسعار مناسبة لحيواناتك الأليفة",
@@ -836,7 +855,7 @@
         "الخدمات الجراحية للحيوانات الأليفة"
       ]
     },
-      "quickLinks": {
+    "quickLinks": {
       "title": "روابط سريعة",
       "items": {
         "about": "من نحن",
@@ -860,10 +879,9 @@
       "cat": "قطة",
       "dog": "كلب"
     },
-    "copyright":
-      "© جميع الحقوق محفوظة 2024. Petique. تصميم فريق ITI."
+    "copyright": "© جميع الحقوق محفوظة 2024. Petique. تصميم فريق ITI."
   },
-   "features": {
+  "features": {
     "items": [
       {
         "icon": "shopping",
@@ -925,25 +943,38 @@
   "common": {
     "reset": "إعادة تعيين"
   },
-  "ProductDetails":{
-    "price":"السعر",
-    "category":"الفئة",
-    "addTocart":"أضف الي السلة",
-    "addReview":"إضافة تقييم",
-    "readMore":"اقرأ المزيد",
-    "showLess":"عرض أقل",
-    "submit":"إرسال",
-    "cancel" : "إلغاء",
-    "addNewReview":"إضافة تقييم جديد",
-    "rating":"التقييم ",
-    "comment":"التعليق",
-    "productReview":"تقيممات المنتج",
+  "ProductDetails": {
+    "price": "السعر",
+    "category": "الفئة",
+    "addTocart": "أضف الي السلة",
+    "addReview": "إضافة تقييم",
+    "readMore": "قراءة المزيد",
+    "showLess": "عرض أقل",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "addNewReview": "إضافة تقييم جديد",
+    "rating": "التقييم ",
+    "comment": "التعليق",
+    "productReview": "تقيممات المنتج",
     "relatedProduct": "منتجات ذات صلة ",
-     "showReviews":"إظهار التقييمات",
-    "hideReviews":"إخفاء التقييمات",
-    "placeholder":"اكتب تقيممك هنا ....",
-    "deletemessage":" هل أنت تريد حذف هذا التقييم ؟",
-    "delete":"حذف"
+    "showReviews": "إظهار التقييمات",
+    "hideReviews": "إخفاء التقييمات",
+    "placeholder": "اكتب تقيممك هنا ....",
+    "deletemessage": " هل أنت تريد حذف هذا التقييم ؟",
+    "delete": "حذف",
+    "priceDropNotification": "تلقي إشعار عند انخفاض السعر",
+    "update": "جاري التحديث...",
+    "unsubscribe": "إلغاء الإشتراك",
+    "notifyMe": "أرسل لي إشعار عند إنخفاض السعر",
+    "deleteReviewTitle": "حذف نهائي؟",
+    "deleteReviewText": "هذا سيقوم بحذف التعليق نهائيا ولا يمكن التراجع عنه.",
+    "deleteReviewConfirm": "نعم، احذف نهائيا",
+    "deleteReviewCancel": "إلغاء",
+    "deleteReviewloading": "جاري الحذف...",
+    "successdelReviewTitle": "تم حذف التعليق بنجاح",
+    "faildelReviewTitle": "فشل حذف التعليق",
+    "successAddReviewTitle": "تم إضافة التعليق بنجاح",
+    "failAddReviewTitle": "فشل إضافة تعليق"
   },
   "about": {
     "badge": "من نحن",
@@ -983,7 +1014,7 @@
       "repeatPassword": "إعادة كلمة المرور",
       "name": "الاسم",
       "phone": "رقم الهاتف",
-      "otp" : "أدخل رمز التحقق",
+      "otp": "أدخل رمز التحقق",
       "male": "ذكر",
       "female": "أنثى",
       "or": "أو",
@@ -992,8 +1023,8 @@
       "login": "تسجيل الدخول",
       "signup": "إنشاء حساب",
       "verify": "تأكيد",
-      "emailError":"من فضلك قم بإدخال بريد إالكتروني صحيح",
-      "passwordError" : "من فضلك قم بإدخال كلمة مرور صحيحة"
+      "emailError": "من فضلك قم بإدخال بريد إالكتروني صحيح",
+      "passwordError": "من فضلك قم بإدخال كلمة مرور صحيحة"
     },
 
     "login": {
@@ -1018,7 +1049,7 @@
       "loading": "جاري الإنشاء...",
       "alreadyHaveAccount": "لديك حساب بالفعل؟",
       "confirmOtp": "تأكيد رمز التحقق",
-      "alreadyRegister":"قمت بإنشاء حساب بالفعل؟",
+      "alreadyRegister": "قمت بإنشاء حساب بالفعل؟",
       "rightTitle": "انضم إلى Petique",
       "rightSubtitle": "أنشئ حسابك واستمتع بعالم حيوانك الأليف.",
       "successTitle": "تم إنشاء الحساب!",
@@ -1054,7 +1085,7 @@
       },
 
       "remember": "تتذكر كلمة المرور؟",
-      "defaultError" : "حدث خطأ, الرجاء إعادة المحاولة."
+      "defaultError": "حدث خطأ, الرجاء إعادة المحاولة."
     },
 
     "otp": {
@@ -1067,9 +1098,7 @@
       "successText": "تم تفعيل حسابك بنجاح.",
       "errorTitle": "فشل التحقق",
       "errorDefault": "رمز التحقق غير صالح أو منتهي",
-      "required" : "رمز التحقق مطلوب"
+      "required": "رمز التحقق مطلوب"
     }
   }
-
-
 }

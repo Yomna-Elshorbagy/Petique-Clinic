@@ -1,5 +1,5 @@
 import type { productdetails } from "../../Types/ProductDetailsType";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,6 +10,7 @@ import {
   unsubscribeFromPriceAlerts,
   getUserPriceAlertSubscriptions,
 } from "../../Apis/ProductApis";
+import { useTranslation } from "react-i18next";
 
 /* ================= SINGLE CARD ================= */
 function RelatedProductCard({
@@ -22,7 +23,7 @@ function RelatedProductCard({
   const [activeImage, setActiveImage] = useState(
     product.imageCover.secure_url
   );
-
+const {t} =useTranslation();
   const isSubscribed = subscribedProducts.includes(product._id);
   const isLoading = loadingSubs === product._id;
 
@@ -66,7 +67,7 @@ function RelatedProductCard({
             <img
               src={activeImage}
               alt={product.title}
-              className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-52  transition-transform duration-500 group-hover:scale-105"
             />
 
             {product.subImages?.length > 0 && (
@@ -115,7 +116,7 @@ function RelatedProductCard({
           </div>
 
           <p className="text-[11px] text-[var(--color-text-muted)]">
-            Get notified when price drops
+            {t("ProductDetails.priceDropNotification")}
           </p>
         </div>
 
@@ -133,10 +134,10 @@ function RelatedProductCard({
             `}
           >
             {isLoading
-              ? "Updating..."
+              ? t("ProductDetails.update")
               : isSubscribed
-              ? "Unsubscribe"
-              : "Notify me on price drop"}
+              ? t("ProductDetails.unsubscribe")
+              : t("ProductDetails.notifyMe")}
           </button>
         </div>
       </div>
@@ -167,8 +168,32 @@ export default function RelatedProductsSlider({ relatedProducts }: any) {
   }, []);
 
   return (
-    <section className="px-6 md:px-10 lg:px-16 py-8">
-      <Slider dots infinite speed={500} slidesToShow={4} slidesToScroll={1} autoplay>
+    // <section className="px-6 md:px-10 lg:px-16 py-8">
+      <Slider 
+      dots={true}
+      infinite={true}
+      speed={500}
+      slidesToShow={4}
+         slidesToScroll={1}
+          autoplay={true}
+           autoplaySpeed={3000}
+      responsive={[
+        {
+          breakpoint: 1024,
+          settings: { slidesToShow: 3 },
+        },
+        {
+          breakpoint: 768,
+          settings: { slidesToShow: 2 },
+        },
+        {
+          breakpoint: 640,
+          settings: { slidesToShow: 1 },
+        },
+      ]}
+      
+      
+      >
         {safeProducts.map((product: any) => (
           <RelatedProductCard
             key={product._id}
@@ -180,6 +205,6 @@ export default function RelatedProductsSlider({ relatedProducts }: any) {
           />
         ))}
       </Slider>
-    </section>
+    // </section>
   );
 }

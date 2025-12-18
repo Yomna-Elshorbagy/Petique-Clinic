@@ -9,14 +9,32 @@ import {
   useDeleteVaccination,
 } from "../../../../Hooks/Vaccinations/useVaccinations";
 import type { IVaccination, IDose } from "../../../../Interfaces/IVacination";
+import { useAllVaccinationsFilter } from "../../../../Hooks/SharedSearch/useAllVaccinationsFilter";
+import SharedSearch from "../../../../Shared/SharedSearch/SharedSearch";
 
 export default function AllVaccinationsTable() {
   const { data: vaccines = [], isLoading } = useVaccinations();
   const softDelete = useSoftDeleteVaccination();
   const hardDelete = useDeleteVaccination();
 
+  const {
+    filteredVaccines,
+    nameSearch,
+    setNameSearch,
+    idSearch,
+    setIdSearch,
+    createdBySearch,
+    setCreatedBySearch,
+    category,
+    setCategory,
+    doses,
+    setDoses,
+    categoryOptions,
+    dosesOptions,
+  } = useAllVaccinationsFilter(vaccines);
+
   const { page, totalPages, paginatedItems, goToPage } =
-    useLocalPagination<IVaccination>(vaccines, 5);
+    useLocalPagination<IVaccination>(filteredVaccines, 5);
 
   const handleSoftDelete = (id: string) => {
     Swal.fire({
@@ -45,6 +63,18 @@ export default function AllVaccinationsTable() {
 
   return (
     <>
+      <SharedSearch
+        searches={[
+          {placeholder: "Search by ID" , value: idSearch , onChange: setIdSearch},
+          { placeholder: "Search by Name", value: nameSearch, onChange: setNameSearch },
+          { placeholder: "Search by Created By", value: createdBySearch, onChange: setCreatedBySearch },
+        ]}
+        filters={[
+          { value: category, onChange: setCategory, options: categoryOptions },
+          { value: doses, onChange: setDoses, options: dosesOptions },
+        ]}
+      />
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
