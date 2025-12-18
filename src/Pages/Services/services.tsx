@@ -34,46 +34,45 @@ export default function Services() {
     gsap.to(".bone-icon", {
       y: -10,
       x: isRTL ? -10 : 10,
-      duration: 1.2,
+      duration: 1,
       repeat: -1,
       yoyo: true,
       ease: "power1.inOut",
     });
   }, [isRTL]);
 
-  console.log("services data:", services);
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Something went wrong</p>;
 
   return (
     <div className="bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] transition-colors duration-300">
-      <div className="relative bg-[#1f1b22] dark:bg-[var(--color-dark-card)] h-[360px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
+      <div className="relative bg-[var(--color-accent-darker)] dark:bg-[var(--color-dark-card)] h-[290px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
         <div className="max-w-7xl text-center md:text-left w-full">
           <Bone
             key={i18n.language}
             ref={boneRef}
-            className={`bone-icon w-30 h-30 text-white drop-shadow-[0_0_10px_#ff9100] ${
+            className={`bone-icon w-25 h-30 text-white ${
               isRTL
                 ? "ml-0 mr-[-30px] scale-y-[-1]"
                 : "ml-[-30px] mr-0 scale-y-[1]"
             }`}
             strokeWidth={2.5}
-            color="#e3e3e3"
+            color="#fde5d3"
           />
           <h1
-            className={`text-white text-3xl md:text-5xl font-extrabold mt-4 ${
+            className={`text-white text-3xl md:text-4xl font-extrabold mt-4 ${
               isRTL ? "text-right" : "text-left"
             }`}
           >
             {t("services.services")}
           </h1>
 
-          <div className="mt-8 flex justify-start md:justify-start gap-6 text-[#e9a66f] font-medium text-1xl md:text-1xl">
+          <div className="mt-8 flex justify-start md:justify-start gap-6 text-[#6b5a4d] font-medium text-1xl md:text-1xl">
             <Link to="/home" className="hover:text-white transition-colors">
               {t("services.home")}
             </Link>
-            <span className="text-[#e9a66f]"> &gt; </span>
+            <span className="text-[#6b5a4d]"> &gt; </span>
             <p className="text-white font-semibold">
               {t("services.ourServices")}
             </p>
@@ -81,10 +80,10 @@ export default function Services() {
         </div>
 
         <img
-          src="/src/assets/images/cat-relaxing.png"
+          src="/src/assets/images/pic-2.png"
           alt="cat"
-          className={`hidden md:block absolute bottom-[-120px] w-[600px] z-10 ${
-            isRTL ? "left-0" : "right-0"
+          className={`hidden md:block absolute bottom-[-90px] w-[600px] z-10 ${
+            isRTL ? "left-0" : "right-5"
           }`}
         />
       </div>
