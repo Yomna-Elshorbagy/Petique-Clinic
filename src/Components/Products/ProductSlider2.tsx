@@ -132,7 +132,7 @@ const ProductSlider2: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="relative py-20 bg-[#FAF8F4] px-4 sm:px-6 lg:px-24 overflow-hidden"
+      className="relative py-20 px-4 sm:px-6 lg:px-24 overflow-hidden"
     >
       {/* Decorative paw prints with subtle animation */}
             <div className="absolute inset-0 opacity-[0.2] pointer-events-none">
@@ -167,10 +167,10 @@ const ProductSlider2: React.FC = () => {
             </div>
       {/* ================= Header ================= */}
       <div className="text-center mb-12 relative z-10">
-        <h2 className="font-['Playfair_Display'] text-[#6c5136] uppercase tracking-widest font-semibold text-xl md:text-3xl mb-4">
+        <h2 className="font-['Playfair_Display'] text-[var(--color-extra-2)] uppercase tracking-widest font-semibold text-xl md:text-3xl mb-4">
           {t("productsSection.bestValue.title")}
         </h2>
-        <p className="text-[#8A7A67] text-sm md:text-base max-w-2xl mx-auto">
+        <p className="text-[#8A7A67] dark:text-[#CFC3B5] text-sm md:text-base max-w-2xl mx-auto">
            {t("productsSection.bestValue.subtitle")}
         </p>
       </div>
@@ -196,7 +196,9 @@ const ProductSlider2: React.FC = () => {
               style={{ width: `${slideWidth}%` }}
               className="shrink-0 px-3"
             >
-              <motion.div whileHover={{ y: -8 }}>
+              <motion.div whileHover={{ y: -8 }}
+              // className="bg-[var(--color-bg-light)]"
+              >
                 <ProductCard product={product} />
               </motion.div>
             </div>
