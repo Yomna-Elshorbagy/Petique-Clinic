@@ -72,7 +72,7 @@ interface ProductCardProps {
 }
 interface JwtPayload {
   id: string;
-  role: "admin" | "doctor" | "owner" | "user";
+  role: "admin" | "doctor" | "owner" | "petOwner";
   iat: number;
   exp: number;
 }
@@ -120,7 +120,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     }
   }
   const isPrivilegedRole =
-    role === "admin" || role === "doctor" || role === "owner";
+    role === "admin" || role === "doctor" ;
 
   const isOutOfStock = product.stock === 0;
 
