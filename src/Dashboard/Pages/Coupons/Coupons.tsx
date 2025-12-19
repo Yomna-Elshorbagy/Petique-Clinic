@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { TableColumn } from "react-data-table-component";
-import { FaEdit, FaPlusCircle, FaTrash, FaUndo, FaTags } from "react-icons/fa";
+import {  FaEye,FaEdit, FaPlusCircle, FaTrash, FaUndo, FaTags } from "react-icons/fa";
 import DataTableComponent from "../../../Shared/Table/TableComponent";
 import Swal from "sweetalert2";
 
@@ -22,6 +22,8 @@ export default function Coupons() {
   const [openModal, setOpenModal] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState<ICoupon | null>(null);
   const [page, setPage] = useState(1);
+  const [viewMode, setViewMode] = useState(false);
+
   const [limit] = useState(10);
 
   const queryClient = useQueryClient();
@@ -45,6 +47,13 @@ export default function Coupons() {
     setSelectedCoupon(null);
     setOpenModal(true);
   };
+
+  const handleView = (coupon: ICoupon) => {
+  setSelectedCoupon(coupon);
+  setViewMode(true);
+  setOpenModal(true);
+};
+
 
   const handleEdit = (coupon: ICoupon) => {
     setSelectedCoupon(coupon);
@@ -240,6 +249,19 @@ export default function Coupons() {
       name: "Actions",
       cell: (row) => (
         <div className="flex items-center gap-3">
+
+        {/* VIEW */}
+        <button
+          onClick={() => handleView(row)}
+          className="p-2 rounded-lg bg-blue-50 text-blue-600 
+            hover:bg-blue-100 transition-all duration-200
+            hover:scale-[1.07] active:scale-[0.96]
+            shadow-sm hover:shadow-md border border-blue-100"
+            title="Preview"
+        >
+          <FaEye size={15} />
+        </button>
+
           <button
             onClick={() => handleEdit(row)}
             className="p-2 rounded-lg bg-green-50 text-green-600 
@@ -250,6 +272,19 @@ export default function Coupons() {
           >
             <FaEdit size={15} />
           </button>
+
+          {/* SOFT DELETE */}
+        <button
+          onClick={() => handleSoftDelete(row._id)}
+          className="p-2 rounded-lg bg-yellow-50 text-yellow-600 
+                                   hover:bg-yellow-100 transition-all duration-200
+                                   hover:scale-[1.07] active:scale-[0.96]
+                                   shadow-sm hover:shadow-md border border-yellow-100"
+                  
+          title="Soft Delete"
+        >
+          <FaUndo size={15} />
+        </button>
 
           <button
             onClick={() => handleDelete(row._id)}
@@ -347,10 +382,12 @@ export default function Coupons() {
         onClose={() => {
           setOpenModal(false);
           setSelectedCoupon(null);
+          setViewMode(false);
         }}
         coupon={selectedCoupon}
-        onSubmit={handleSubmit}
+        onSubmit={viewMode ? undefined : handleSubmit}
         loading={createMutation.isPending || updateMutation.isPending}
+        viewMode={viewMode}
       />
     </div>
   );
