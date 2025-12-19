@@ -65,7 +65,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     },
     {
       icon: <FaClipboardList />,
-      label: "Medical History",
+      label: "Medical OverView",
       to: "/resDashboard/medical",
     },
     { icon: <FaSignOutAlt />, label: "Logout", to: "/login" },

@@ -1,12 +1,13 @@
 import React from "react";
 import ReactECharts from "echarts-for-react";
-import { FaSyringe, FaDog } from "react-icons/fa";
+import { FaSyringe, FaDog, FaDollarSign } from "react-icons/fa";
 
 import { COLORS } from "./Shared/Colors";
 import StatCard from "./Shared/StatCard";
 import {
   usePetsPerCategory,
   useTotalPets,
+  useTotalRevenueAnalysis,
   useVaccinationStatus,
 } from "../../../Hooks/Reservation/useanalytics";
 import TopVaccinatedCategoriesChart from "./Components/TopVaccinatedCategoriesChart";
@@ -33,7 +34,10 @@ const MedicalHistory: React.FC = () => {
   const { data: totalPets } = useTotalPets();
   const { data: petsPerCategory } = usePetsPerCategory();
   const { data: vaccinationStatus } = useVaccinationStatus();
+  const { data: totalRevenueData, isLoading: revenueLoading } =
+    useTotalRevenueAnalysis();
 
+  const totalRevenue = totalRevenueData?.data?.totalRevenue ?? 0;
   /* ===== PIE: Pets per Category ===== */
   const petsCategoryOption = {
     ...pieBaseOptions,
@@ -101,6 +105,12 @@ const MedicalHistory: React.FC = () => {
             vaccinationStatus?.data.reduce((acc, v) => acc + v.total, 0) ?? 0
           }
           icon={<FaSyringe size={22} />}
+        />
+
+        <StatCard
+          title="Total Revenue"
+          value={revenueLoading ? "—" : `$${totalRevenue.toLocaleString()}`}
+          icon={<FaDollarSign size={22} />}
         />
       </div>
 

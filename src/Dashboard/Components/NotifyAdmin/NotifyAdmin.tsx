@@ -24,7 +24,7 @@ const OrderNotificationBell: React.FC = () => {
           `${baseURL}/order/allorders`,
           {
             headers: { authentication: `bearer ${token}` }, 
-            timeout: 10000, 
+            timeout: 40000, 
           }
         );
 
@@ -89,7 +89,7 @@ const OrderNotificationBell: React.FC = () => {
             new Date(b?.createdAt || "").getTime() -
             new Date(a?.createdAt || "").getTime()
         )
-        .slice(0, 5)
+        .slice(0, 10)
     : [];
 
   return (
