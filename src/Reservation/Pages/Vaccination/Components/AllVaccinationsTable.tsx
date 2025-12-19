@@ -11,9 +11,16 @@ import {
 import type { IVaccination, IDose } from "../../../../Interfaces/IVacination";
 import { useAllVaccinationsFilter } from "../../../../Hooks/SharedSearch/useAllVaccinationsFilter";
 import SharedSearch from "../../../../Shared/SharedSearch/SharedSearch";
+import { useState } from "react";
+import EditAllVaccinationModal from "./EditVaccinationModal";
 
 export default function AllVaccinationsTable() {
   const { data: vaccines = [], isLoading } = useVaccinations();
+  const [editOpen, setEditOpen] = useState(false);
+  const [selectedVaccine, setSelectedVaccine] = useState<IVaccination | null>(
+    null
+  );
+
   const softDelete = useSoftDeleteVaccination();
   const hardDelete = useDeleteVaccination();
 
@@ -164,11 +171,16 @@ export default function AllVaccinationsTable() {
                 <td className="p-4">
                   <div className="flex justify-end gap-2">
                     <button
-                      className="p-2 text-[#86654F] hover:bg-[#FCF9F4] rounded-lg transition-colors"
-                      title="Edit vaccine"
+                      disabled={editOpen}
+                      onClick={() => {
+                        setSelectedVaccine(v);
+                        setEditOpen(true);
+                      }}
+                      className="p-2 text-[#86654F] hover:bg-[#FCF9F4] rounded-lg disabled:opacity-50"
                     >
                       <Edit size={16} />
                     </button>
+
                     <button
                       onClick={() => handleSoftDelete(v._id)}
                       className="p-2 text-orange-500 hover:bg-orange-50 rounded-lg transition-colors"
@@ -198,7 +210,16 @@ export default function AllVaccinationsTable() {
           </tbody>
         </table>
       </motion.div>
-
+      {editOpen && selectedVaccine && (
+        <EditAllVaccinationModal
+          isOpen={editOpen}
+          vaccination={selectedVaccine}
+          onClose={() => {
+            setEditOpen(false);
+            setSelectedVaccine(null);
+          }}
+        />
+      )}
       {/* Pagination */}
       <div className="mt-4">
         <Pagination

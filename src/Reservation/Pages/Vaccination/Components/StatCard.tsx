@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 interface StatCardProps {
   title: string;
-  value: number;
+  value: number | string;
   icon: React.ReactNode;
   bgColor: string;
   iconBg: string;

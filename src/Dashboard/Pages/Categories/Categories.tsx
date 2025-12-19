@@ -12,15 +12,13 @@ import type { ICategory } from "../../../Interfaces/categryInterfaces";
 import DataTableComponent from "../../../Shared/Table/TableComponent";
 import {
   FaEdit,
-  FaPlus,
   FaPlusCircle,
   FaTrash,
   FaUndo,
   FaSearch,
 } from "react-icons/fa";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import CategoryModal from "./Components/CategoryModal";
-import DeleteModel from "./Components/DeleteModel";
 import Swal from "sweetalert2";
 import SEO from "../../../Components/SEO/SEO";
 
@@ -31,7 +29,6 @@ export default function CategoriesDashboared() {
   const [newcategoryName, SetnewcategoryName] = useState("");
   const [newcategoryImage, SetnewcategoryImage] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const [deleteId, setDeleteId] = useState<string | null>(null);
   const [updateId, setUpdateId] = useState<string | null>(null);
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   // get categories

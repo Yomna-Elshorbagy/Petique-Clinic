@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../Store/store";
+import {
+  useAppDispatch,
+  useAppSelector,
+  type RootState,
+} from "../../Store/store";
 import { motion } from "framer-motion";
 import {
   FaBars,
@@ -14,7 +18,8 @@ import {
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/images/logo.jpg";
-import { Link } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
+import { clearUserToken } from "../../Store/Slices/AuthSlice";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
@@ -35,14 +40,23 @@ export default function NavBar() {
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
 
   const isAuthenticated = Boolean(accessToken);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const token = useAppSelector((state) => state.auth.token);
+
+  //====> handel logout
+  const handleLogout = () => {
+    dispatch(clearUserToken());
+    navigate("/login");
+  };
 
   const navLinks = [
     { label: t("navbar.home"), href: "/" },
-    { label: t("navbar.products"), href: "/products" },
-    { label: t("navbar.services"), href: "service" },
     { label: t("navbar.reservation"), href: "/reservation" },
-    { label: t("navbar.contactUs"), href: "/contact" },
+    { label: t("navbar.services"), href: "service" },
+    { label: t("navbar.products"), href: "/products" },
     { label: t("navbar.blog"), href: "/blog" },
+    { label: t("navbar.contactUs"), href: "/contact" },
   ];
 
   const toggleLanguage = () => {
@@ -118,13 +132,20 @@ export default function NavBar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.06 * index + 0.2, duration: 0.45 }}
               >
-                <Link
+                <NavLink
                   to={link.href}
-                  className="relative text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] font-semibold text-base hover:text-[var(--color-light-accent)] dark:hover:text-[var(--color-dark-accent)] transition-colors duration-300 group"
+                  className={({ isActive }) =>
+                    `relative font-semibold text-base transition-colors duration-300 group
+                    ${
+                      isActive
+                        ? "text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)] active"
+                        : "text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]"
+                    }`
+                  }
                 >
                   {link.label}
-                  <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-[var(--color-light-accent)] group-hover:w-full transition-all duration-300"></span>
-                </Link>
+                  <span className="absolute left-0 -bottom-1 h-0.5 transition-all duration-300 w-0 bg-[var(--color-light-accent)] group-hover:w-full active:w-full" />
+                </NavLink>
               </motion.div>
             ))}
           </div>
@@ -199,15 +220,29 @@ export default function NavBar() {
                     { label: t("navbar.logout"), href: "/logout", auth: true },
                   ]
                     .filter((item) => item.auth === isAuthenticated)
-                    .map((item) => (
-                      <Link
-                        key={item.label}
-                        to={item.href}
-                        className="block px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
+                    .map((item) =>
+                      item.label === t("navbar.logout") ? (
+                        <button
+                          key={item.label}
+                          onClick={() => {
+                            handleLogout();
+                            setShowProfile(false); 
+                          }}
+                          className="w-full text-left px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
+                        >
+                          {item.label}
+                        </button>
+                      ) : (
+                        <Link
+                          key={item.label}
+                          to={item.href}
+                          onClick={() => setShowProfile(false)}
+                          className="block px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
+                        >
+                          {item.label}
+                        </Link>
+                      )
+                    )}
                 </div>
               )}
             </div>

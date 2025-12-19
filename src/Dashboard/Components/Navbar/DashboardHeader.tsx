@@ -1,10 +1,12 @@
 import React, { type ChangeEvent } from "react";
-import { FaBars, FaUserCircle } from "react-icons/fa";
+import { FaBars, FaHome } from "react-icons/fa";
 import Swal from "sweetalert2";
 import OrderNotificationBell from "../NotifyAdmin/NotifyAdmin";
 import { baseURL } from "../../../Apis/BaseUrl";
+import { useNavigate } from "react-router-dom";
 
 const DashboardHeader = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
+  const navigate = useNavigate();
   const handleExport = async () => {
     try {
       const response = await fetch(`${baseURL}/products/export`, {
@@ -132,6 +134,16 @@ const DashboardHeader = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
           </svg>
           Export
         </button>
+
+         <div className="relative">
+          <button
+            onClick={() => navigate("/home")}
+            title="Home"
+            className="relative p-2 rounded-lg hover:bg-[var(--color-accent)] transition cursor-pointer"
+            >
+            <FaHome size={20}/>
+          </button>
+        </div>
 
         <OrderNotificationBell />
 

@@ -54,7 +54,7 @@ export const getAllProducts = async (
 
   const { data } = await axios.get(`${BASE_URL}`, {
     params,
-    headers: getHeaders(),
+    // headers: getHeaders(),
   });
 
   return data;

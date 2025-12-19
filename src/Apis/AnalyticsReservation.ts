@@ -118,3 +118,11 @@ export const getRevenueAnalysisApi = async () => {
 
   return data;
 };
+
+export const getTotalRevenueAnalysisApi = async () => {
+  const { data } = await axios.get(`${BASE_URL}/total-revenue`, {
+    headers,
+  });
+
+  return data;
+};

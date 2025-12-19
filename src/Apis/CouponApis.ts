@@ -26,6 +26,11 @@ export const getCouponById = async (id: string): Promise<ICoupon> => {
   return data.data;
 };
 
+export const getCouponByCode = async (code: string): Promise<ICoupon> => {
+  const { data } = await axios.get(`${BASE_URL}/code/${code}`, { headers });
+  return data.data;
+};
+
 export const createCoupon = async (couponData: ICouponCreate): Promise<ICoupon> => {
   const { data } = await axios.post(`${BASE_URL}/addcoupon`, couponData, { headers });
   return data.data;
@@ -45,11 +50,12 @@ export const deleteCoupon = async (id: string): Promise<any> => {
 };
 
 export const softDeleteCoupon = async (id: string): Promise<any> => {
-  const { data } = await axios.put(
-    `${BASE_URL}/${id}`,
-    // { isDeleted: true },
-    { headers }
+   const { data } = await axios.put(
+    `${BASE_URL}/soft/${id}`,
+    {},
+    {
+      headers: { authentication: `bearer ${token}` },
+    }
   );
-  return data;
+  return data.data;
 };
-

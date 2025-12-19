@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   FaTimes,
   FaEdit,
@@ -14,7 +14,6 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import {
   updateOrderDetails,
-  getAllOrders,
 } from "../../../Store/Slices/OrderSlice";
 import type { AppDispatch } from "../../../Store/store";
 
@@ -36,7 +35,7 @@ export default function OrderDetailsModal({
     phone: order?.phone || "",
     address: order?.address || "",
     status: order?.status || "",
-    notes: order?.note || "",
+    notes: order?.notes || "",
     finalPrice: order?.finalPrice || 0,
   });
 
@@ -100,7 +99,6 @@ export default function OrderDetailsModal({
           color: "#4f3f36",
           iconColor: "#C58D52",
         });
-        dispatch(getAllOrders());
         setIsEditing(false);
         onClose();
       } else {
@@ -160,7 +158,7 @@ export default function OrderDetailsModal({
                     phone: order.phone || "",
                     address: order.address || "",
                     status: order.status || "",
-                    notes: order.note || "",
+                    notes: order.notes || "",
                     finalPrice: order.finalPrice || 0,
                   });
                   setIsEditing(true);
@@ -347,7 +345,7 @@ export default function OrderDetailsModal({
                   />
                 ) : (
                   <p className="text-[var(--color-light-dark)]">
-                    {order.note || "No notes"}
+                    {order.notes || "No notes"}
                   </p>
                 )}
               </div>

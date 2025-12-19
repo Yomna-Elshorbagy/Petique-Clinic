@@ -42,7 +42,6 @@ export default function Services() {
     });
   }, [isRTL]);
 
-
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Something went wrong</p>;
 
@@ -54,46 +53,46 @@ export default function Services() {
       />
 
       <div className="bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] transition-colors duration-300">
-      <div className="relative bg-[var(--color-accent-darker)] dark:bg-[var(--color-dark-card)] h-[290px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
-        <div className="max-w-7xl text-center md:text-left w-full">
-          <Bone
-            key={i18n.language}
-            ref={boneRef}
-            className={`bone-icon w-25 h-30 text-white ${
-              isRTL
-                ? "ml-0 mr-[-30px] scale-y-[-1]"
-                : "ml-[-30px] mr-0 scale-y-[1]"
+        <div className="relative bg-[var(--color-accent-darker)] dark:bg-[var(--color-dark-card)] h-[290px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
+          <div className="max-w-7xl text-center md:text-left w-full">
+            <Bone
+              key={i18n.language}
+              ref={boneRef}
+              className={`bone-icon w-25 h-30 text-white ${
+                isRTL
+                  ? "ml-0 mr-[-30px] scale-y-[-1]"
+                  : "ml-[-30px] mr-0 scale-y-[1]"
+              }`}
+              strokeWidth={2.5}
+              color="#fde5d3"
+            />
+            <h1
+              className={`text-white text-3xl md:text-4xl font-extrabold mt-4 ${
+                isRTL ? "text-right" : "text-left"
+              }`}
+            >
+              {t("services.services")}
+            </h1>
+
+            <div className="mt-8 flex justify-start md:justify-start gap-6 text-[#6b5a4d] font-medium text-1xl md:text-1xl">
+              <Link to="/home" className="hover:text-white transition-colors">
+                {t("services.home")}
+              </Link>
+              <span className="text-[#6b5a4d]"> &gt; </span>
+              <p className="text-white font-semibold">
+                {t("services.ourServices")}
+              </p>
+            </div>
+          </div>
+
+          <img
+            src="/src/assets/images/pic-2.png"
+            alt="cat"
+            className={`hidden md:block absolute bottom-[-90px] w-[600px] z-10 ${
+              isRTL ? "left-0" : "right-5"
             }`}
-            strokeWidth={2.5}
-            color="#fde5d3"
           />
-          <h1
-            className={`text-white text-3xl md:text-4xl font-extrabold mt-4 ${
-              isRTL ? "text-right" : "text-left"
-            }`}
-          >
-            {t("services.services")}
-          </h1>
-
-         <div className="mt-8 flex justify-start md:justify-start gap-6 text-[#6b5a4d] font-medium text-1xl md:text-1xl">
-  <Link to="/home" className="hover:text-white transition-colors">
-    {t("services.home")}
-  </Link>
-  <span className="text-[#6b5a4d]"> &gt; </span>
-  <p className="text-white font-semibold">
-    {t("services.ourServices")}
-  </p>
-</div>
-</div>
-
-<img
-  src="/src/assets/images/pic-2.png"
-  alt="cat"
-  className={`hidden md:block absolute bottom-[-90px] w-[600px] z-10 ${
-    isRTL ? "left-0" : "right-5"
-  }`}
-/>
-</div>
+        </div>
 
         <div className="mt-40 font-serif mb-10">
           <div className="flex flex-wrap justify-center gap-6 px-6">
@@ -106,9 +105,9 @@ export default function Services() {
                 <div
                   key={service._id}
                   onClick={() => navigate(`/service/${service._id}`)}
-                  className="bg-white dark:bg-[var(--color-dark-card)] rounded-lg shadow-md overflow-hidden 
+                  className="bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] rounded-lg shadow-md overflow-hidden 
              w-full sm:w-[45%] lg:w-[25%] flex flex-col items-center group
-             cursor-pointer transition-colors duration-300"
+             cursor-pointer transition-colors duration-300 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
                 >
                   <div className="relative w-full h-90 overflow-hidden rounded-t-lg">
                     <img
@@ -144,13 +143,11 @@ export default function Services() {
                     </p>
                   </div>
                 </div>
-              
               );
             })}
           </div>
         </div>
       </div>
-      </>
+    </>
   );
-  
 }

@@ -7,7 +7,7 @@ export interface IUser {
 
   mobileNumber?: string;
 
-  role: "admin" | "doctor" | "petOwner";
+  role: "admin" | "doctor" | "petOwner" | "owner";
   gender: "male" | "female";
 
   isVerified: boolean;
