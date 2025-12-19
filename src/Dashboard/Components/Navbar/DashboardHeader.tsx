@@ -1,5 +1,5 @@
-import React, { type ChangeEvent } from "react";
-import { FaBars, FaUserCircle } from "react-icons/fa";
+import { type ChangeEvent } from "react";
+import { FaBars } from "react-icons/fa";
 import Swal from "sweetalert2";
 import OrderNotificationBell from "../NotifyAdmin/NotifyAdmin";
 import { baseURL } from "../../../Apis/BaseUrl";

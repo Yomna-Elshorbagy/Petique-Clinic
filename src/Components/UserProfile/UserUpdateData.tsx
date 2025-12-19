@@ -21,8 +21,6 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
   formData,
   handleChange,
   handleSubmit,
-  preview,
-  handleImageChange,
   mutation,
   showPassword,
   setShowPassword,
@@ -41,7 +39,7 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
           name="userName"
           value={formData.userName}
           onChange={handleChange}
-          className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
+          className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] focus:outline-none focus:ring-2 focus:ring-amber-600"
         />
       </div>
 
@@ -54,7 +52,7 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
           name="email"
           value={formData.email}
           disabled
-          className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-gray-100 dark:bg-[var(--color-dark-background)] text-gray-500 dark:text-gray-400 cursor-not-allowed"
+          className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-gray-100 dark:bg-[var(--color-dark-background)] text-gray-500 dark:text-gray-400 cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-amber-600"
         />
       </div>
 
@@ -67,7 +65,7 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
           name="mobileNumber"
           value={formData.mobileNumber}
           onChange={handleChange}
-          className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
+          className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] focus:outline-none focus:ring-2 focus:ring-amber-600"
         />
       </div>
 
@@ -90,7 +88,7 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
                 type="password"
                 name="newPassword"
                 onChange={handleChange}
-                className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
+                className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] focus:outline-none focus:ring-2 focus:ring-amber-600"
               />
             </div>
 
@@ -102,7 +100,7 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
                 type="password"
                 name="confirmPassword"
                 onChange={handleChange}
-                className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
+                className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] focus:outline-none focus:ring-2 focus:ring-amber-600"
               />
             </div>
           </div>
