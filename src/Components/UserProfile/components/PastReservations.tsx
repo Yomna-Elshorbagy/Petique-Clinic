@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FaCalendarAlt,
   FaClock,
@@ -50,6 +50,11 @@ export default function PastReservations() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+
+  // Reset currentPage to 1 when reservations data changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [reservations]);
 
   if (isLoading)
     return (

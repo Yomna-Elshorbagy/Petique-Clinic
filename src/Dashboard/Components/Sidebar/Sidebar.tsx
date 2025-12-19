@@ -30,7 +30,6 @@ const Sidebar = ({
   const isDesktop = window.innerWidth >= 768;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const token = useAppSelector((state) => state.auth.token);
 
   //====> handel logout
   const handleLogout = () => {
