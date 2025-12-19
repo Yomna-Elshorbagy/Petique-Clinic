@@ -96,7 +96,7 @@ const OrderNotificationBell: React.FC = () => {
     <div className="relative" ref={bellRef}>
       <button
         onClick={handleBellClick}
-        className="relative p-2 rounded-lg hover:bg-[var(--color-accent)] transition"
+        className="relative p-2 rounded-lg hover:bg-[var(--color-accent)] transition cursor-pointer"
       >
         <Bell size={20} />
         {hasNew && (

@@ -5,7 +5,8 @@ export function useServiceSearch(services: any[]) {
 
   const filtered = useMemo(() => {
     return services.filter((s) =>
-      s.title?.toLowerCase().includes(search.toLowerCase())
+      s.title?.toLowerCase().includes(search.toLowerCase()) ||
+      s.id?.toLowerCase().includes(search.toLowerCase())
     );
   }, [search, services]);
 
