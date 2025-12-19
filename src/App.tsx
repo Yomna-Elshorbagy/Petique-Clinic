@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProtectedRoutes from "./Shared/ProtectedRoutes/ProtectedRoutes";
 import AdminProtectedRoute from "./Shared/ProtectedRoutes/AdminProtectedRoutes";
 import DoctorProtectedRoute from "./Shared/ProtectedRoutes/DoctorProtectedRoutes";
+import NotFoundPage from "./Components/NotFound/NotFound";
 
 // ===> Lazy imports
 const Layout = lazy(() => import("./Shared/Layout/layout"));
@@ -168,6 +169,7 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "forgetPass", element: <ForgetPassword /> },
       { path: "otp", element: <OtpConfirmation /> },
+      { path: "*", element: <NotFoundPage /> },
     ],
   },
   {
