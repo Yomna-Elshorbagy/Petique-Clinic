@@ -32,7 +32,7 @@ const ReservationNotificationBell = () => {
         new Date(b?.createdAt || "").getTime() -
         new Date(a?.createdAt || "").getTime()
     )
-    .slice(0, 5);
+    .slice(0, 10);
 
   return (
     <div className="relative text-[#86654F]" ref={bellRef}>
@@ -71,7 +71,7 @@ const ReservationNotificationBell = () => {
                   className="border-b border-[#A98770]/20 py-2 text-sm text-[#4F3F36]"
                 >
                   <strong>{res.petOwner?.userName || "Unknown"}</strong> booked{" "}
-                  <strong>{res.service?.name || "Service"}</strong>
+                  <strong>{res.service?.title || "Service"}</strong>
                   <br />
                   <small className="text-[#7A7067]">
                     {new Date(res.createdAt).toLocaleString()}
