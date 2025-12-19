@@ -23,7 +23,7 @@ const ProductsHero: React.FC = () => {
   return (
     <div
       dir={i18n.dir()} 
-      className="relative bg-[#1f1b22] h-auto px-10 py-10 overflow-visible flex flex-col md:flex-row items-center font-serif"
+      className="relative bg-[#1f1a17] h-auto px-10 py-10 overflow-visible flex flex-col md:flex-row items-center font-serif"
     >
       <div className="max-w-7xl text-center md:text-start md:ps-24">
         <Bone

@@ -31,7 +31,7 @@ const quickLinks = t("footer.quickLinks.items", {
   }) as { day: string; time: string }[];
 
   return (
-    <footer className="bg-[#3c2f2f] text-white pt-20 pb-6 relative overflow-hidden">
+    <footer className="bg-[#1f1a17] text-white pt-20 pb-6 relative overflow-hidden">
       <img
         src={CatImg}
         alt={t("footer.images.cat")}

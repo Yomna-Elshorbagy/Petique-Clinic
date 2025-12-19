@@ -1,7 +1,7 @@
 :root {
   --features-primary: #D98C33;
   --features-primary-light: #E5A85C;
-  --features-bg: #FFFFFF;
+  --features-bg: transparent;
   --features-card-bg: #FAFAFA;
   --features-text: #4C3A26;
   --features-text-muted: #8A7A67;
@@ -92,4 +92,16 @@
   color: var(--features-text-muted);
   font-size: 0.95rem;
   line-height: 1.5;
+}
+:global(.dark) .section {
+  --features-card-bg: #1f1a17;
+
+  --features-text: #e7e5e4;
+  --features-text-muted: #a8a29e;
+
+  --features-primary: #fb923c;
+  --features-primary-light: #fdba74;
+
+  --features-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  --features-shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.7);
 }
