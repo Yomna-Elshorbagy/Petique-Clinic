@@ -151,8 +151,8 @@ export default function ServiceDashboard() {
       )}
 
       {/* ========= search ========= */}
-      <div className="relative mb-6">
-        <FaSearch className="absolute left-4 top-3 text-[#A98770]" />
+      <div className="relative flex-1 mb-6">
+        <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A98770]" />
         <input
           type="text"
           placeholder="Search services..."
@@ -161,7 +161,7 @@ export default function ServiceDashboard() {
             setPage(1);
             setSearch(e.target.value);
           }}
-          className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#FCF9F4]"
+          className="w-1/4 pl-11 pr-4 py-3 rounded-xl bg-[#FCF9F4] border-none focus:ring-2 focus:ring-[#A98770]/50 text-[#86654F] placeholder-[#A98770]/70 shadow-sm"
         />
       </div>
 
