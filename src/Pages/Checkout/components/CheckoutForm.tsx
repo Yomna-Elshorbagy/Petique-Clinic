@@ -29,7 +29,7 @@ const checkoutSchema = z.object({
     .string()
     .min(10, "Address must be at least 10 characters")
     .max(200, "Address must be less than 200 characters"),
-  note: z.string(),
+  notes: z.string(),
   payment: z.string(),
   couponCode: z.string(),
 });
@@ -49,7 +49,7 @@ const CheckoutForm = ({ couponCode }: CheckoutFormProps) => {
     fullName: "",
     phone: "",
     address: "",
-    note: "",
+    notes: "",
     payment: "",
     couponCode: "",
   });
@@ -117,7 +117,7 @@ const CheckoutForm = ({ couponCode }: CheckoutFormProps) => {
           fullName: true,
           phone: true,
           address: true,
-          note: true,
+          notes: true,
         });
       }
     }
@@ -234,18 +234,18 @@ const CheckoutForm = ({ couponCode }: CheckoutFormProps) => {
         {/* NOTE */}
         <div>
           <label
-            htmlFor="note"
+            htmlFor="notes"
             className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
           >
-            {t("checkout.note")}
+            {t("checkout.notes")}
           </label>
           <textarea
-            onChange={(e) => handleChange("note", e.target.value)}
-            value={formData.note}
-            id="note"
+            onChange={(e) => handleChange("notes", e.target.value)}
+            value={formData.notes}
+            id="notes"
             rows={4}
             className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[var(--color-light-accent)] focus:border-transparent outline-none transition-all resize-none"
-            placeholder={t("checkout.notePlaceholder")}
+            placeholder={t("checkout.notesPlaceholder")}
           />
         </div>
 

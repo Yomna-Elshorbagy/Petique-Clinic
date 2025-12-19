@@ -658,8 +658,8 @@ export default function Reservation() {
               <SwiperSlide key={service._id}>
                 <div
                   onClick={() => navigate(`/service/${service._id}`)}
-                  className="bg-white dark:bg-[var(--color-dark-card)] rounded-lg shadow-md overflow-hidden 
-                       w-full flex flex-col items-center group cursor-pointer transition-colors duration-300"
+                  className="bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] rounded-lg shadow-md overflow-hidden 
+                       w-full flex flex-col items-center group cursor-pointer transition-colors duration-300 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
                 >
                   <div className="relative w-full h-[360px] overflow-hidden rounded-t-lg">
                     <img
@@ -676,7 +676,8 @@ export default function Reservation() {
                     />
                   </div>
 
-                  <div className="text-center bg-white dark:bg-[var(--color-dark-card)] transition-colors duration-300">
+                  <div className="text-center bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] transition-colors duration-300 w-full">
+                    \n{" "}
                     <h3
                       className="text-lg font-bold mb-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] text-ellipsis overflow-hidden line-clamp-1 mt-3
              transition-colors duration-300 group-hover:text-[#e9a66f] dark:group-hover:text-[var(--color-dark-accent)]"

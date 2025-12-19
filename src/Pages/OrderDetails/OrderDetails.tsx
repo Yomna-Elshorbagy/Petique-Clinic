@@ -140,10 +140,10 @@ const OrderDetails: React.FC = () => {
                     {orderData.address}
                   </p>
 
-                  {orderData.note && (
+                  {orderData.notes && (
                     <p>
                       <strong>{t("orderDetails.specialNotes")}:</strong>{" "}
-                      {orderData.note}
+                      {orderData.notes}
                     </p>
                   )}
                 </div>

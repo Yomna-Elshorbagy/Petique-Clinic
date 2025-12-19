@@ -174,7 +174,7 @@ export default function Servicesdetails() {
                     className={`flex items-center rounded-full shadow-md p-3 cursor-pointer transition transform hover:scale-105 ${
                       s._id === activeId
                         ? "bg-[#e9a66f] text-white border-2 border-[#e9a66f]"
-                        : "bg-white dark:bg-[var(--color-dark-card)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] border-2 border-transparent"
+                        : "bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] border-2 border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
                     }`}
                   >
                     <img
@@ -197,7 +197,7 @@ export default function Servicesdetails() {
             {/* Right Side */}
 
             <div
-              className={`w-full md:w-3/4 bg-white dark:bg-[var(--color-dark-card)] p-6 rounded-lg shadow space-y-4 transition-colors duration-300 ${
+              className={`w-full md:w-3/4 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] p-6 rounded-lg shadow space-y-4 transition-colors duration-300 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] ${
                 isRTL ? "text-right" : "text-left"
               }`}
             >
@@ -222,8 +222,8 @@ export default function Servicesdetails() {
                   <ul className="space-y-2">
                     {service.benefits.split(",").map((b, i) => (
                       <li key={i} className="flex items-center gap-2">
-                        <PawPrint className="w-4 h-4 text-[#e9a66f]" />
-                        <span className="text-gray-700 dark:text-gray-400">
+                        <PawPrint className="w-4 h-4 text-[#e9a66f] dark:text-[var(--color-dark-accent)]" />
+                        <span className="text-gray-700 dark:text-gray-300">
                           {b}
                         </span>
                       </li>
@@ -241,8 +241,8 @@ export default function Servicesdetails() {
                   <ul className="space-y-2">
                     {service.tips.split(",").map((t, i) => (
                       <li key={i} className="flex items-center gap-2">
-                        <PawPrint className="w-4 h-4 text-[#e9a66f]" />
-                        <span className="text-gray-700 dark:text-gray-400">
+                        <PawPrint className="w-4 h-4 text-[#e9a66f] dark:text-[var(--color-dark-accent)]" />
+                        <span className="text-gray-700 dark:text-gray-300">
                           {t}
                         </span>
                       </li>

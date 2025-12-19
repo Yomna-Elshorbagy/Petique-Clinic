@@ -35,7 +35,7 @@ export default function OrderDetailsModal({
     phone: order?.phone || "",
     address: order?.address || "",
     status: order?.status || "",
-    notes: order?.note || "",
+    notes: order?.notes || "",
     finalPrice: order?.finalPrice || 0,
   });
 
@@ -158,7 +158,7 @@ export default function OrderDetailsModal({
                     phone: order.phone || "",
                     address: order.address || "",
                     status: order.status || "",
-                    notes: order.note || "",
+                    notes: order.notes || "",
                     finalPrice: order.finalPrice || 0,
                   });
                   setIsEditing(true);
@@ -345,7 +345,7 @@ export default function OrderDetailsModal({
                   />
                 ) : (
                   <p className="text-[var(--color-light-dark)]">
-                    {order.note || "No notes"}
+                    {order.notes || "No notes"}
                   </p>
                 )}
               </div>
