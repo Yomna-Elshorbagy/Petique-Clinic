@@ -8,6 +8,7 @@ import { useAppDispatch } from "../../Hooks/useSliceHook";
 import Swal from "sweetalert2";
 import { addProductToCart } from "../../Store/Slices/CartSlice";
 import type { AppDispatch } from "../../Store/store";
+import { jwtDecode } from "jwt-decode";
 
 const handleAddToCart = async (dispatch: AppDispatch, productId: string) => {
   try {
@@ -69,6 +70,12 @@ const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
 interface ProductCardProps {
   product: IProduct;
 }
+interface JwtPayload {
+  id: string;
+  role: "admin" | "doctor" | "owner" | "user";
+  iat: number;
+  exp: number;
+}
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const dispatch = useAppDispatch();
@@ -99,6 +106,40 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   const validSubImages = subImages?.filter((img) => getSubImageSrc(img)) || [];
+
+  const token = localStorage.getItem("accessToken");
+
+  let role: JwtPayload["role"] | null = null;
+
+  if (token) {
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      role = decoded.role;
+    } catch (error) {
+      console.error("Invalid token", error);
+    }
+  }
+  const isPrivilegedRole =
+    role === "admin" || role === "doctor" || role === "owner";
+
+  const isOutOfStock = product.stock === 0;
+
+  const isButtonDisabled = isPrivilegedRole || isOutOfStock;
+
+  const handleLoginAlert = () => {
+    Swal.fire({
+      icon: "warning",
+      title: "Login required",
+      text: "You need to login to add products to cart",
+      showCancelButton: true,
+      confirmButtonText: "Login",
+      cancelButtonText: "Continue shopping",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/login");
+      }
+    });
+  };
 
   return (
     <article
@@ -191,8 +232,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         {/* Add to Cart Button */}
         <button
+          disabled={isButtonDisabled}
           onClick={async (e) => {
             e.stopPropagation();
+
+            if (!token) {
+              handleLoginAlert();
+              return;
+            }
+
+            if (isButtonDisabled) return;
+
             setIsAddingToCart(true);
             try {
               await handleAddToCart(dispatch, product._id);
@@ -200,14 +250,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               setIsAddingToCart(false);
             }
           }}
-          className={styles.addToCartButton}
+          className={`${styles.addToCartButton} ${
+            isButtonDisabled ? styles.disabledButton : ""
+          }`}
         >
           <ShoppingCart
             className={`${styles.cartIcon} ${
               isAddingToCart ? styles.cartIconBounce : ""
             }`}
           />
-          {isAddingToCart ? "Adding..." : "Add to Cart"}
+          {isOutOfStock
+            ? "Out of Stock"
+            : isPrivilegedRole
+            ? "Not allowed"
+            : isAddingToCart
+            ? "Adding..."
+            : "Add to Cart"}
         </button>
       </div>
     </article>
