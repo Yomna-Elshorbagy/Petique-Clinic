@@ -12,7 +12,9 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../Store/store";
+import { clearUserToken } from "../../../Store/Slices/AuthSlice";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -28,19 +30,31 @@ const Sidebar: React.FC<SidebarProps> = ({
   toggleCollapse,
 }) => {
   const isDesktop = window.innerWidth >= 768;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const token = useAppSelector((state) => state.auth.token);
 
+  //====> handel logout
+  const handleLogout = () => {
+    dispatch(clearUserToken());
+    navigate("/login");
+  };
   const links = [
-    { icon: <FaTachometerAlt  />, label: "Clinic Board", to: "/resDashboard" },
+    { icon: <FaTachometerAlt />, label: "Clinic Board", to: "/resDashboard" },
     {
-      icon: <FaCalendarCheck  />,
+      icon: <FaCalendarCheck />,
       label: "Reservations",
       to: "/resDashboard/reserv",
     },
     { icon: <FaPaw />, label: "Animals", to: "/resDashboard/animals" },
-    { icon: <FaTags  />, label: "Animals Category", to: "/resDashboard/animalCategory" },
+    {
+      icon: <FaTags />,
+      label: "Animals Category",
+      to: "/resDashboard/animalCategory",
+    },
     { icon: <FaUserMd />, label: "Doctors", to: "/resDashboard/doctors" },
     {
-      icon: <FaSyringe  />,
+      icon: <FaSyringe />,
       label: "Vaccinations",
       to: "/resDashboard/vaccinations",
     },
@@ -49,7 +63,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       label: "Services",
       to: "/resDashboard/service",
     },
-     {
+    {
       icon: <FaClipboardList />,
       label: "Medical History",
       to: "/resDashboard/medical",
@@ -75,11 +89,12 @@ const Sidebar: React.FC<SidebarProps> = ({
           shadow-lg flex flex-col p-4
           transition-all duration-300
           border-r border-[#A98770]/20
-          ${isDesktop
-            ? isCollapsed
-              ? "w-20"
-              : "w-64"
-            : isOpen
+          ${
+            isDesktop
+              ? isCollapsed
+                ? "w-20"
+                : "w-64"
+              : isOpen
               ? "w-64"
               : "w-0"
           }
@@ -110,32 +125,40 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         <ul className="space-y-2 text-base flex-1">
-          {links.map((item, i) => (
-            <NavLink
-              key={i}
-              to={item.to}
-              end={item.to === "/resDashboard"}
-              className={({ isActive }) =>
-                `
-                flex items-center gap-3 p-3 rounded-xl transition-all duration-200 font-medium
-                ${isActive
-                  ? "bg-[#86654F] text-[#ECE7E2] shadow-md"
-                  : "hover:bg-[#A98770]/10 text-[#86654F]"
+          {links.map((item, i) => {
+            const isLogout = item.label === "Logout";
+
+            return (
+              <NavLink
+                key={i}
+                to={item.to}
+                end={item.to === "/resDashboard"}
+                className={({ isActive }) =>
+                  `
+          flex items-center gap-3 p-3 rounded-xl transition-all duration-200 font-medium
+          ${
+            isActive
+              ? "bg-[#86654F] text-[#ECE7E2] shadow-md"
+              : "hover:bg-[#A98770]/10 text-[#86654F]"
+          }
+          ${isCollapsed ? "justify-center" : ""}`
                 }
-                ${isCollapsed ? "justify-center" : ""}
-              `
-              }
-              onClick={() => !isDesktop && toggleMobile()}
-            >
-              <div className="text-lg">{item.icon}</div>
-              {!isCollapsed && <span>{item.label}</span>}
-            </NavLink>
-          ))}
+                onClick={() => {
+                  if (!isDesktop) toggleMobile();
+                  if (isLogout) handleLogout(); // ✅ handle logout
+                }}
+              >
+                <div className="text-lg">{item.icon}</div>
+                {!isCollapsed && <span>{item.label}</span>}
+              </NavLink>
+            );
+          })}
         </ul>
 
         <div
-          className={`mt-auto text-sm text-[#A98770] ${isCollapsed ? "text-center" : ""
-            }`}
+          className={`mt-auto text-sm text-[#A98770] ${
+            isCollapsed ? "text-center" : ""
+          }`}
         >
           {!isCollapsed && "© 2025 Petique"}
         </div>

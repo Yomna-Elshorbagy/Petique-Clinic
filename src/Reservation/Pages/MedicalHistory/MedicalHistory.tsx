@@ -12,7 +12,7 @@ import {
 import TopVaccinatedCategoriesChart from "./Components/TopVaccinatedCategoriesChart";
 import DoctorWorkloadChart from "./Components/DoctorWorkloadChart";
 import MonthlyReservationsTrendChart from "./Components/MonthlyReservationsTrend";
-import RevenueChart from "../../../Dashboard/Pages/OverView/Components/RevenueChart";
+import ReservationRevenueChart from "./Components/RevenueAnalysis";
 
 // ===== Base options for all pies =====
 export const pieBaseOptions = {
@@ -134,7 +134,7 @@ const MedicalHistory: React.FC = () => {
         </div>
       </div>
       <div className="pt-8">
-        <RevenueChart />
+        <ReservationRevenueChart />
       </div>
     </div>
   );
