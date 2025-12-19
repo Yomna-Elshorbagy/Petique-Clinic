@@ -29,12 +29,18 @@ const checkoutSchema = z.object({
     .string()
     .min(10, "Address must be at least 10 characters")
     .max(200, "Address must be less than 200 characters"),
-  note: z.string(),
+  notes: z.string(),
+  payment: z.string(),
+  couponCode: z.string(),
 });
 
 type CheckoutFormData = z.infer<typeof checkoutSchema>;
 
-const CheckoutForm = () => {
+interface CheckoutFormProps {
+  couponCode: string;
+}
+
+const CheckoutForm = ({ couponCode }: CheckoutFormProps) => {
   const dispatch = useAppDispatch();
   const Navigate = useNavigate();
   const { t } = useTranslation();
@@ -43,8 +49,17 @@ const CheckoutForm = () => {
     fullName: "",
     phone: "",
     address: "",
-    note: "",
+    notes: "",
+    payment: "",
+    couponCode: "",
   });
+
+  // Sync coupon code from props
+  useEffect(() => {
+    if (couponCode) {
+      setFormData((prev) => ({ ...prev, couponCode: couponCode }));
+    }
+  }, [couponCode]);
 
   const [errors, setErrors] = useState<
     Partial<Record<keyof CheckoutFormData, string>>
@@ -102,7 +117,7 @@ const CheckoutForm = () => {
           fullName: true,
           phone: true,
           address: true,
-          note: true,
+          notes: true,
         });
       }
     }
@@ -124,14 +139,13 @@ const CheckoutForm = () => {
           <FaPaw className="text-xl" />
         </div>
         <div>
-         <h2 className="text-xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-  {t("checkout.title")}
-</h2>
+          <h2 className="text-xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
+            {t("checkout.title")}
+          </h2>
 
-<p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
-  {t("checkout.description")}
-</p>
-
+          <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
+            {t("checkout.description")}
+          </p>
         </div>
       </div>
 
@@ -142,7 +156,8 @@ const CheckoutForm = () => {
             htmlFor="fullName"
             className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
           >
-            {t("checkout.fullName")} <span className="text-red-500">{t("checkout.required")}</span>
+            {t("checkout.fullName")}{" "}
+            <span className="text-red-500">{t("checkout.required")}</span>
           </label>
           <input
             onChange={(e) => handleChange("fullName", e.target.value)}
@@ -168,7 +183,8 @@ const CheckoutForm = () => {
               htmlFor="address"
               className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
             >
-              {t("checkout.address")} <span className="text-red-500">{t("checkout.required")}</span>
+              {t("checkout.address")}{" "}
+              <span className="text-red-500">{t("checkout.required")}</span>
             </label>
             <input
               onChange={(e) => handleChange("address", e.target.value)}
@@ -193,7 +209,8 @@ const CheckoutForm = () => {
               htmlFor="phone"
               className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
             >
-              {t("checkout.phone")} <span className="text-red-500">{t("checkout.required")}</span>
+              {t("checkout.phone")}{" "}
+              <span className="text-red-500">{t("checkout.required")}</span>
             </label>
             <input
               onChange={(e) => handleChange("phone", e.target.value)}
@@ -217,19 +234,101 @@ const CheckoutForm = () => {
         {/* NOTE */}
         <div>
           <label
-            htmlFor="note"
+            htmlFor="notes"
             className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-2"
           >
-            {t("checkout.note")}
+            {t("checkout.notes")}
           </label>
           <textarea
-            onChange={(e) => handleChange("note", e.target.value)}
-            value={formData.note}
-            id="note"
+            onChange={(e) => handleChange("notes", e.target.value)}
+            value={formData.notes}
+            id="notes"
             rows={4}
             className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[var(--color-light-accent)] focus:border-transparent outline-none transition-all resize-none"
-            placeholder={t("checkout.notePlaceholder")}
+            placeholder={t("checkout.notesPlaceholder")}
           />
+        </div>
+
+        {/* PAYMENT METHOD */}
+        <div>
+          <label className="block text-sm font-medium text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)] mb-3">
+            {t("checkout.paymentMethod")}{" "}
+            <span className="text-red-500">{t("checkout.required")}</span>
+          </label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Cash on Delivery */}
+            <button
+              type="button"
+              onClick={() => handleChange("payment", "Cash on Delivery")}
+              className={`relative flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-300 ${
+                formData.payment === "Cash on Delivery"
+                  ? "border-[var(--color-light-accent)] bg-[var(--color-light-accent)]/10 dark:bg-[var(--color-light-accent)]/20"
+                  : "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] hover:border-[var(--color-light-accent)]/50"
+              }`}
+            >
+              <div
+                className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
+                  formData.payment === "Cash on Delivery"
+                    ? "bg-[var(--color-light-accent)] text-white"
+                    : "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <div className="text-left">
+                <p className={`font-semibold ${formData.payment === "Cash on Delivery" ? "text-[var(--color-light-accent)]" : "text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]"}`}>
+                  {t("checkout.cashOnDelivery")}
+                </p>
+                <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
+                  {t("checkout.cashOnDeliveryDesc")}
+                </p>
+              </div>
+              {formData.payment === "Cash on Delivery" && (
+                <div className="absolute top-2 right-2">
+                  <FaCheckCircle className="text-[var(--color-light-accent)] text-lg" />
+                </div>
+              )}
+            </button>
+
+            {/* Visa / Card Payment */}
+            <button
+              type="button"
+              onClick={() => handleChange("payment", "visa")}
+              className={`relative flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-300 ${
+                formData.payment === "visa"
+                  ? "border-[var(--color-light-accent)] bg-[var(--color-light-accent)]/10 dark:bg-[var(--color-light-accent)]/20"
+                  : "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] hover:border-[var(--color-light-accent)]/50"
+              }`}
+            >
+              <div
+                className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
+                  formData.payment === "visa"
+                    ? "bg-[var(--color-light-accent)] text-white"
+                    : "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+              </div>
+              <div className="text-left">
+                <p className={`font-semibold ${formData.payment === "visa" ? "text-[var(--color-light-accent)]" : "text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]"}`}>
+                  {t("checkout.visaPayment")}
+                </p>
+                
+                <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
+                  {t("checkout.visaPaymentDesc")}
+                </p>
+              </div>
+              {formData.payment === "visa" && (
+                <div className="absolute top-2 right-2">
+                  <FaCheckCircle className="text-[var(--color-light-accent)] text-lg" />
+                </div>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* BUTTON */}

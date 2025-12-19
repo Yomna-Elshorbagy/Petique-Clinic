@@ -2,19 +2,27 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../../Store/store";
-import { FaTruck, FaShieldAlt, FaHeart } from "react-icons/fa";
+import { FaTruck, FaShieldAlt, FaHeart, FaCheckCircle, FaTrash } from "react-icons/fa";
 import { Tag } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { getUserCart } from "../../../Store/Slices/CartSlice";
 import { useTranslation } from "react-i18next";
+import { getCouponByCode } from "../../../Apis/CouponApis";
+import type { ICoupon } from "../../../Interfaces/ICoupon";
 
 const useAppDispatch = () => useDispatch<AppDispatch>();
 
-const OrderSummary = () => {
+interface OrderSummaryProps {
+  onApplyCoupon?: (code: string) => void;
+}
+
+const OrderSummary: React.FC<OrderSummaryProps> = ({ onApplyCoupon }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [couponCode, setCouponCode] = useState("");
   const [showCoupon, setShowCoupon] = useState(false);
+  const [isApplied, setIsApplied] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<ICoupon | null>(null);
   const { products, totalPrice } = useSelector(
     (state: RootState) => state.cart
   );
@@ -22,16 +30,48 @@ const OrderSummary = () => {
   const displayProducts = products;
 
   const subtotal = totalPrice;
-  const tax = subtotal * 0.08;
-  const total = subtotal + tax;
+  const calculateDiscount = () => {
+    if (!appliedCoupon) return 0;
+    if (appliedCoupon.type === "percentage") {
+      return subtotal * (appliedCoupon.discount / 100);
+    }
+    return appliedCoupon.discount;
+  };
+
+  const discountAmount = calculateDiscount();
+  const discountedSubtotal = Math.max(0, subtotal - discountAmount);
+  const tax = discountedSubtotal * 0.08;
+  const total = discountedSubtotal + tax;
 
   useEffect(() => {
     dispatch(getUserCart());
   }, [dispatch]);
 
-  const handleApplyCoupon = () => {
-    // TODO: Implement coupon application logic
-    console.log("Applying coupon:", couponCode);
+  const handleApplyCoupon = async () => {
+    if (!couponCode) return;
+
+    try {
+      // Verify coupon exists before applying
+      const coupon = await getCouponByCode(couponCode); 
+      
+      if (onApplyCoupon) {
+        onApplyCoupon(couponCode);
+        setIsApplied(true);
+        setAppliedCoupon(coupon);
+      }
+    } catch (error) {
+      console.error("Invalid coupon code", error);
+      // Optional: Add UI feedback for invalid coupon here
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    if (onApplyCoupon) {
+      onApplyCoupon("");
+    }
+    setCouponCode("");
+    setIsApplied(false);
+    setAppliedCoupon(null);
   };
 
   return (
@@ -92,21 +132,43 @@ const OrderSummary = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="mt-3 flex gap-2"
+              className="mt-3"
             >
-              <input
-                type="text"
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
-                placeholder={t("checkout.enterCoupon")}
-                className="flex-1 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] text-sm outline-none focus:ring-2 focus:ring-[var(--color-light-accent)] dark:focus:ring-[var(--color-dark-accent)]"
-              />
-              <button
-                onClick={handleApplyCoupon}
-                className="px-4 py-2 bg-[var(--color-light-accent)] dark:bg-[var(--color-dark-accent)] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
-              >
-                {t("checkout.apply")}
-              </button>
+              {isApplied ? (
+                <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                  <div className="flex items-center gap-2">
+                    <FaCheckCircle className="text-green-500" />
+                    <span className="font-semibold text-green-700 dark:text-green-400">
+                      {couponCode}
+                    </span>
+                    <span className="text-xs text-green-600 dark:text-green-500">
+                      (Applied)
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleRemoveCoupon}
+                    className="text-red-500 hover:text-red-600 p-1 transition-colors"
+                  >
+                    <FaTrash size={14} />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value)}
+                    placeholder={t("checkout.enterCoupon")}
+                    className="flex-1 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[var(--color-dark-background)] text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] text-sm outline-none focus:ring-2 focus:ring-[var(--color-light-accent)] dark:focus:ring-[var(--color-dark-accent)]"
+                  />
+                  <button
+                    onClick={handleApplyCoupon}
+                    className="px-4 py-2 bg-[var(--color-light-accent)] dark:bg-[var(--color-dark-accent)] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+                  >
+                    {t("checkout.apply")}
+                  </button>
+                </div>
+              )}
             </motion.div>
           )}
         </div>
@@ -120,6 +182,14 @@ const OrderSummary = () => {
             <span>{t("checkout.tax")}</span>
             <span>${tax.toFixed(2)}</span>
           </div>
+          {isApplied && appliedCoupon && (
+            <div className="flex justify-between text-sm text-green-600 font-medium">
+              <span>
+                {t("checkout.discount", "Discount")} ({appliedCoupon.code})
+              </span>
+              <span>-${discountAmount.toFixed(2)}</span>
+            </div>
+          )}
           <div className="flex justify-between text-sm text-green-600 font-medium">
             <span>{t("checkout.delivery")}</span>
             <span>{t("checkout.free")}</span>

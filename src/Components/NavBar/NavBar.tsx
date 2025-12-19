@@ -249,7 +249,7 @@ export default function NavBar() {
                   onClick={toggleLanguage}
                   className="p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
                 >
-                  <FaLanguage className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
+                  < FaGlobe className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
                 </button>
                 <button
                   aria-label={t("navbar.toggleTheme")}

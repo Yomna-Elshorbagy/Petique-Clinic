@@ -26,6 +26,11 @@ export const getCouponById = async (id: string): Promise<ICoupon> => {
   return data.data;
 };
 
+export const getCouponByCode = async (code: string): Promise<ICoupon> => {
+  const { data } = await axios.get(`${BASE_URL}/code/${code}`, { headers });
+  return data.data;
+};
+
 export const createCoupon = async (couponData: ICouponCreate): Promise<ICoupon> => {
   const { data } = await axios.post(`${BASE_URL}/addcoupon`, couponData, { headers });
   return data.data;

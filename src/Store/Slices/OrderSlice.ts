@@ -171,6 +171,11 @@ export const addOrder = createAsyncThunk(
       const res = await axios.post("http://localhost:3000/order", order, {
         headers: { authentication: `bearer ${token}` },
       });
+      console.log(res.data.data.checkoutUrl);
+      if (res.data.data.checkoutUrl){
+          window.location.href = res.data.data.checkoutUrl;
+        return
+      }
       return res.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err.response?.data);
@@ -211,8 +216,11 @@ const orderSlice = createSlice({
     builder.addCase(deleteOrderById.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(deleteOrderById.fulfilled, (state) => {
+    builder.addCase(deleteOrderById.fulfilled, (state, action) => {
       state.loading = false;
+      // Remove the deleted order from the state
+      const deletedOrderId = action.meta.arg;
+      state.orders = state.orders.filter((order: any) => order._id !== deletedOrderId);
     });
     builder.addCase(deleteOrderById.rejected, (state) => {
       state.loading = false;
@@ -222,8 +230,11 @@ const orderSlice = createSlice({
     builder.addCase(deleteOrderhard.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(deleteOrderhard.fulfilled, (state) => {
+    builder.addCase(deleteOrderhard.fulfilled, (state, action) => {
       state.loading = false;
+      // Remove the deleted order from the state
+      const deletedOrderId = action.meta.arg;
+      state.orders = state.orders.filter((order: any) => order._id !== deletedOrderId);
     });
     builder.addCase(deleteOrderhard.rejected, (state) => {
       state.loading = false;
@@ -233,8 +244,14 @@ const orderSlice = createSlice({
     builder.addCase(updateOrderStatus.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(updateOrderStatus.fulfilled, (state) => {
+    builder.addCase(updateOrderStatus.fulfilled, (state, action) => {
       state.loading = false;
+      // Update the order in the state
+      const { id, status } = action.meta.arg;
+      const orderIndex = state.orders.findIndex((order: any) => order._id === id);
+      if (orderIndex !== -1) {
+        (state.orders[orderIndex] as any).status = status;
+      }
     });
     builder.addCase(updateOrderStatus.rejected, (state) => {
       state.loading = false;
@@ -244,8 +261,20 @@ const orderSlice = createSlice({
     builder.addCase(updateOrderDetails.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(updateOrderDetails.fulfilled, (state) => {
+    builder.addCase(updateOrderDetails.fulfilled, (state, action) => {
       state.loading = false;
+      // Update the order in the state
+      const { id, fullName, phone, address, status, finalPrice, notes } = action.meta.arg;
+      const orderIndex = state.orders.findIndex((order: any) => order._id === id);
+      if (orderIndex !== -1) {
+        const order = state.orders[orderIndex] as any;
+        order.fullName = fullName;
+        order.phone = phone;
+        order.address = address;
+        order.status = status;
+        order.finalPrice = finalPrice;
+        if (notes !== undefined) order.note = notes;
+      }
     });
     builder.addCase(updateOrderDetails.rejected, (state) => {
       state.loading = false;

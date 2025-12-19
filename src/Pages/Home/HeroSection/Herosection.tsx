@@ -107,17 +107,6 @@ const HeroSection = () => {
             {t("heroSection.description")}
           </motion.p>
 
-          {/* Button */}
-          {/* <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.5, delay: 2.8 }}
-            className="bg-[var(--color-light-accent)] hover:bg-[#d69560] text-white text-lg font-bold py-4 px-10 rounded-full shadow-lg shadow-orange-500/30 flex items-center gap-3 transition-all"
-          >
-            CONTACT US <FaPaw />
-          </motion.button> */}
         </div>
       </div>
     </div>

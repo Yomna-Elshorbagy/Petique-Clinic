@@ -37,7 +37,7 @@ export const useReservationsNotifications = () => {
 
   useEffect(() => {
     fetchReservations();
-    const interval = setInterval(fetchReservations, 30000);
+    const interval = setInterval(fetchReservations, 60000); 
     return () => clearInterval(interval);
   }, []);
 

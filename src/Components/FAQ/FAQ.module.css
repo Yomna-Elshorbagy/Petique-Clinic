@@ -13,27 +13,63 @@
   --faq-brown-dark: 18 50% 15%;
   --faq-border: 30 25% 88%;
   --faq-shadow: 20 40% 20%;
-  
+
   padding: 6rem 2rem;
-  background: 
-    radial-gradient(ellipse 80% 60% at 20% 40%, hsla(var(--faq-orange) / 0.04) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 80%, hsla(var(--faq-brown) / 0.03) 0%, transparent 50%),
-    linear-gradient(180deg, hsl(var(--faq-bg)) 0%, hsl(var(--faq-bg-pattern)) 100%);
+  background: radial-gradient(
+      ellipse 80% 60% at 20% 40%,
+      hsla(var(--faq-orange) / 0.04) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 80% 80%,
+      hsla(var(--faq-brown) / 0.03) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      180deg,
+      hsl(var(--faq-bg)) 0%,
+      hsl(var(--faq-bg-pattern)) 100%
+    );
   position: relative;
   overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+:global(.dark) .faq {
+  --faq-bg: 220 15% 13%;
+  --faq-bg-pattern: 220 15% 10%;
+  --faq-card-bg: 220 15% 18%;
+  --faq-text: 30 10% 90%;
+  --faq-text-muted: 30 5% 65%;
+  --faq-border: 220 10% 25%;
+  --faq-shadow: 220 20% 5%;
+  --faq-brown: 30 20% 70%;
+  --faq-brown-light: 30 15% 60%;
+  --faq-brown-dark: 30 10% 85%;
 }
 
 .faq::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
-    radial-gradient(circle at 20% 20%, hsla(var(--faq-orange) / 0.08) 0%, transparent 2%),
-    radial-gradient(circle at 80% 80%, hsla(var(--faq-brown) / 0.06) 0%, transparent 2%),
-    radial-gradient(circle at 40% 60%, hsla(var(--faq-orange) / 0.05) 0%, transparent 1.5%);
+  background-image: radial-gradient(
+      circle at 20% 20%,
+      hsla(var(--faq-orange) / 0.08) 0%,
+      transparent 2%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      hsla(var(--faq-brown) / 0.06) 0%,
+      transparent 2%
+    ),
+    radial-gradient(
+      circle at 40% 60%,
+      hsla(var(--faq-orange) / 0.05) 0%,
+      transparent 1.5%
+    );
   background-size: 80px 80px, 100px 100px, 60px 60px;
   opacity: 0.5;
   pointer-events: none;
@@ -59,7 +95,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  color:  #D98C33;
+  color: #d98c33;
   font-weight: 600;
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
@@ -71,9 +107,16 @@
 }
 
 @keyframes wiggle {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(8deg); }
-  75% { transform: rotate(-8deg); }
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(8deg);
+  }
+  75% {
+    transform: rotate(-8deg);
+  }
 }
 
 .title {
@@ -83,7 +126,7 @@
   margin-bottom: 1.25rem;
   line-height: 1.2;
   letter-spacing: -0.01em;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-style: italic;
 }
 
@@ -96,11 +139,13 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: perspective(1000px) rotateY(-5deg) rotateZ(-3deg) translateY(0);
   }
   50% {
-    transform: perspective(1000px) rotateY(-5deg) rotateZ(-3deg) translateY(-12px);
+    transform: perspective(1000px) rotateY(-5deg) rotateZ(-3deg)
+      translateY(-12px);
   }
 }
 
@@ -113,15 +158,13 @@
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 
-    0 20px 50px hsla(var(--faq-shadow) / 0.15),
+  box-shadow: 0 20px 50px hsla(var(--faq-shadow) / 0.15),
     0 8px 20px hsla(var(--faq-shadow) / 0.1);
   transition: box-shadow 0.4s ease;
 }
 
 .imageWrapper:hover .imageInner {
-  box-shadow: 
-    0 30px 70px hsla(var(--faq-shadow) / 0.2),
+  box-shadow: 0 30px 70px hsla(var(--faq-shadow) / 0.2),
     0 15px 35px hsla(var(--faq-shadow) / 0.15);
 }
 
@@ -139,12 +182,12 @@
 }
 
 .imageInner::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    135deg, 
-    hsla(var(--faq-orange) / 0.1) 0%, 
+    135deg,
+    hsla(var(--faq-orange) / 0.1) 0%,
     transparent 50%,
     hsla(var(--faq-brown) / 0.05) 100%
   );
@@ -153,23 +196,30 @@
 }
 
 .imageInner::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: 40%;
-  background: linear-gradient(to top, hsla(var(--faq-brown-dark) / 0.3) 0%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    hsla(var(--faq-brown-dark) / 0.3) 0%,
+    transparent 100%
+  );
   z-index: 1;
   pointer-events: none;
 }
-
 
 .decorBadge {
   position: absolute;
   bottom: 1.25rem;
   right: 1.25rem;
-  background: linear-gradient(135deg, hsl(var(--faq-orange)) 0%, hsl(var(--faq-orange-light)) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--faq-orange)) 0%,
+    hsl(var(--faq-orange-light)) 100%
+  );
   color: white;
   padding: 0.75rem 1.25rem;
   border-radius: 50px;
@@ -192,16 +242,14 @@
   background: hsl(var(--faq-card-bg));
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 
-    0 4px 20px hsla(var(--faq-shadow) / 0.04),
+  box-shadow: 0 4px 20px hsla(var(--faq-shadow) / 0.04),
     0 1px 4px hsla(var(--faq-shadow) / 0.03);
   border: 1.5px solid hsl(var(--faq-border));
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .accordionItem:hover {
-  box-shadow: 
-    0 12px 40px hsla(var(--faq-shadow) / 0.1),
+  box-shadow: 0 12px 40px hsla(var(--faq-shadow) / 0.1),
     0 4px 12px hsla(var(--faq-shadow) / 0.06);
   border-color: hsla(var(--faq-orange) / 0.3);
   transform: translateY(-2px);
@@ -209,8 +257,7 @@
 
 .accordionItemOpen {
   border-color: hsl(var(--faq-orange));
-  box-shadow: 
-    0 15px 50px hsla(var(--faq-orange) / 0.12),
+  box-shadow: 0 15px 50px hsla(var(--faq-orange) / 0.12),
     0 6px 18px hsla(var(--faq-shadow) / 0.08);
 }
 
@@ -246,7 +293,7 @@
   justify-content: center;
   font-size: 0.8rem;
   font-weight: 700;
-  color: #D98C33;
+  color: #d98c33;
   margin-right: 1rem;
   flex-shrink: 0;
   transition: all 0.3s ease;
@@ -268,18 +315,22 @@
 }
 
 .accordionItemOpen .accordionQuestion {
-  color: #D98C33;
+  color: #d98c33;
 }
 
 .accordionIcon {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, hsl(var(--faq-orange-bg)) 0%, hsla(var(--faq-orange) / 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--faq-orange-bg)) 0%,
+    hsla(var(--faq-orange) / 0.15) 100%
+  );
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color:#D98C33;
+  color: #d98c33;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
 }
@@ -289,9 +340,7 @@
 }
 
 .accordionIconOpen {
-  background: linear-gradient(135deg,
-  #D98C33 0%,
-  #E5A85C 100%);
+  background: linear-gradient(135deg, #d98c33 0%, #e5a85c 100%);
   color: white;
   transform: rotate(180deg);
   box-shadow: 0 6px 20px hsla(var(--faq-orange) / 0.3);
@@ -299,7 +348,11 @@
 
 .accordionContent {
   overflow: hidden;
-  background: linear-gradient(180deg, hsla(var(--faq-orange-bg) / 0.3) 0%, transparent 100%);
+  background: linear-gradient(
+    180deg,
+    hsla(var(--faq-orange-bg) / 0.3) 0%,
+    transparent 100%
+  );
 }
 
 .accordionAnswer {
@@ -311,13 +364,17 @@
 }
 
 .accordionAnswer::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 2.5rem;
   top: 0;
   width: 3px;
   height: calc(100% - 1.5rem);
-  background: linear-gradient(180deg, hsl(var(--faq-orange)) 0%, hsla(var(--faq-orange) / 0.2) 100%);
+  background: linear-gradient(
+    180deg,
+    hsl(var(--faq-orange)) 0%,
+    hsla(var(--faq-orange) / 0.2) 100%
+  );
   border-radius: 3px;
 }
 
@@ -327,16 +384,16 @@
     grid-template-columns: 1fr;
     gap: 3.5rem;
   }
-  
+
   .leftColumn {
     position: static;
     text-align: center;
   }
-  
+
   .subtitle {
     justify-content: center;
   }
-  
+
   .imageWrapper {
     max-width: 480px;
     margin-left: auto;
@@ -344,7 +401,7 @@
     transform: none;
     animation: none;
   }
-  
+
   .imageWrapper:hover {
     transform: scale(1.02);
   }
@@ -354,40 +411,40 @@
   .faq {
     padding: 4rem 1.25rem;
   }
-  
+
   .title {
     font-size: 2rem;
   }
-  
+
   .accordionHeader {
     padding: 1.1rem 1.25rem;
   }
-  
+
   .accordionNumber {
     width: 24px;
     height: 24px;
     font-size: 0.75rem;
     margin-right: 0.75rem;
   }
-  
+
   .accordionQuestion {
     font-size: 0.95rem;
   }
-  
+
   .accordionIcon {
     width: 32px;
     height: 32px;
   }
-  
+
   .accordionAnswer {
     padding: 0 1.25rem 1.25rem 3.5rem;
     font-size: 0.9rem;
   }
-  
+
   .accordionAnswer::before {
     left: 1.75rem;
   }
-  
+
   .decorBadge {
     bottom: 0.75rem;
     right: 0.75rem;
@@ -400,11 +457,11 @@
   .accordionNumber {
     display: none;
   }
-  
+
   .accordionAnswer {
     padding-left: 1.25rem;
   }
-  
+
   .accordionAnswer::before {
     display: none;
   }
