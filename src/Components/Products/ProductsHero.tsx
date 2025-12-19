@@ -59,9 +59,9 @@ const ProductsHero: React.FC = () => {
       </div>
 
       <img
-        src="/src/assets/images/cat-relaxing.png"
+        src="/src/assets/images/pic-2.png"
         alt={t("productsHero.imageAlt")}
-        className="hidden md:block absolute md:end-1 md:bottom-[-120px] w-[600px] z-10"
+        className="hidden md:block absolute md:end-1 md:bottom-[-90px] w-[600px] z-10"
       />
     </div>
   );

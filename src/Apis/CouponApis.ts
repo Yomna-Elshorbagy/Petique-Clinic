@@ -50,11 +50,12 @@ export const deleteCoupon = async (id: string): Promise<any> => {
 };
 
 export const softDeleteCoupon = async (id: string): Promise<any> => {
-  const { data } = await axios.put(
-    `${BASE_URL}/${id}`,
-    // { isDeleted: true },
-    { headers }
+   const { data } = await axios.put(
+    `${BASE_URL}/soft/${id}`,
+    {},
+    {
+      headers: { authentication: `bearer ${token}` },
+    }
   );
-  return data;
+  return data.data;
 };
-
