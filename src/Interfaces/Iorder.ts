@@ -1,7 +1,5 @@
 import type { IProduct } from "./IProducts";
 
-
-
 export interface OrderProduct {
   _id: string;
   productId: IProduct;
@@ -13,17 +11,18 @@ export interface OrderProduct {
 }
 
 export interface IOrder {
-    fullName: string;
-    address: string;
-    phone: string;
-    notes: string;
-    payment: string;
-
+  fullName: string;
+  address: string;
+  phone: string;
+  notes: string;
+  payment: string;
+  finalPrice: number;
+  status: string;
 }
 
 interface IorderState {
-    orders: IOrder[];
-    loading: boolean;
+  orders: IOrder[];
+  loading: boolean;
 }
 
 export type { IorderState };
