@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { Star } from "lucide-react";
 import Modal from "react-modal";
@@ -52,6 +52,7 @@ export default function Reservation() {
   ];
   const orderedSteps = isRTL ? [...stepKeys].reverse() : stepKeys;
   const totalSteps = stepKeys.length;
+  const queryClient = useQueryClient();
 
   const token = localStorage.getItem("accessToken");
   let userId: string | null = null;
@@ -155,6 +156,43 @@ export default function Reservation() {
     }, 0);
   }, [date, doctor, allReservations, timeSlot, timeOptions]);
 
+
+   const [next5Days, setNext5Days] = useState<{ abbr: string; iso: string }[]>(
+    []
+  );
+  useEffect(() => {
+    const today = new Date();
+    const clinicDays = ["Sun", "Mon", "Tue", "Wed", "Thu"];
+    const arr: { abbr: string; iso: string }[] = [];
+
+    let added = 0;
+    const checkDate = new Date(today);
+
+    while (added < 5) {
+      const dayAbbr = checkDate.toLocaleDateString("en-US", {
+        weekday: "short",
+      });
+      if (clinicDays.includes(dayAbbr)) {
+        arr.push({ abbr: dayAbbr, iso: checkDate.toISOString().split("T")[0] });
+        added++;
+      }
+      checkDate.setDate(checkDate.getDate() + 1);
+    }
+
+    setTimeout(() => {
+      setNext5Days(arr);
+    }, 0);
+  }, []);
+
+  const showAlert = (title: string, message: string) => {
+    Swal.fire({
+      title,
+      text: message,
+      icon: "error",
+      confirmButtonColor: "#b89c86",
+    });
+  };
+
   // Create Reservation
   const mutation = useMutation({
     mutationFn: async () => {
@@ -193,6 +231,8 @@ export default function Reservation() {
       setDate("");
       setTimeSlot("");
       setNotes("");
+      queryClient.invalidateQueries({ queryKey: ["allReservations"] });
+
     },
     onError: (error: AxiosError) => {
       if (error.response?.status === 409)
@@ -201,41 +241,7 @@ export default function Reservation() {
     },
   });
 
-  const [next5Days, setNext5Days] = useState<{ abbr: string; iso: string }[]>(
-    []
-  );
-  useEffect(() => {
-    const today = new Date();
-    const clinicDays = ["Sun", "Mon", "Tue", "Wed", "Thu"];
-    const arr: { abbr: string; iso: string }[] = [];
-
-    let added = 0;
-    const checkDate = new Date(today);
-
-    while (added < 5) {
-      const dayAbbr = checkDate.toLocaleDateString("en-US", {
-        weekday: "short",
-      });
-      if (clinicDays.includes(dayAbbr)) {
-        arr.push({ abbr: dayAbbr, iso: checkDate.toISOString().split("T")[0] });
-        added++;
-      }
-      checkDate.setDate(checkDate.getDate() + 1);
-    }
-
-    setTimeout(() => {
-      setNext5Days(arr);
-    }, 0);
-  }, []);
-
-  const showAlert = (title: string, message: string) => {
-    Swal.fire({
-      title,
-      text: message,
-      icon: "error",
-      confirmButtonColor: "#b89c86",
-    });
-  };
+ 
 
   return (
     <>

@@ -11,6 +11,7 @@ import type { IPet } from "../../../../Interfaces/Ipet";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface IVaccinatePetModalProps {
   pets: IPet[];
@@ -35,10 +36,11 @@ export default function VaccinatePetModal({
   isOpen,
   onClose,
 }: IVaccinatePetModalProps) {
-  const { data: vaccines } = useVaccinations();
+  const { data: vaccines, refetch } = useVaccinations();
   const vaccinateMutation = useVaccinatePet();
 
   const [availableDoses, setAvailableDoses] = useState<IDose[]>([]);
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -82,8 +84,14 @@ export default function VaccinatePetModal({
       {
         onSuccess: () => {
           Swal.fire("Done", "Pet vaccinated successfully", "success");
+          refetch();
           reset();
           onClose();
+          queryClient.invalidateQueries({
+            queryKey: ["vaccination-records"],
+            exact: true,
+          });
+          queryClient.invalidateQueries({ queryKey: ["vaccinations"] });
         },
         onError: (error: unknown) => {
           const e = error as { response?: { data?: { message?: string } } };

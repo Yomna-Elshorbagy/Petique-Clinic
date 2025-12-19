@@ -4,11 +4,13 @@ import { Calendar, Users, Syringe } from "lucide-react";
 interface QuickActionsPanelProps {
   onRegisterPet: () => void;
   onScheduleVaccination: () => void;
+   onNewAppointment: () => void;
 }
 
 const QuickActionsPanel = ({
   onRegisterPet,
   onScheduleVaccination,
+   onNewAppointment,
 }: QuickActionsPanelProps) => {
   return (
     <div className="w-full flex flex-col gap-5">
@@ -17,7 +19,9 @@ const QuickActionsPanel = ({
       </h2>
 
       <div className="flex flex-col gap-4">
-        <button className="w-full bg-[#B38A72] text-white py-4 px-6 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-[#A27964] transition-all">
+        <button 
+        onClick={onNewAppointment}
+        className="w-full bg-[#B38A72] text-white py-4 px-6 rounded-2xl flex items-center gap-3 shadow-sm hover:bg-[#A27964] transition-all">
           <Calendar size={20} />
           <span>New Appointment</span>
         </button>

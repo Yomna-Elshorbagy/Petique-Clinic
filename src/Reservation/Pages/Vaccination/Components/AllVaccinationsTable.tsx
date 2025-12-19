@@ -65,9 +65,21 @@ export default function AllVaccinationsTable() {
     <>
       <SharedSearch
         searches={[
-          {placeholder: "Search by ID" , value: idSearch , onChange: setIdSearch},
-          { placeholder: "Search by Name", value: nameSearch, onChange: setNameSearch },
-          { placeholder: "Search by Created By", value: createdBySearch, onChange: setCreatedBySearch },
+          {
+            placeholder: "Search by ID",
+            value: idSearch,
+            onChange: setIdSearch,
+          },
+          {
+            placeholder: "Search by Name",
+            value: nameSearch,
+            onChange: setNameSearch,
+          },
+          {
+            placeholder: "Search by Created By",
+            value: createdBySearch,
+            onChange: setCreatedBySearch,
+          },
         ]}
         filters={[
           { value: category, onChange: setCategory, options: categoryOptions },
@@ -112,7 +124,10 @@ export default function AllVaccinationsTable() {
               >
                 <td className="p-4 font-medium">#{v._id.slice(-5)}</td>
                 <td className="p-4 font-medium max-w-[100px]">{v.name}</td>
-                <td className="p-4 text-gray-600 max-w-[100px]" title={v.description}>
+                <td
+                  className="p-4 text-gray-600 max-w-[100px]"
+                  title={v.description}
+                >
                   {v.description.length > 60
                     ? v.description.slice(0, 50) + "..."
                     : v.description}
@@ -134,7 +149,9 @@ export default function AllVaccinationsTable() {
                       <span>
                         Dose {dose.doseNumber} - {dose.ageInWeeks} wks
                         {dose.recurring ? " (Recurring)" : ""}
-                        {dose.repeatAfterDays ? `, +${dose.repeatAfterDays}d` : ""}
+                        {dose.repeatAfterDays
+                          ? `, +${dose.repeatAfterDays}d`
+                          : ""}
                       </span>
                     </div>
                   ))}
@@ -184,7 +201,11 @@ export default function AllVaccinationsTable() {
 
       {/* Pagination */}
       <div className="mt-4">
-        <Pagination page={page} totalPages={totalPages} onPageChange={goToPage} />
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onPageChange={goToPage}
+        />
       </div>
     </>
   );
