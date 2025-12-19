@@ -1,5 +1,4 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaBox,
@@ -13,6 +12,8 @@ import {
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
+import { useAppDispatch, useAppSelector } from "../../../Store/store";
+import { clearUserToken } from "../../../Store/Slices/AuthSlice";
 
 const Sidebar = ({
   isOpen,
@@ -27,6 +28,15 @@ const Sidebar = ({
 }) => {
   const location = useLocation();
   const isDesktop = window.innerWidth >= 768;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const token = useAppSelector((state) => state.auth.token);
+
+  //====> handel logout
+  const handleLogout = () => {
+    dispatch(clearUserToken());
+    navigate("/login");
+  };
 
   const menuItems = [
     { name: "Overview", icon: FaHome, path: "/ecoDashboard" },
@@ -129,14 +139,20 @@ const Sidebar = ({
         </nav>
 
         <div className={`mt-auto ${isCollapsed ? "text-center" : ""}}`}>
-          <button
-            className={`flex items-center gap-3 p-3 w-full rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200 font-medium ${
-              isCollapsed ? "justify-center" : ""
-            }`}
-          >
-            <FaSignOutAlt className="text-lg" />
-            {!isCollapsed && <span>Logout</span>}
-          </button>
+          <div className={`mt-auto ${isCollapsed ? "text-center" : ""}`}>
+            <button
+              onClick={() => {
+                handleLogout();
+                if (!isDesktop) toggleMobile(); 
+              }}
+              className={`flex items-center gap-3 p-3 w-full rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200 font-medium ${
+                isCollapsed ? "justify-center" : ""
+              }`}
+            >
+              <FaSignOutAlt className="text-lg" />
+              {!isCollapsed && <span>Logout</span>}
+            </button>
+          </div>
         </div>
       </aside>
     </>

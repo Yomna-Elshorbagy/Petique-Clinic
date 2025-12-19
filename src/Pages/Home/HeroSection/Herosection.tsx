@@ -15,7 +15,7 @@ const HeroSection = () => {
   const tiles = Array.from({ length: totalTiles }, (_, i) => i);
 
   return (
-    <div className="relative w-full h-[90vh] md:h-screen overflow-hidden flex items-center">
+    <div className="relative w-full h-screen overflow-hidden flex items-center">
       {/* Grid Image Reveal Container - Force LTR to prevent image direction change */}
       <div
         dir="ltr"
@@ -28,31 +28,27 @@ const HeroSection = () => {
         {tiles.map((index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, scale: 0.2 }}
+            initial={{ opacity: 0, scale: 0.8 }}
             animate={{
               opacity: 1,
               scale: 1,
-              borderWidth: 0,
             }}
             transition={{
-              duration: 1.5,
-              delay: (index % cols) * 0.07 + Math.floor(index / cols) * 0.07,
-              ease: "easeOut",
+              duration: 1.2,
+              delay: (index % cols) * 0.05 + Math.floor(index / cols) * 0.05,
+              ease: [0.25, 0.1, 0.25, 1],
             }}
-            className="w-full h-full relative border-2 border-white/60"
+            className="w-full h-full relative overflow-hidden"
           >
             <div
-              className="absolute inset-0 w-[100vw] h-[90vh] md:h-screen"
+              className="absolute w-[100vw] h-[100vh]"
               style={{
                 backgroundImage:
                   "url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=2000&q=80')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-
                 left: `-${(index % cols) * (100 / cols)}vw`,
-                top: `-${Math.floor(index / cols) * (90 / rows)}vh`,
-                width: "100vw",
-                height: "90vh",
+                top: `-${Math.floor(index / cols) * (100 / rows)}vh`,
               }}
             />
           </motion.div>
@@ -111,17 +107,6 @@ const HeroSection = () => {
             {t("heroSection.description")}
           </motion.p>
 
-          {/* Button */}
-          {/* <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.5, delay: 2.8 }}
-            className="bg-[var(--color-light-accent)] hover:bg-[#d69560] text-white text-lg font-bold py-4 px-10 rounded-full shadow-lg shadow-orange-500/30 flex items-center gap-3 transition-all"
-          >
-            CONTACT US <FaPaw />
-          </motion.button> */}
         </div>
       </div>
     </div>

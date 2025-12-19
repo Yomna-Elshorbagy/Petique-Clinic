@@ -22,6 +22,7 @@ import Swal from "sweetalert2";
 import ProductModal from "./Components/viewProductModle";
 import EditProductModal from "./Components/EditProductModel";
 import AddProductModal from "./Components/AddProductModel";
+import SEO from "../../../Components/SEO/SEO";
 
 export default function ProductsDashboared() {
   const [openModal, setOpenModal] = useState(false);
@@ -35,10 +36,8 @@ export default function ProductsDashboared() {
   const [searchName, setSearchName] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [minStock, setMinStock] = useState("");
-  const [maxStock, setMaxStock] = useState("");
+  const [priceFilter, setPriceFilter] = useState("");
+  const [stockFilter, setStockFilter] = useState("");
 
   // ===> fetch products
   const { data, isLoading } = useQuery({
@@ -88,27 +87,19 @@ export default function ProductsDashboared() {
       });
     }
 
-    // Price filter
-    if (minPrice) {
+    // Price filter - search by exact or partial match
+    if (priceFilter) {
+      const priceNum = Number(priceFilter);
       filtered = filtered.filter(
-        (product: IProduct) => product.price >= Number(minPrice)
-      );
-    }
-    if (maxPrice) {
-      filtered = filtered.filter(
-        (product: IProduct) => product.price <= Number(maxPrice)
+        (product: IProduct) => product.price <= priceNum
       );
     }
 
-    // Stock filter
-    if (minStock) {
+    // Stock filter - search by max stock
+    if (stockFilter) {
+      const stockNum = Number(stockFilter);
       filtered = filtered.filter(
-        (product: IProduct) => product.stock >= Number(minStock)
-      );
-    }
-    if (maxStock) {
-      filtered = filtered.filter(
-        (product: IProduct) => product.stock <= Number(maxStock)
+        (product: IProduct) => product.stock <= stockNum
       );
     }
 
@@ -119,10 +110,8 @@ export default function ProductsDashboared() {
     searchName,
     categoryFilter,
     statusFilter,
-    minPrice,
-    maxPrice,
-    minStock,
-    maxStock,
+    priceFilter,
+    stockFilter,
   ]);
 
   // ====> action handlers
@@ -383,10 +372,8 @@ export default function ProductsDashboared() {
     setSearchName("");
     setCategoryFilter("");
     setStatusFilter("");
-    setMinPrice("");
-    setMaxPrice("");
-    setMinStock("");
-    setMaxStock("");
+    setPriceFilter("");
+    setStockFilter("");
   };
 
   const hasActiveFilters =
@@ -394,13 +381,16 @@ export default function ProductsDashboared() {
     searchName ||
     categoryFilter ||
     statusFilter ||
-    minPrice ||
-    maxPrice ||
-    minStock ||
-    maxStock;
+    priceFilter ||
+    stockFilter;
 
   return (
     <div className="w-full max-w-full px-4 md:px-6">
+      <SEO
+        title="Products | Dashboard Petique Clinic"
+        description="Manage pet products, medicines, and supplies available at Petique Clinic."
+      />
+
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
           Products Management
@@ -504,50 +494,50 @@ export default function ProductsDashboared() {
           </button>
         </div>
 
-        {/* Second Row - Price and Stock */}
+        {/* Second Row - Price, Stock, and Add Button */}
         <div className="flex gap-4 flex-wrap items-center mt-4">
-          {/* Min Price */}
-          <div className="relative min-w-[150px]">
+          {/* Price Search */}
+          <div className="relative flex-1 min-w-[180px]">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaSearch className="text-gray-400" size={18} />
+            </div>
             <input
               type="number"
-              placeholder="Min Price"
-              value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
-              className="w-full px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
+              placeholder="Search by max price..."
+              value={priceFilter}
+              onChange={(e) => setPriceFilter(e.target.value)}
+              className="w-full pl-10 pr-10 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
             />
+            {priceFilter && (
+              <button
+                onClick={() => setPriceFilter("")}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            )}
           </div>
 
-          {/* Max Price */}
-          <div className="relative min-w-[150px]">
+          {/* Stock Search */}
+          <div className="relative flex-1 min-w-[180px]">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaSearch className="text-gray-400" size={18} />
+            </div>
             <input
               type="number"
-              placeholder="Max Price"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
-              className="w-full px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
+              placeholder="Search by max stock..."
+              value={stockFilter}
+              onChange={(e) => setStockFilter(e.target.value)}
+              className="w-full pl-10 pr-10 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
             />
-          </div>
-
-          {/* Min Stock */}
-          <div className="relative min-w-[150px]">
-            <input
-              type="number"
-              placeholder="Min Stock"
-              value={minStock}
-              onChange={(e) => setMinStock(e.target.value)}
-              className="w-full px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
-            />
-          </div>
-
-          {/* Max Stock */}
-          <div className="relative min-w-[150px]">
-            <input
-              type="number"
-              placeholder="Max Stock"
-              value={maxStock}
-              onChange={(e) => setMaxStock(e.target.value)}
-              className="w-full px-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
-            />
+            {stockFilter && (
+              <button
+                onClick={() => setStockFilter("")}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+            )}
           </div>
 
           {/* Add Product Button */}

@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../Store/store";
+import {
+  useAppDispatch,
+  useAppSelector,
+  type RootState,
+} from "../../Store/store";
 import { motion } from "framer-motion";
 import {
   FaBars,
@@ -10,25 +14,49 @@ import {
   FaSun,
   FaUserCircle,
   FaChevronDown,
+  FaLanguage,
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/images/logo.jpg";
+import { Link, NavLink, useNavigate } from "react-router";
+import { clearUserToken } from "../../Store/Slices/AuthSlice";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const stored = localStorage.getItem("theme");
+    if (stored === "dark" || stored === "light") {
+      return stored === "dark";
+    }
+    // Fallback to system preference
+    return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
+  });
   const [isScrolled, setIsScrolled] = useState(false);
   const { noOfCartItems } = useSelector((state: RootState) => state.cart);
   const { t, i18n } = useTranslation();
+  const accessToken =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+  const isAuthenticated = Boolean(accessToken);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const token = useAppSelector((state) => state.auth.token);
+
+  //====> handel logout
+  const handleLogout = () => {
+    dispatch(clearUserToken());
+    navigate("/login");
+  };
 
   const navLinks = [
     { label: t("navbar.home"), href: "/" },
-    { label: t("navbar.products"), href: "/products" },
-    { label: t("navbar.services"), href: "service" },
     { label: t("navbar.reservation"), href: "/reservation" },
-    { label: t("navbar.contactUs"), href: "/contact" },
+    { label: t("navbar.services"), href: "service" },
+    { label: t("navbar.products"), href: "/products" },
     { label: t("navbar.blog"), href: "/blog" },
+    { label: t("navbar.contactUs"), href: "/contact" },
   ];
 
   const toggleLanguage = () => {
@@ -46,6 +74,8 @@ export default function NavBar() {
     } else {
       root.classList.remove("dark");
     }
+    // Persist theme to localStorage
+    localStorage.setItem("theme", isDark ? "dark" : "light");
   }, [isDark]);
 
   useEffect(() => {
@@ -68,10 +98,11 @@ export default function NavBar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${isScrolled
+      className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
+        isScrolled
           ? "bg-[var(--color-light-background)]/90 dark:bg-[var(--color-dark-background)]/90 backdrop-blur-xl shadow-lg"
           : "bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] shadow-md"
-        }`}
+      }`}
     >
       {/* Container */}
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-5 md:px-6 py-3 md:py-4">
@@ -95,28 +126,38 @@ export default function NavBar() {
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-7">
             {navLinks.map((link, index) => (
-              <motion.a
+              <motion.div
                 key={link.label}
-                href={link.href}
-                className="relative text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] font-semibold text-base hover:text-[var(--color-light-accent)] dark:hover:text-[var(--color-dark-accent)] transition-colors duration-300 group"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.06 * index + 0.2, duration: 0.45 }}
               >
-                {link.label}
-                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-[var(--color-light-accent)] group-hover:w-full transition-all duration-300"></span>
-              </motion.a>
+                <NavLink
+                  to={link.href}
+                  className={({ isActive }) =>
+                    `relative font-semibold text-base transition-colors duration-300 group
+                    ${
+                      isActive
+                        ? "text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)] active"
+                        : "text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]"
+                    }`
+                  }
+                >
+                  {link.label}
+                  <span className="absolute left-0 -bottom-1 h-0.5 transition-all duration-300 w-0 bg-[var(--color-light-accent)] group-hover:w-full active:w-full" />
+                </NavLink>
+              </motion.div>
             ))}
           </div>
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-4">
             <button
-              aria-label={t("navbar.toggleTheme")}
+              aria-label={t("navbar.toggleLanguage")}
               onClick={toggleLanguage}
-              className="p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] font-semibold text-sm"
+              className="p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
             >
-              {i18n.language === "en" ? "AR" : "EN"}
+              <FaLanguage className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
             </button>
 
             <button
@@ -130,19 +171,20 @@ export default function NavBar() {
                 <FaMoon className="text-[var(--color-light-dark)]" />
               )}
             </button>
-
-            <a
-              href="/cart"
-              className="relative p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]"
-              aria-label={t("navbar.cart")}
-            >
-              <FaShoppingCart />
-              {noOfCartItems > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-[var(--color-light-accent)] text-white text-[11px] font-bold flex items-center justify-center">
-                  {noOfCartItems}
-                </span>
-              )}
-            </a>
+            {isAuthenticated && (
+              <Link
+                to="/cart"
+                className="relative p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
+                aria-label={t("navbar.cart")}
+              >
+                <FaShoppingCart className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
+                {noOfCartItems > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-[var(--color-light-accent)] text-white text-[11px] font-bold flex items-center justify-center">
+                    {noOfCartItems}
+                  </span>
+                )}
+              </Link>
+            )}
 
             <div className="relative">
               <button
@@ -151,26 +193,56 @@ export default function NavBar() {
               >
                 <FaUserCircle />
                 <FaChevronDown
-                  className={`transition-transform ${showProfile ? "rotate-180" : ""
-                    }`}
+                  className={`transition-transform ${
+                    showProfile ? "rotate-180" : ""
+                  }`}
                 />
               </button>
               {showProfile && (
                 <div className="absolute right-0 mt-3 w-52 rounded-2xl bg-white dark:bg-[var(--color-dark-card)] border border-[var(--color-light-secondary)]/20 shadow-2xl p-3 space-y-2 z-20">
                   {[
-                    { label: t("navbar.profile"), href: "/profile" },
-                    { label: t("navbar.login"), href: "/login" },
-                    { label: t("navbar.register"), href: "/register" },
-                    { label: t("navbar.logout"), href: "/logout" },
-                  ].map((item) => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      className="block px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
-                    >
-                      {item.label}
-                    </a>
-                  ))}
+                    {
+                      label: t("navbar.profile"),
+                      href: "/profile",
+                      auth: true,
+                    },
+                    {
+                      label: t("navbar.reviews"),
+                      href: "/clinicReviews",
+                      auth: true,
+                    },
+                    { label: t("navbar.login"), href: "/login", auth: false },
+                    {
+                      label: t("navbar.register"),
+                      href: "/register",
+                      auth: false,
+                    },
+                    { label: t("navbar.logout"), href: "/logout", auth: true },
+                  ]
+                    .filter((item) => item.auth === isAuthenticated)
+                    .map((item) =>
+                      item.label === t("navbar.logout") ? (
+                        <button
+                          key={item.label}
+                          onClick={() => {
+                            handleLogout();
+                            setShowProfile(false); 
+                          }}
+                          className="w-full text-left px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
+                        >
+                          {item.label}
+                        </button>
+                      ) : (
+                        <Link
+                          key={item.label}
+                          to={item.href}
+                          onClick={() => setShowProfile(false)}
+                          className="block px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
+                        >
+                          {item.label}
+                        </Link>
+                      )
+                    )}
                 </div>
               )}
             </div>
@@ -196,23 +268,23 @@ export default function NavBar() {
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
-                  href={link.href}
+                  to={link.href}
                   className="text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] font-semibold text-lg hover:text-[var(--color-light-accent)] dark:hover:text-[var(--color-dark-accent)] transition-colors duration-300 py-2"
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
 
               <div className="flex items-center gap-3">
                 <button
-                  aria-label={t("navbar.toggleTheme")}
+                  aria-label={t("navbar.toggleLanguage")}
                   onClick={toggleLanguage}
-                  className="p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] font-semibold text-sm"
+                  className="p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
                 >
-                  {i18n.language === "en" ? "عربي" : "EN"}
+                  <FaLanguage className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
                 </button>
                 <button
                   aria-label={t("navbar.toggleTheme")}
@@ -225,36 +297,47 @@ export default function NavBar() {
                     <FaMoon className="text-[var(--color-light-dark)]" />
                   )}
                 </button>
-                <a
-                  href="/cart"
-                  className="relative p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm"
+                <Link
+                  to="/cart"
+                  className="relative p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
                   onClick={() => setOpen(false)}
                 >
-                  <FaShoppingCart />
+                  <FaShoppingCart className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
                   {noOfCartItems > 0 && (
                     <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-[var(--color-light-accent)] text-white text-[11px] font-bold flex items-center justify-center">
                       {noOfCartItems}
                     </span>
                   )}
-                </a>
+                </Link>
               </div>
 
               <div className="bg-white dark:bg-[var(--color-dark-card)] border border-[var(--color-light-secondary)]/20 rounded-2xl p-3 space-y-2">
                 {[
-                  { label: t("navbar.profile"), href: "/profile" },
-                  { label: t("navbar.login"), href: "/login" },
-                  { label: t("navbar.register"), href: "/register" },
-                  { label: t("navbar.logout"), href: "/logout" },
-                ].map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="block px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
-                    onClick={() => setOpen(false)}
-                  >
-                    {item.label}
-                  </a>
-                ))}
+                  { label: t("navbar.profile"), href: "/profile", auth: true },
+                  {
+                    label: t("navbar.reviews"),
+                    href: "/clinicReviews",
+                    auth: true,
+                  },
+                  { label: t("navbar.login"), href: "/login", auth: false },
+                  {
+                    label: t("navbar.register"),
+                    href: "/register",
+                    auth: false,
+                  },
+                  { label: t("navbar.logout"), href: "/logout", auth: true },
+                ]
+                  .filter((item) => item.auth === isAuthenticated)
+                  .map((item) => (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      className="block px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
+                      onClick={() => setOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
               </div>
             </div>
           </motion.div>

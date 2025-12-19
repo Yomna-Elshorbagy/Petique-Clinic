@@ -3,13 +3,16 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaPaw, FaTruck, FaCheckCircle, FaClock, FaBox } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import SEO from "../../Components/SEO/SEO";
 
 const OrderDetails: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
 
-  const orderData = location.state?.order?.data;
+  const orderData = location.state?.order?.data ?? location.state?.order;
+
+  console.log(orderData);
 
   /* -------------------- Helpers -------------------- */
 
@@ -78,129 +81,136 @@ const OrderDetails: React.FC = () => {
   /* -------------------- UI -------------------- */
 
   return (
-    <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-[var(--color-dark-card)] rounded-3xl p-8 mb-8"
-        >
-          <div className="flex justify-between items-center flex-wrap gap-4">
-            <div>
-              <h1 className="text-2xl font-bold mb-1">
-                {t("orderDetails.orderNumber")} {orderData._id}
-              </h1>
-              <p className="text-sm text-gray-500">
-                {t("orderDetails.placedOn")}{" "}
-                {new Date(orderData.createdAt).toLocaleDateString()}
-              </p>
+    <>
+      <SEO
+        title="Order Details | Petique Clinic"
+        description="Confirm and manage your pet service orders securely with Petique Clinic."
+      />
+
+      <div className="min-h-screen bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-12 px-4">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white dark:bg-[var(--color-dark-card)] rounded-3xl p-8 mb-8"
+          >
+            <div className="flex justify-between items-center flex-wrap gap-4">
+              <div>
+                <h1 className="text-2xl font-bold mb-1">
+                  {t("orderDetails.orderNumber")} {orderData._id}
+                </h1>
+                <p className="text-sm text-gray-500">
+                  {t("orderDetails.placedOn")}{" "}
+                  {new Date(orderData.createdAt).toLocaleDateString()}
+                </p>
+              </div>
+
+              <div
+                className={`px-4 py-2 rounded-full flex items-center gap-2 text-sm font-semibold ${getStatusColor(
+                  orderData.status
+                )}`}
+              >
+                {getStatusIcon(orderData.status)}
+                {getStatusText(orderData.status)}
+              </div>
             </div>
+          </motion.div>
 
-            <div
-              className={`px-4 py-2 rounded-full flex items-center gap-2 text-sm font-semibold ${getStatusColor(
-                orderData.status
-              )}`}
-            >
-              {getStatusIcon(orderData.status)}
-              {getStatusText(orderData.status)}
-            </div>
-          </div>
-        </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Customer Info */}
+            <div className="lg:col-span-2 space-y-8">
+              <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl p-6">
+                <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                  <FaPaw />
+                  {t("orderDetails.customerInfo")}
+                </h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Customer Info */}
-          <div className="lg:col-span-2 space-y-8">
-            <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl p-6">
-              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                <FaPaw />
-                {t("orderDetails.customerInfo")}
-              </h2>
-
-              <div className="space-y-4">
-                <p>
-                  <strong>{t("orderDetails.fullName")}:</strong>{" "}
-                  {orderData.fullName}
-                </p>
-                <p>
-                  <strong>{t("orderDetails.phoneNumber")}:</strong>{" "}
-                  {orderData.phone}
-                </p>
-                <p>
-                  <strong>{t("orderDetails.deliveryAddress")}:</strong>{" "}
-                  {orderData.address}
-                </p>
-
-                {orderData.note && (
+                <div className="space-y-4">
                   <p>
-                    <strong>{t("orderDetails.specialNotes")}:</strong>{" "}
-                    {orderData.note}
+                    <strong>{t("orderDetails.fullName")}:</strong>{" "}
+                    {orderData.fullName}
                   </p>
+                  <p>
+                    <strong>{t("orderDetails.phoneNumber")}:</strong>{" "}
+                    {orderData.phone}
+                  </p>
+                  <p>
+                    <strong>{t("orderDetails.deliveryAddress")}:</strong>{" "}
+                    {orderData.address}
+                  </p>
+
+                  {orderData.notes && (
+                    <p>
+                      <strong>{t("orderDetails.specialNotes")}:</strong>{" "}
+                      {orderData.notes}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Order Items */}
+              <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl p-6">
+                <h2 className="text-xl font-bold mb-6">
+                  {t("orderDetails.orderItems")}
+                </h2>
+
+                {orderData.products?.length ? (
+                  orderData.products.map((item: any, index: number) => (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center mb-4"
+                    >
+                      <div className="flex items-center gap-4">
+                        <img
+                          src={item.imageCover?.secure_url}
+                          className="w-16 h-16 rounded-lg object-cover"
+                        />
+                        <div>
+                          <p className="font-semibold">{item.title}</p>
+                          <p className="text-sm">
+                            {t("orderDetails.qty")} {item.quantity}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="font-semibold">EGP {item.price}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>{t("orderDetails.noItems")}</p>
                 )}
               </div>
             </div>
 
-            {/* Order Items */}
-            <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl p-6">
+            {/* Summary */}
+            <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl p-6 h-fit">
               <h2 className="text-xl font-bold mb-6">
-                {t("orderDetails.orderItems")}
+                {t("orderDetails.orderSummary")}
               </h2>
 
-              {orderData.products?.length ? (
-                orderData.products.map((item: any, index: number) => (
-                  <div
-                    key={index}
-                    className="flex justify-between items-center mb-4"
-                  >
-                    <div className="flex items-center gap-4">
-                      <img
-                        src={item.imageCover?.secure_url}
-                        className="w-16 h-16 rounded-lg object-cover"
-                      />
-                      <div>
-                        <p className="font-semibold">{item.title}</p>
-                        <p className="text-sm">
-                          {t("orderDetails.qty")} {item.quantity}
-                        </p>
-                      </div>
-                    </div>
-                    <p className="font-semibold">EGP {item.price}</p>
-                  </div>
-                ))
-              ) : (
-                <p>{t("orderDetails.noItems")}</p>
-              )}
+              <p className="flex justify-between mb-2">
+                <span>{t("orderDetails.subtotal")}</span>
+                <span>EGP {orderData.orderPrice}</span>
+              </p>
+
+              <p className="flex justify-between font-bold text-lg">
+                <span>{t("orderDetails.total")}</span>
+                <span className="text-[var(--color-light-accent)]">
+                  EGP {orderData.finalPrice}
+                </span>
+              </p>
+
+              <button
+                onClick={() => navigate("/cart")}
+                className="w-full mt-6 px-6 py-3 bg-[var(--color-light-accent)] text-white rounded-lg"
+              >
+                {t("orderDetails.continueShopping")}
+              </button>
             </div>
-          </div>
-
-          {/* Summary */}
-          <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl p-6 h-fit">
-            <h2 className="text-xl font-bold mb-6">
-              {t("orderDetails.orderSummary")}
-            </h2>
-
-            <p className="flex justify-between mb-2">
-              <span>{t("orderDetails.subtotal")}</span>
-              <span>EGP {orderData.orderPrice}</span>
-            </p>
-
-            <p className="flex justify-between font-bold text-lg">
-              <span>{t("orderDetails.total")}</span>
-              <span className="text-[var(--color-light-accent)]">
-                EGP {orderData.finalPrice}
-              </span>
-            </p>
-
-            <button
-              onClick={() => navigate("/cart")}
-              className="w-full mt-6 px-6 py-3 bg-[var(--color-light-accent)] text-white rounded-lg"
-            >
-              {t("orderDetails.continueShopping")}
-            </button>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

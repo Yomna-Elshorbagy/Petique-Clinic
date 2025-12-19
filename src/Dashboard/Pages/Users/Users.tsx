@@ -14,6 +14,7 @@ import {
   handleSoftDeleteUser,
   handleViewUser,
 } from "./Components/UserHandlers";
+import SEO from "../../../Components/SEO/SEO";
 
 export default function Users() {
   const dispatch = useDispatch<AppDispatch>();
@@ -72,6 +73,11 @@ export default function Users() {
 
   return (
     <div className="w-full max-w-full px-4 md:px-6">
+      <SEO
+        title="Users | Dashboard Petique Clinic"
+        description="Manage registered users, pet owners, and staff accounts within Petique Clinic."
+      />
+
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-(--color-light-dark) dark:text-(--color-dark-text)">
           Pet Owners

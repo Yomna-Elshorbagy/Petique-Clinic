@@ -5,6 +5,7 @@ import QuickActionsPanel from "./Components/QuickActionsPanel";
 import { useAllPets } from "../../../Hooks/Pets/UsePets";
 import AddPetModal from "../Animals/Components/AddPetModal";
 import VaccinatePetModal from "../Vaccination/Components/VaccinatePetModal";
+import SEO from "../../../Components/SEO/SEO";
 
 export default function DashboardHome() {
   const [openAddPet, setOpenAddPet] = useState(false);
@@ -15,6 +16,11 @@ export default function DashboardHome() {
 
   return (
     <div className="p-6">
+      <SEO
+        title="Reservation Overview | Dashboard Petique Clinic"
+        description="Overview of all reservations, schedules, and booking activity at Petique Clinic."
+      />
+
       <OverviewStats />
 
       <AddPetModal

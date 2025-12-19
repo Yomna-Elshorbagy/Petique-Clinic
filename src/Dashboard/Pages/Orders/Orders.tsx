@@ -18,6 +18,7 @@ import {
   FaTrash,
 } from "react-icons/fa";
 import OrderDetailsModal from "./OrderDetailsModal";
+import SEO from "../../../Components/SEO/SEO";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
@@ -33,7 +34,7 @@ export default function Orders() {
   // Fetch orders on component mount
   useEffect(() => {
     dispatch(getAllOrders());
-  }, [dispatch]);
+  }, []);
 
   // Filter orders based on search term, status, and date
   const filteredOrders = useMemo(() => {
@@ -91,6 +92,19 @@ export default function Orders() {
       },
       inputPlaceholder: "Select a status",
       showCancelButton: true,
+      confirmButtonColor: "#e9a66f",
+      cancelButtonColor: "#b89c86",
+      confirmButtonText: "Update Status",
+      cancelButtonText: "Cancel",
+      background: "#faf7f2",
+      color: "#4f3f36",
+      customClass: {
+        popup: "rounded-2xl shadow-xl border border-[#e6ddd3]",
+        title: "text-[#4f3f36] font-semibold",
+        input: "rounded-xl border-[#d1c4b5] focus:border-[#e9a66f]",
+        confirmButton: "rounded-xl px-6 py-2 font-medium",
+        cancelButton: "rounded-xl px-6 py-2 font-medium",
+      },
       inputValidator: (value) => {
         if (!value) {
           return "You need to choose a status!";
@@ -110,8 +124,15 @@ export default function Orders() {
             text: "Order status has been updated successfully.",
             timer: 2000,
             timerProgressBar: true,
+            confirmButtonColor: "#e9a66f",
+            background: "#faf7f2",
+            color: "#4f3f36",
+            customClass: {
+              popup: "rounded-2xl shadow-xl border border-[#e6ddd3]",
+              title: "text-[#4f3f36] font-semibold",
+              confirmButton: "rounded-xl px-6 py-2 font-medium",
+            },
           });
-          dispatch(getAllOrders());
         } else {
           const errorPayload = resultAction.payload as any;
           const errorMessage =
@@ -120,6 +141,14 @@ export default function Orders() {
             icon: "error",
             title: "Error",
             text: errorMessage,
+            confirmButtonColor: "#e9a66f",
+            background: "#faf7f2",
+            color: "#4f3f36",
+            customClass: {
+              popup: "rounded-2xl shadow-xl border border-[#e6ddd3]",
+              title: "text-[#4f3f36] font-semibold",
+              confirmButton: "rounded-xl px-6 py-2 font-medium",
+            },
           });
         }
       } catch (error: any) {
@@ -127,6 +156,14 @@ export default function Orders() {
           icon: "error",
           title: "Error",
           text: error.message || "Failed to update order status",
+          confirmButtonColor: "#e9a66f",
+          background: "#faf7f2",
+          color: "#4f3f36",
+          customClass: {
+            popup: "rounded-2xl shadow-xl border border-[#e6ddd3]",
+            title: "text-[#4f3f36] font-semibold",
+            confirmButton: "rounded-xl px-6 py-2 font-medium",
+          },
         });
       }
     }
@@ -138,10 +175,18 @@ export default function Orders() {
       text: "This order will be archived (soft deleted). You can restore it later.",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#d69560",
-      cancelButtonColor: "#6b7280",
+      confirmButtonColor: "#e9a66f",
+      cancelButtonColor: "#b89c86",
       confirmButtonText: "Yes, archive it!",
       cancelButtonText: "Cancel",
+      background: "#faf7f2",
+      color: "#4f3f36",
+      customClass: {
+        popup: "rounded-2xl shadow-xl border border-[#e6ddd3]",
+        title: "text-[#4f3f36] font-semibold",
+        confirmButton: "rounded-xl px-6 py-2 font-medium",
+        cancelButton: "rounded-xl px-6 py-2 font-medium",
+      },
     });
 
     if (result.isConfirmed) {
@@ -154,8 +199,15 @@ export default function Orders() {
             text: "Order has been archived successfully.",
             timer: 2000,
             timerProgressBar: true,
+            confirmButtonColor: "#e9a66f",
+            background: "#faf7f2",
+            color: "#4f3f36",
+            customClass: {
+              popup: "rounded-2xl shadow-xl border border-[#e6ddd3]",
+              title: "text-[#4f3f36] font-semibold",
+              confirmButton: "rounded-xl px-6 py-2 font-medium",
+            },
           });
-          dispatch(getAllOrders());
         } else {
           const errorPayload = resultAction.payload as any;
           const errorMessage =
@@ -164,6 +216,14 @@ export default function Orders() {
             icon: "error",
             title: "Error",
             text: errorMessage,
+            confirmButtonColor: "#e9a66f",
+            background: "#faf7f2",
+            color: "#4f3f36",
+            customClass: {
+              popup: "rounded-2xl shadow-xl border border-[#e6ddd3]",
+              title: "text-[#4f3f36] font-semibold",
+              confirmButton: "rounded-xl px-6 py-2 font-medium",
+            },
           });
         }
       } catch (error: any) {
@@ -171,6 +231,14 @@ export default function Orders() {
           icon: "error",
           title: "Error",
           text: error.message || "Failed to archive order",
+          confirmButtonColor: "#e9a66f",
+          background: "#faf7f2",
+          color: "#4f3f36",
+          customClass: {
+            popup: "rounded-2xl shadow-xl border border-[#e6ddd3]",
+            title: "text-[#4f3f36] font-semibold",
+            confirmButton: "rounded-xl px-6 py-2 font-medium",
+          },
         });
       }
     }
@@ -182,10 +250,18 @@ export default function Orders() {
       text: "This action cannot be undone! The order will be permanently deleted.",
       icon: "error",
       showCancelButton: true,
-      confirmButtonColor: "#dc2626",
-      cancelButtonColor: "#6b7280",
+      confirmButtonColor: "#c2844d",
+      cancelButtonColor: "#b89c86",
       confirmButtonText: "Yes, delete permanently!",
       cancelButtonText: "Cancel",
+      background: "#faf7f2",
+      color: "#4f3f36",
+      customClass: {
+        popup: "rounded-2xl shadow-xl border border-[#e6ddd3]",
+        title: "text-[#4f3f36] font-semibold",
+        confirmButton: "rounded-xl px-6 py-2 font-medium",
+        cancelButton: "rounded-xl px-6 py-2 font-medium",
+      },
     });
 
     if (result.isConfirmed) {
@@ -198,8 +274,15 @@ export default function Orders() {
             text: "Order has been permanently deleted.",
             timer: 2000,
             timerProgressBar: true,
+            confirmButtonColor: "#e9a66f",
+            background: "#faf7f2",
+            color: "#4f3f36",
+            customClass: {
+              popup: "rounded-2xl shadow-xl border border-[#e6ddd3]",
+              title: "text-[#4f3f36] font-semibold",
+              confirmButton: "rounded-xl px-6 py-2 font-medium",
+            },
           });
-          dispatch(getAllOrders());
         } else {
           const errorPayload = resultAction.payload as any;
           const errorMessage =
@@ -208,6 +291,14 @@ export default function Orders() {
             icon: "error",
             title: "Error",
             text: errorMessage,
+            confirmButtonColor: "#e9a66f",
+            background: "#faf7f2",
+            color: "#4f3f36",
+            customClass: {
+              popup: "rounded-2xl shadow-xl border border-[#e6ddd3]",
+              title: "text-[#4f3f36] font-semibold",
+              confirmButton: "rounded-xl px-6 py-2 font-medium",
+            },
           });
         }
       } catch (error: any) {
@@ -215,6 +306,14 @@ export default function Orders() {
           icon: "error",
           title: "Error",
           text: error.message || "Failed to delete order",
+          confirmButtonColor: "#e9a66f",
+          background: "#faf7f2",
+          color: "#4f3f36",
+          customClass: {
+            popup: "rounded-2xl shadow-xl border border-[#e6ddd3]",
+            title: "text-[#4f3f36] font-semibold",
+            confirmButton: "rounded-xl px-6 py-2 font-medium",
+          },
         });
       }
     }
@@ -347,6 +446,11 @@ export default function Orders() {
 
   return (
     <div className="w-full max-w-full overflow-x-hidden px-4 md:px-6">
+      <SEO
+        title="Orders | Dashboard Petique Clinic"
+        description="View and manage customer orders, payments, and service requests."
+      />
+
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
           Orders Management

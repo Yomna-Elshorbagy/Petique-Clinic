@@ -16,6 +16,7 @@ import {
 import type { ICoupon, ICouponCreate } from "../../../Interfaces/ICoupon";
 import CouponModal from "./Components/CouponModal";
 import FilterCoupons from "./Components/FilterCoupons";
+import SEO from "../../../Components/SEO/SEO";
 
 export default function Coupons() {
   const [openModal, setOpenModal] = useState(false);
@@ -292,6 +293,11 @@ export default function Coupons() {
 
   return (
     <div className="w-full max-w-full px-4 md:px-6">
+      <SEO
+        title="Coupons | Dashboard Petique Clinic"
+        description="Manage discount coupons, and marketing campaigns for Petique Clinic."
+      />
+
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-xl text-[#6c5136] font-semibold flex items-center gap-2">
           <FaTags className="text-[#6c5136]" />

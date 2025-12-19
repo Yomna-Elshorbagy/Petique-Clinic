@@ -33,7 +33,7 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
       className="grid grid-cols-1 md:grid-cols-2 gap-5"
     >
       <div className="md:col-span-2">
-        <label className="block text-[#443935] mb-1 font-medium">
+        <label className="block text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] mb-1 font-medium">
           Owner Name *
         </label>
         <input
@@ -41,24 +41,25 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
           name="userName"
           value={formData.userName}
           onChange={handleChange}
-          className="w-full border border-[#D7C7BD] rounded-md px-3 py-2 bg-white"
+          className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
         />
       </div>
 
       <div className="md:col-span-2">
-        <label className="block text-[#443935] mb-1 font-medium">Email *</label>
+        <label className="block text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] mb-1 font-medium">
+          Email *
+        </label>
         <input
           type="email"
           name="email"
           value={formData.email}
           disabled
-          className="w-full border border-[#D7C7BD] rounded-md px-3 py-2 bg-gray-100 cursor-not-allowed"
+          className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-gray-100 dark:bg-[var(--color-dark-background)] text-gray-500 dark:text-gray-400 cursor-not-allowed"
         />
       </div>
 
-
       <div className="md:col-span-2">
-        <label className="block text-[#443935] mb-1 font-medium">
+        <label className="block text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] mb-1 font-medium">
           Phone Number
         </label>
         <input
@@ -66,17 +67,15 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
           name="mobileNumber"
           value={formData.mobileNumber}
           onChange={handleChange}
-          className="w-full border border-[#D7C7BD] rounded-md px-3 py-2 bg-white"
+          className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
         />
       </div>
-
 
       <div className="md:col-span-2 mt-3">
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          className="text-sm font-semibold px-4 py-2 rounded-md"
-          style={{ backgroundColor: "#F2A056", color: "#FFFFFF" }}
+          className="text-sm font-semibold px-4 py-2 rounded-md bg-[#F2A056] dark:bg-[var(--color-dark-accent)] text-white hover:bg-[#e9a66f] dark:hover:bg-[var(--color-dark-accent)]/80 transition"
         >
           {showPassword ? "Hide Password Fields" : "Change Password"}
         </button>
@@ -84,24 +83,26 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
         {showPassword && (
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-5 animate-fadeIn">
             <div>
-              <label className="block mb-1 text-[#443935]">New Password</label>
+              <label className="block mb-1 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
+                New Password
+              </label>
               <input
                 type="password"
                 name="newPassword"
                 onChange={handleChange}
-                className="w-full border border-[#D7C7BD] rounded-md px-3 py-2 bg-white"
+                className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
               />
             </div>
 
             <div>
-              <label className="block mb-1 text-[#443935]">
+              <label className="block mb-1 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
                 Confirm Password
               </label>
               <input
                 type="password"
                 name="confirmPassword"
                 onChange={handleChange}
-                className="w-full border border-[#D7C7BD] rounded-md px-3 py-2 bg-white"
+                className="w-full border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
               />
             </div>
           </div>
@@ -112,8 +113,7 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
         <button
           type="submit"
           disabled={mutation.isPending}
-          className="px-6 py-2 rounded-md transition text-white"
-          style={{ backgroundColor: "#F19645" }}
+          className="px-6 py-2 rounded-md transition text-white bg-[#F19645] dark:bg-[var(--color-dark-accent)] hover:bg-[#e9a66f] dark:hover:bg-[var(--color-dark-accent)]/80"
         >
           {mutation.isPending ? "Saving..." : "Save Changes"}
         </button>

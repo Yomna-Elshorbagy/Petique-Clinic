@@ -20,15 +20,14 @@ export const useOrderTracking = (orderId: string) => {
     enabled: !!orderId,
   });
 };
-export const useUserOrders = (page: number, limit: number) => {
+export const useUserOrders = () => {
   const token = localStorage.getItem("accessToken");
 
   return useQuery<OrdersResponse>({
-    queryKey: ["userOrders", page],
+    queryKey:  ["userOrders"],
     queryFn: async () => {
       const res = await axios.get(`${baseURL}/order`, {
         headers: { authentication: `bearer ${token}` },
-        params: { page, limit },
       });
 
       return res.data;

@@ -16,7 +16,9 @@ export interface IOrder {
     fullName: string;
     address: string;
     phone: string;
-    note: string;
+    notes: string;
+    payment: string;
+
 }
 
 interface IorderState {

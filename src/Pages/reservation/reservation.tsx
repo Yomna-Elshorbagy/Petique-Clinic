@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import SEO from "../../Components/SEO/SEO";
 
 type ReservationPayload = {
   petOwner: string;
@@ -124,18 +125,6 @@ export default function Reservation() {
   });
 
   // Create Reservation
-
-  console.log("User ID:", userId);
-  console.log({
-    petOwner: userId,
-    pet,
-    service,
-    doctor,
-    date,
-    timeSlot,
-    notes,
-  });
-
   const [availableTimes, setAvailableTimes] = useState<string[]>(timeOptions);
 
   const { data: allReservations } = useQuery<IAppointment[]>({
@@ -250,19 +239,24 @@ export default function Reservation() {
 
   return (
     <>
-      <div className="max-w-7xl mx-auto p-6 space-y-6 mt-10  font-serif">
+      <SEO
+        title="Reservations | Petique Clinic"
+        description="Reserve veterinary services and pet care treatments easily with Petique Clinic."
+      />
+
+      <div className="max-w-7xl mx-auto p-6 space-y-6 mt-10 font-serif">
         <div className="flex items-center gap-2 mb-6 justify-center">
-          <h1 className="text-3xl font-bold flex items-center gap-2 ">
+          <h1 className="text-3xl font-bold flex items-center gap-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
             Petique
-            <PawPrint className="w-5 h-5 text-[#e9a66f]" />
+            <PawPrint className="w-5 h-5 text-[#e9a66f] dark:text-[var(--color-dark-accent)]" />
           </h1>
         </div>
 
-        <p className="text-2xl font-bold mb-6 text-center">
+        <p className="text-2xl font-bold mb-6 text-center text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
           {t("reservation.title")}
         </p>
 
-        <div className="flex gap-6 rounded-xl p-6 shadow-lg bg-white border border-green-50">
+        <div className="flex gap-6 rounded-xl p-6 shadow-lg bg-white dark:bg-[var(--color-dark-card)] border border-green-50 dark:border-[var(--color-dark-accent)]/20 transition-colors duration-300">
           {/* Left image */}
           <div className="w-2/5 max-h-[600px] overflow-hidden rounded-xl hidden md:block">
             <img
@@ -303,7 +297,9 @@ export default function Reservation() {
                       {stepNum}
                     </div>
                     {/* Label */}
-                    <span className="mt-2 text-xs text-gray-600">{label}</span>
+                    <span className="mt-2 text-xs text-gray-600 dark:text-gray-400">
+                      {label}
+                    </span>
                     {/* Line */}
                     {index < 4 && (
                       <div
@@ -330,12 +326,12 @@ export default function Reservation() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Step 1 */}
               <div className={`p-4 }`}>
-                <h2 className="text-lg font-medium mb-2 flex items-center gap-2">
+                <h2 className="text-lg font-medium mb-2 flex items-center gap-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
                   {t("reservation.selectPet")}{" "}
-                  <PawPrint className="w-5 h-5 text-[#e9a66f]" />
+                  <PawPrint className="w-5 h-5 text-[#e9a66f] dark:text-[var(--color-dark-accent)]" />
                 </h2>
                 <select
-                  className="w-full p-2 border-0  bg-orange-50"
+                  className="w-full p-2 border-0 bg-orange-50 dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] rounded"
                   value={pet}
                   onChange={(e) => {
                     setPet(e.target.value);
@@ -353,12 +349,12 @@ export default function Reservation() {
 
               {/* Step 2 */}
               <div className="p-4">
-                <h2 className="text-lg font-medium mb-2 flex items-center gap-2">
+                <h2 className="text-lg font-medium mb-2 flex items-center gap-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
                   {t("reservation.selectService")}
-                  <PawPrint className="w-5 h-5 text-[#e9a66f]" />
+                  <PawPrint className="w-5 h-5 text-[#e9a66f] dark:text-[var(--color-dark-accent)]" />
                 </h2>
                 <select
-                  className="w-full p-2 border-0  bg-orange-50"
+                  className="w-full p-2 border-0 bg-orange-50 dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] rounded"
                   value={service}
                   onChange={(e) => {
                     setService(e.target.value);
@@ -376,12 +372,12 @@ export default function Reservation() {
 
               {/* Step 3 */}
               <div className="p-4">
-                <h2 className="text-lg font-medium mb-2 flex items-center gap-2">
+                <h2 className="text-lg font-medium mb-2 flex items-center gap-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
                   {t("reservation.selectDoctor")}
-                  <PawPrint className="w-5 h-5 text-[#e9a66f]" />
+                  <PawPrint className="w-5 h-5 text-[#e9a66f] dark:text-[var(--color-dark-accent)]" />
                 </h2>
                 <select
-                  className="w-full p-2 border-0  bg-orange-50 outline-none"
+                  className="w-full p-2 border-0 bg-orange-50 dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] outline-none rounded"
                   value={doctor}
                   onChange={(e) => {
                     setDoctor(e.target.value);
@@ -398,7 +394,7 @@ export default function Reservation() {
               </div>
 
               {doctor && (
-                <div className="rounded-lg shadow-md bg-white border border-gray-200 flex items-center gap-4">
+                <div className="rounded-lg shadow-md bg-white dark:bg-[var(--color-dark-card)] border border-gray-200 dark:border-[var(--color-dark-accent)]/20 flex items-center gap-4 transition-colors duration-300">
                   <img
                     src={
                       doctors.find((d) => d._id === doctor)?.image
@@ -409,10 +405,10 @@ export default function Reservation() {
                   />
                   {/* Doctor Info */}
                   <div className="flex flex-col">
-                    <span className="font-semibold text-gray-800">
+                    <span className="font-semibold text-gray-800 dark:text-[var(--color-dark-text)]">
                       {doctors.find((d) => d._id === doctor)?.userName}
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
                       {doctors.find((d) => d._id === doctor)?.email}
                     </span>
                     <span className="text-sm text-gray-500">
@@ -431,9 +427,9 @@ export default function Reservation() {
 
               {step >= 4 && (
                 <div className="flex-1">
-                  <h2 className="text-lg font-medium flex items-center gap-2 p-3">
+                  <h2 className="text-lg font-medium flex items-center gap-2 p-3 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
                     {t("reservation.selectDateTime")}{" "}
-                    <PawPrint className="w-5 h-5 text-[#e9a66f]" />
+                    <PawPrint className="w-5 h-5 text-[#e9a66f] dark:text-[var(--color-dark-accent)]" />
                   </h2>
 
                   <div className="flex gap-3 justify-start p-4  ">
@@ -478,10 +474,35 @@ export default function Reservation() {
               timeSlot === t
                 ? "bg-[#e9a66f] text-white border-[#e9a66f]"
                 : !isAvailable
-                ? "bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed"
-                : "bg-gray-100 border-gray-300"
+                ? "bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 border-gray-300 dark:border-gray-600 cursor-not-allowed"
+                : "bg-gray-100 dark:bg-[var(--color-dark-background)] border-gray-300 dark:border-[var(--color-dark-accent)]/30 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
             }`}
                             onClick={() => {
+                              const today = new Date();
+                              const selectedDate = new Date(date);
+
+                              if (
+                                selectedDate.getFullYear() ===
+                                  today.getFullYear() &&
+                                selectedDate.getMonth() === today.getMonth() &&
+                                selectedDate.getDate() === today.getDate()
+                              ) {
+                                showAlert(
+                                  "Invalid date",
+                                  "You cannot book for today. Please choose a future date."
+                                );
+                                return;
+                              }
+
+                              const selectedDateTime = new Date(`${date} ${t}`);
+                              if (selectedDateTime <= today) {
+                                showAlert(
+                                  "Invalid time",
+                                  "This time is in the past."
+                                );
+                                return;
+                              }
+
                               if (isAvailable) {
                                 setTimeSlot(t);
                                 if (step === 4) setStep(5);
@@ -499,14 +520,14 @@ export default function Reservation() {
 
               {/* Step 5 */}
               <div className={`p-4 }`}>
-                <h2 className="text-lg font-medium mb-2 flex items-center gap-2">
+                <h2 className="text-lg font-medium mb-2 flex items-center gap-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
                   {t("reservation.notesLabel")}
-                  <PawPrint className="w-5 h-5 text-[#e9a66f]" />
+                  <PawPrint className="w-5 h-5 text-[#e9a66f] dark:text-[var(--color-dark-accent)]" />
                 </h2>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full border rounded"
+                  className="w-full border rounded bg-white dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] border-gray-300 dark:border-[var(--color-dark-accent)]/30"
                   placeholder={t("reservation.notesPlaceholder")}
                 />
 
@@ -549,12 +570,12 @@ export default function Reservation() {
               <Modal
                 isOpen={showModal}
                 onRequestClose={() => setShowModal(false)}
-                className="max-w-lg mx-auto mt-20 p-6 bg-white rounded-xl shadow-lg"
+                className="max-w-lg mx-auto mt-20 p-6 bg-white dark:bg-[var(--color-dark-card)] rounded-xl shadow-lg"
               >
-                <h2 className="text-xl font-bold mb-4">
+                <h2 className="text-xl font-bold mb-4 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
                   {t("reservation.modal.title")}
                 </h2>
-                <div className="space-y-2">
+                <div className="space-y-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
                   <p>
                     <strong>{t("reservation.modal.pet")}:</strong>{" "}
                     {pets?.find((p) => p._id === pet)?.name}
@@ -581,7 +602,7 @@ export default function Reservation() {
                 <div className="flex justify-end gap-4 mt-4">
                   <button
                     onClick={() => setShowModal(false)}
-                    className="px-4 py-2 border rounded"
+                    className="px-4 py-2 border rounded bg-white dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] border-gray-300 dark:border-[var(--color-dark-accent)]/30 hover:bg-gray-50 dark:hover:bg-[var(--color-dark-background)]/80"
                   >
                     Cancel
                   </button>
@@ -605,8 +626,8 @@ export default function Reservation() {
         </div>
       </div>
 
-      <div className="mt-32 bg-[#faf9f6] py-16 px-6  shadow-inner font-serif">
-        <h2 className="text-5xl font-bold text-center mb-12 text-gray-900 leading-snug">
+      <div className="mt-32 bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] py-16 px-6 shadow-inner font-serif transition-colors duration-300">
+        <h2 className="text-5xl font-bold text-center mb-12 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] leading-snug">
           {t("hero.happyCustomersLine1")}
           <br />
           {t("hero.happyCustomersLine2")}
@@ -637,8 +658,8 @@ export default function Reservation() {
               <SwiperSlide key={service._id}>
                 <div
                   onClick={() => navigate(`/service/${service._id}`)}
-                  className="bg-amber-20 rounded-lg shadow-md overflow-hidden 
-                       w-full flex flex-col items-center group cursor-pointer"
+                  className="bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] rounded-lg shadow-md overflow-hidden 
+                       w-full flex flex-col items-center group cursor-pointer transition-colors duration-300 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
                 >
                   <div className="relative w-full h-[360px] overflow-hidden rounded-t-lg">
                     <img
@@ -655,16 +676,17 @@ export default function Reservation() {
                     />
                   </div>
 
-                  <div className="text-center bg-white">
+                  <div className="text-center bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] transition-colors duration-300 w-full">
+                    \n{" "}
                     <h3
-                      className="text-lg font-bold mb-2 text-black text-ellipsis overflow-hidden line-clamp-1 mt-3
-             transition-colors duration-300 group-hover:text-[#e9a66f]"
+                      className="text-lg font-bold mb-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] text-ellipsis overflow-hidden line-clamp-1 mt-3
+             transition-colors duration-300 group-hover:text-[#e9a66f] dark:group-hover:text-[var(--color-dark-accent)]"
                       style={{ fontSize: 25 }}
                     >
                       {service.title}
                     </h3>
                     <p
-                      className="text-gray-400 mb-4 text-sm text-ellipsis overflow-hidden line-clamp-2 mt-3"
+                      className="text-gray-500 dark:text-gray-400 mb-4 text-sm text-ellipsis overflow-hidden line-clamp-2 mt-3"
                       style={{ fontSize: 15 }}
                     >
                       {service.description}

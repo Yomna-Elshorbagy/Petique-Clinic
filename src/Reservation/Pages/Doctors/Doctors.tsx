@@ -12,6 +12,7 @@ import { useDoctorSearch } from "./Hook/UseDoctorSearch";
 import type { IUser } from "../../../Interfaces/IUser";
 import { useLocalPagination } from "../../Componenst/Pagination/UsePagination";
 import Pagination from "../../Componenst/Pagination/Pagination";
+import SEO from "../../../Components/SEO/SEO";
 
 export default function Doctors() {
   const [doctors, setDoctors] = useState<IUser[]>([]);
@@ -130,6 +131,11 @@ export default function Doctors() {
 
   return (
     <div className="min-h-screen bg-[#ECE7E2] p-6 font-['Inter']">
+      <SEO
+        title="Doctors | Dashboard Petique Clinic"
+        description="Manage veterinarians, specialists, and doctor schedules within Petique Clinic."
+      />
+
       <AddDoctorModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

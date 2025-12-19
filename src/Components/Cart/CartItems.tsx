@@ -58,7 +58,7 @@ const CartItems: React.FC<Props> = ({ items }) => {
           <div
             key={item._id}
             className="
-              group flex gap-4 bg-white p-4 rounded-2xl border border-gray-200
+              group flex gap-4 bg-white dark:bg-[var(--color-dark-card)] p-4 rounded-2xl border border-gray-200 dark:border-[var(--color-dark-accent)]/20
               shadow-sm hover:shadow-lg transition-all duration-300 ease-out
             "
           >
@@ -69,10 +69,10 @@ const CartItems: React.FC<Props> = ({ items }) => {
             />
 
             <div className="flex-1">
-              <h3 className="font-semibold text-gray-800 text-lg">
+              <h3 className="font-semibold text-gray-800 dark:text-[var(--color-dark-text)] text-lg">
                 {product.title}
               </h3>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 ${product.price} {t("cart.each")}
               </p>
 
@@ -83,15 +83,15 @@ const CartItems: React.FC<Props> = ({ items }) => {
                   }
                   className="
                     w-8 h-8 flex items-center justify-center rounded-full 
-                    border border-gray-300 text-gray-600 transition-all duration-200
-                    hover:bg-orange-100 hover:border-orange-300 hover:text-orange-600
+                    border border-gray-300 dark:border-[var(--color-dark-accent)]/30 text-gray-600 dark:text-gray-400 transition-all duration-200
+                    hover:bg-orange-100 dark:hover:bg-[var(--color-dark-accent)]/20 hover:border-orange-300 dark:hover:border-[var(--color-dark-accent)] hover:text-orange-600 dark:hover:text-[var(--color-dark-accent)]
                     active:scale-95
                   "
                 >
                   –
                 </button>
 
-                <span className="font-medium text-gray-800">
+                <span className="font-medium text-gray-800 dark:text-[var(--color-dark-text)]">
                   {item.quantity}
                 </span>
 
@@ -101,8 +101,8 @@ const CartItems: React.FC<Props> = ({ items }) => {
                   }
                   className="
                     w-8 h-8 flex items-center justify-center rounded-full 
-                    border border-gray-300 text-gray-600 transition-all duration-200
-                    hover:bg-orange-100 hover:border-orange-300 hover:text-orange-600
+                    border border-gray-300 dark:border-[var(--color-dark-accent)]/30 text-gray-600 dark:text-gray-400 transition-all duration-200
+                    hover:bg-orange-100 dark:hover:bg-[var(--color-dark-accent)]/20 hover:border-orange-300 dark:hover:border-[var(--color-dark-accent)] hover:text-orange-600 dark:hover:text-[var(--color-dark-accent)]
                     active:scale-95
                   "
                 >
@@ -125,7 +125,7 @@ const CartItems: React.FC<Props> = ({ items }) => {
                 />
               </button>
 
-              <p className="font-semibold text-gray-800 text-lg">
+              <p className="font-semibold text-gray-800 dark:text-[var(--color-dark-text)] text-lg">
                 ${itemTotal}
               </p>
             </div>

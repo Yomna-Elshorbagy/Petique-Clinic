@@ -1,17 +1,25 @@
 import { useState } from "react";
 import { FaSearch, FaPlus } from "react-icons/fa";
 import Swal from "sweetalert2";
+
 import ServiceCard from "./Components/ServiceCard";
 import AddServiceModal from "./Components/AddServiceModal";
+import EditServiceModal from "./Components/EditServiceModal";
+import StatsCards from "./Components/StatesCard";
+import Pagination from "../../Componenst/Pagination/Pagination";
+import SEO from "../../../Components/SEO/SEO";
+
 import {
   useServices,
   useSoftDeleteService,
   useDeleteService,
 } from "../../../Hooks/Services/UseServices";
+
 import { useServiceSearch } from "./Hooks/useServiceSearch";
-import StatsCards from "./Components/StatesCard";
-import Pagination from "../../Componenst/Pagination/Pagination";
-import EditServiceModal from "./Components/EditServiceModal";
+import {
+  useRevenueAnalysis,
+  useTotalRevenueAnalysis,
+} from "../../../Hooks/Reservation/useanalytics";
 
 export default function ServiceDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,6 +27,7 @@ export default function ServiceDashboard() {
   const [page, setPage] = useState(1);
   const [editId, setEditId] = useState<string | null>(null);
 
+  // ================= SERVICES =================
   const { data, isLoading } = useServices();
   const services = data?.data || [];
 
@@ -27,6 +36,29 @@ export default function ServiceDashboard() {
 
   const { search, setSearch, filtered } = useServiceSearch(services);
 
+  // ================= ANALYTICS =================
+  const { data: totalRevenueData, isLoading: totalRevenueLoading } =
+    useTotalRevenueAnalysis();
+
+  const { data: monthlyRevenueData, isLoading: monthlyRevenueLoading } =
+    useRevenueAnalysis();
+
+  const currentMonth = new Date().getMonth() + 1;
+
+  const monthlyRevenue =
+    monthlyRevenueData?.data?.find((m: any) => m.month === currentMonth)
+      ?.totalRevenue || 0;
+
+  const totalRevenue = totalRevenueData?.data?.totalRevenue || 0;
+
+  // ===> stats
+  const stats = {
+    total: services.length,
+    month: monthlyRevenue,
+    revenue: totalRevenue,
+  };
+
+  // ===> filters
   const categories = [
     "All",
     "Consultations",
@@ -35,7 +67,6 @@ export default function ServiceDashboard() {
     "Dental Care",
   ];
 
-  // ===> category filter
   const filteredServices =
     activeCategory === "All"
       ? filtered
@@ -51,7 +82,7 @@ export default function ServiceDashboard() {
     page * pageSize
   );
 
-  //===> soft delete
+  // ===> actions
   const handleSoftDelete = async (id: string) => {
     const result = await Swal.fire({
       title: "Move to Trash?",
@@ -59,11 +90,11 @@ export default function ServiceDashboard() {
       showCancelButton: true,
       confirmButtonColor: "#F9BE91",
     });
+
     if (!result.isConfirmed) return;
     softDelete.mutate(id);
   };
 
-  // ===> hard delete
   const handleHardDelete = async (id: string) => {
     const result = await Swal.fire({
       title: "Delete Permanently?",
@@ -72,27 +103,32 @@ export default function ServiceDashboard() {
       showCancelButton: true,
       confirmButtonColor: "#d33",
     });
+
     if (!result.isConfirmed) return;
     hardDelete.mutate(id);
   };
 
-  // STATS DATA
-  const stats = {
-    total: services.length,
-    month: 156,
-    revenue: 12400,
-    rating: 4.8,
-  };
-
+  // ===> render
   return (
     <div className="min-h-screen bg-[#ECE7E2] p-6">
-      {/* ===> model */}
+      <SEO
+        title="Services | Dashboard Petique Clinic"
+        description="Manage veterinary services offered for reservations at Petique Clinic."
+      />
+
+      {/* ========= models ========= */}
       <AddServiceModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
 
-      {/* ===> header */}
+      <EditServiceModal
+        isOpen={!!editId}
+        onClose={() => setEditId(null)}
+        serviceId={editId}
+      />
+
+      {/* ========= header ========= */}
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-3xl font-bold text-[#86654F]">Services</h1>
@@ -107,10 +143,14 @@ export default function ServiceDashboard() {
         </button>
       </div>
 
-      {/* ===> states */}
-      <StatsCards stats={stats} />
+      {/* ========= stats ========= */}
+      {totalRevenueLoading || monthlyRevenueLoading ? (
+        <p className="text-center text-[#86654F] py-6">Loading analytics...</p>
+      ) : (
+        <StatsCards stats={stats} />
+      )}
 
-      {/* ===> search */}
+      {/* ========= search ========= */}
       <div className="relative mb-6">
         <FaSearch className="absolute left-4 top-3 text-[#A98770]" />
         <input
@@ -125,7 +165,7 @@ export default function ServiceDashboard() {
         />
       </div>
 
-      {/* ===> categories */}
+      {/* ========= categories ========= */}
       <div className="flex gap-3 mb-6 overflow-auto pb-2">
         {categories.map((cat) => (
           <button
@@ -145,7 +185,7 @@ export default function ServiceDashboard() {
         ))}
       </div>
 
-      {/* ===> Service grid */}
+      {/* ========= grid ========= */}
       {isLoading ? (
         <p className="text-center text-[#86654F] py-12">Loading services...</p>
       ) : (
@@ -161,17 +201,13 @@ export default function ServiceDashboard() {
           ))}
         </div>
       )}
-      <EditServiceModal
-        isOpen={!!editId}
-        onClose={() => setEditId(null)}
-        serviceId={editId}
-      />
-      {/* ===> pagination */}
+
+      {/* ========= pagination ========= */}
       {filteredServices.length > 0 && (
         <Pagination
           page={page}
           totalPages={totalPages}
-          onPageChange={(p) => setPage(p)}
+          onPageChange={setPage}
         />
       )}
     </div>

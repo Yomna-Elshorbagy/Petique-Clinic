@@ -9,10 +9,12 @@ interface AdminProtectedRouteProps {
 interface JwtPayload {
   role?: string;
   exp?: number;
-  [key: string]: unknown; 
+  [key: string]: unknown;
 }
 
-export default function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
+export default function AdminProtectedRoute({
+  children,
+}: AdminProtectedRouteProps) {
   const token = localStorage.getItem("accessToken");
 
   if (!token) {
@@ -28,7 +30,7 @@ export default function AdminProtectedRoute({ children }: AdminProtectedRoutePro
       return <Navigate to="/login" />;
     }
 
-    if (userRole !== "admin") {
+    if (userRole !== "admin" && userRole !== "owner") {
       return <Navigate to="/" />;
     }
 
