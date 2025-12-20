@@ -15,7 +15,7 @@ export default function UserOrders() {
 
   if (isError)
     return (
-      <div className="text-center py-10 text-red-500">
+      <div className="text-center py-10 text-red-500 dark:text-red-400">
         Failed to load orders.
       </div>
     );
@@ -23,7 +23,9 @@ export default function UserOrders() {
   if (!data?.data || data.data.length === 0)
     return (
       <div className="text-center py-10">
-        <p className="text-gray-500 text-lg">You have no orders yet.</p>
+        <p className="text-gray-500 dark:text-gray-400 text-lg">
+          You have no orders yet.
+        </p>
       </div>
     );
 
@@ -52,7 +54,7 @@ export default function UserOrders() {
         description="Manage your personal info, pets, and appointments."
       />
 
-      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+      <h2 className="text-3xl font-bold text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] mb-6">
         Your Orders
       </h2>
 
@@ -60,11 +62,11 @@ export default function UserOrders() {
       {paginatedOrders.map((order: Order) => (
         <div
           key={order._id}
-          className="p-6 rounded-2xl bg-white/40 dark:bg-gray-800/40 backdrop-blur-lg shadow-lg border border-gray-200 dark:border-gray-700"
+          className="p-6 rounded-2xl bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] backdrop-blur-lg shadow-lg border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
         >
           {/* Header */}
           <div className="flex items-center justify-between mb-5">
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+            <h3 className="text-xl font-semibold text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
               Order #{order._id}
             </h3>
             <span
@@ -77,31 +79,33 @@ export default function UserOrders() {
           </div>
 
           {/* Order Details */}
-          <div className="relative border-l-4 border-primary pl-5 mb-6">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+          <div className="relative border-l-4 border-[#e9a66f] dark:border-[var(--color-dark-accent)] pl-5 mb-6">
+            <p className="text-sm text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
               <span className="font-semibold">Address:</span> {order.address}
             </p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
               <span className="font-semibold">Phone:</span> {order.phone}
             </p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
               <span className="font-semibold">Payment:</span> {order.payment}
             </p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
               <span className="font-semibold">Placed On:</span>{" "}
               {new Date(order.createdAt).toLocaleString()}
             </p>
-            <span className="absolute -left-2 top-0 w-4 h-4 bg-primary rounded-full"></span>
+            <span className="absolute -left-2 top-0 w-4 h-4 bg-[#e9a66f] dark:bg-[var(--color-dark-accent)] rounded-full"></span>
           </div>
 
           {/* Products */}
           <div>
-            <h4 className="text-lg font-semibold mb-3">Products</h4>
+            <h4 className="text-lg font-semibold mb-3 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
+              Products
+            </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {order.products.map((p) => (
                 <div
                   key={p._id}
-                  className="p-4 rounded-xl border bg-white dark:bg-gray-900 shadow"
+                  className="p-4 rounded-xl border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] bg-[var(--color-bg-cream)] dark:bg-[var(--color-dark-background)] shadow text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
                 >
                   {p.productId.imageCover?.secure_url && (
                     <img
@@ -124,9 +128,9 @@ export default function UserOrders() {
 
           {/* Total */}
           <div className="mt-6 text-right">
-            <p className="text-xl font-bold">
+            <p className="text-xl font-bold text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
               Total:{" "}
-              <span className="text-primary">
+              <span className="text-[#e9a66f] dark:text-[var(--color-dark-accent)]">
                 {order.finalPrice.toLocaleString()} EGP
               </span>
             </p>

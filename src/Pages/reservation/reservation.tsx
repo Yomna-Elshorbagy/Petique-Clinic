@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { Star } from "lucide-react";
 import Modal from "react-modal";
@@ -52,6 +52,7 @@ export default function Reservation() {
   ];
   const orderedSteps = isRTL ? [...stepKeys].reverse() : stepKeys;
   const totalSteps = stepKeys.length;
+  const queryClient = useQueryClient();
 
   const token = localStorage.getItem("accessToken");
   let userId: string | null = null;
@@ -155,6 +156,43 @@ export default function Reservation() {
     }, 0);
   }, [date, doctor, allReservations, timeSlot, timeOptions]);
 
+
+   const [next5Days, setNext5Days] = useState<{ abbr: string; iso: string }[]>(
+    []
+  );
+  useEffect(() => {
+    const today = new Date();
+    const clinicDays = ["Sun", "Mon", "Tue", "Wed", "Thu"];
+    const arr: { abbr: string; iso: string }[] = [];
+
+    let added = 0;
+    const checkDate = new Date(today);
+
+    while (added < 5) {
+      const dayAbbr = checkDate.toLocaleDateString("en-US", {
+        weekday: "short",
+      });
+      if (clinicDays.includes(dayAbbr)) {
+        arr.push({ abbr: dayAbbr, iso: checkDate.toISOString().split("T")[0] });
+        added++;
+      }
+      checkDate.setDate(checkDate.getDate() + 1);
+    }
+
+    setTimeout(() => {
+      setNext5Days(arr);
+    }, 0);
+  }, []);
+
+  const showAlert = (title: string, message: string) => {
+    Swal.fire({
+      title,
+      text: message,
+      icon: "error",
+      confirmButtonColor: "#b89c86",
+    });
+  };
+
   // Create Reservation
   const mutation = useMutation({
     mutationFn: async () => {
@@ -193,6 +231,8 @@ export default function Reservation() {
       setDate("");
       setTimeSlot("");
       setNotes("");
+      queryClient.invalidateQueries({ queryKey: ["allReservations"] });
+
     },
     onError: (error: AxiosError) => {
       if (error.response?.status === 409)
@@ -201,41 +241,7 @@ export default function Reservation() {
     },
   });
 
-  const [next5Days, setNext5Days] = useState<{ abbr: string; iso: string }[]>(
-    []
-  );
-  useEffect(() => {
-    const today = new Date();
-    const clinicDays = ["Sun", "Mon", "Tue", "Wed", "Thu"];
-    const arr: { abbr: string; iso: string }[] = [];
-
-    let added = 0;
-    const checkDate = new Date(today);
-
-    while (added < 5) {
-      const dayAbbr = checkDate.toLocaleDateString("en-US", {
-        weekday: "short",
-      });
-      if (clinicDays.includes(dayAbbr)) {
-        arr.push({ abbr: dayAbbr, iso: checkDate.toISOString().split("T")[0] });
-        added++;
-      }
-      checkDate.setDate(checkDate.getDate() + 1);
-    }
-
-    setTimeout(() => {
-      setNext5Days(arr);
-    }, 0);
-  }, []);
-
-  const showAlert = (title: string, message: string) => {
-    Swal.fire({
-      title,
-      text: message,
-      icon: "error",
-      confirmButtonColor: "#b89c86",
-    });
-  };
+ 
 
   return (
     <>
@@ -658,8 +664,8 @@ export default function Reservation() {
               <SwiperSlide key={service._id}>
                 <div
                   onClick={() => navigate(`/service/${service._id}`)}
-                  className="bg-white dark:bg-[var(--color-dark-card)] rounded-lg shadow-md overflow-hidden 
-                       w-full flex flex-col items-center group cursor-pointer transition-colors duration-300"
+                  className="bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] rounded-lg shadow-md overflow-hidden 
+                       w-full flex flex-col items-center group cursor-pointer transition-colors duration-300 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
                 >
                   <div className="relative w-full h-[360px] overflow-hidden rounded-t-lg">
                     <img
@@ -676,7 +682,8 @@ export default function Reservation() {
                     />
                   </div>
 
-                  <div className="text-center bg-white dark:bg-[var(--color-dark-card)] transition-colors duration-300">
+                  <div className="text-center bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] transition-colors duration-300 w-full">
+                    
                     <h3
                       className="text-lg font-bold mb-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] text-ellipsis overflow-hidden line-clamp-1 mt-3
              transition-colors duration-300 group-hover:text-[#e9a66f] dark:group-hover:text-[var(--color-dark-accent)]"

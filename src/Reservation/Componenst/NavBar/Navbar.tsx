@@ -1,8 +1,9 @@
 import React from "react";
-import { FaBell, FaUserCircle, FaBars } from "react-icons/fa";
+import { FaHome , FaUserCircle, FaBars } from "react-icons/fa";
 import type { TokenPayload } from "../../../Interfaces/ITokenPayload";
 import { jwtDecode } from "jwt-decode";
 import ReservationNotificationBell from "../NotificationsDoctor/ReservationNotificationBell";
+import { useNavigate } from "react-router-dom";
 
 
 interface NavbarProps {
@@ -20,6 +21,7 @@ if (token) {
   }
 }
 const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
+  const navigate = useNavigate();
   return (
     <header
       className="
@@ -38,6 +40,15 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
       </button>
 
       <div className="flex items-center gap-6 text-[#86654F]  ml-auto">
+          <div className="relative text-[#86654F]">
+            <button
+            onClick={() => navigate("/home")}
+            title="Home"
+            className="relative p-2 cursor-pointer rounded-xl hover:bg-[#E9A66F]/20 hover:text-[#A98770] transition-colors"
+          >
+            <FaHome size={22} className="text-[#86654F]"/>
+          </button>
+          </div>
           <ReservationNotificationBell />
 
         <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition pl-6 border-l border-[#A98770]/20">

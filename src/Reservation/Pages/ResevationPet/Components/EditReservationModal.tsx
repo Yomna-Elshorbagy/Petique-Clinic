@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useUpdateReservation } from "../../../../Hooks/Reservation/useReservationMutations";
@@ -13,6 +13,8 @@ import type { IPet } from "../../../../Interfaces/Ipet";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 interface ReservationEdit {
   _id?: string;
@@ -46,10 +48,10 @@ const reservationSchema = z.object({
     .refine((val) => val !== "", { message: "Please select a doctor." }),
   date: z
     .string()
-    .refine((val) => val !== "", { message: "Please select a date." })
-    .refine((val) => val >= new Date().toISOString().split("T")[0], {
-      message: "Date cannot be before today.",
-    }),
+    .refine((val) => val !== "", { message: "Please select a date." }),
+  // .refine((val) => val >= new Date().toISOString().split("T")[0], {
+  //   message: "Select a day in the future",
+
   timeSlot: z.string().optional(),
   status: z.enum(["pending", "confirmed", "completed", "cancelled"]),
   paymentStatus: z.enum(["unpaid", "paid"]),
@@ -65,6 +67,7 @@ export default function EditReservationModal({
   const { data: petsData } = useAllPets();
   const { data: doctorsData } = useAllDoctors();
   const { data: servicesData } = useServices();
+
   const pets = useMemo(() => petsData?.data ?? petsData ?? [], [petsData]);
   const doctors = useMemo(() => doctorsData ?? [], [doctorsData]);
   const services = useMemo(
@@ -72,9 +75,12 @@ export default function EditReservationModal({
     [servicesData]
   );
 
+  const token = localStorage.getItem("accessToken");
+
   const {
     register,
     handleSubmit,
+    watch,
     setValue,
     formState: { errors },
   } = useForm<ReservationEdit>({
@@ -91,15 +97,30 @@ export default function EditReservationModal({
     },
   });
 
-  const [fetchSlotsKey, setFetchSlotsKey] = useState<{
-    doctor: string;
-    date: string;
-  } | null>(null);
+  const { data: allReservations = [], refetch } = useQuery<ReservationEdit[]>({
+    queryKey: ["allReservations"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:3000/reserve", {
+        headers: { authentication: `bearer ${token}` },
+      });
+      return res.data.data;
+    },
+    enabled: !!token,
+  });
+
+  const selectedDoctor = watch("doctor");
+  const selectedDate = watch("date");
+
+  const doctorId =
+    typeof selectedDoctor === "string"
+      ? selectedDoctor
+      : selectedDoctor?._id ?? "";
 
   const { data: availableSlotsData } = useAvailableSlots(
-    fetchSlotsKey?.doctor ?? "",
-    fetchSlotsKey?.date ?? ""
+    doctorId,
+    selectedDate || ""
   );
+
   const availableSlotsRaw = useMemo<string[]>(
     () => availableSlotsData?.availableSlots ?? availableSlotsData ?? [],
     [availableSlotsData]
@@ -125,47 +146,33 @@ export default function EditReservationModal({
         ? reservation.service?._id
         : reservation.service;
 
+    let dateValue = "";
+    if (reservation.date) {
+      const d = new Date(reservation.date);
+      if (!isNaN(d.getTime())) {
+        dateValue = d.toISOString().split("T")[0];
+      }
+    }
+
     setValue("pet", petId ?? "");
     setValue("service", serviceId ?? "");
     setValue("doctor", doctorId ?? "");
-    setValue(
-      "date",
-      reservation.date
-        ? new Date(reservation.date).toISOString().split("T")[0]
-        : ""
-    );
+    setValue("date", dateValue, { shouldDirty: true, shouldTouch: true });
     setValue("timeSlot", reservation.timeSlot ?? "");
     setValue("status", reservation.status ?? "pending");
     setValue("paymentStatus", reservation.paymentStatus ?? "unpaid");
     setValue("notes", reservation.notes ?? "");
   }, [reservation, setValue]);
 
-  useEffect(() => {
-    if (!reservation) return;
-
-    const doctorId =
-      typeof reservation.doctor === "object"
-        ? reservation.doctor?._id
-        : reservation.doctor;
-
-    const date = reservation.date
-      ? new Date(reservation.date).toISOString().split("T")[0]
-      : "";
-
-    if (doctorId && date) {
-      setTimeout(() => {
-        setFetchSlotsKey({ doctor: doctorId, date });
-      }, 0);
-    }
-  }, [reservation]);
-
   const onSubmit = async (data: ReservationEdit) => {
+    const dateString = data.date ? new Date(data.date).toISOString() : "";
+
     const payload: ReservationEdit = {
       _id: reservation!._id,
       pet: data.pet,
       service: data.service,
       doctor: data.doctor || null,
-      date: data.date,
+      date: dateString,
       timeSlot: data.timeSlot || reservation?.timeSlot,
       status: data.status,
       paymentStatus: data.paymentStatus,
@@ -177,8 +184,10 @@ export default function EditReservationModal({
       {
         onSuccess(res) {
           Swal.fire("Updated!", "Reservation updated successfully", "success");
+
           onUpdated?.(res.data);
           onClose();
+          refetch();
         },
         onError() {
           Swal.fire("Error", "Failed to update reservation", "error");
@@ -187,16 +196,50 @@ export default function EditReservationModal({
     );
   };
 
-  const originalTimeSlot = reservation?.timeSlot ?? "";
-
   const timeslotOptions = useMemo(() => {
-    const slots = new Set<string>();
-    if (originalTimeSlot) {
-      slots.add(originalTimeSlot);
-    }
-    availableSlotsRaw.forEach((s) => slots.add(s));
-    return Array.from(slots);
-  }, [availableSlotsRaw, originalTimeSlot]);
+    if (!reservation) return [];
+
+    // const currentSlot = reservation.timeSlot;
+
+    const bookedTimes = allReservations
+      ?.filter((r) => {
+        const rDate = r.date
+          ? new Date(r.date).toISOString().split("T")[0]
+          : "";
+
+        const rDoctorId =
+          r.doctor && typeof r.doctor === "object"
+            ? r.doctor._id
+            : typeof r.doctor === "string"
+            ? r.doctor
+            : "";
+
+        return (
+          rDate === selectedDate &&
+          rDoctorId === selectedDoctor &&
+          r._id !== reservation._id &&
+          r.timeSlot
+        );
+      })
+      .map((r) => r.timeSlot!)
+      .filter(Boolean);
+
+    const filtered = availableSlotsRaw
+      .filter((slot): slot is string => !!slot)
+      .filter((slot) => !bookedTimes.includes(slot));
+
+    // if (currentSlot && !filtered.includes(currentSlot)) {
+    //   filtered.push(currentSlot);
+    // }
+
+    return filtered.sort();
+  }, [
+    availableSlotsRaw,
+    allReservations,
+    reservation,
+    selectedDoctor,
+    selectedDate,
+  ]);
 
   if (!isOpen) return null;
 
@@ -316,7 +359,7 @@ export default function EditReservationModal({
               className="w-full mt-2 px-4 py-2 rounded-xl bg-white border border-[#ECE7E2] 
               focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none text-[#86654F]"
             >
-              <option value="">Keep current time</option>
+              <option value="">Select a time</option>
               {timeslotOptions.map((t: string) => (
                 <option key={t} value={t}>
                   {t}

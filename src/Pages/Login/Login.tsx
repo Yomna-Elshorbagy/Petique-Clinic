@@ -20,6 +20,9 @@ import AuthCardLayout from "../../Shared/AuthCardLayout/AuthCardLayout";
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
 import SEO from "../../Components/SEO/SEO";
+import type { TokenPayload } from "../../Interfaces/ITokenPayload";
+import { jwtDecode } from "jwt-decode";
+import type { IUser } from "../../Interfaces/IUser";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -40,16 +43,43 @@ export default function Login() {
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: userLogin,
     onSuccess: (data) => {
-      console.log(data);
       dispatch(insertUserToken(data.accessToken));
+
+      let username = "User";
+      let role: IUser["role"] = "petOwner";
+      let destination = "/home";
+
+      try {
+        const decoded = jwtDecode<TokenPayload>(data.accessToken);
+        username = decoded?.name || "User";
+        role = decoded?.role as any;
+
+        if (role === "admin") {
+          destination = "/ecoDashboard";
+        } else if (role === "doctor" || role === "owner") {
+          destination = "/resDashboard";
+        } else {
+          destination = "/home";
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+
+      const welcomeText =
+        role === "admin"
+          ? `Welcome Admin ${username}!`
+          : role === "doctor"
+            ? `Welcome Dr. ${username}!`
+            : `Welcome ${username}!`;
+
       Swal.fire({
+        title: `👋 ${welcomeText}`,
+        text: "Login successful. Redirecting...",
         icon: "success",
-        title: t("auth.login.successTitle"),
-        text: t("auth.login.successText"),
-        timer: 2000,
+        timer: 2500,
         timerProgressBar: true,
         showConfirmButton: false,
-        willClose: () => navigate("/home"),
+        willClose: () => navigate(destination),
       });
     },
 
@@ -80,9 +110,8 @@ export default function Login() {
             {t("auth.login.welcomeTitle")}
           </p>
           <p
-            className={`text-[#443935] font-bold font-['Playfair_Display'] p-2 ${
-              isRTL ? "text-2xl" : ""
-            }`}
+            className={`text-[#443935] font-bold font-['Playfair_Display'] p-2 ${isRTL ? "text-2xl" : ""
+              }`}
           >
             {t("auth.login.welcomeSubtitle")}
           </p>
@@ -103,9 +132,8 @@ export default function Login() {
               <div className="flex flex-col gap-3 mb-6">
                 <div className="relative">
                   <MdEmail
-                    className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${
-                      isRTL ? "right-3" : "left-3"
-                    }`}
+                    className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"
+                      }`}
                     size={20}
                   />
                   <Input
@@ -120,9 +148,8 @@ export default function Login() {
 
                 <div className="relative">
                   <MdLock
-                    className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${
-                      isRTL ? "right-3" : "left-3"
-                    }`}
+                    className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"
+                      }`}
                     size={20}
                   />
                   <Input

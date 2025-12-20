@@ -9,6 +9,7 @@ import {
   getTopCategoriesApi,
   getTopVaccinatedCategoriesApi,
   getTotalPetsApi,
+  getTotalRevenueAnalysisApi,
   getUpcomingVaccinationsApi,
   getVaccinationStatusApi,
 } from "../../Apis/AnalyticsReservation";
@@ -94,5 +95,11 @@ export const useRevenueAnalysis = () => {
   return useQuery({
     queryKey: ["analytics", "revenue"],
     queryFn: getRevenueAnalysisApi,
+  });
+};
+export const useTotalRevenueAnalysis = () => {
+  return useQuery({
+    queryKey: ["analytics", "total-revenue"],
+    queryFn: getTotalRevenueAnalysisApi,
   });
 };

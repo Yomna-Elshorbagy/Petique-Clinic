@@ -3,7 +3,6 @@ import { baseURL } from "../../Apis/BaseUrl";
 import { Trash2 } from "lucide-react";
 import { useAppDispatch } from "../../Hooks/useSliceHook";
 import {
-  clearCartApi,
   deleteCartItem,
   updateCartQuantity,
 } from "../../Store/Slices/CartSlice";
@@ -33,11 +32,6 @@ const CartItems: React.FC<Props> = ({ items }) => {
   //===> remove Single Item
   const handleRemoveItem = (id: string) => {
     dispatch(deleteCartItem(id));
-  };
-
-  //===> clear All Cart
-  const handleClearCart = () => {
-    dispatch(clearCartApi());
   };
 
   return (
@@ -79,7 +73,7 @@ const CartItems: React.FC<Props> = ({ items }) => {
               <div className="flex items-center gap-3 mt-4">
                 <button
                   onClick={() =>
-                    handleUpdateQuantity(item._id, -1, item.quantity)
+                    handleUpdateQuantity(item.productId._id, -1, item.quantity)
                   }
                   className="
                     w-8 h-8 flex items-center justify-center rounded-full 

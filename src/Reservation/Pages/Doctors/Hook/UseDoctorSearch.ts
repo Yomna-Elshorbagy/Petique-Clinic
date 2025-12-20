@@ -10,7 +10,8 @@ export function useDoctorSearch(doctors: IUser[]) {
         const lowerSearch = search.toLowerCase();
         return doctors.filter((doctor) =>
             doctor.userName.toLowerCase().includes(lowerSearch) ||
-            doctor.email.toLowerCase().includes(lowerSearch)
+            doctor.email.toLowerCase().includes(lowerSearch) ||
+            doctor._id.toLowerCase().includes(lowerSearch) 
         );
     }, [doctors, search]);
 

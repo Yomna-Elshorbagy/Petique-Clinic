@@ -10,6 +10,7 @@ import UserOrders from "../../Components/UserProfile/Orders";
 import PetOrderTracking from "../../Components/UserProfile/OrderTracking";
 import UserUpdateData from "../../Components/UserProfile/UserUpdateData";
 import Appointments from "../../Components/UserProfile/Appointments";
+import NotificationBell from "../../Components/UserProfile/components/UserPell";
 
 export default function UserPetClinicProfile() {
   const [activeTab, setActiveTab] = useState("Appointments");
@@ -39,7 +40,7 @@ export default function UserPetClinicProfile() {
 
   if (isError)
     return (
-      <p className="text-center py-10 text-[#443935]">
+      <p className="text-center py-10 text-[#443935] dark:text-[var(--color-dark-text)]">
         Error loading User Profile
       </p>
     );
@@ -60,28 +61,37 @@ export default function UserPetClinicProfile() {
       </div>
 
       {/* ===> header <=== */}
-      <div className="relative text-center mb-10">
-        <h2 className="text-4xl font-bold font-serif text-[#443935] dark:text-[var(--color-dark-text)]">
-          Pet Owner Dashboard
-        </h2>
-        <p className="mt-2 text-[#A98868] dark:text-gray-400">
-          Home /{" "}
-          <span className="text-[#F2A056] dark:text-[var(--color-dark-accent)]">
-            My Account
-          </span>
-        </p>
+
+      <div className="relative flex flex-col md:flex-row items-center justify-center mb-10 mt-5 md:mt-0">
+        <div className="text-center">
+          <h2 className="text-3xl md:text-4xl font-bold font-serif text-[#443935] dark:text-[var(--color-dark-text)]">
+            Pet Owner Dashboard
+          </h2>
+          <p className="mt-2 text-[#A98868] dark:text-gray-400">
+            Home /{" "}
+            <span className="text-[#F2A056] dark:text-[var(--color-dark-accent)]">
+              My Account
+            </span>
+          </p>
+        </div>
+        <div className="absolute top-0 right-20 md:top-2 md:right-80 hidden md:block">
+          <NotificationBell />
+        </div>
+
+        <div className="absolute top-0 right-0 md:hidden p-2">
+          <NotificationBell />
+        </div>
       </div>
 
-      <div className="relative max-w-6xl mx-auto bg-white dark:bg-[var(--color-dark-card)] rounded-2xl shadow-xl p-8 flex flex-col md:flex-row gap-8 transition-colors duration-300">
+      <div className="relative max-w-6xl mx-auto bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] rounded-2xl shadow-xl p-8 flex flex-col md:flex-row gap-8 transition-colors duration-300 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]">
         {/* ===> sidebar <=== */}
-        <div className="flex flex-col w-full md:w-1/4 border-r border-[#E8DED7] dark:border-[var(--color-dark-accent)]/30">
+        <div className="flex flex-col w-full md:w-1/4 border-r border-[#E8DED7] dark:border-[var(--color-dark-border-light)]">
           <div className="flex flex-col items-center mb-8">
             <div className="relative w-28 h-28">
               <img
                 src={preview || profileImage}
                 alt="Profile"
-                className="w-full h-full rounded-full object-cover border-4"
-                style={{ borderColor: "#F2A056" }}
+                className="w-full h-full rounded-full object-cover border-4 border-[#F2A056] dark:border-[var(--color-dark-accent)]"
               />
 
               <input
@@ -107,8 +117,8 @@ export default function UserPetClinicProfile() {
               onClick={() => setActiveTab(tab)}
               className={`text-left px-5 py-3 font-medium rounded-md mb-2 transition shadow-sm ${
                 activeTab === tab
-                  ? "text-white bg-[#F2A056]"
-                  : "text-[#443935] dark:text-[var(--color-dark-text)] hover:bg-[#F2A056]/20 dark:hover:bg-[var(--color-dark-accent)]/20 bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)]"
+                  ? "text-white bg-[#F2A056] dark:bg-[var(--color-dark-accent)]"
+                  : "text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] hover:bg-[#F2A056]/20 dark:hover:bg-[var(--color-dark-accent)]/20 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
               }`}
             >
               {tab}

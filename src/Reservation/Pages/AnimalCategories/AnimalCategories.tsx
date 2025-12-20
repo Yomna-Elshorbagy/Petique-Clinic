@@ -71,7 +71,8 @@ export default function AnimalCategories() {
   }, [categories, petCounts]);
 
   const filteredCategories = displayedCategories.filter((cat) =>
-    cat.name.toLowerCase().includes(search.toLowerCase())
+    cat.name.toLowerCase().includes(search.toLowerCase()) ||
+    cat._id.toLowerCase().includes(search.toLowerCase())
   );
 
   const { paginatedItems, page, totalPages, goToPage } = useLocalPagination(

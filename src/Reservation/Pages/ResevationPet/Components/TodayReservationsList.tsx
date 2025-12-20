@@ -16,6 +16,7 @@ import ViewReservationModal from "./ViewReservationModal";
 import EditReservationModal from "./EditReservationModal";
 import { useTodayReservationFilters } from "../../../../Hooks/SharedSearch/useTodayReservations";
 import SharedSearch from "../../../../Shared/SharedSearch/SharedSearch";
+import AddReservationModal from "./AddReservationModal";
 
 const TodayReservationsList: React.FC = () => {
   const { data: allReservations = [], isLoading } = useTodayReservations();
@@ -37,7 +38,7 @@ const TodayReservationsList: React.FC = () => {
     setStatus,
     timeSlot,
     setTimeSlot,
-    timeSlotOptions
+    timeSlotOptions,
   } = useTodayReservationFilters(reservations);
 
   const { page, totalPages, paginatedItems, goToPage } = useLocalPagination(
@@ -48,6 +49,7 @@ const TodayReservationsList: React.FC = () => {
   const [viewOpen, setViewOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [activeReservation, setActiveReservation] = useState<any | null>(null);
+  const [addOpen, setAddOpen] = useState(false);
 
   const openView = (r: any) => {
     setActiveReservation(r);
@@ -169,39 +171,51 @@ const TodayReservationsList: React.FC = () => {
         }}
       />
 
-      <SharedSearch
-        searches={[
-          {
-            placeholder: "Search by Pet",
-            value: petSearch,
-            onChange: setPetSearch,
-          },
-          {
-            placeholder: "Search by Owner",
-            value: ownerSearch,
-            onChange: setOwnerSearch,
-          },
-        ]}
-        filters={[
-          {
-            value: status,
-            onChange: setStatus,
-            options: [
-              { label: "All Status", value: "all" },
-              { label: "Pending", value: "pending" },
-              { label: "Upcoming", value: "upcoming" },
-              { label: "Completed", value: "completed" },
-              { label: "Cancelled", value: "cancelled" },
-            ],
-          },
-          {
-            value: timeSlot,
-            onChange: setTimeSlot,
-            options: timeSlotOptions,
-          }
-        ]}
-      />
+      <AddReservationModal isOpen={addOpen} onClose={() => setAddOpen(false)} />
 
+      <div className="flex items-center justify-between gap-4 flex-wrap md:flex-nowrap">
+        <SharedSearch
+          searches={[
+            {
+              placeholder: "Search by Pet",
+              value: petSearch,
+              onChange: setPetSearch,
+            },
+            {
+              placeholder: "Search by Owner",
+              value: ownerSearch,
+              onChange: setOwnerSearch,
+            },
+          ]}
+          filters={[
+            {
+              value: status,
+              onChange: setStatus,
+              options: [
+                { label: "All Status", value: "all" },
+                { label: "Pending", value: "pending" },
+                { label: "Upcoming", value: "upcoming" },
+                { label: "Completed", value: "completed" },
+                { label: "Cancelled", value: "cancelled" },
+              ],
+            },
+            {
+              value: timeSlot,
+              onChange: setTimeSlot,
+              options: timeSlotOptions,
+            },
+          ]}
+        />
+
+        <div className="flex justify-end mb-6">
+          <button
+            onClick={() => setAddOpen(true)}
+            className="px-4 py-3 rounded-xl bg-[#86654F] text-white hover:bg-[#6d5240] transition"
+          >
+            + Add Reservation
+          </button>
+        </div>
+      </div>
 
       <div className="mt-6 flex flex-col gap-4">
         {paginatedItems.map((res: any, i: number) => (
@@ -230,15 +244,18 @@ const TodayReservationsList: React.FC = () => {
 
                   <span
                     className={`px-3 py-[4px] rounded-full text-xs capitalize font-medium
-                      ${res.status === "completed" &&
-                      "bg-green-100 text-green-700"
+                      ${
+                        res.status === "completed" &&
+                        "bg-green-100 text-green-700"
                       }
-                      ${res.status === "pending" &&
-                      "bg-orange-100 text-orange-700"
+                      ${
+                        res.status === "pending" &&
+                        "bg-orange-100 text-orange-700"
                       }
                       ${res.status === "cancelled" && "bg-red-100 text-red-700"}
-                      ${res.status === "confirmed" &&
-                      "bg-blue-100 text-blue-700"
+                      ${
+                        res.status === "confirmed" &&
+                        "bg-blue-100 text-blue-700"
                       }
                     `}
                   >

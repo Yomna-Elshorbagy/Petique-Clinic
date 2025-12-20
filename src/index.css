@@ -70,6 +70,13 @@
   animation: slideUp 0.35s ease-out;
 }
 
+.swal2-container {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+}
+.swal-toast-custom {
+  z-index: 999999 !important;
+}
 :root {
   --color-light-primary: #e8d8c4;
   --color-light-secondary: #b89c86;
@@ -116,7 +123,7 @@
 
 .dark {
   --color-dark-primary: #e8d8c4;
-  --color-dark-background: #3a342f;
+  --color-dark-background: #2b2521;
   --color-dark-secondary: #d1c4b5;
   --color-dark-card: #3a342f;
   --color-dark-text: #c3b09a;
@@ -159,7 +166,7 @@
   --color-dark-border-dark: #6b5d52;
 
   /* ========== EXTENDED WARM PALETTE ========== */
-  
+
   /* More Brown Shades */
   --color-dark-brown-lighter: #9d8470;
   --color-dark-brown-light: #8a7260;

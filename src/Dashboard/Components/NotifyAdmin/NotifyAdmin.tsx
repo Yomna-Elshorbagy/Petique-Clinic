@@ -24,7 +24,7 @@ const OrderNotificationBell: React.FC = () => {
           `${baseURL}/order/allorders`,
           {
             headers: { authentication: `bearer ${token}` }, 
-            timeout: 10000, 
+            timeout: 40000, 
           }
         );
 
@@ -62,9 +62,6 @@ const OrderNotificationBell: React.FC = () => {
     };
 
     fetchOrders();
-
-    const interval = setInterval(fetchOrders, 10000);
-    return () => clearInterval(interval);
   }, []);
 
   // ===> handle click outside
@@ -92,14 +89,14 @@ const OrderNotificationBell: React.FC = () => {
             new Date(b?.createdAt || "").getTime() -
             new Date(a?.createdAt || "").getTime()
         )
-        .slice(0, 5)
+        .slice(0, 10)
     : [];
 
   return (
     <div className="relative" ref={bellRef}>
       <button
         onClick={handleBellClick}
-        className="relative p-2 rounded-lg hover:bg-[var(--color-accent)] transition"
+        className="relative p-2 rounded-lg hover:bg-[var(--color-accent)] transition cursor-pointer"
       >
         <Bell size={20} />
         {hasNew && (

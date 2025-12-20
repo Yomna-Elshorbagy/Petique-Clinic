@@ -1,6 +1,4 @@
-import React from "react";
 import RevenueChart from "./Components/RevenueChart";
-import TopSellingProducts from "../Reports/Components/TopSellingProducts";
 import GenderPieChart from "./Components/GenderChart";
 import RolesBarChart from "./Components/RolesChart";
 import UsersOverviewChart from "./Components/UsersOverviewChart";
@@ -8,6 +6,8 @@ import DeletedUsersChart from "./Components/useDeletedUsersAnalysis ";
 import RevenueByCategoryChart from "./Components/RevenueByCategory";
 import CategoryDistributionChart from "./Components/CategoryDistributionChart";
 import SEO from "../../../Components/SEO/SEO";
+import OrdersDistributionChart from "./Components/OrderDistriputed";
+import TopSellingProductsChart from "./Components/TopSellingProducts";
 
 const OverView = () => {
   return (
@@ -37,6 +37,10 @@ const OverView = () => {
         <DeletedUsersChart />
         <RevenueByCategoryChart />
         <CategoryDistributionChart />
+      </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <OrdersDistributionChart />
+        <TopSellingProductsChart />
       </div>
       <RevenueChart />
     </div>

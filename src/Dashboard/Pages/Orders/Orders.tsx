@@ -34,7 +34,7 @@ export default function Orders() {
   // Fetch orders on component mount
   useEffect(() => {
     dispatch(getAllOrders());
-  }, [dispatch]);
+  }, []);
 
   // Filter orders based on search term, status, and date
   const filteredOrders = useMemo(() => {
@@ -133,7 +133,6 @@ export default function Orders() {
               confirmButton: "rounded-xl px-6 py-2 font-medium",
             },
           });
-          dispatch(getAllOrders());
         } else {
           const errorPayload = resultAction.payload as any;
           const errorMessage =
@@ -209,7 +208,6 @@ export default function Orders() {
               confirmButton: "rounded-xl px-6 py-2 font-medium",
             },
           });
-          dispatch(getAllOrders());
         } else {
           const errorPayload = resultAction.payload as any;
           const errorMessage =
@@ -285,7 +283,6 @@ export default function Orders() {
               confirmButton: "rounded-xl px-6 py-2 font-medium",
             },
           });
-          dispatch(getAllOrders());
         } else {
           const errorPayload = resultAction.payload as any;
           const errorMessage =
