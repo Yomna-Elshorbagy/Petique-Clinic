@@ -35,14 +35,23 @@ export const getUserCart = createAsyncThunk<any, void, { state: RootState }>(
 //==> adding product
 export const addProductToCart = createAsyncThunk<
   any,
-  string,
+  string | { productId: string; quantity?: number },
   { state: RootState }
->("cart/addProductToCart", async (productId, { getState, rejectWithValue }) => {
+>("cart/addProductToCart", async (payload, { getState, rejectWithValue }) => {
   try {
-    const token = getState().auth.token;
+    const token = getState().auth.token ;
+    let productId: string;
+      let quantity: number;
+      if (typeof payload === "string") {
+        productId = payload;
+        quantity = 1;
+      } else {
+        productId = payload.productId;
+        quantity = payload.quantity ?? 1;
+      }
     const res = await axios.post(
       `${baseURL}/cart`,
-      { productId },
+      { productId, quantity  },
       { headers: { authentication: `bearer ${token}` } }
     );
     return res.data;

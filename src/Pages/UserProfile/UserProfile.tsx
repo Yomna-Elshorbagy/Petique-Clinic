@@ -10,6 +10,7 @@ import UserOrders from "../../Components/UserProfile/Orders";
 import PetOrderTracking from "../../Components/UserProfile/OrderTracking";
 import UserUpdateData from "../../Components/UserProfile/UserUpdateData";
 import Appointments from "../../Components/UserProfile/Appointments";
+import NotificationBell from "../../Components/UserProfile/components/UserPell";
 
 export default function UserPetClinicProfile() {
   const [activeTab, setActiveTab] = useState("Appointments");
@@ -60,16 +61,26 @@ export default function UserPetClinicProfile() {
       </div>
 
       {/* ===> header <=== */}
-      <div className="relative text-center mb-10">
-        <h2 className="text-4xl font-bold font-serif text-[#443935] dark:text-[var(--color-dark-text)]">
-          Pet Owner Dashboard
-        </h2>
-        <p className="mt-2 text-[#A98868] dark:text-gray-400">
-          Home /{" "}
-          <span className="text-[#F2A056] dark:text-[var(--color-dark-accent)]">
-            My Account
-          </span>
-        </p>
+
+      <div className="relative flex flex-col md:flex-row items-center justify-center mb-10 mt-5 md:mt-0">
+        <div className="text-center">
+          <h2 className="text-3xl md:text-4xl font-bold font-serif text-[#443935] dark:text-[var(--color-dark-text)]">
+            Pet Owner Dashboard
+          </h2>
+          <p className="mt-2 text-[#A98868] dark:text-gray-400">
+            Home /{" "}
+            <span className="text-[#F2A056] dark:text-[var(--color-dark-accent)]">
+              My Account
+            </span>
+          </p>
+        </div>
+        <div className="absolute top-0 right-20 md:top-2 md:right-80 hidden md:block">
+          <NotificationBell />
+        </div>
+
+        <div className="absolute top-0 right-0 md:hidden p-2">
+          <NotificationBell />
+        </div>
       </div>
 
       <div className="relative max-w-6xl mx-auto bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] rounded-2xl shadow-xl p-8 flex flex-col md:flex-row gap-8 transition-colors duration-300 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]">

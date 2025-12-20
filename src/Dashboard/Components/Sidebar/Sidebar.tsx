@@ -12,7 +12,7 @@ import {
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
-import { useAppDispatch, useAppSelector } from "../../../Store/store";
+import { useAppDispatch } from "../../../Store/store";
 import { clearUserToken } from "../../../Store/Slices/AuthSlice";
 
 const Sidebar = ({
