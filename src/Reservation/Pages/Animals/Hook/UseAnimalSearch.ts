@@ -9,7 +9,8 @@ export function usePetSearch(pets: IPet[]) {
 
     return pets.filter((pet) =>
       pet.name.toLowerCase().includes(search.toLowerCase()) ||
-      pet.petOwner?.userName?.toLowerCase().includes(search.toLowerCase())
+      pet.petOwner?.userName?.toLowerCase().includes(search.toLowerCase()) ||
+      pet.petOwner?._id.toLowerCase().includes(search.toLowerCase())
     );
   }, [pets, search]);
 

@@ -37,7 +37,7 @@ export default function UserPets() {
         description="Manage your personal info, pets, and appointments."
       />
       <div>
-        <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+        <h3 className="text-2xl font-semibold text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] mb-4">
           My Pets
         </h3>
 
@@ -45,7 +45,7 @@ export default function UserPets() {
           {currentPets.map((pet: any) => (
             <div
               key={pet._id}
-              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-200"
+              className="bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] shadow-md rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-200"
             >
               <img
                 src={pet.image?.secure_url}
@@ -53,24 +53,21 @@ export default function UserPets() {
                 className="w-full h-48 object-cover rounded-xl mb-4"
               />
 
-              <h4
-                className="text-xl font-semibold mb-2"
-                style={{ color: "var(--color-primary)" }}
-              >
+              <h4 className="text-xl font-semibold mb-2 text-[#e9a66f] dark:text-[var(--color-dark-accent)]">
                 {pet.name}
               </h4>
-              <span className="text-sm px-3 py-1 bg-[var(--color-primary-light)] text-[var(--color-primary)] rounded-full">
+              <span className="text-sm px-3 py-1 bg-[#F2A056]/20 dark:bg-[var(--color-dark-accent)]/20 text-[#e9a66f] dark:text-[var(--color-dark-accent)] rounded-full">
                 {pet.category?.name}
               </span>
 
-              <div className="mt-4 space-y-2 text-gray-700 dark:text-gray-300">
+              <div className="mt-4 space-y-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
                 <p className="flex items-center gap-2">
-                  <FaCalendar style={{ color: "var(--color-primary)" }} />
+                  <FaCalendar className="text-[#e9a66f] dark:text-[var(--color-dark-accent)]" />
                   Age: <span className="font-medium">{pet.age} years</span>
                 </p>
 
                 <p className="flex items-center gap-2">
-                  <FaWeight style={{ color: "var(--color-primary)" }} />
+                  <FaWeight className="text-[#e9a66f] dark:text-[var(--color-dark-accent)]" />
                   Weight: <span className="font-medium">{pet.weight} kg</span>
                 </p>
 
@@ -86,9 +83,9 @@ export default function UserPets() {
 
               {/* vaccinations */}
               {pet.vaccinationHistory?.length > 0 && (
-                <div className="mt-4 border-t border-gray-300 dark:border-gray-600 pt-3">
-                  <h5 className="font-medium text-gray-800 dark:text-gray-100 mb-2 flex items-center gap-2">
-                    <FaSyringe style={{ color: "var(--color-primary)" }} />
+                <div className="mt-4 border-t border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] pt-3">
+                  <h5 className="font-medium text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] mb-2 flex items-center gap-2">
+                    <FaSyringe className="text-[#e9a66f] dark:text-[var(--color-dark-accent)]" />
                     Vaccinations
                   </h5>
 
@@ -96,7 +93,7 @@ export default function UserPets() {
                     {pet.vaccinationHistory.map((v: any) => (
                       <div
                         key={v._id}
-                        className="text-sm bg-gray-50 dark:bg-gray-900 p-2 rounded-md"
+                        className="text-sm bg-[var(--color-bg-cream)] dark:bg-[var(--color-dark-background)] p-2 rounded-md text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
                       >
                         <p className="font-semibold">{v.vaccine?.name}</p>
                         <p>Date: {new Date(v.date).toLocaleDateString()}</p>

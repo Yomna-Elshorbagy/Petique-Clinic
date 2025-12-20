@@ -8,20 +8,20 @@ import {
   useDeletePetVaccination,
   useVaccinationRecords,
 } from "../../../../Hooks/Pets/UsePets";
-import EditVaccinationModal from "./EditVaccinationModal";
+import EditVaccinationModal from "./EditPetVaccinationModal";
 import { usePetVaccinationFilters } from "../../../../Hooks/SharedSearch/usePetVaccinationsFilters";
 import SharedSearch from "../../../../Shared/SharedSearch/SharedSearch";
 import type { VaccinationStatus } from "../../../../Interfaces/IVacination";
 
 interface VaccinationRecord {
   petId: string;
-  vaccinationId: string; 
+  vaccinationId: string;
   _id?: string;
   category?: string;
   petName: string;
   petImage?: string;
   vaccineName?: string;
-  vaccineId?: string; 
+  vaccineId?: string;
   date: string;
   nextDose?: string;
   status: "completed" | "scheduled" | "overdue";
@@ -66,7 +66,7 @@ const VaccinationTable = () => {
     status,
     setStatus,
     categoryOptions,
-    statusOptions
+    statusOptions,
   } = usePetVaccinationFilters(records);
 
   const { page, totalPages, paginatedItems, goToPage } =
@@ -174,18 +174,30 @@ const VaccinationTable = () => {
           );
         })()}
 
-        {/* Shared Search */}
-        <SharedSearch
-          searches={[
-            { placeholder: "Search by Pet", value: petSearch, onChange: setPetSearch },
-            { placeholder: "Search by Vaccine", value: vaccineSearch, onChange: setVaccineSearch },
-          ]}
-          filters={[
-            { value: category, onChange: setCategory, options: categoryOptions },
-            { value: status, onChange: (v: string) => setStatus(v as VaccinationStatus), options: statusOptions },
-          ]}
-        />
-        
+      {/* Shared Search */}
+      <SharedSearch
+        searches={[
+          {
+            placeholder: "Search by Pet",
+            value: petSearch,
+            onChange: setPetSearch,
+          },
+          {
+            placeholder: "Search by Vaccine",
+            value: vaccineSearch,
+            onChange: setVaccineSearch,
+          },
+        ]}
+        filters={[
+          { value: category, onChange: setCategory, options: categoryOptions },
+          {
+            value: status,
+            onChange: (v: string) => setStatus(v as VaccinationStatus),
+            options: statusOptions,
+          },
+        ]}
+      />
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

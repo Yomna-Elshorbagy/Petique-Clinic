@@ -6,7 +6,7 @@ import {
   usePetById,
   useDeletePetVaccination,
 } from "../../../../Hooks/Pets/UsePets";
-import EditVaccinationModal from "../../Vaccination/Components/EditVaccinationModal";
+import EditVaccinationModal from "../../Vaccination/Components/EditPetVaccinationModal";
 
 interface Props {
   petId: string | null;

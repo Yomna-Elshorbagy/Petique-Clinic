@@ -10,7 +10,9 @@ const OrderDetails: React.FC = () => {
   const location = useLocation();
   const { t } = useTranslation();
 
-  const orderData = location.state?.order?.data;
+  const orderData = location.state?.order?.data ?? location.state?.order;
+
+  console.log(orderData);
 
   /* -------------------- Helpers -------------------- */
 
@@ -138,10 +140,10 @@ const OrderDetails: React.FC = () => {
                     {orderData.address}
                   </p>
 
-                  {orderData.note && (
+                  {orderData.notes && (
                     <p>
                       <strong>{t("orderDetails.specialNotes")}:</strong>{" "}
-                      {orderData.note}
+                      {orderData.notes}
                     </p>
                   )}
                 </div>

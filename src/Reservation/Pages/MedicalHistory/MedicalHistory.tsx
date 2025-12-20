@@ -1,18 +1,19 @@
 import React from "react";
 import ReactECharts from "echarts-for-react";
-import { FaSyringe, FaDog } from "react-icons/fa";
+import { FaSyringe, FaDog, FaDollarSign } from "react-icons/fa";
 
 import { COLORS } from "./Shared/Colors";
 import StatCard from "./Shared/StatCard";
 import {
   usePetsPerCategory,
   useTotalPets,
+  useTotalRevenueAnalysis,
   useVaccinationStatus,
 } from "../../../Hooks/Reservation/useanalytics";
 import TopVaccinatedCategoriesChart from "./Components/TopVaccinatedCategoriesChart";
 import DoctorWorkloadChart from "./Components/DoctorWorkloadChart";
 import MonthlyReservationsTrendChart from "./Components/MonthlyReservationsTrend";
-import RevenueChart from "../../../Dashboard/Pages/OverView/Components/RevenueChart";
+import ReservationRevenueChart from "./Components/RevenueAnalysis";
 
 // ===== Base options for all pies =====
 export const pieBaseOptions = {
@@ -33,7 +34,10 @@ const MedicalHistory: React.FC = () => {
   const { data: totalPets } = useTotalPets();
   const { data: petsPerCategory } = usePetsPerCategory();
   const { data: vaccinationStatus } = useVaccinationStatus();
+  const { data: totalRevenueData, isLoading: revenueLoading } =
+    useTotalRevenueAnalysis();
 
+  const totalRevenue = totalRevenueData?.data?.totalRevenue ?? 0;
   /* ===== PIE: Pets per Category ===== */
   const petsCategoryOption = {
     ...pieBaseOptions,
@@ -102,6 +106,12 @@ const MedicalHistory: React.FC = () => {
           }
           icon={<FaSyringe size={22} />}
         />
+
+        <StatCard
+          title="Total Revenue"
+          value={revenueLoading ? "—" : `$${totalRevenue.toLocaleString()}`}
+          icon={<FaDollarSign size={22} />}
+        />
       </div>
 
       {/* ===== CHARTS ===== */}
@@ -134,7 +144,7 @@ const MedicalHistory: React.FC = () => {
         </div>
       </div>
       <div className="pt-8">
-        <RevenueChart />
+        <ReservationRevenueChart />
       </div>
     </div>
   );

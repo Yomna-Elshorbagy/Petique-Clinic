@@ -30,7 +30,7 @@ const ImageUploadPredict: React.FC = () => {
     formData.append("image", file);
 
     try {
-      const response = await axios.post("http://localhost:3000/predict", formData, {
+      const response = await axios.post("http://localhost:3000/chat/disease", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

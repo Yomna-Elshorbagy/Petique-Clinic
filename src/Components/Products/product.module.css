@@ -13,7 +13,7 @@
   position: relative;
   cursor: pointer;
   border-radius: 0.75rem;
-  background-color: hsl(0, 0%, 100%);
+  background-color: transparent;
   padding: 1rem;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   animation: fadeInUp 0.5s ease-out forwards;
@@ -307,3 +307,35 @@
     transform: translateY(-4px);
   }
 }
+
+:global(.dark) .productCard {
+  --brown-dark: #9a8c81;
+  --brown: #b3a89d;
+  --brown-light: #a8a29e;
+
+  --orange: #fb923c;
+  --orange-dark: #f97316;
+  --orange-light: #fed7aa;
+
+  --cream: #1c1917;
+  --beige: #292524;
+  --beige-dark: #44403c;
+
+  background-color: #1f1a17;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+:global(.dark) .productCard:hover .imageContainer {
+  border-color: lightgray;
+}
+:global(.dark) .subImagesOverlay {
+  background: linear-gradient(
+    to top,
+    rgba(15, 23, 42, 0.8),
+    transparent 60%
+  );
+}
+:global(.dark) .starEmpty {
+  color: #94a3b8;
+  stroke: #64748b;
+}
+
