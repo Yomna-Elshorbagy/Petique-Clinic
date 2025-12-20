@@ -15,11 +15,14 @@ import {
   FaUserCircle,
   FaChevronDown,
   FaLanguage,
+  FaChartLine
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/images/logo.jpg";
 import { Link, NavLink, useNavigate } from "react-router";
 import { clearUserToken } from "../../Store/Slices/AuthSlice";
+import type { TokenPayload } from "../../Interfaces/ITokenPayload";
+import { jwtDecode } from "jwt-decode";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
@@ -42,6 +45,25 @@ export default function NavBar() {
   const isAuthenticated = Boolean(accessToken);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  let role: TokenPayload["role"] | null = null;
+
+  if (accessToken) {
+    try {
+      const decoded = jwtDecode<TokenPayload>(accessToken);
+      role = decoded?.role ?? null;
+    } catch (err) {
+      console.error("Invalid token:", err);
+    }
+  }
+
+  const dashboardRoute =
+    role === "admin"
+      ? "/ecoDashboard"
+      : role === "doctor" || role === "owner"
+      ? "/resDashboard"
+      : null;
+
 
   //====> handel logout
   const handleLogout = () => {
@@ -185,6 +207,16 @@ export default function NavBar() {
               </Link>
             )}
 
+            {dashboardRoute && (
+              <Link
+                to={dashboardRoute}
+                aria-label="Dashboard"
+                className="p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
+              >
+                <FaChartLine className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
+              </Link>
+            )}
+
             <div className="relative">
               <button
                 onClick={() => setShowProfile((p) => !p)}
@@ -308,6 +340,15 @@ export default function NavBar() {
                     </span>
                   )}
                 </Link>
+                {dashboardRoute && (
+                <Link
+                  to={dashboardRoute}
+                  className="relative p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
+                  onClick={() => setOpen(false)}
+                >
+                  <FaChartLine className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
+                </Link>
+              )}
               </div>
 
               <div className="bg-white dark:bg-[var(--color-dark-card)] border border-[var(--color-light-secondary)]/20 rounded-2xl p-3 space-y-2">
