@@ -10,7 +10,6 @@ import type {
 import { baseURL } from "../../Apis/BaseUrl";
 import { toast, ToastContainer } from "react-toastify";
 import { FaPaw } from "react-icons/fa";
-
 import RelatedProductsSlider from "./RelatedProductsSlider";
 import Loader from "./Loader";
 import ErrorLoader from "./ErrorLoader";
@@ -26,7 +25,17 @@ import SEO from "../../Components/SEO/SEO";
 import { addProductToCart } from "../../Store/Slices/CartSlice";
 import type { AppDispatch } from "../../Store/store";
 import { useAppDispatch } from "../../Hooks/useSliceHook";
-import { jwtDecode, type JwtPayload } from "jwt-decode";
+import { jwtDecode} from "jwt-decode";
+
+
+interface JwtPayload {
+  role?: "admin" | "doctor" | "owner" | "petOwner";
+   id: string;
+   iat: number;
+  exp: number;
+}
+
+
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -41,12 +50,7 @@ export default function ProductDetails() {
 const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-interface JwtPayload {
-  role?: "admin" | "doctor" | "owner" | "petOwner";
-   id: string;
-   iat: number;
-  exp: number;
-}
+
   // role
 
 
