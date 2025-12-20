@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 import SEO from "../../Components/SEO/SEO";
+import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
 
 const fetchServices = async (): Promise<IService[]> => {
   const res = await axios.get("http://localhost:3000/service");
@@ -32,6 +33,7 @@ export default function Services() {
   const boneRef = useRef(null);
 
   useEffect(() => {
+
     gsap.to(".bone-icon", {
       y: -10,
       x: isRTL ? -10 : 10,
@@ -42,7 +44,6 @@ export default function Services() {
     });
   }, [isRTL]);
 
-  if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Something went wrong</p>;
 
   return (
@@ -51,10 +52,12 @@ export default function Services() {
         title="Petique Clinic | Veterinary Services"
         description="Explore our full range of veterinary services including checkups, vaccinations, grooming, diagnostics, and emergency care."
       />
-
+     <div className="relative">
+              {isLoading && <LoaderPage />}
       <div className="bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] transition-colors duration-300">
         <div className="relative bg-[var(--color-accent-darker)] dark:bg-[var(--color-dark-card)] h-[290px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
           <div className="max-w-7xl text-center md:text-left w-full">
+            
             <Bone
               key={i18n.language}
               ref={boneRef}
@@ -147,6 +150,7 @@ export default function Services() {
             })}
           </div>
         </div>
+      </div>
       </div>
     </>
   );

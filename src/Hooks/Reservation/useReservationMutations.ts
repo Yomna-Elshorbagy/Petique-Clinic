@@ -1,5 +1,7 @@
-import { deleteReservation, softDeleteReservation, updateReservation } from "../../Apis/ReservationApis";
+import { string } from "zod";
+import { deleteReservation, softDeleteReservation, updateReservation, addReservation } from "../../Apis/ReservationApis";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 
 
 // 15) soft delete
@@ -45,6 +47,30 @@ export const useUpdateReservation = () => {
         ["doctor-weekly-reservations"],
       ];
 
+      keysToInvalidate.forEach((key) =>
+        queryClient.invalidateQueries({ queryKey: key })
+      );
+    },
+  });
+};
+
+
+// 18) add reservation
+
+
+
+export const useAddReservation = () => {
+  const queryClient = useQueryClient();
+
+   return useMutation({
+    mutationFn: (data: any) => addReservation(data),
+    onSuccess: () => {
+      const keysToInvalidate = [
+        ["reservations"],
+        ["todayReservations"],
+        ["doctor-today-reservations"],
+        ["doctor-weekly-reservations"],
+      ];
       keysToInvalidate.forEach((key) =>
         queryClient.invalidateQueries({ queryKey: key })
       );
