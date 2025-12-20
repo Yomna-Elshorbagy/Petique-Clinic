@@ -1,5 +1,5 @@
 import React from "react";
-import { FaEye,FaTimes, FaPlusCircle, FaEdit } from "react-icons/fa";
+import { FaEye, FaTimes, FaPlusCircle, FaEdit } from "react-icons/fa";
 import CouponForm from "./CouponForm";
 import type { ICoupon, ICouponCreate } from "../../../../Interfaces/ICoupon";
 
@@ -12,15 +12,13 @@ interface CouponModalProps {
   viewMode?: boolean;
 }
 
-
-
 const CouponModal: React.FC<CouponModalProps> = ({
   open,
   onClose,
   coupon,
   onSubmit,
   loading = false,
-  viewMode = false
+  viewMode = false,
 }) => {
   if (!open) return null;
 
@@ -81,7 +79,7 @@ export default CouponModal;
 const CouponView = ({ coupon }: { coupon?: ICoupon | null }) => {
   if (!coupon) return null;
   return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
       {[
         {
           label: "Coupon Code",
@@ -119,9 +117,7 @@ const CouponView = ({ coupon }: { coupon?: ICoupon | null }) => {
         {
           label: "Used Users",
           content: (
-            <p className="text-lg font-bold">
-              {coupon.assignedUser.length}
-            </p>
+            <p className="text-lg font-bold">{coupon.assignedUser.length}</p>
           ),
         },
       ].map(({ label, content }, i) => (
@@ -137,9 +133,7 @@ const CouponView = ({ coupon }: { coupon?: ICoupon | null }) => {
             hover:shadow-lg hover:shadow-black/10
           "
         >
-          <p className="text-xs text-[var(--color-text-muted)] mb-1">
-            {label}
-          </p>
+          <p className="text-xs text-[var(--color-text-muted)] mb-1">{label}</p>
           <div className="group-hover:scale-[1.02] transition-transform">
             {content}
           </div>
@@ -175,9 +169,7 @@ const CouponView = ({ coupon }: { coupon?: ICoupon | null }) => {
           hover:shadow-lg
         "
       >
-        <p className="text-xs text-[var(--color-text-muted)] mb-1">
-          Status
-        </p>
+        <p className="text-xs text-[var(--color-text-muted)] mb-1">Status</p>
 
         <span
           className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold
@@ -199,22 +191,6 @@ const CouponView = ({ coupon }: { coupon?: ICoupon | null }) => {
         </span>
       </div>
     </div>
-
-
-      );
-    };
-
-    const Detail = ({
-      label,
-      value,
-    }: {
-      label: string;
-      value: React.ReactNode;
-    }) => (
-      <div className="flex justify-between border-b pb-2">
-        <span className="font-medium">{label}</span>
-        <span className="font-semibold">{value}</span>
-      </div>
-    );
-
+  );
+};
 

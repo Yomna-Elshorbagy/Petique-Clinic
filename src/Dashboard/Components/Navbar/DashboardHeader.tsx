@@ -1,4 +1,4 @@
-import React, { type ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 import { FaBars, FaHome } from "react-icons/fa";
 import Swal from "sweetalert2";
 import OrderNotificationBell from "../NotifyAdmin/NotifyAdmin";

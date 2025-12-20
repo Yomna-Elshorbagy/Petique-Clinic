@@ -23,6 +23,9 @@ import ReviewButton from "./ReviewButton";
 import { useTranslation } from "react-i18next";
 import Swal from "sweetalert2";
 import SEO from "../../Components/SEO/SEO";
+import { addProductToCart } from "../../Store/Slices/CartSlice";
+import type { AppDispatch } from "../../Store/store";
+import { useAppDispatch } from "../../Hooks/useSliceHook";
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -31,8 +34,11 @@ export default function ProductDetails() {
   const token = localStorage.getItem("accessToken");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showReviews, setShowReviews] = useState(false);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
   const queryClient = useQueryClient();
   const { t } = useTranslation();
+const dispatch = useAppDispatch();
+
   //get product
   async function getproductdetails() {
     const { data } = await axios.get(`${baseURL}/products/${id}`);
@@ -198,6 +204,42 @@ export default function ProductDetails() {
   const handleDecrease = () => {
     if (quantity > 1) setQuantity(quantity - 1);
   };
+  
+  //// add to cart ////
+const handleaddtocart=async(dispatch:AppDispatch,productId:string,quantity:number) =>{
+  try{
+  
+   const res= await dispatch(addProductToCart({ productId, quantity })).unwrap();
+ 
+    const addedQuantity = res.cartItem?.quantity ?? quantity;
+    const itemText = addedQuantity === 1 ? t("ProductDetails.item") : t("ProductDetails.items");
+     Swal.fire({
+      position: "top-end",
+      icon: res.success ? "success" : "error",
+      title: res.success
+        ? `${addedQuantity} ${itemText} ${t("ProductDetails.addedToCart")}`
+        : res.message || t("ProductDetails.failedAddToCart"),
+      showConfirmButton: false,
+      timer: 1500,
+      toast: true,
+      customClass: { popup: "swal-toast-custom" },
+    });
+    } catch (err: any) {
+      console.log(err?.message);
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: err?.message ||  t("ProductDetails.failedAddToCart"),
+      showConfirmButton: false,
+      timer: 1500,
+      toast: true,
+      customClass: { popup: "swal-toast-custom" },
+    });
+
+  }
+  
+}
+
 
   // jsx
   return (
@@ -287,7 +329,7 @@ export default function ProductDetails() {
 
               <div className="flex items-center gap-4 mt-3">
                 <button
-                  className="w-10 h-10 bg-[var(--color-light-accent)] rounded-lg text-xl font-bold disabled:opacity-40"
+                  className="w-10 h-10 bg-[var(--color-light-accent)] rounded-lg text-xl font-bold disabled:opacity-40 hover:bg-[var(--color-accent-dark)] hover:text-white"
                   onClick={handleDecrease}
                   disabled={quantity <= 1}
                 >
@@ -297,7 +339,7 @@ export default function ProductDetails() {
                 <span className="text-lg font-medium">{quantity}</span>
 
                 <button
-                  className="w-10 h-10 bg-[var(--color-light-accent)] rounded-lg text-xl font-bold disabled:opacity-40"
+                  className="w-10 h-10 bg-[var(--color-light-accent)] rounded-lg text-xl font-bold disabled:opacity-40 hover:bg-[var(--color-accent-dark)] hover:text-white"
                   onClick={handleIncrease}
                   disabled={quantity >= data.stock}
                 >
@@ -305,8 +347,22 @@ export default function ProductDetails() {
                 </button>
               </div>
 
-              <button className="mt-3 px-6 py-3 bg-[var(--color-light-accent)] text-[var(--color-light-dark)] text-lg font-bold rounded-xl shadow-md ">
-                {t("ProductDetails.addTocart")}
+              <button className="mt-3 px-6 py-3 bg-[var(--color-light-accent)] text-[var(--color-light-dark)] text-lg font-bold rounded-xl shadow-md  hover:bg-[var(--color-accent-dark)] hover:text-white"
+              onClick={async()=>{
+
+                setIsAddingToCart(true);
+                try{
+                 await  handleaddtocart(dispatch,data._id,quantity);
+                }
+                finally{
+                setIsAddingToCart(false);
+                }
+               
+              
+              }}
+               disabled={isAddingToCart} 
+              >{isAddingToCart ? t("ProductDetails.addproducttocart") : t("ProductDetails.addTocart")
+              }
               </button>
             </div>
           </div>

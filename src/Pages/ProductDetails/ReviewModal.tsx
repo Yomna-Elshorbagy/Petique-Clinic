@@ -65,8 +65,8 @@ export default function ReviewModal({onClose,onSubmit}:Props) {
               />
                  {commentError && <p className="text-red-500 text-sm mb-2">{commentError}</p>}
               <div className="flex justify-end gap-3">
-                <button className="px-4 py-2 bg-[var(--color-border-light)] text-[var(--color-light-dark)] rounded-lg hover:bg-[var(--color-border-medium)] transition" onClick={onClose}>{t("ProductDetails.cancel")}</button>
-                <button className="px-4 py-2 bg-[var(--color-light-accent)] text-[var(--color-light-dark)]  rounded-lg hover:bg-[var(--color-accent-dark)] transition" onClick={handleAddReview}>{t("ProductDetails.submit")}</button>
+                <button className="px-4 py-2 bg-[var(--color-border-light)] text-[var(--color-light-dark)] rounded-lg hover:bg-[var(--color-border-medium)]  hover:text-white transition" onClick={onClose}>{t("ProductDetails.cancel")}</button>
+                <button className="px-4 py-2 bg-[var(--color-light-accent)] text-[var(--color-light-dark)]  rounded-lg hover:bg-[var(--color-accent-dark)]  hover:text-white transition" onClick={handleAddReview}>{t("ProductDetails.submit")}</button>
               </div>
             </div>
           </div>

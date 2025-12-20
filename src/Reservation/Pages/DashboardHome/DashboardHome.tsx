@@ -6,10 +6,12 @@ import { useAllPets } from "../../../Hooks/Pets/UsePets";
 import AddPetModal from "../Animals/Components/AddPetModal";
 import VaccinatePetModal from "../Vaccination/Components/VaccinatePetModal";
 import SEO from "../../../Components/SEO/SEO";
+import AddReservationModal from "../ResevationPet/Components/AddReservationModal";
 
 export default function DashboardHome() {
   const [openAddPet, setOpenAddPet] = useState(false);
   const [openVaccinate, setOpenVaccinate] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const { data: petsData, refetch } = useAllPets();
   const pets = petsData || [];
@@ -38,6 +40,11 @@ export default function DashboardHome() {
         onClose={() => setOpenVaccinate(false)}
       />
 
+      <AddReservationModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+      />
+
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mt-8">
         <div className="lg:col-span-4">
           <AllReservationsPage />
@@ -45,6 +52,7 @@ export default function DashboardHome() {
 
         <div className="lg:col-span-1">
           <QuickActionsPanel
+            onNewAppointment={() => setIsAddModalOpen(true)}
             onRegisterPet={() => setOpenAddPet(true)}
             onScheduleVaccination={() => setOpenVaccinate(true)}
           />

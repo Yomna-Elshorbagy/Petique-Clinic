@@ -1,9 +1,6 @@
-import React, { useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
-import { useUpdateReservation } from "../../../../Hooks/Reservation/useReservationMutations";
 import Swal from "sweetalert2";
-import { useAllPets } from "../../../../Hooks/Pets/UsePets";
 import { useAllDoctors } from "../../../../Hooks/Doctor/useDoctor";
 import { useServices } from "../../../../Hooks/Services/UseServices";
 import { useAvailableSlots } from "../../../../Hooks/Reservation/useReservation";
@@ -13,10 +10,13 @@ import type { IPet } from "../../../../Interfaces/Ipet";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import { useAddReservation } from "../../../../Hooks/Reservation/useReservationMutations";
+import { useMemo } from "react";
+import { useUserPets } from "../../../../Hooks/UserProfile/useUserPets";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
-interface ReservationEdit {
+interface ReservationAdd {
   _id?: string;
   pet?: IPet | string;
   petOwner?: IUser;
@@ -32,8 +32,7 @@ interface ReservationEdit {
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  reservation: ReservationEdit | null;
-  onUpdated?: (res: ReservationEdit) => void;
+  onAdded?: (res: ReservationAdd) => void;
 }
 
 const reservationSchema = z.object({
@@ -48,47 +47,48 @@ const reservationSchema = z.object({
     .refine((val) => val !== "", { message: "Please select a doctor." }),
   date: z
     .string()
-    .refine((val) => val !== "", { message: "Please select a date." }),
-  // .refine((val) => val >= new Date().toISOString().split("T")[0], {
-  //   message: "Select a day in the future",
+    .refine((val) => val !== "", { message: "Please select a date." })
+    .refine((val) => val > new Date().toISOString().split("T")[0], {
+      message: "Select a day in the future",
+    }),
 
   timeSlot: z.string().optional(),
-  status: z.enum(["pending", "confirmed", "completed", "cancelled"]),
-  paymentStatus: z.enum(["unpaid", "paid"]),
+  status: z
+    .enum(["pending", "confirmed", "completed", "cancelled"])
+    .default("pending"),
+  paymentStatus: z.enum(["unpaid", "paid"]).default("unpaid"),
   notes: z.string().optional(),
 });
 
-export default function EditReservationModal({
+export default function AddReservationModal({
   isOpen,
   onClose,
-  reservation,
-  onUpdated,
+  onAdded,
 }: Props) {
-  const { data: petsData } = useAllPets();
+  const { data: petsData } = useUserPets();
   const { data: doctorsData } = useAllDoctors();
   const { data: servicesData } = useServices();
 
-  const pets = useMemo(() => petsData?.data ?? petsData ?? [], [petsData]);
-  const doctors = useMemo(() => doctorsData ?? [], [doctorsData]);
-  const services = useMemo(
-    () => servicesData?.data ?? servicesData ?? [],
-    [servicesData]
-  );
-
+  const pets = petsData ?? [];
+  console.log(petsData);
+  const doctors = doctorsData ?? [];
+  const services = servicesData?.data ?? [];
   const token = localStorage.getItem("accessToken");
+
+  const addMutation = useAddReservation();
 
   const {
     register,
     handleSubmit,
+    reset,
     watch,
-    setValue,
     formState: { errors },
-  } = useForm<ReservationEdit>({
+  } = useForm<ReservationAdd>({
     resolver: zodResolver(reservationSchema) as any,
     defaultValues: {
       pet: "",
-      service: "",
       doctor: "",
+      service: "",
       date: "",
       timeSlot: "",
       status: "pending",
@@ -97,7 +97,7 @@ export default function EditReservationModal({
     },
   });
 
-  const { data: allReservations = [], refetch } = useQuery<ReservationEdit[]>({
+  const { data: allReservations = [], refetch } = useQuery<ReservationAdd[]>({
     queryKey: ["allReservations"],
     queryFn: async () => {
       const res = await axios.get("http://localhost:3000/reserve", {
@@ -126,122 +126,54 @@ export default function EditReservationModal({
     [availableSlotsData]
   );
 
-  const updateMutation = useUpdateReservation();
+  const onSubmit = (data: ReservationAdd) => {
+    console.log("Submitting reservation:", data);
 
-  useEffect(() => {
-    if (!reservation) return;
-
-    const doctorId =
-      typeof reservation.doctor === "object"
-        ? reservation.doctor?._id
-        : reservation.doctor;
-
-    const petId =
-      typeof reservation.pet === "object"
-        ? reservation.pet?._id
-        : reservation.pet;
-
-    const serviceId =
-      typeof reservation.service === "object"
-        ? reservation.service?._id
-        : reservation.service;
-
-    let dateValue = "";
-    if (reservation.date) {
-      const d = new Date(reservation.date);
-      if (!isNaN(d.getTime())) {
-        dateValue = d.toISOString().split("T")[0];
-      }
-    }
-
-    setValue("pet", petId ?? "");
-    setValue("service", serviceId ?? "");
-    setValue("doctor", doctorId ?? "");
-    setValue("date", dateValue, { shouldDirty: true, shouldTouch: true });
-    setValue("timeSlot", reservation.timeSlot ?? "");
-    setValue("status", reservation.status ?? "pending");
-    setValue("paymentStatus", reservation.paymentStatus ?? "unpaid");
-    setValue("notes", reservation.notes ?? "");
-  }, [reservation, setValue]);
-
-  const onSubmit = async (data: ReservationEdit) => {
-    const dateString = data.date ? new Date(data.date).toISOString() : "";
-
-    const payload: ReservationEdit = {
-      _id: reservation!._id,
-      pet: data.pet,
-      service: data.service,
-      doctor: data.doctor || null,
-      date: dateString,
-      timeSlot: data.timeSlot || reservation?.timeSlot,
-      status: data.status,
-      paymentStatus: data.paymentStatus,
-      notes: data.notes,
-    };
-
-    updateMutation.mutate(
-      { id: reservation!._id!, data: payload },
-      {
-        onSuccess(res) {
-          Swal.fire("Updated!", "Reservation updated successfully", "success");
-
-          onUpdated?.(res.data);
-          onClose();
-          refetch();
-        },
-        onError() {
-          Swal.fire("Error", "Failed to update reservation", "error");
-        },
-      }
-    );
+    addMutation.mutate(data, {
+      onSuccess: (res) => {
+        reset();
+        Swal.fire("Added!", "Reservation added successfully", "success");
+        onAdded?.(res);
+        onClose();
+        refetch();
+      },
+      onError() {
+        Swal.fire("Error", "Failed to creat reservation", "error");
+      },
+    });
   };
 
   const timeslotOptions = useMemo(() => {
-    if (!reservation) return [];
-
-    // const currentSlot = reservation.timeSlot;
+    if (!selectedDoctor || !selectedDate) return [];
 
     const bookedTimes = allReservations
       ?.filter((r) => {
         const rDate = r.date
           ? new Date(r.date).toISOString().split("T")[0]
           : "";
-
         const rDoctorId =
           r.doctor && typeof r.doctor === "object"
             ? r.doctor._id
             : typeof r.doctor === "string"
             ? r.doctor
             : "";
-
         return (
-          rDate === selectedDate &&
-          rDoctorId === selectedDoctor &&
-          r._id !== reservation._id &&
-          r.timeSlot
+          rDate === selectedDate && rDoctorId === selectedDoctor && r.timeSlot
         );
       })
       .map((r) => r.timeSlot!)
       .filter(Boolean);
 
-    const filtered = availableSlotsRaw
-      .filter((slot): slot is string => !!slot)
-      .filter((slot) => !bookedTimes.includes(slot));
-
-    // if (currentSlot && !filtered.includes(currentSlot)) {
-    //   filtered.push(currentSlot);
-    // }
+    const filtered = availableSlotsRaw.filter(
+      (slot) => !!slot && !bookedTimes.includes(slot)
+    );
 
     return filtered.sort();
-  }, [
-    availableSlotsRaw,
-    allReservations,
-    reservation,
-    selectedDoctor,
-    selectedDate,
-  ]);
+  }, [availableSlotsRaw, allReservations, selectedDoctor, selectedDate]);
 
   if (!isOpen) return null;
+
+  console.log(errors);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
@@ -253,7 +185,7 @@ export default function EditReservationModal({
       >
         <div className="flex items-center justify-between p-6 border-b border-[#ECE7E2]">
           <h3 className="text-xl font-semibold text-[#4A3F35]">
-            Edit Reservation
+            Add Reservation
           </h3>
           <button
             type="button"
@@ -359,7 +291,7 @@ export default function EditReservationModal({
               className="w-full mt-2 px-4 py-2 rounded-xl bg-white border border-[#ECE7E2] 
               focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none text-[#86654F]"
             >
-              <option value="">Select a time</option>
+              <option value="">Keep current time</option>
               {timeslotOptions.map((t: string) => (
                 <option key={t} value={t}>
                   {t}
@@ -424,10 +356,10 @@ export default function EditReservationModal({
             </button>
             <button
               type="submit"
-              disabled={updateMutation.isPending}
+              disabled={addMutation.isPending}
               className="px-6 py-3 rounded-xl bg-[#86654F] text-white hover:bg-[#6d5240]"
             >
-              {updateMutation.isPending ? "Saving..." : "Save changes"}
+              {addMutation.isPending ? "Saving..." : "Save changes"}
             </button>
           </div>
         </div>

@@ -1,5 +1,3 @@
-import React from "react";
-
 interface FilterProps {
   searchCode: string;
   setSearchCode: (v: string) => void;

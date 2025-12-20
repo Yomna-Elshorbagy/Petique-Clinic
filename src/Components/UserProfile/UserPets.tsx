@@ -3,7 +3,7 @@ import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
 import { useUserPets } from "../../Hooks/UserProfile/useUserPets";
 import SEO from "../SEO/SEO";
 import SharedPagination from "./components/SharedPagination";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function UserPets() {
   const { data: pets = [], isLoading, isError } = useUserPets();
