@@ -69,7 +69,7 @@ const AllReservationsPage = () => {
         isOpen={editOpen}
         onClose={() => setEditOpen(false)}
         reservation={activeReservation}
-        onUpdated={() => setEditOpen(false)}
+          onUpdated={(updated) => setActiveReservation(updated)}
       />
 
       <h1 className="text-2xl font-bold text-[#4A3F35] mb-4">
