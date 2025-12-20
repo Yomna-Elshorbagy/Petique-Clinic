@@ -104,7 +104,7 @@ export default function Servicesdetails() {
       />
 
       <div className="bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] transition-colors duration-300">
-        <div className="relative bg-[var(--color-accent-darker)] dark:bg-[var(--color-dark-card)] h-[290px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
+        <div className="relative bg-[#86654f]  dark:bg-[var(--color-dark-card)] h-auto px-20 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
           <div className="max-w-7xl text-center md:text-left w-full">
             <Bone
               key={i18n.language}
@@ -124,21 +124,27 @@ export default function Servicesdetails() {
             >
               {service.title}
             </h1>
-            <div className="mt-8 flex flex-wrap items-center gap-2 text-1xl justify-center md:justify-start">
+            <div className="mt-8 flex flex-wrap items-center gap-2 text-1xl justify-start">
               <Link
                 to="/home"
-                className="text-[#6b5a4d] hover:text-white transition-colors"
+                className="border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] hover:text-white transition-colors"
               >
                 {t("serviceDetails.home")}
               </Link>
-              <span className="text-[#6b5a4d]"> &gt; </span>
+              <span className="border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]">
+                {" "}
+                &gt;{" "}
+              </span>
               <Link
                 to="/service"
-                className="text-[#6b5a4d] hover:text-white transition-colors"
+                className="border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] hover:text-white transition-colors"
               >
                 {t("serviceDetails.services")}
               </Link>
-              <span className="text-[#6b5a4d]"> &gt; </span>
+              <span className="border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]">
+                {" "}
+                &gt;{" "}
+              </span>
               <p className="text-white font-semibold">{service.title}</p>
             </div>
           </div>
@@ -147,7 +153,7 @@ export default function Servicesdetails() {
             src="/src/assets/images/pic-2.png"
             alt="cat"
             className={`hidden md:block absolute bottom-[-90px] w-[600px] z-10 ${
-              isRTL ? "left-0" : "right-5"
+              isRTL ? "left-0" : "right-0"
             }`}
           />
         </div>

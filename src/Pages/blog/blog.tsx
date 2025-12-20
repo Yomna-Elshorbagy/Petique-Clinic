@@ -91,7 +91,7 @@ export default function Blog() {
 
       {/* Header */}
       <div className="bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] transition-colors duration-300">
-        <div className="relative bg-[var(--color-accent-darker)] dark:bg-[var(--color-dark-card)] h-[290px] px-10 py-10 overflow-visible flex items-center justify-center md:justify-start font-serif">
+        <div className="relative bg-[#86654f] dark:bg-[var(--color-dark-card)] h-auto px-20 py-10 overflow-visible flex items-center justify-center md:justify-start  font-serif">
           <div className="max-w-7xl text-center md:text-left w-full">
             <Bone
               key={i18n.language}
@@ -111,11 +111,11 @@ export default function Blog() {
               {t("blog.latestArticles")}
             </h1>
 
-            <div className="mt-8 flex justify-start md:justify-start gap-6 text-[#6b5a4d] font-medium text-1xl md:text-1xl">
+            <div className="mt-8 flex justify-start md:justify-start gap-6 border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] font-medium text-1xl md:text-1xl">
               <Link to="/home" className="hover:text-white transition-colors">
                 {t("blog.home")}
               </Link>
-              <span className="text-[#6b5a4d]"> &gt; </span>
+              <span className="border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"> &gt; </span>
               <p className="text-white font-semibold">{t("blog.blog")}</p>
             </div>
           </div>
