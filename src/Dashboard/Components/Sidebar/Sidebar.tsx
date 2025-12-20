@@ -5,7 +5,6 @@ import {
   FaShoppingCart,
   FaUsers,
   FaSignOutAlt,
-  FaPaw,
   FaEnvelopeOpenText,
   FaTags,
   FaChartBar,
@@ -14,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { useAppDispatch } from "../../../Store/store";
 import { clearUserToken } from "../../../Store/Slices/AuthSlice";
+import logo from "../../../assets/images/logo.jpg";
 
 const Sidebar = ({
   isOpen,
@@ -85,9 +85,11 @@ const Sidebar = ({
               ${isCollapsed ? "mx-auto" : ""}
             `}
           >
-            <div className="w-11 h-11 bg-[var(--color-light-accent)] rounded-xl flex items-center justify-center text-white shadow-md">
-              <FaPaw className="text-xl" />
-            </div>
+            <img
+              src={logo}
+              alt="Petique Clinic Logo"
+              className="h-11 w-11 object-contain rounded-full border-2 border-[var(--color-light-accent)]/30 shadow-md"
+            />
             {!isCollapsed && (
               <span className="text-lg font-bold text-[var(--color-light-dark)] dark:text-white">
                 Petique
@@ -142,7 +144,7 @@ const Sidebar = ({
             <button
               onClick={() => {
                 handleLogout();
-                if (!isDesktop) toggleMobile(); 
+                if (!isDesktop) toggleMobile();
               }}
               className={`flex items-center gap-3 p-3 w-full rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200 font-medium ${
                 isCollapsed ? "justify-center" : ""
