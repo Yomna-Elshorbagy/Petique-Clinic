@@ -199,6 +199,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 type="number"
                 value={formData.price}
                 onChange={handleChange}
+                min={0}
                 className="w-full border border-[var(--color-light-secondary)]/40 p-2 rounded-xl bg-[var(--color-extra-5)] focus:ring-2 focus:ring-[var(--color-light-accent)] outline-none transition"
                 placeholder="Enter price"
               />
@@ -211,6 +212,8 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 type="number"
                 value={formData.discount}
                 onChange={handleChange}
+                min={0}
+                max={100}
                 className="w-full border border-[var(--color-light-secondary)]/40 p-2 rounded-xl bg-[var(--color-extra-5)] focus:ring-2 focus:ring-[var(--color-light-accent)] outline-none transition"
                 placeholder="Optional discount"
               />
@@ -224,6 +227,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
               <input
                 name="stock"
                 type="number"
+                min={0}
                 value={formData.stock}
                 onChange={handleChange}
                 className="w-full border border-[var(--color-light-secondary)]/40 p-2 rounded-xl bg-[var(--color-extra-5)] focus:ring-2 focus:ring-[var(--color-light-accent)] outline-none transition"

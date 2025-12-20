@@ -3,12 +3,6 @@ import type { LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import styles from "./features.module.css";
 
-interface Feature {
-  icon: LucideIcon;
-  title: string;
-  desc: string;
-}
-
 const ICON_MAP: Record<string, LucideIcon> = {
   shopping: ShoppingBag,
   care: Heart,
