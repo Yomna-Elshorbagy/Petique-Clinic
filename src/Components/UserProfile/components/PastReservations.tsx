@@ -49,7 +49,7 @@ export default function PastReservations() {
   } = useMyPastReservations();
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 4;
 
   // Reset currentPage to 1 when reservations data changes
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function PastReservations() {
         <h3 className="text-xl font-semibold text-[var(--color-text-primary)] mb-2">
           No Past Appointments
         </h3>
-        <p className="text-[var(--color-text-muted)]">
+        <p className="text-sm text-[var(--color-text-muted)]">
           You don't have any past appointments yet.
         </p>
       </div>
@@ -96,8 +96,13 @@ export default function PastReservations() {
       new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
-  // Group by month
-  const groupedByMonth = sortedReservations.reduce(
+  // Pagination Logic
+  const totalPages = Math.ceil(sortedReservations.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentReservations = sortedReservations.slice(startIndex, startIndex + itemsPerPage);
+
+  // Group current page items by month for display
+  const groupedByMonth = currentReservations.reduce(
     (acc: Record<string, Reservation[]>, reservation: Reservation) => {
       const date = new Date(reservation.date);
       const monthKey = date.toLocaleDateString("en-US", {
@@ -113,14 +118,7 @@ export default function PastReservations() {
     {}
   );
 
-  // Pagination logic for months
   const monthKeys = Object.keys(groupedByMonth);
-  const totalPages = Math.ceil(monthKeys.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedMonthKeys = monthKeys.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -147,7 +145,7 @@ export default function PastReservations() {
       </div>
 
       {/* Grouped Reservations */}
-      {paginatedMonthKeys.map((month) => {
+      {monthKeys.map((month) => {
         const monthReservations = groupedByMonth[month];
         return (
           <div key={month} className="space-y-4">
@@ -310,11 +308,13 @@ export default function PastReservations() {
       })}
 
       {/* Pagination */}
-      <SharedPagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+      {totalPages > 1 && (
+        <SharedPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 }

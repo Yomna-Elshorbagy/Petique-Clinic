@@ -64,12 +64,12 @@ export default function TopSellingProductsChart() {
   };
 
   return (
-    <div className="w-full h-[340px] bg-[var(--color-bg-light)] rounded-2xl p-4">
+    <div className="w-full h-90 bg-white dark:bg-(--color-dark-card) p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow">
       <h2 className="text-xl font-semibold text-center mb-3">
         🏆 Top-Selling Products
       </h2>
 
-      <ReactECharts option={option} style={{ height: "100%" }} />
+      <ReactECharts option={option} style={{ height: "90%" }} />
     </div>
   );
 }

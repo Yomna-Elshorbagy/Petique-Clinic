@@ -171,7 +171,10 @@ const TodayReservationsList: React.FC = () => {
         }}
       />
 
-      <AddReservationModal2 isOpen={addOpen} onClose={() => setAddOpen(false)} />
+      <AddReservationModal2
+        isOpen={addOpen}
+        onClose={() => setAddOpen(false)}
+      />
 
       <div className="flex items-center justify-between gap-4 flex-wrap md:flex-nowrap">
         <SharedSearch
@@ -194,7 +197,7 @@ const TodayReservationsList: React.FC = () => {
               options: [
                 { label: "All Status", value: "all" },
                 { label: "Pending", value: "pending" },
-                { label: "Upcoming", value: "upcoming" },
+                { label: "Confirmed", value: "confirmed" },
                 { label: "Completed", value: "completed" },
                 { label: "Cancelled", value: "cancelled" },
               ],
