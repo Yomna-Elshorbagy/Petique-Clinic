@@ -66,7 +66,7 @@ export default function GoogleLoginBtn() {
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
-            mutate({ idToken: codeResponse.access_token });
+            mutate({ accessToken: codeResponse.access_token });
         },
         onError: () => {
             Swal.fire("Error", "Google Login Failed", "error");

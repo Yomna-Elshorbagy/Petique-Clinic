@@ -40,7 +40,7 @@ export const verifyOtpApi = async (data: {
   return res.data;
 };
 
-export const googleLogin = async (data: { idToken: string }) => {
+export const googleLogin = async (data: { accessToken: string }) => {
   const res = await axios.post(`${baseURL}/auth/google-login`, data, { headers });
   return res.data;
 };
