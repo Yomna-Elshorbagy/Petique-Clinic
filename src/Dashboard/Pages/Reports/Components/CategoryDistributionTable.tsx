@@ -56,7 +56,7 @@ const CategoryDistributionTable: React.FC = () => {
   }
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 g-(--color-bg-light) rounded-xl border border-(--color-border-light) p-6 shadow-lg transition-all duration-300 hover:shadow-xl">
       <SharedReportTable
         title="🛒 Products per Category"
         data={processedData}
