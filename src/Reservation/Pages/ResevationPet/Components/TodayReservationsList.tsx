@@ -16,7 +16,7 @@ import ViewReservationModal from "./ViewReservationModal";
 import EditReservationModal from "./EditReservationModal";
 import { useTodayReservationFilters } from "../../../../Hooks/SharedSearch/useTodayReservations";
 import SharedSearch from "../../../../Shared/SharedSearch/SharedSearch";
-import AddReservationModal from "./AddReservationModal";
+import AddReservationModal2 from "./AddReservationModel2";
 
 const TodayReservationsList: React.FC = () => {
   const { data: allReservations = [], isLoading } = useTodayReservations();
@@ -171,7 +171,7 @@ const TodayReservationsList: React.FC = () => {
         }}
       />
 
-      <AddReservationModal isOpen={addOpen} onClose={() => setAddOpen(false)} />
+      <AddReservationModal2 isOpen={addOpen} onClose={() => setAddOpen(false)} />
 
       <div className="flex items-center justify-between gap-4 flex-wrap md:flex-nowrap">
         <SharedSearch

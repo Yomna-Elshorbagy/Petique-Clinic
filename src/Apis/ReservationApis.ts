@@ -16,6 +16,14 @@ export const addReservation = async (payload: any) => {
   return data.data;
 };
 
+// ===> create Reservation By Admin
+export const addReservationAdmin = async (payload: any) => {
+  const { data } = await axios.post(`${BASE_URL}/addByAdmin`, payload, {
+    headers,
+  });
+  return data.data;
+};
+
 // ===> update reservations
 export const updateReservation = async (id: string, payload: any) => {
   const { data } = await axios.put(`${BASE_URL}/${id}`, payload, {
