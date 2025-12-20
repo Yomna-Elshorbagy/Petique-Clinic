@@ -14,7 +14,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 interface ReservationEdit {
   _id?: string;
@@ -36,44 +36,45 @@ interface Props {
   onUpdated?: (res: ReservationEdit) => void;
 }
 
-const reservationSchema = z.object({
-  pet: z
-    .string()
-    .refine((val) => val !== "", { message: "Please select a pet." }),
-  service: z
-    .string()
-    .refine((val) => val !== "", { message: "Please select a service." }),
-  doctor: z
-    .string()
-    .refine((val) => val !== "", { message: "Please select a doctor." }),
-  date: z
-    .string()
-    .refine((val) => val !== "", { message: "Please select a date." }),
-  // .refine((val) => val >= new Date().toISOString().split("T")[0], {
-  //   message: "Select a day in the future",
-
-  timeSlot: z.string().optional(),
-  status: z.enum(["pending", "confirmed", "completed", "cancelled"]),
-  paymentStatus: z.enum(["unpaid", "paid"]),
-  notes: z.string().optional(),
-});
-
 export default function EditReservationModal({
   isOpen,
   onClose,
   reservation,
   onUpdated,
 }: Props) {
+  const todayString = new Date().toISOString().split("T")[0];
+  const reservationDateString = reservation?.date
+    ? new Date(reservation.date).toISOString().split("T")[0]
+    : "";
+
   const { data: petsData } = useAllPets();
   const { data: doctorsData } = useAllDoctors();
   const { data: servicesData } = useServices();
-
   const pets = useMemo(() => petsData?.data ?? petsData ?? [], [petsData]);
   const doctors = useMemo(() => doctorsData ?? [], [doctorsData]);
   const services = useMemo(
     () => servicesData?.data ?? servicesData ?? [],
     [servicesData]
   );
+
+  const isDateLocked = reservationDateString <= todayString;
+  const reservationSchema = z.object({
+    pet: z.string().nonempty("Please select a pet."),
+    service: z.string().nonempty("Please select a service."),
+    doctor: z.string().nonempty("Please select a doctor."),
+    date: z.string().refine(
+      (val) => {
+        if (!val) return false;
+        if (reservationDateString <= todayString) return true;
+        return val > todayString;
+      },
+      { message: "Select a day in the future" }
+    ),
+    timeSlot: z.string().optional(),
+    status: z.enum(["pending", "confirmed", "completed", "cancelled"]),
+    paymentStatus: z.enum(["unpaid", "paid"]),
+    notes: z.string().optional(),
+  });
 
   const token = localStorage.getItem("accessToken");
 
@@ -96,6 +97,8 @@ export default function EditReservationModal({
       notes: "",
     },
   });
+
+  const queryClient = useQueryClient();
 
   const { data: allReservations = [], refetch } = useQuery<ReservationEdit[]>({
     queryKey: ["allReservations"],
@@ -146,26 +149,34 @@ export default function EditReservationModal({
         ? reservation.service?._id
         : reservation.service;
 
-    let dateValue = "";
-    if (reservation.date) {
-      const d = new Date(reservation.date);
-      if (!isNaN(d.getTime())) {
-        dateValue = d.toISOString().split("T")[0];
-      }
-    }
+    // let dateValue = "";
+    // if (reservation.date) {
+    //   const d = new Date(reservation.date);
+    //   if (!isNaN(d.getTime())) {
+    //     dateValue = d.toISOString().split("T")[0];
+    //   }
+    // }
 
     setValue("pet", petId ?? "");
     setValue("service", serviceId ?? "");
     setValue("doctor", doctorId ?? "");
-    setValue("date", dateValue, { shouldDirty: true, shouldTouch: true });
+    setValue("date", reservationDateString, {
+      shouldDirty: false,
+      shouldTouch: false,
+    });
     setValue("timeSlot", reservation.timeSlot ?? "");
     setValue("status", reservation.status ?? "pending");
     setValue("paymentStatus", reservation.paymentStatus ?? "unpaid");
     setValue("notes", reservation.notes ?? "");
-  }, [reservation, setValue]);
+  }, [reservation, setValue, reservationDateString]);
 
   const onSubmit = async (data: ReservationEdit) => {
-    const dateString = data.date ? new Date(data.date).toISOString() : "";
+    let dateString = "";
+    if (data.date) {
+      const d = new Date(data.date);
+      d.setHours(12, 0, 0, 0);
+      dateString = d.toISOString();
+    }
 
     const payload: ReservationEdit = {
       _id: reservation!._id,
@@ -188,6 +199,11 @@ export default function EditReservationModal({
           onUpdated?.(res.data);
           onClose();
           refetch();
+          queryClient.invalidateQueries({
+            queryKey: ["todayReservations"],
+            refetchType: "active",
+          });
+          queryClient.invalidateQueries({ queryKey: ["allReservations"] });
         },
         onError() {
           Swal.fire("Error", "Failed to update reservation", "error");
@@ -198,8 +214,6 @@ export default function EditReservationModal({
 
   const timeslotOptions = useMemo(() => {
     if (!reservation) return [];
-
-    // const currentSlot = reservation.timeSlot;
 
     const bookedTimes = allReservations
       ?.filter((r) => {
@@ -227,10 +241,6 @@ export default function EditReservationModal({
     const filtered = availableSlotsRaw
       .filter((slot): slot is string => !!slot)
       .filter((slot) => !bookedTimes.includes(slot));
-
-    // if (currentSlot && !filtered.includes(currentSlot)) {
-    //   filtered.push(currentSlot);
-    // }
 
     return filtered.sort();
   }, [
@@ -338,6 +348,7 @@ export default function EditReservationModal({
               <input
                 {...register("date")}
                 type="date"
+                disabled={isDateLocked}
                 className="w-full mt-2 px-4 py-2 rounded-xl bg-white border border-[#ECE7E2]
                focus:ring-2 focus:ring-[#A98770] focus:border-transparent outline-none text-[#86654F]"
               />
