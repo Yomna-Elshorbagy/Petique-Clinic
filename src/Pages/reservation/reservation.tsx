@@ -683,7 +683,7 @@ export default function Reservation() {
                   </div>
 
                   <div className="text-center bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] transition-colors duration-300 w-full">
-                    \n{" "}
+                    
                     <h3
                       className="text-lg font-bold mb-2 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] text-ellipsis overflow-hidden line-clamp-1 mt-3
              transition-colors duration-300 group-hover:text-[#e9a66f] dark:group-hover:text-[var(--color-dark-accent)]"
