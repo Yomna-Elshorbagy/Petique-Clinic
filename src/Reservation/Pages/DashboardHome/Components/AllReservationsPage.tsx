@@ -94,9 +94,9 @@ const AllReservationsPage = () => {
             onChange: setStatus,
             options: [
               { label: "All Status", value: "all" },
-              { label: "Pending", value: "pending" },
-              { label: "Upcoming", value: "upcoming" },
               { label: "Completed", value: "completed" },
+              { label: "Pending", value: "pending" },
+              { label: "Confirmed", value: "confirmed" },
               { label: "Cancelled", value: "cancelled" },
             ],
           },

@@ -10,6 +10,7 @@ import ProtectedRoutes from "./Shared/ProtectedRoutes/ProtectedRoutes";
 import AdminProtectedRoute from "./Shared/ProtectedRoutes/AdminProtectedRoutes";
 import DoctorProtectedRoute from "./Shared/ProtectedRoutes/DoctorProtectedRoutes";
 import NotFoundPage from "./Components/NotFound/NotFound";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 // ===> Lazy imports
 const Layout = lazy(() => import("./Shared/Layout/layout"));
@@ -86,7 +87,6 @@ const ServiceDashbored = lazy(
 //==> NotFound
 
 const NotFoundAnimated = lazy(() => import("./Components/NotFound/NotFound"));
-
 
 const router = createBrowserRouter([
   {
@@ -336,19 +336,21 @@ export default function App() {
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <Provider store={store}>
-          <Suspense
-            fallback={
-              <div className="flex items-center justify-center h-screen text-lg font-semibold">
-                Loading...
-              </div>
-            }
-          >
-            <RouterProvider router={router} />
-          </Suspense>
-        </Provider>
-      </QueryClientProvider>
+      <GoogleOAuthProvider clientId="700704531343-884jrghj44cpak2fo1na231uudd889nj.apps.googleusercontent.com">
+        <QueryClientProvider client={queryClient}>
+          <Provider store={store}>
+            <Suspense
+              fallback={
+                <div className="flex items-center justify-center h-screen text-lg font-semibold">
+                  Loading...
+                </div>
+              }
+            >
+              <RouterProvider router={router} />
+            </Suspense>
+          </Provider>
+        </QueryClientProvider>
+      </GoogleOAuthProvider>
     </>
   );
 }
