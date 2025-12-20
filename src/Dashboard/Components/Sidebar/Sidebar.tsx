@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   FaHome,
   FaBox,
@@ -27,9 +28,18 @@ const Sidebar = ({
   toggleCollapse: () => void;
 }) => {
   const location = useLocation();
-  const isDesktop = window.innerWidth >= 768;
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  // Listen for window resize to update isDesktop
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   //====> handel logout
   const handleLogout = () => {
@@ -62,20 +72,20 @@ const Sidebar = ({
       <aside
         className={`
           fixed md:static top-0 left-0 z-40 
-          min-h-screen                     
+          min-h-screen overflow-hidden                    
           bg-white dark:bg-[var(--color-dark-card)]
           text-[var(--color-light-dark)] dark:text-white
-          shadow-lg flex flex-col p-4
+          shadow-lg flex flex-col
           transition-all duration-300
           border-r border-[var(--color-extra-3)]/30 dark:border-gray-800
           ${
             isDesktop
               ? isCollapsed
-                ? "w-20"
-                : "w-64"
+                ? "w-20 p-4"
+                : "w-64 p-4"
               : isOpen
-              ? "w-64"
-              : "w-0"
+              ? "w-64 p-4"
+              : "w-0 p-0"
           }
         `}
       >
