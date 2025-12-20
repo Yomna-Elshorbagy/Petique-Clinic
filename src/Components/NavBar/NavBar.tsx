@@ -42,7 +42,6 @@ export default function NavBar() {
   const isAuthenticated = Boolean(accessToken);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const token = useAppSelector((state) => state.auth.token);
 
   //====> handel logout
   const handleLogout = () => {

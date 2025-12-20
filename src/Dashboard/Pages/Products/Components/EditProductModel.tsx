@@ -206,6 +206,7 @@ const EditProductModal: React.FC<Props> = ({
                 className="input-box"
                 type="number"
                 name="price"
+                min={0}
                 value={formData.price}
                 onChange={handleInput}
               />
@@ -217,6 +218,8 @@ const EditProductModal: React.FC<Props> = ({
                 type="number"
                 className="input-box"
                 name="discount"
+                min={0}
+                max={100}
                 value={formData.discount}
                 onChange={handleInput}
               />
@@ -231,6 +234,7 @@ const EditProductModal: React.FC<Props> = ({
                 type="number"
                 className="input-box"
                 name="stock"
+                min={0}
                 value={formData.stock}
                 onChange={handleInput}
               />

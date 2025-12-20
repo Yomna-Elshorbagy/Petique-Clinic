@@ -156,7 +156,6 @@ const router = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
-      { path: "*", element: <NotFoundAnimated /> },
     ],
   },
   {
@@ -328,7 +327,6 @@ const router = createBrowserRouter([
           </DoctorProtectedRoute>
         ),
       },
-      { path: "*", element: <NotFoundAnimated /> },
     ],
   },
 ]);

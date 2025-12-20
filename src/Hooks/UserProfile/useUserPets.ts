@@ -16,3 +16,25 @@ export const useUserPets = () => {
     enabled: !!token,
   });
 };
+
+export const useNotifications = () => {
+const token = localStorage.getItem("accessToken");
+
+const notificationsQuery = useQuery({
+  queryKey: ["notifications"],
+  enabled: !!token,
+  queryFn: async () => {
+    const { data } = await axios.get(
+      `${baseURL}/auth/notifications`,
+      { headers: { authentication: `bearer ${token}` } }
+    );
+    return data.data;
+  },
+});
+
+
+  const unreadCount =
+    notificationsQuery.data?.filter((n: any) => !n.isRead).length || 0;
+
+  return { ...notificationsQuery, unreadCount };
+};

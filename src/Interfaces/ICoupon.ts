@@ -34,6 +34,7 @@ export interface ICouponCreate {
   expire: string;
   discount: number;
   assignedUser?: string[];
+  
 }
 
 export interface ICouponUpdate extends Partial<ICouponCreate> {}

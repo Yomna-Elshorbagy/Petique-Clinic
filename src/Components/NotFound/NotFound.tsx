@@ -4,90 +4,162 @@ import { useNavigate } from "react-router-dom";
 const NotFoundPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const goHome = () => {
-    navigate("/home");
-  };
-
-  const contactSupport = () => {
-    navigate("/contact"); 
-  };
   return (
-    <div className="relative flex flex-col items-center justify-center w-full h-screen overflow-hidden bg-gradient-to-br from-yellow-50 to-orange-100 dark:from-gray-900 dark:to-gray-800">
-      {/* Background floating circles */}
-      <div className="absolute w-96 h-96 bg-orange-300 rounded-full opacity-30 animate-pulse -top-20 -left-20"></div>
-      <div className="absolute w-72 h-72 bg-yellow-400 rounded-full opacity-30 animate-bounce -bottom-32 -right-16"></div>
-      <div className="absolute w-80 h-80 bg-pink-300 rounded-full opacity-20 animate-ping top-1/3 left-1/4"></div>
+    <div
+      className="relative flex flex-col items-center justify-center w-full h-screen overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(135deg, var(--color-bg-light), var(--color-bg-warm))",
+      }}
+    >
+      {/* Soft background bubbles */}
+      <div
+        className="absolute w-96 h-96 rounded-full opacity-30 blur-3xl animate-pulse -top-24 -left-24"
+        style={{ backgroundColor: "var(--color-extra-1)" }}
+      />
+      <div
+        className="absolute w-72 h-72 rounded-full opacity-30 blur-3xl animate-bounce -bottom-32 -right-20"
+        style={{ backgroundColor: "var(--color-extra-5)" }}
+      />
 
-      {/* Main 404 container */}
-      <div className="z-10 text-center px-6 md:px-0">
-        {/* Cute Pet Illustration */}
-        <div className="relative inline-block mb-8">
-          {/* Dog face */}
-          <div className="w-40 h-40 bg-white dark:bg-gray-700 rounded-full relative drop-shadow-lg">
-            {/* Ears */}
-            <div className="absolute w-16 h-16 bg-white dark:bg-gray-700 rounded-full -top-4 -left-4 rotate-12"></div>
-            <div className="absolute w-16 h-16 bg-white dark:bg-gray-700 rounded-full -top-4 -right-4 -rotate-12"></div>
-            {/* Eyes */}
-            <div className="absolute w-6 h-6 bg-black rounded-full top-16 left-12"></div>
-            <div className="absolute w-6 h-6 bg-black rounded-full top-16 right-12"></div>
-            {/* Nose */}
-            <div className="absolute w-6 h-4 bg-black rounded-full top-24 left-1/2 -translate-x-1/2"></div>
-            {/* Mouth */}
-            <div className="absolute w-12 h-2 bg-black rounded-full top-28 left-1/2 -translate-x-1/2"></div>
+      {/* Main content */}
+      <div className="z-10 text-center px-6 animate-soft">
+        {/* Dog */}
+        <div className="relative inline-block mb-10">
+          <div
+            className="relative w-44 h-44 rounded-full shadow-xl animate-bounceSlow"
+            style={{ backgroundColor: "var(--color-bg-lighter)" }}
+          >
+            {/* ===>ears */}
+            <div
+              className="absolute w-16 h-20 rounded-full -top-4 -left-6 rotate-12"
+              style={{ backgroundColor: "var(--color-bg-lighter)" }}
+            />
+            <div
+              className="absolute w-16 h-20 rounded-full -top-4 -right-6 -rotate-12"
+              style={{ backgroundColor: "var(--color-bg-lighter)" }}
+            />
+
+            {/* ===> eyes */}
+            <div className="absolute w-6 h-6 bg-black rounded-full top-16 left-14">
+              <span className="absolute w-2 h-2 bg-white rounded-full top-1 left-1" />
+            </div>
+            <div className="absolute w-6 h-6 bg-black rounded-full top-16 right-14">
+              <span className="absolute w-2 h-2 bg-white rounded-full top-1 left-1" />
+            </div>
+
+            {/* ===> blush */}
+            <div
+              className="absolute w-6 h-4 rounded-full top-22 left-8 opacity-60"
+              style={{ backgroundColor: "var(--color-accent-light)" }}
+            />
+            <div
+              className="absolute w-6 h-4 rounded-full top-22 right-8 opacity-60"
+              style={{ backgroundColor: "var(--color-accent-light)" }}
+            />
+
+            {/* ===> nose */}
+            <div className="absolute w-6 h-4 bg-black rounded-full top-24 left-1/2 -translate-x-1/2" />
+
+            {/* ===> smile */}
+            <div className="absolute w-16 h-8 border-b-4 border-black rounded-b-full top-26 left-1/2 -translate-x-1/2" />
+
+            {/* ===> tongue */}
+            <div
+              className="absolute w-6 h-4 rounded-b-full top-30 left-1/2 -translate-x-1/2"
+              style={{ backgroundColor: "var(--color-extra-1)" }}
+            />
           </div>
-          {/* Paw prints animation */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-3 animate-bounce">
+
+          {/* ===> tail */}
+          <div
+            className="absolute right-[-18px] top-24 w-10 h-6 rounded-full origin-left animate-wag"
+            style={{ backgroundColor: "var(--color-bg-lighter)" }}
+          />
+
+          {/* ===> Paw prints */}
+          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex gap-3 animate-float opacity-60">
             <span className="text-3xl">🐾</span>
             <span className="text-3xl">🐾</span>
             <span className="text-3xl">🐾</span>
           </div>
         </div>
 
-        {/* Title */}
-        <h1 className="text-6xl md:text-7xl font-extrabold text-orange-500 dark:text-yellow-400 mb-4 animate-pulse">
+        {/* ===> text */}
+        <h1
+          className="text-7xl font-extrabold mb-4 tracking-tight"
+          style={{ color: "var(--color-light-accent)" }}
+        >
           404
         </h1>
 
-        {/* Subtitle */}
-        <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-6">
-          Oops! It seems this page ran away like a playful puppy. 🐶
+        <p
+          className="text-lg mb-3"
+          style={{ color: "var(--color-text-primary)" }}
+        >
+          This page isn’t available right now.
         </p>
 
-        {/* Buttons */}
+        <p
+          className="text-sm mb-8 max-w-md mx-auto"
+          style={{ color: "var(--color-text-muted)" }}
+        >
+          Our pets are safe and cared for 🐕🐈  
+          — the page you’re looking for may have moved or no longer exists.
+        </p>
+
+        {/* ===> actions */}
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <button
-            onClick={goHome}
-            className="px-6 py-3 bg-orange-500 dark:bg-yellow-400 text-white dark:text-gray-900 font-semibold rounded-full shadow-lg hover:scale-105 hover:bg-orange-600 dark:hover:bg-yellow-300 transition-all duration-300"
+            onClick={() => navigate("/home")}
+            className="px-6 py-3 rounded-full font-semibold shadow-md transition hover:scale-105"
+            style={{
+              backgroundColor: "var(--color-light-accent)",
+              color: "white",
+            }}
           >
-            🏠 Go Home
+            🐾 Back to Home
           </button>
 
           <button
-            onClick={contactSupport}
-            className="px-6 py-3 bg-transparent border-2 border-orange-500 dark:border-yellow-400 text-orange-500 dark:text-yellow-400 font-semibold rounded-full shadow-md hover:bg-orange-500 dark:hover:bg-yellow-400 hover:text-white dark:hover:text-gray-900 transition-all duration-300"
+            onClick={() => navigate("/contact")}
+            className="px-6 py-3 rounded-full font-semibold transition border"
+            style={{
+              borderColor: "var(--color-border-dark)",
+              color: "var(--color-text-primary)",
+            }}
           >
-            📞 Contact Us
+            📩 Support & Care
           </button>
+        </div>
+
+        {/* ===> footer */}
+        <div
+          className="mt-10 text-xs tracking-wide"
+          style={{ color: "var(--color-text-light)" }}
+        >
+          Trusted care • Warm service • Happy pets 🐾
         </div>
       </div>
 
-      {/* Bottom paw prints floating */}
-      <div className="absolute bottom-8 left-1/4 flex gap-4 animate-[wiggle_2s_ease-in-out_infinite]">
-        <span className="text-2xl">🐾</span>
-        <span className="text-2xl">🐾</span>
-      </div>
-      <div className="absolute bottom-12 right-1/3 flex gap-4 animate-[wiggle_2.5s_ease-in-out_infinite]">
-        <span className="text-2xl">🐾</span>
-        <span className="text-2xl">🐾</span>
-      </div>
-
-      {/* Extra CSS animation */}
+      {/* ===> animations */}
       <style>
         {`
-          @keyframes wiggle {
-            0%, 100% { transform: rotate(-10deg); }
-            50% { transform: rotate(10deg); }
+          @keyframes wag {
+            0%, 100% { transform: rotate(20deg); }
+            50% { transform: rotate(-20deg); }
           }
+          @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+          }
+          @keyframes bounceSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+          }
+          .animate-wag { animation: wag 0.6s ease-in-out infinite; }
+          .animate-float { animation: float 2s ease-in-out infinite; }
+          .animate-bounceSlow { animation: bounceSlow 2.5s ease-in-out infinite; }
         `}
       </style>
     </div>

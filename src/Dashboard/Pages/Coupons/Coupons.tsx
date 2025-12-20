@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import type { TableColumn } from "react-data-table-component";
 import {  FaEye,FaEdit, FaPlusCircle, FaTrash, FaUndo, FaTags } from "react-icons/fa";
 import DataTableComponent from "../../../Shared/Table/TableComponent";
@@ -21,12 +21,10 @@ import SEO from "../../../Components/SEO/SEO";
 export default function Coupons() {
   const [openModal, setOpenModal] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState<ICoupon | null>(null);
-  const [page, setPage] = useState(1);
+  const [page, _setPage] = useState(1);
   const [viewMode, setViewMode] = useState(false);
 
   const [limit] = useState(10);
-
-  const queryClient = useQueryClient();
 
   // Fetch coupons
   const { data, isLoading } = useCoupons(page, limit);
