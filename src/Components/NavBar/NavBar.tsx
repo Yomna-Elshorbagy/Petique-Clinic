@@ -14,7 +14,7 @@ import {
   FaSun,
   FaUserCircle,
   FaChevronDown,
-  FaLanguage,
+  FaGlobe,
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/images/logo.jpg";
@@ -156,7 +156,7 @@ export default function NavBar() {
               onClick={toggleLanguage}
               className="p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
             >
-              <FaLanguage className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
+              <FaGlobe className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
             </button>
 
             <button
@@ -225,7 +225,7 @@ export default function NavBar() {
                           key={item.label}
                           onClick={() => {
                             handleLogout();
-                            setShowProfile(false); 
+                            setShowProfile(false);
                           }}
                           className="w-full text-left px-3 py-2 rounded-lg text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30 transition-colors"
                         >
@@ -283,7 +283,7 @@ export default function NavBar() {
                   onClick={toggleLanguage}
                   className="p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
                 >
-                  <FaLanguage className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
+                  <FaGlobe className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
                 </button>
                 <button
                   aria-label={t("navbar.toggleTheme")}
