@@ -23,6 +23,7 @@ import SEO from "../../Components/SEO/SEO";
 import type { TokenPayload } from "../../Interfaces/ITokenPayload";
 import { jwtDecode } from "jwt-decode";
 import type { IUser } from "../../Interfaces/IUser";
+import GoogleLoginBtn from "./components/GoogleLoginBtn";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -192,7 +193,6 @@ export default function Login() {
                   t("auth.login.errorDefault")}
               </p>
             )}
-
             {/* Divider */}
             <div className="flex items-center gap-3">
               <div className="flex-1 h-px bg-white/20" />
@@ -201,11 +201,8 @@ export default function Login() {
               </span>
               <div className="flex-1 h-px bg-white/20" />
             </div>
-            <div className="flex justify-center gap-4">
-              <button className="w-10 h-10 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 transition">
-                <FcGoogle size={20} />
-              </button>
-            </div>
+
+            <GoogleLoginBtn />
           </div>
         </>
       }

@@ -1002,7 +1002,12 @@
     "items": "items",
     "unsubscribedToast": "Unsubscribed from price drop alerts",
      "subscribedToast": "Subscribed to price drop alerts 🔔",
-     "subscriptionFailed" :"Subscription failed"
+     "subscriptionFailed" :"Subscription failed",
+     "notallowed":"Not allowed",
+     "loginRequiredTitle": "Login required",
+    "loginRequiredText": "You need to login to add products to cart",
+    "login": "Login",
+    "continueShopping": "Continue shopping"
   },
   "about": {
     "badge": "About Us",

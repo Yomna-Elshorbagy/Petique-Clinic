@@ -92,14 +92,38 @@ export default function CategoriesDashboared() {
   });
 
   const handleAddCategory = () => {
-    if (!newcategoryName || !newcategoryImage) {
-      setErrorMessage("Please Enter both name and image");
-      return;
-    }
+ let message = "";
+ const trimmedName = newcategoryName.trim();
+  if (!trimmedName && !newcategoryImage) {
+    message = "Please enter category name and image";
+  } else if (!trimmedName) {
+    message = "Please enter category name";
+  }
+   else if (/\d/.test(trimmedName)) {   
+    message = "Please enter a valid category name";
+  } 
+   else if (!newcategoryImage) {
+    message = "Please select a category image";
+  }
+
+  if (message) {
+    setErrorMessage(message);
+    return;
+  }
+
+
+    //  setErrorMessage("");
+
+    // if (!newcategoryName || !newcategoryImage) {
+    //   setErrorMessage("Please Enter both name and image");
+    //   return;
+    // }
 
     const formData = new FormData();
     formData.append("name", newcategoryName);
-    formData.append("image", newcategoryImage);
+    if (newcategoryImage) {
+  formData.append("image", newcategoryImage);
+}
     addmutation.mutate(formData);
   };
 
@@ -129,10 +153,16 @@ export default function CategoriesDashboared() {
     },
   });
   const handleUpdatecategory = () => {
-    if (!newcategoryName) {
+     const trimmedName = newcategoryName.trim();
+    if (!trimmedName) {
       setErrorMessage("Please enter category name");
       return;
     }
+    if (/\d/.test(trimmedName))  {
+      setErrorMessage("Please enter a valid category name");
+      return;
+    }
+    
     const formData = new FormData();
     formData.append("name", newcategoryName);
     if (newcategoryImage) formData.append("image", newcategoryImage);

@@ -14,7 +14,7 @@ export default function SharedSearch({
       {searches.map((search, index) => (
         <div
           key={index}
-          className="shared-search-wrapper w-full md:w-[220px]"
+          className="shared-search-wrapper w-full md:w-[200px]"
         >
           <FaSearch className="shared-search-icon" />
           <input
@@ -34,7 +34,7 @@ export default function SharedSearch({
           key={index}
           value={filter.value}
           onChange={(e) => filter.onChange(e.target.value)}
-          className="shared-filter-select w-[220px]"
+          className="shared-filter-select w-[200px]"
         >
           {filter.options.map((opt) => (
             <option key={opt.value} value={opt.value}>

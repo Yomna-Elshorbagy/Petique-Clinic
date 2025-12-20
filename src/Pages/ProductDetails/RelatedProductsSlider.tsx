@@ -3,7 +3,7 @@ import { useEffect, useState, useTransition } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {toast,Toaster} from "react-hot-toast";
 import {
   subscribeToPriceAlerts,
@@ -11,10 +11,18 @@ import {
   getUserPriceAlertSubscriptions,
 } from "../../Apis/ProductApis";
 import { useTranslation } from "react-i18next";
+import { jwtDecode } from "jwt-decode";
+import Swal from "sweetalert2";
  
 type Props = {
   relatedProducts: productdetails[];
 };
+interface JwtPayload {
+  role?: "admin" | "doctor" | "owner" | "petOwner";
+  id: string;
+  iat: number;
+  exp: number;
+}
 
 /* ================= SINGLE CARD ================= */
 function RelatedProductCard({
@@ -26,19 +34,58 @@ function RelatedProductCard({
 }: any) {
   const [activeImage, setActiveImage] = useState(product.imageCover.secure_url);
   const { t } = useTranslation();
+  const token = localStorage.getItem("accessToken");
+   const navigate = useNavigate();
+// role 
+let role: JwtPayload["role"] | null = null;
+
+if (token) {
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      role = decoded.role;
+    } catch (error) {
+      console.error("Invalid token", error);
+    }
+  }
+
+const isPrivilegedRole =
+    role === "admin" || role === "doctor" ; 
+
   const isSubscribed = subscribedProducts.includes(product._id);
   const isLoading = loadingSubs === product._id;
 
    useEffect(() => {
     setActiveImage(product.imageCover.secure_url);
   }, [product._id]);
+ // handle login alert
+
+const handleLoginAlert = () => {
+    Swal.fire({
+      icon: "warning",
+      title: t("ProductDetails.loginRequiredTitle"),
+      text:  t("ProductDetails.loginRequiredText"),
+      showCancelButton: true,
+      confirmButtonText: t("ProductDetails.login"),
+      cancelButtonText: t("ProductDetails.continueShopping"),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/login");
+      }
+    });
+  };
+
 
   const handleToggleSubscription = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
     e.stopPropagation();
-
+// check login
+    if (!token) {
+      handleLoginAlert();
+      return;
+    }
+    
     setLoadingSubs(product._id);
 
     try {
@@ -136,7 +183,7 @@ function RelatedProductCard({
         <div className="px-4 pb-4">
           <button
             onClick={handleToggleSubscription}
-            disabled={isLoading}
+            disabled={isLoading || isPrivilegedRole}
             className={`w-[212px]  py-2.5 mx-auto  block rounded-xl font-semibold text-sm transition-all
               ${
                 isSubscribed
@@ -145,8 +192,11 @@ function RelatedProductCard({
               }
               ${isLoading && "opacity-60 cursor-not-allowed"}
             `}
+            
           >
-            {isLoading
+            {isPrivilegedRole?
+            t("ProductDetails.notallowed") :
+            isLoading
               ? t("ProductDetails.update")
               : isSubscribed
               ? t("ProductDetails.unsubscribe")
