@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import OverviewStats from "./Components/OverviewStats";
 import AllReservationsPage from "./Components/AllReservationsPage";
 import QuickActionsPanel from "./Components/QuickActionsPanel";
@@ -6,7 +6,7 @@ import { useAllPets } from "../../../Hooks/Pets/UsePets";
 import AddPetModal from "../Animals/Components/AddPetModal";
 import VaccinatePetModal from "../Vaccination/Components/VaccinatePetModal";
 import SEO from "../../../Components/SEO/SEO";
-import AddReservationModal from "../ResevationPet/Components/AddReservationModal";
+import AddReservationModal2 from "../ResevationPet/Components/AddReservationModel2";
 
 export default function DashboardHome() {
   const [openAddPet, setOpenAddPet] = useState(false);
@@ -40,7 +40,7 @@ export default function DashboardHome() {
         onClose={() => setOpenVaccinate(false)}
       />
 
-      <AddReservationModal
+      <AddReservationModal2
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
       />
