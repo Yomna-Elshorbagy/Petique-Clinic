@@ -10,11 +10,11 @@ import axios, { type AxiosResponse } from "axios";
 export interface ReservationAddAdmin {
   _id?: string;
   userId?: string;
-  pet?: string; 
-  doctor?: string | null; 
-  service?: string; 
-  date?: string; 
-  timeSlot?: string; 
+  pet?: string;
+  doctor?: string | null;
+  service?: string;
+  date?: string;
+  timeSlot?: string;
   status?: "pending" | "confirmed" | "completed" | "cancelled";
   paymentStatus?: "unpaid" | "paid";
   notes?: string;
@@ -27,6 +27,8 @@ export const useSoftDeleteReservation = () => {
     mutationFn: async ({ id }: { id: string }) => softDeleteReservation(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todayReservations"] });
+      queryClient.invalidateQueries({ queryKey: ["reservations"] });
+      queryClient.invalidateQueries({ queryKey: ["reservations", "today"] });
     },
   });
 };
@@ -39,6 +41,8 @@ export const useHardDeleteReservation = () => {
     mutationFn: async ({ id }: { id: string }) => deleteReservation(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todayReservations"] });
+      queryClient.invalidateQueries({ queryKey: ["reservations"] });
+      queryClient.invalidateQueries({ queryKey: ["reservations", "today"] });
     },
   });
 };

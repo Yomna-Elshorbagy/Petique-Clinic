@@ -293,6 +293,12 @@ const TodayReservationsList: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-3">
+              <div className="px-4 py-2 rounded-xl bg-[#F6EFE7] border border-[#E9DFD5]">
+                <span className="text-sm text-[#8C827A]">Price</span>
+                <p className="font-semibold text-[#4A3F35]">
+                  {res.service?.priceRange ?? "—"}
+                </p>
+              </div>
               <button
                 onClick={() => openView(res)}
                 className="p-1 rounded-full hover:bg-gray-100 transition"
