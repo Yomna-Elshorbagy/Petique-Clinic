@@ -23,11 +23,12 @@ export default function Reports() {
       <div className="lg:col-span-3">
         <TopSellingProducts />
       </div>
+      {/* <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-6"> */}
+        
+        <RecentOrders />
+      {/* </div> */}
       <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-6">
         <OrderStatusOverview />
-        <RecentOrders />
-      </div>
-      <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-6">
         <UserAnalysis />
       </div>
       <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-6">

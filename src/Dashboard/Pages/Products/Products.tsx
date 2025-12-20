@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
-import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCategories } from "../../../Hooks/Categories/useCategories";
 import type { TableColumn } from "react-data-table-component";
 import {
   deleteProduct,
@@ -45,6 +46,9 @@ export default function ProductsDashboared() {
     queryFn: () => getProducts(),
   });
 
+  // ===> fetch categories for filter
+  const { categories } = useCategories();
+
   // Filter products
   const filteredProducts = useMemo(() => {
     let filtered = data?.data || [];
@@ -67,9 +71,10 @@ export default function ProductsDashboared() {
 
     // Category filter
     if (categoryFilter) {
-      const searchLower = categoryFilter.toLowerCase();
-      filtered = filtered.filter((product: IProduct) =>
-        product.category?.name?.toLowerCase().includes(searchLower)
+      filtered = filtered.filter(
+        (product: IProduct) =>
+          product.category?._id === categoryFilter ||
+          product.category?.name === categoryFilter
       );
     }
 
@@ -444,26 +449,23 @@ export default function ProductsDashboared() {
             )}
           </div>
 
-          {/* Category Search */}
-          <div className="relative flex-1 min-w-[200px]">
+          {/* Category Filter */}
+          <div className="relative min-w-[180px]">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <FaFilter className="text-gray-400" size={14} />
             </div>
-            <input
-              type="text"
-              placeholder="Search by category..."
+            <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="w-full pl-10 pr-10 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] placeholder:text-[var(--color-text-muted)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200"
-            />
-            {categoryFilter && (
-              <button
-                onClick={() => setCategoryFilter("")}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
-              >
-                ✕
-              </button>
-            )}
+              className="w-full pl-10 pr-4 py-2.5 border border-[var(--color-border-medium)] rounded-xl bg-[var(--color-bg-cream)] text-[var(--color-light-dark)] focus:border-[#b89c86] focus:bg-white focus:ring-1 focus:ring-black/10 outline-none transition-all duration-200 appearance-none cursor-pointer"
+            >
+              <option value="">All Categories</option>
+              {categories.map((cat: any) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Status Filter */}

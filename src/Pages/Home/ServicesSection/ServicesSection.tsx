@@ -5,9 +5,11 @@ import petTaxiImg from "../../../assets/images/homeReservation/PetTax.jpg";
 import petGroomingImg from "../../../assets/images/homeReservation/PetGromming.jpg";
 import petTrainingImg from "../../../assets/images/homeReservation/petTraining.jpg";
 import dogServiceImg from "../../../assets/images/homeReservation/dogService.jpg";
+import { useNavigate } from "react-router-dom";
 
 const ServicesSection = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const serviceCards = [
     {
@@ -93,10 +95,11 @@ const ServicesSection = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 + 0.2 }}
                 className={`flex-1 bg-[var(--color-bg-lighter)] p-10 flex flex-col items-center text-center justify-center border border-[var(--color-border-light)] shadow-xl hover:shadow-2xl transition-all duration-300 group
-                    ${card.type === "card-top"
-                    ? "rounded-t-[150px] border-b-4 border-b-[var(--color-light-accent)]"
-                    : "rounded-b-[150px] border-t-4 border-t-[var(--color-light-accent)]"
-                  }
+                    ${
+                      card.type === "card-top"
+                        ? "rounded-t-[150px] border-b-4 border-b-[var(--color-light-accent)]"
+                        : "rounded-b-[150px] border-t-4 border-t-[var(--color-light-accent)]"
+                    }
                 `}
               >
                 <div className="mb-6 p-4 rounded-full bg-[var(--color-light-secondary)]/10 group-hover:bg-[var(--color-light-accent)]/20 transition-colors duration-300">
@@ -138,7 +141,10 @@ const ServicesSection = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mt-16 text-center"
         >
-          <button className="bg-[var(--color-light-accent)] hover:opacity-90 text-white px-8 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 mx-auto transition-all transform hover:-translate-y-1">
+          <button
+            onClick={() => navigate("/service")}
+            className="bg-[var(--color-light-accent)] hover:opacity-90 text-white px-8 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 mx-auto transition-all transform hover:-translate-y-1"
+          >
             {t("servicesSection.viewServices")} <FaPaw />
           </button>
         </motion.div>

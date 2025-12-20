@@ -73,10 +73,10 @@ export default function CategoryDistributionChart() {
   };
 
   return (
-    <div className="bg-[var(--color-bg-light)] p-6 rounded-2xl transition-all">
+    <div className="w-full h-90 bg-[var(--color-bg-light)] dark:bg-(--color-dark-card) p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow">
       <h3 className="text-lg font-semibold mb-4">🛒 Products per Category</h3>
 
-      <ReactECharts option={option} style={{ height: 300 }} />
+      <ReactECharts option={option} style={{ height: 280 }} />
     </div>
   );
 }

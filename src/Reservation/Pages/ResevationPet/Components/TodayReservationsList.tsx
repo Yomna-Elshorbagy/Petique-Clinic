@@ -16,7 +16,7 @@ import ViewReservationModal from "./ViewReservationModal";
 import EditReservationModal from "./EditReservationModal";
 import { useTodayReservationFilters } from "../../../../Hooks/SharedSearch/useTodayReservations";
 import SharedSearch from "../../../../Shared/SharedSearch/SharedSearch";
-import AddReservationModal from "./AddReservationModal";
+import AddReservationModal2 from "./AddReservationModel2";
 
 const TodayReservationsList: React.FC = () => {
   const { data: allReservations = [], isLoading } = useTodayReservations();
@@ -171,7 +171,10 @@ const TodayReservationsList: React.FC = () => {
         }}
       />
 
-      <AddReservationModal isOpen={addOpen} onClose={() => setAddOpen(false)} />
+      <AddReservationModal2
+        isOpen={addOpen}
+        onClose={() => setAddOpen(false)}
+      />
 
       <div className="flex items-center justify-between gap-4 flex-wrap md:flex-nowrap">
         <SharedSearch
@@ -194,7 +197,7 @@ const TodayReservationsList: React.FC = () => {
               options: [
                 { label: "All Status", value: "all" },
                 { label: "Pending", value: "pending" },
-                { label: "Upcoming", value: "upcoming" },
+                { label: "Confirmed", value: "confirmed" },
                 { label: "Completed", value: "completed" },
                 { label: "Cancelled", value: "cancelled" },
               ],
@@ -290,6 +293,12 @@ const TodayReservationsList: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-3">
+              <div className="px-4 py-2 rounded-xl bg-[#F6EFE7] border border-[#E9DFD5]">
+                <span className="text-sm text-[#8C827A]">Price</span>
+                <p className="font-semibold text-[#4A3F35]">
+                  {res.service?.priceRange ?? "—"}
+                </p>
+              </div>
               <button
                 onClick={() => openView(res)}
                 className="p-1 rounded-full hover:bg-gray-100 transition"

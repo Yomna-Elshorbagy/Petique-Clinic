@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import type {
   productdetails,
   review,
@@ -10,7 +10,6 @@ import type {
 import { baseURL } from "../../Apis/BaseUrl";
 import { toast, ToastContainer } from "react-toastify";
 import { FaPaw } from "react-icons/fa";
-
 import RelatedProductsSlider from "./RelatedProductsSlider";
 import Loader from "./Loader";
 import ErrorLoader from "./ErrorLoader";
@@ -26,6 +25,17 @@ import SEO from "../../Components/SEO/SEO";
 import { addProductToCart } from "../../Store/Slices/CartSlice";
 import type { AppDispatch } from "../../Store/store";
 import { useAppDispatch } from "../../Hooks/useSliceHook";
+import { jwtDecode} from "jwt-decode";
+
+
+interface JwtPayload {
+  role?: "admin" | "doctor" | "owner" | "petOwner";
+   id: string;
+   iat: number;
+  exp: number;
+}
+
+
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -38,6 +48,26 @@ export default function ProductDetails() {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
 const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+
+  // role
+
+
+let role: JwtPayload["role"] | null = null;
+
+if (token) {
+  try {
+    const decoded = jwtDecode<JwtPayload>(token);
+    role = decoded.role;
+  } catch (error) {
+    console.error("Invalid token", error);
+  }
+}
+
+ const isPrivilegedRole =
+    role === "admin" || role === "doctor" ;
+     
 
   //get product
   async function getproductdetails() {
@@ -48,7 +78,7 @@ const dispatch = useAppDispatch();
     queryKey: ["productdetails", id],
     queryFn: getproductdetails,
   });
-
+   
   // related product
   async function getrelatedproducts() {
     const { data } = await axios.get(`${baseURL}/products/related/${id}`);
@@ -196,6 +226,7 @@ const dispatch = useAppDispatch();
   }
 
   if (!data) return null;
+  const isOutOfStock =   data.stock === 0  ;
   //counter
   const handleIncrease = () => {
     console.log(data.stock);
@@ -204,7 +235,22 @@ const dispatch = useAppDispatch();
   const handleDecrease = () => {
     if (quantity > 1) setQuantity(quantity - 1);
   };
-  
+  // handle login alert
+const handleLoginAlert = () => {
+    Swal.fire({
+      icon: "warning",
+      title: t("ProductDetails.loginRequiredTitle"),
+      text: t("ProductDetails.loginRequiredText"),
+      showCancelButton: true,
+      confirmButtonText: t("ProductDetails.login"),
+      cancelButtonText: t("ProductDetails.continueShopping"),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/login");
+      }
+    });
+  };
+
   //// add to cart ////
 const handleaddtocart=async(dispatch:AppDispatch,productId:string,quantity:number) =>{
   try{
@@ -349,7 +395,10 @@ const handleaddtocart=async(dispatch:AppDispatch,productId:string,quantity:numbe
 
               <button className="mt-3 px-6 py-3 bg-[var(--color-light-accent)] text-[var(--color-light-dark)] text-lg font-bold rounded-xl shadow-md  hover:bg-[var(--color-accent-dark)] hover:text-white"
               onClick={async()=>{
-
+              if (!token) {
+              handleLoginAlert();
+              return;
+            }
                 setIsAddingToCart(true);
                 try{
                  await  handleaddtocart(dispatch,data._id,quantity);
@@ -360,8 +409,11 @@ const handleaddtocart=async(dispatch:AppDispatch,productId:string,quantity:numbe
                
               
               }}
-               disabled={isAddingToCart} 
-              >{isAddingToCart ? t("ProductDetails.addproducttocart") : t("ProductDetails.addTocart")
+               disabled={isAddingToCart || isOutOfStock || isPrivilegedRole} 
+              >{isOutOfStock ?
+                 t("ProductDetails.outOfStock") : 
+                 isPrivilegedRole ?  t("ProductDetails.notallowed") :
+                isAddingToCart ? t("ProductDetails.addproducttocart") : t("ProductDetails.addTocart")
               }
               </button>
             </div>

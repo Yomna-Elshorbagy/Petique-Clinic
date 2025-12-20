@@ -28,6 +28,9 @@ const ReservationTable = ({
             <th className="py-3 px-6 text-left text-[#4A3F35] font-semibold">
               Status
             </th>
+            <th className="py-3 px-6 text-left text-[#4A3F35] font-semibold">
+              price
+            </th>
             <th className="py-3 px-6 text-center text-[#4A3F35] font-semibold">
               Actions
             </th>
@@ -81,7 +84,9 @@ const ReservationTable = ({
                   {res.status}
                 </span>
               </td>
-
+              <td className="py-4 px-6 text-[#4A3F35] font-medium">
+                {res.service?.priceRange ?? "—"}
+              </td>
               <td className="py-4 px-6 text-center">
                 <ReservationActions
                   res={res}

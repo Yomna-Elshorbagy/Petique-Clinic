@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { sendChatPrompt } from "../../Components/Chat/Instance";
+import { sendChatPrompt, sendImagePrompt } from "../../Components/Chat/Instance";
 
+// Message interface for chat
 export interface Message {
   role: "user" | "assistant";
   content: string;
+  type?: "text" | "image"; // only used for rendering images in UI
 }
 
 interface UseChatProps {
@@ -13,12 +15,15 @@ interface UseChatProps {
 
 export const useChat = ({ user }: UseChatProps) => {
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "How can I help you today?" }
+    { role: "assistant", content: "How can I help you today?", type: "text" },
   ]);
 
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
+  /**
+   * SEND TEXT MESSAGE
+   */
   const handleSend = async () => {
     if (!input.trim()) return;
 
@@ -32,8 +37,14 @@ export const useChat = ({ user }: UseChatProps) => {
       return;
     }
 
-    const newUserMsg: Message = { role: "user", content: input };
-    setMessages((p) => [...p, newUserMsg]);
+    const newUserMsg: Message = {
+      role: "user",
+      content: input,
+      type: "text",
+    };
+
+    // Show user message immediately
+    setMessages((prev) => [...prev, newUserMsg]);
     setInput("");
     setLoading(true);
 
@@ -52,21 +63,69 @@ export const useChat = ({ user }: UseChatProps) => {
         `,
       };
 
+      const apiMessages = messages
+        .filter((m) => m.type !== "image")
+        .map((m) => ({
+          role: m.role,
+          content: m.content,
+        }));
+
       const reply = await sendChatPrompt([
         systemPrompt,
-        ...messages,
-        newUserMsg,
+        ...apiMessages,
+        { role: "user", content: input },
       ]);
 
-      setMessages((p) => [...p, { role: "assistant", content: reply }]);
+      // Assistant message (text only, no type)
+      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
     } catch (err: any) {
-      setMessages((p) => [
-        ...p,
-        { role: "assistant", content: "error: " + err.message },
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: err.message },
       ]);
     } finally {
       setLoading(false);
     }
+  };
+
+  /**
+   * SEND IMAGE MESSAGE
+   */
+  const handleImageSend = async (file: File) => {
+    if (!user) return;
+
+    setLoading(true);
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const base64 = reader.result as string;
+
+        // Show user image immediately
+        setMessages((prev) => [
+          ...prev,
+          { role: "user", content: base64, type: "image" },
+        ]);
+
+        // Send image to backend for AI diagnosis
+        const res = await sendImagePrompt(base64);
+
+        // Show assistant diagnosis (text only!)
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: res.diagnosis },
+        ]);
+      } catch (err: any) {
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: err.message },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    reader.readAsDataURL(file);
   };
 
   return {
@@ -75,5 +134,6 @@ export const useChat = ({ user }: UseChatProps) => {
     loading,
     setInput,
     handleSend,
+    handleImageSend,
   };
 };

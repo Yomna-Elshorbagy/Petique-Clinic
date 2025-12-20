@@ -1,11 +1,11 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   FaHome,
   FaBox,
   FaShoppingCart,
   FaUsers,
   FaSignOutAlt,
-  FaPaw,
   FaEnvelopeOpenText,
   FaTags,
   FaChartBar,
@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import { useAppDispatch } from "../../../Store/store";
 import { clearUserToken } from "../../../Store/Slices/AuthSlice";
+import logo from "../../../assets/images/logo.jpg";
 
 const Sidebar = ({
   isOpen,
@@ -27,9 +28,18 @@ const Sidebar = ({
   toggleCollapse: () => void;
 }) => {
   const location = useLocation();
-  const isDesktop = window.innerWidth >= 768;
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  // Listen for window resize to update isDesktop
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   //====> handel logout
   const handleLogout = () => {
@@ -62,20 +72,20 @@ const Sidebar = ({
       <aside
         className={`
           fixed md:static top-0 left-0 z-40 
-          min-h-screen                     
+          min-h-screen overflow-hidden                    
           bg-white dark:bg-[var(--color-dark-card)]
           text-[var(--color-light-dark)] dark:text-white
-          shadow-lg flex flex-col p-4
+          shadow-lg flex flex-col
           transition-all duration-300
           border-r border-[var(--color-extra-3)]/30 dark:border-gray-800
           ${
             isDesktop
               ? isCollapsed
-                ? "w-20"
-                : "w-64"
+                ? "w-20 p-4"
+                : "w-64 p-4"
               : isOpen
-              ? "w-64"
-              : "w-0"
+              ? "w-64 p-4"
+              : "w-0 p-0"
           }
         `}
       >
@@ -85,9 +95,11 @@ const Sidebar = ({
               ${isCollapsed ? "mx-auto" : ""}
             `}
           >
-            <div className="w-11 h-11 bg-[var(--color-light-accent)] rounded-xl flex items-center justify-center text-white shadow-md">
-              <FaPaw className="text-xl" />
-            </div>
+            <img
+              src={logo}
+              alt="Petique Clinic Logo"
+              className="h-11 w-11 object-contain rounded-full border-2 border-[var(--color-light-accent)]/30 shadow-md"
+            />
             {!isCollapsed && (
               <span className="text-lg font-bold text-[var(--color-light-dark)] dark:text-white">
                 Petique
@@ -142,7 +154,7 @@ const Sidebar = ({
             <button
               onClick={() => {
                 handleLogout();
-                if (!isDesktop) toggleMobile(); 
+                if (!isDesktop) toggleMobile();
               }}
               className={`flex items-center gap-3 p-3 w-full rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200 font-medium ${
                 isCollapsed ? "justify-center" : ""

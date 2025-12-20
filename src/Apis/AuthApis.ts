@@ -39,3 +39,8 @@ export const verifyOtpApi = async (data: {
   const res = await axios.post(`${baseURL}/auth/verifyOtp`, data, { headers });
   return res.data;
 };
+
+export const googleLogin = async (data: { accessToken: string }) => {
+  const res = await axios.post(`${baseURL}/auth/google-login`, data, { headers });
+  return res.data;
+};

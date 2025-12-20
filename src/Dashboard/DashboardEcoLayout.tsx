@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import DashboardHeader from "./Components/Navbar/DashboardHeader";
@@ -6,11 +6,22 @@ import DashboardHeader from "./Components/Navbar/DashboardHeader";
 const DashboardEcoLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
 
   const toggleSidebarMobile = () => setIsSidebarOpen((prev) => !prev);
   const toggleCollapse = () => setIsCollapsed((prev) => !prev);
 
-  const sidebarWidth = isCollapsed ? "80px" : "260px";
+  // Listen for window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // On mobile, sidebar width is 0 (hidden), on desktop it respects collapsed state
+  const sidebarWidth = isDesktop ? (isCollapsed ? "80px" : "260px") : "0px";
 
   return (
     <div
