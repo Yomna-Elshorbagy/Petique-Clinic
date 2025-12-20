@@ -988,7 +988,16 @@
     "successdelReviewTitle": "Review deleted successfully",
     "faildelReviewTitle": "Failed to delete review",
     "successAddReviewTitle": "Review added successfully",
-    "failAddReviewTitle": "Failed to add review"
+    "failAddReviewTitle": "Failed to add review",
+    "addproducttocart":"Adding...",
+    "outOfStock": "Out of Stock",
+     "failedAddToCart": "Failed to add to cart",
+     "addedToCart": "Added to cart",
+     "item": "item",
+    "items": "items",
+    "unsubscribedToast": "Unsubscribed from price drop alerts",
+     "subscribedToast": "Subscribed to price drop alerts 🔔",
+     "subscriptionFailed" :"Subscription failed"
   },
   "about": {
     "badge": "About Us",
