@@ -4,13 +4,17 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
+import {toast,Toaster} from "react-hot-toast";
 import {
   subscribeToPriceAlerts,
   unsubscribeFromPriceAlerts,
   getUserPriceAlertSubscriptions,
 } from "../../Apis/ProductApis";
 import { useTranslation } from "react-i18next";
+ 
+type Props = {
+  relatedProducts: productdetails[];
+};
 
 /* ================= SINGLE CARD ================= */
 function RelatedProductCard({
@@ -24,6 +28,10 @@ function RelatedProductCard({
   const { t } = useTranslation();
   const isSubscribed = subscribedProducts.includes(product._id);
   const isLoading = loadingSubs === product._id;
+
+   useEffect(() => {
+    setActiveImage(product.imageCover.secure_url);
+  }, [product._id]);
 
   const handleToggleSubscription = async (
     e: React.MouseEvent<HTMLButtonElement>
@@ -41,16 +49,16 @@ function RelatedProductCard({
         setSubscribedProducts((prev: string[]) =>
           prev.filter((id) => id !== product._id)
         );
-        toast.success("Unsubscribed from price drop alerts");
+        toast.success(t("ProductDetails.unsubscribedToast"));
       } else {
         const res = await subscribeToPriceAlerts(product._id);
         if (!res.success) throw new Error(res.message);
 
         setSubscribedProducts((prev: string[]) => [...prev, product._id]);
-        toast.success("Subscribed to price drop alerts 🔔");
+        toast.success(t("ProductDetails.subscribedToast"));
       }
     } catch (error: any) {
-      toast.error(error.message || "Subscription failed");
+      toast.error(error.message || t("ProductDetails.subscriptionFailed"));
     } finally {
       setLoadingSubs(null);
     }
@@ -64,7 +72,7 @@ function RelatedProductCard({
             <img
               src={activeImage}
               alt={product.title}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="absolute inset-0 w-full h-full  transition-transform duration-500 group-hover:scale-105"
             />
 
             {product.subImages?.length > 0 && (
@@ -129,7 +137,7 @@ function RelatedProductCard({
           <button
             onClick={handleToggleSubscription}
             disabled={isLoading}
-            className={`w-[200px]  py-2.5 mx-auto  block rounded-xl font-semibold text-sm transition-all
+            className={`w-[212px]  py-2.5 mx-auto  block rounded-xl font-semibold text-sm transition-all
               ${
                 isSubscribed
                   ? "bg-red-600 hover:bg-red-700 text-white"
@@ -151,7 +159,7 @@ function RelatedProductCard({
 }
 
 /* ================= MAIN SLIDER ================= */
-export default function RelatedProductsSlider({ relatedProducts }: any) {
+export default function RelatedProductsSlider({ relatedProducts }: Props) {
   const safeProducts = relatedProducts.filter((p: any) => !p.isDeleted);
 
   const [subscribedProducts, setSubscribedProducts] = useState<string[]>([]);
@@ -173,7 +181,13 @@ export default function RelatedProductsSlider({ relatedProducts }: any) {
   }, []);
 
   return (
-    // <section className="px-6 md:px-10 lg:px-16 py-8">
+    <section className="px-6 md:px-10 lg:px-16 py-8">
+
+       <Toaster 
+        position="top-right" 
+        reverseOrder={true} 
+        toastOptions={{ duration: 3000 }}
+      />
     <Slider
       dots={true}
       infinite={true}
@@ -208,6 +222,7 @@ export default function RelatedProductsSlider({ relatedProducts }: any) {
         />
       ))}
     </Slider>
-    // </section>
+    
+    </section>
   );
 }
