@@ -11,6 +11,7 @@ import AdminProtectedRoute from "./Shared/ProtectedRoutes/AdminProtectedRoutes";
 import DoctorProtectedRoute from "./Shared/ProtectedRoutes/DoctorProtectedRoutes";
 import NotFoundPage from "./Components/NotFound/NotFound";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import LoaderPage from "./Shared/LoaderPage/LoaderPage";
 
 // ===> Lazy imports
 const Layout = lazy(() => import("./Shared/Layout/layout"));
@@ -342,7 +343,7 @@ export default function App() {
             <Suspense
               fallback={
                 <div className="flex items-center justify-center h-screen text-lg font-semibold">
-                  Loading...
+                  <LoaderPage/>
                 </div>
               }
             >
