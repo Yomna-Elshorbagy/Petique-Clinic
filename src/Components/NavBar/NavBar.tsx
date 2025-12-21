@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import {
-  useAppDispatch,
-  type RootState,
-} from "../../Store/store";
+import { useAppDispatch, type RootState } from "../../Store/store";
 import { motion } from "framer-motion";
 import {
   FaBars,
@@ -14,7 +11,7 @@ import {
   FaUserCircle,
   FaChevronDown,
   FaGlobe,
-  FaChartLine
+  FaChartLine,
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/images/logo.jpg";
@@ -63,6 +60,7 @@ export default function NavBar() {
       ? "/resDashboard"
       : null;
 
+  const isDoctor = role === "owner";
 
   //====> handel logout
   const handleLogout = () => {
@@ -241,6 +239,15 @@ export default function NavBar() {
                       href: "/clinicReviews",
                       auth: true,
                     },
+                    ...(isDoctor
+                      ? [
+                          {
+                            label: t("navbar.reservationBoard"),
+                            href: "/ecoDashboard",
+                            auth: true,
+                          },
+                        ]
+                      : []),
                     { label: t("navbar.login"), href: "/login", auth: false },
                     {
                       label: t("navbar.register"),
@@ -249,6 +256,7 @@ export default function NavBar() {
                     },
                     { label: t("navbar.logout"), href: "/logout", auth: true },
                   ]
+
                     .filter((item) => item.auth === isAuthenticated)
                     .map((item) =>
                       item.label === t("navbar.logout") ? (
@@ -340,14 +348,14 @@ export default function NavBar() {
                   )}
                 </Link>
                 {dashboardRoute && (
-                <Link
-                  to={dashboardRoute}
-                  className="relative p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
-                  onClick={() => setOpen(false)}
-                >
-                  <FaChartLine className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
-                </Link>
-              )}
+                  <Link
+                    to={dashboardRoute}
+                    className="relative p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
+                    onClick={() => setOpen(false)}
+                  >
+                    <FaChartLine className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
+                  </Link>
+                )}
               </div>
 
               <div className="bg-white dark:bg-[var(--color-dark-card)] border border-[var(--color-light-secondary)]/20 rounded-2xl p-3 space-y-2">

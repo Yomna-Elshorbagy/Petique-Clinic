@@ -12,7 +12,9 @@
     "register": "Register",
     "logout": "Logout",
     "cart": "Cart",
-    "toggleTheme": "Toggle theme"
+    "toggleTheme": "Toggle theme",
+    "reservationBoard": "ecommerce Board"
+
   },
   "contactUs": {
     "title": "Contact Us",
