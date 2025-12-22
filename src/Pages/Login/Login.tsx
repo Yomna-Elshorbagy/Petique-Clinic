@@ -24,6 +24,7 @@ import type { TokenPayload } from "../../Interfaces/ITokenPayload";
 import { jwtDecode } from "jwt-decode";
 import type { IUser } from "../../Interfaces/IUser";
 import GoogleLoginBtn from "./components/GoogleLoginBtn";
+import { MdArrowBack } from "react-icons/md";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -70,8 +71,8 @@ export default function Login() {
         role === "admin"
           ? `Welcome Admin ${username}!`
           : role === "doctor"
-            ? `Welcome Dr. ${username}!`
-            : `Welcome ${username}!`;
+          ? `Welcome Dr. ${username}!`
+          : `Welcome ${username}!`;
 
       Swal.fire({
         title: `👋 ${welcomeText}`,
@@ -111,8 +112,9 @@ export default function Login() {
             {t("auth.login.welcomeTitle")}
           </p>
           <p
-            className={`text-[#443935] font-bold font-['Playfair_Display'] p-2 ${isRTL ? "text-2xl" : ""
-              }`}
+            className={`text-[#443935] font-bold font-['Playfair_Display'] p-2 ${
+              isRTL ? "text-2xl" : ""
+            }`}
           >
             {t("auth.login.welcomeSubtitle")}
           </p>
@@ -124,17 +126,26 @@ export default function Login() {
             title="Petique Clinic | Login"
             description="Log in to your Petique Clinic account to manage appointments, orders, and pet health records."
           />
+          <div className="mb-6 flex items-center gap-3">
+            <Link
+              to="/home"
+              className="text-[#C58D52] hover:text-[#b67e46] font-semibold"
+            >
+              <MdArrowBack size={24} />
+            </Link>
+            <h2 className="text-(--color-light-accent) font-['Playfair_Display'] text-3xl font-semibold">
+              {t("auth.login.title")}
+            </h2>
+          </div>
 
-          <h2 className="text-(--color-light-accent) font-['Playfair_Display'] text-3xl font-semibold mb-6">
-            {t("auth.login.title")}
-          </h2>
           <div className="space-y-4">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-3 mb-6">
                 <div className="relative">
                   <MdEmail
-                    className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"
-                      }`}
+                    className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${
+                      isRTL ? "right-3" : "left-3"
+                    }`}
                     size={20}
                   />
                   <Input
@@ -149,8 +160,9 @@ export default function Login() {
 
                 <div className="relative">
                   <MdLock
-                    className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${isRTL ? "right-3" : "left-3"
-                      }`}
+                    className={`absolute top-1/2 -translate-y-1/2 text-[#d5c5b5] ${
+                      isRTL ? "right-3" : "left-3"
+                    }`}
                     size={20}
                   />
                   <Input
