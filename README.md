@@ -23,6 +23,7 @@ The platform consists of **3 websites** and **4 user roles**.
 
 ### 🐶 Pet Owner
 
+- Sign up & login 
 - Google OAuth signup & login
 - Email verification & OTP
 - Forget & reset password
@@ -45,8 +46,8 @@ The platform consists of **3 websites** and **4 user roles**.
 ### 🛠️ Admin Shopping
 
 - Manage users & product-related support emails
-- Manage products & orders
-- View analytics
+- Manage products & Categories & coupons & orders
+- View analytics & reports 
 - Order notifications
 
 ### 👑 Owner
