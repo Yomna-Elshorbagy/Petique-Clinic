@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+
 import type { TableColumn } from "react-data-table-component";
-import {  FaEye,FaEdit, FaPlusCircle, FaTrash, FaUndo, FaTags } from "react-icons/fa";
+import { FaEye, FaEdit, FaPlusCircle, FaTrash, FaUndo, FaTags } from "react-icons/fa";
 import DataTableComponent from "../../../Shared/Table/TableComponent";
 import Swal from "sweetalert2";
 
@@ -12,6 +12,8 @@ import {
   useDeleteCoupon,
   useSoftDeleteCoupon,
 } from "../../../Hooks/Coupons/useCoupons";
+import { FaBoxOpen } from "react-icons/fa";
+import DeletedCouponsTable from "./Components/DeletedCouponsTable";
 
 import type { ICoupon, ICouponCreate } from "../../../Interfaces/ICoupon";
 import CouponModal from "./Components/CouponModal";
@@ -23,6 +25,7 @@ export default function Coupons() {
   const [selectedCoupon, setSelectedCoupon] = useState<ICoupon | null>(null);
   const [page, _setPage] = useState(1);
   const [viewMode, setViewMode] = useState(false);
+  const [showDeleted, setShowDeleted] = useState(false); // Toggle state
 
   const [limit] = useState(10);
 
@@ -47,10 +50,10 @@ export default function Coupons() {
   };
 
   const handleView = (coupon: ICoupon) => {
-  setSelectedCoupon(coupon);
-  setViewMode(true);
-  setOpenModal(true);
-};
+    setSelectedCoupon(coupon);
+    setViewMode(true);
+    setOpenModal(true);
+  };
 
 
   const handleEdit = (coupon: ICoupon) => {
@@ -162,11 +165,10 @@ export default function Coupons() {
       name: "Type",
       cell: (row) => (
         <span
-          className={`px-2 py-1 text-xs font-semibold rounded-full ${
-            row.type === "fixedAmount"
-              ? "bg-blue-100 text-blue-700"
-              : "bg-purple-100 text-purple-700"
-          }`}
+          className={`px-2 py-1 text-xs font-semibold rounded-full ${row.type === "fixedAmount"
+            ? "bg-blue-100 text-blue-700"
+            : "bg-purple-100 text-purple-700"
+            }`}
         >
           {row.type === "fixedAmount" ? "Fixed" : "Percentage"}
         </span>
@@ -248,17 +250,17 @@ export default function Coupons() {
       cell: (row) => (
         <div className="flex items-center gap-3">
 
-        {/* VIEW */}
-        <button
-          onClick={() => handleView(row)}
-          className="p-2 rounded-lg bg-blue-50 text-blue-600 
+          {/* VIEW */}
+          <button
+            onClick={() => handleView(row)}
+            className="p-2 rounded-lg bg-blue-50 text-blue-600 
             hover:bg-blue-100 transition-all duration-200
             hover:scale-[1.07] active:scale-[0.96]
             shadow-sm hover:shadow-md border border-blue-100"
             title="Preview"
-        >
-          <FaEye size={15} />
-        </button>
+          >
+            <FaEye size={15} />
+          </button>
 
           <button
             onClick={() => handleEdit(row)}
@@ -272,17 +274,17 @@ export default function Coupons() {
           </button>
 
           {/* SOFT DELETE */}
-        <button
-          onClick={() => handleSoftDelete(row._id)}
-          className="p-2 rounded-lg bg-yellow-50 text-yellow-600 
+          <button
+            onClick={() => handleSoftDelete(row._id)}
+            className="p-2 rounded-lg bg-yellow-50 text-yellow-600 
                                    hover:bg-yellow-100 transition-all duration-200
                                    hover:scale-[1.07] active:scale-[0.96]
                                    shadow-sm hover:shadow-md border border-yellow-100"
-                  
-          title="Soft Delete"
-        >
-          <FaUndo size={15} />
-        </button>
+
+            title="Soft Delete"
+          >
+            <FaUndo size={15} />
+          </button>
 
           <button
             onClick={() => handleDelete(row._id)}
@@ -331,23 +333,55 @@ export default function Coupons() {
         description="Manage discount coupons, and marketing campaigns for Petique Clinic."
       />
 
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
         <h2 className="text-xl text-[#6c5136] font-semibold flex items-center gap-2">
           <FaTags className="text-[#6c5136]" />
-          Coupons Management
-        </h2>{" "}
-        <button
-          onClick={handleAdd}
-          className="flex items-center gap-2 px-4 py-2 
-            bg-[var(--color-extra-1)] 
-            text-[var(--color-light-dark)]
-            font-semibold rounded-xl shadow-md
-            hover:bg-[var(--color-light-accent)]
-            transition-all duration-300 
-            hover:scale-105 active:scale-95"
-        >
-          <FaPlusCircle /> Add Coupon
-        </button>
+          {showDeleted ? "Archived Coupons" : "Coupons Management"}
+        </h2>
+
+        <div className="flex gap-4 items-center">
+          {/* Unique Toggle Button */}
+          <div className="flex bg-gray-200/80 p-1.5 rounded-xl shadow-inner relative w-[240px]">
+            {/* Slider Background */}
+            <div
+              className={`absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${showDeleted ? "translate-x-full left-1.5" : "left-1.5"
+                }`}
+            />
+
+            <button
+              onClick={() => setShowDeleted(false)}
+              className={`flex-1 relative z-10 flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 ${!showDeleted ? "text-[var(--color-primary)]" : "text-gray-500 hover:text-gray-700"
+                }`}
+            >
+              <FaBoxOpen className={!showDeleted ? "animate-pulse" : ""} />
+              Active
+            </button>
+
+            <button
+              onClick={() => setShowDeleted(true)}
+              className={`flex-1 relative z-10 flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 ${showDeleted ? "text-red-500" : "text-gray-500 hover:text-gray-700"
+                }`}
+            >
+              <FaTrash className={showDeleted ? "animate-bounce" : ""} />
+              Archived
+            </button>
+          </div>
+
+          {!showDeleted && (
+            <button
+              onClick={handleAdd}
+              className="flex items-center gap-2 px-4 py-2 
+                    bg-[var(--color-extra-1)] 
+                    text-[var(--color-light-dark)]
+                    font-semibold rounded-xl shadow-md
+                    hover:bg-[var(--color-light-accent)]
+                    transition-all duration-300 
+                    hover:scale-105 active:scale-95 whitespace-nowrap"
+            >
+              <FaPlusCircle /> Add Coupon
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2 p-4 rounded-lg"></div>
@@ -368,12 +402,16 @@ export default function Coupons() {
       />
 
       {/* USE FILTERED DATA */}
-      <DataTableComponent<ICoupon>
-        columns={columns}
-        data={filteredData}
-        loading={isLoading}
-        pagination
-      />
+      {showDeleted ? (
+        <DeletedCouponsTable searchCode={searchCode} />
+      ) : (
+        <DataTableComponent<ICoupon>
+          columns={columns}
+          data={filteredData}
+          loading={isLoading}
+          pagination
+        />
+      )}
 
       <CouponModal
         open={openModal}
@@ -383,7 +421,7 @@ export default function Coupons() {
           setViewMode(false);
         }}
         coupon={selectedCoupon}
-        onSubmit={viewMode ? undefined : handleSubmit}
+        onSubmit={viewMode ? () => { } : handleSubmit}
         loading={createMutation.isPending || updateMutation.isPending}
         viewMode={viewMode}
       />

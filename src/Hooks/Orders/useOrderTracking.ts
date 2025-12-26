@@ -1,7 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { baseURL } from "../../Apis/BaseUrl";
 import type { Order, OrdersResponse } from "../../Types/OrderType";
+import { getDeletedOrders, restoreOrder } from "../../Apis/OrderApi";
+import Swal from "sweetalert2";
 
 export const useOrderTracking = (orderId: string) => {
   const token = localStorage.getItem("accessToken");
@@ -24,7 +26,7 @@ export const useUserOrders = () => {
   const token = localStorage.getItem("accessToken");
 
   return useQuery<OrdersResponse>({
-    queryKey:  ["userOrders"],
+    queryKey: ["userOrders"],
     queryFn: async () => {
       const res = await axios.get(`${baseURL}/order`, {
         headers: { authentication: `bearer ${token}` },
@@ -50,5 +52,38 @@ export const useAllOrders = (page: number = 1, limit: number = 10) => {
       return res.data;
     },
     enabled: !!token,
+  });
+};
+
+export const useDeletedOrders = (page = 1, limit = 10) => {
+  const {
+    data: deletedData,
+    isLoading,
+    error,
+    refetch
+  } = useQuery({
+    queryKey: ["deletedOrders", page, limit],
+    queryFn: () => getDeletedOrders(page, limit),
+  });
+
+  return {
+    deletedOrders: deletedData?.data || [],
+    total: deletedData?.pagination?.totalOrders || 0,
+    isLoading,
+    error,
+    refetch,
+  };
+};
+
+export const useRestoreOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => restoreOrder(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allOrders"] });
+      queryClient.invalidateQueries({ queryKey: ["deletedOrders"] });
+      Swal.fire("Restored", "Order restored successfully", "success");
+    },
   });
 };

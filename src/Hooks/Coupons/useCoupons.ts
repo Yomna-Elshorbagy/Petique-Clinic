@@ -7,6 +7,8 @@ import {
   deleteCoupon,
   softDeleteCoupon,
   getCouponById,
+  getDeletedCoupons,
+  restoreCoupon,
 } from "../../Apis/CouponApis";
 import type { ICoupon, ICouponCreate, ICouponUpdate } from "../../Interfaces/ICoupon";
 import Swal from "sweetalert2";
@@ -103,3 +105,36 @@ export const useSoftDeleteCoupon = () => {
   });
 };
 
+
+export const useDeletedCoupons = (page = 1, limit = 100) => {
+  const {
+    data: deletedData,
+    isLoading,
+    error,
+    refetch
+  } = useQuery({
+    queryKey: ["deletedCoupons", page, limit],
+    queryFn: () => getDeletedCoupons(page, limit),
+  });
+
+  return {
+    deletedCoupons: deletedData?.data || [],
+    total: deletedData?.results || 0,
+    isLoading,
+    error,
+    refetch,
+  };
+};
+
+export const useRestoreCoupon = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => restoreCoupon(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["coupons"] });
+      queryClient.invalidateQueries({ queryKey: ["deletedCoupons"] });
+      Swal.fire("Restored", "Coupon restored successfully", "success");
+    },
+  });
+};

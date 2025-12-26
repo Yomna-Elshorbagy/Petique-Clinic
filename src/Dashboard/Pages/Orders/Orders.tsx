@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import TableComponent from "../../../Shared/Table/TableComponent";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../Store/store";
@@ -16,8 +16,10 @@ import {
   FaUndo,
   FaFilter,
   FaTrash,
+  FaBoxOpen,
 } from "react-icons/fa";
 import OrderDetailsModal from "./OrderDetailsModal";
+import DeletedOrdersTable from "./DeletedOrdersTable";
 import SEO from "../../../Components/SEO/SEO";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
@@ -30,6 +32,7 @@ export default function Orders() {
   const [dateFilter, setDateFilter] = useState("");
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [showDeleted, setShowDeleted] = useState(false); // Toggle state
 
   // Fetch orders on component mount
   useEffect(() => {
@@ -451,10 +454,39 @@ export default function Orders() {
         description="View and manage customer orders, payments, and service requests."
       />
 
-      <div className="mb-6">
+      <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-          Orders Management
+          {showDeleted ? "Archived Orders" : "Orders Management"}
         </h1>
+
+        <div className="flex gap-4 items-center">
+          {/* Unique Toggle Button */}
+          <div className="flex bg-gray-200/80 p-1.5 rounded-xl shadow-inner relative w-[240px]">
+            {/* Slider Background */}
+            <div
+              className={`absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${showDeleted ? "translate-x-full left-1.5" : "left-1.5"
+                }`}
+            />
+
+            <button
+              onClick={() => setShowDeleted(false)}
+              className={`flex-1 relative z-10 flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 ${!showDeleted ? "text-[var(--color-primary)]" : "text-gray-500 hover:text-gray-700"
+                }`}
+            >
+              <FaBoxOpen className={!showDeleted ? "animate-pulse" : ""} />
+              Active
+            </button>
+
+            <button
+              onClick={() => setShowDeleted(true)}
+              className={`flex-1 relative z-10 flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 ${showDeleted ? "text-red-500" : "text-gray-500 hover:text-gray-700"
+                }`}
+            >
+              <FaTrash className={showDeleted ? "animate-bounce" : ""} />
+              Archived
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Search Filter */}
@@ -544,11 +576,15 @@ export default function Orders() {
       </div>
 
       <div className="w-full overflow-x-auto">
-        <TableComponent
-          columns={columns}
-          data={filteredOrders}
-          loading={loading}
-        />
+        {showDeleted ? (
+          <DeletedOrdersTable searchTerm={searchTerm} />
+        ) : (
+          <TableComponent
+            columns={columns}
+            data={filteredOrders}
+            loading={loading}
+          />
+        )}
       </div>
 
       {/* Order Details Modal */}

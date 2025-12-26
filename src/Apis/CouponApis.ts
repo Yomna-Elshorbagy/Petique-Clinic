@@ -50,7 +50,7 @@ export const deleteCoupon = async (id: string): Promise<any> => {
 };
 
 export const softDeleteCoupon = async (id: string): Promise<any> => {
-   const { data } = await axios.put(
+  const { data } = await axios.put(
     `${BASE_URL}/soft/${id}`,
     {},
     {
@@ -59,3 +59,29 @@ export const softDeleteCoupon = async (id: string): Promise<any> => {
   );
   return data.data;
 };
+
+// ===> Get Soft Deleted Coupons
+export const getDeletedCoupons = async (
+  page = 1,
+  limit = 100
+): Promise<ICouponResponse> => {
+  const { data } = await axios.get(
+    `${BASE_URL}/getDeleted`,
+    {
+      headers,
+      params: { page, limit },
+    }
+  );
+  return data;
+};
+
+// ===> Restore Coupon
+export const restoreCoupon = async (id: string): Promise<ICoupon> => {
+  const { data } = await axios.put(
+    `${BASE_URL}/restore/${id}`,
+    {},
+    { headers }
+  );
+  return data.data;
+};
+

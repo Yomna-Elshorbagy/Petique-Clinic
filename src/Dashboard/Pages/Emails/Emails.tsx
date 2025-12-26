@@ -14,9 +14,10 @@ import { useState } from "react";
 import ReplyModal from "./Components/Replaymodel";
 import EditModal from "./Components/Statusmodel";
 import PreviewModal from "./Components/previewModel";
-import { FaEye, FaReply, FaEdit, FaUndo, FaTrash } from "react-icons/fa";
+import { FaEye, FaReply, FaEdit, FaUndo, FaTrash, FaBoxOpen } from "react-icons/fa";
 import Swal from "sweetalert2";
 import SEO from "../../../Components/SEO/SEO";
+import DeletedEmailsTable from "./Components/DeletedEmailsTable";
 
 const token = localStorage.getItem("accessToken");
 
@@ -29,6 +30,7 @@ const ContactsDashboard = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [page, setPage] = useState(1);
   const pageSize = 5;
+  const [showDeleted, setShowDeleted] = useState(false); // Toggle state
 
   const [filter, setFilter] = useState({
     email: "",
@@ -234,10 +236,39 @@ const ContactsDashboard = () => {
         description="Manage Replaying emails, and Support Replies for Petique Clinic."
       />
 
-      <div className="mb-6">
+      <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-          Contacts Dashboard
+          {showDeleted ? "Archived Contacts" : "Contacts Dashboard"}
         </h1>
+
+        <div className="flex gap-4 items-center">
+          {/* Unique Toggle Button */}
+          <div className="flex bg-gray-200/80 p-1.5 rounded-xl shadow-inner relative w-[240px]">
+            {/* Slider Background */}
+            <div
+              className={`absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${showDeleted ? "translate-x-full left-1.5" : "left-1.5"
+                }`}
+            />
+
+            <button
+              onClick={() => setShowDeleted(false)}
+              className={`flex-1 relative z-10 flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 ${!showDeleted ? "text-[var(--color-primary)]" : "text-gray-500 hover:text-gray-700"
+                }`}
+            >
+              <FaBoxOpen className={!showDeleted ? "animate-pulse" : ""} />
+              Active
+            </button>
+
+            <button
+              onClick={() => setShowDeleted(true)}
+              className={`flex-1 relative z-10 flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 ${showDeleted ? "text-red-500" : "text-gray-500 hover:text-gray-700"
+                }`}
+            >
+              <FaTrash className={showDeleted ? "animate-bounce" : ""} />
+              Archived
+            </button>
+          </div>
+        </div>
       </div>
       <div className="mb-4">
         <div className="flex gap-4 flex-wrap items-center">
@@ -306,18 +337,22 @@ const ContactsDashboard = () => {
       </div>
 
       <div className="w-full overflow-x-auto">
-        <DataTableComponent<IContact>
-          columns={contactColumns({
-            handleSoftDelete,
-            handleHardDelete,
-            openReplyModal,
-            handleEdit,
-            openPreviewModal,
-          })}
-          data={filteredContacts}
-          loading={isLoading}
-          pagination
-        />
+        {showDeleted ? (
+          <DeletedEmailsTable searchEmail={filter.email} searchName={filter.name} />
+        ) : (
+          <DataTableComponent<IContact>
+            columns={contactColumns({
+              handleSoftDelete,
+              handleHardDelete,
+              openReplyModal,
+              handleEdit,
+              openPreviewModal,
+            })}
+            data={filteredContacts}
+            loading={isLoading}
+            pagination
+          />
+        )}
       </div>
 
       <ReplyModal
@@ -349,15 +384,14 @@ const ContactsDashboard = () => {
             <div className="flex justify-between items-center">
               <h3 className="font-bold text-[#86654f]">{contact.fullName}</h3>
               <span
-                className={`font-semibold ${
-                  contact.urgency === "emergency"
+                className={`font-semibold ${contact.urgency === "emergency"
                     ? "text-red-700"
                     : contact.urgency === "high"
-                    ? "text-red-500"
-                    : contact.urgency === "medium"
-                    ? "text-orange-500"
-                    : "text-green-600"
-                }`}
+                      ? "text-red-500"
+                      : contact.urgency === "medium"
+                        ? "text-orange-500"
+                        : "text-green-600"
+                  }`}
               >
                 {contact.urgency.charAt(0).toUpperCase() +
                   contact.urgency.slice(1)}
@@ -374,13 +408,12 @@ const ContactsDashboard = () => {
             <p className="text-sm text-gray-600">
               Status:
               <span
-                className={`ml-1 font-semibold ${
-                  contact.replyStatus === "replied"
+                className={`ml-1 font-semibold ${contact.replyStatus === "replied"
                     ? "text-green-600"
                     : contact.replyStatus === "inProgress"
-                    ? "text-blue-600"
-                    : "text-orange-500"
-                }`}
+                      ? "text-blue-600"
+                      : "text-orange-500"
+                  }`}
               >
                 {contact.replyStatus.charAt(0).toUpperCase() +
                   contact.replyStatus.slice(1)}

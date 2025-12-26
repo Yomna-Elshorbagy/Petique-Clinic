@@ -1,10 +1,9 @@
 import { useState, useMemo } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useCategories } from "../../../Hooks/Categories/useCategories";
 import type { TableColumn } from "react-data-table-component";
 import {
   deleteProduct,
-  getProducts,
   softDeleteProducts,
 } from "../../../Apis/ProductsDashboard";
 import type { IProduct } from "../../../Interfaces/IProducts";
@@ -18,12 +17,17 @@ import {
   FaUndo,
   FaSearch,
   FaFilter,
+  FaBoxOpen,
 } from "react-icons/fa";
+import {
+  useProducts,
+} from "../../../Hooks/Products/UseProducts";
 import Swal from "sweetalert2";
 import ProductModal from "./Components/viewProductModle";
 import EditProductModal from "./Components/EditProductModel";
 import AddProductModal from "./Components/AddProductModel";
 import SEO from "../../../Components/SEO/SEO";
+import DeletedProductsTable from "./Components/DeletedProductsTable";
 
 export default function ProductsDashboared() {
   const [openModal, setOpenModal] = useState(false);
@@ -31,6 +35,10 @@ export default function ProductsDashboared() {
   const [editOpen, setEditOpen] = useState(false);
   const queryClient = useQueryClient();
   const [addOpen, setAddOpen] = useState(false);
+  const [showDeleted, setShowDeleted] = useState(false); // Toggle state
+
+  // ===> fetch active products (using hook)
+  const { products, isLoading: isActiveLoading } = useProducts();
 
   // Filter states
   const [searchId, setSearchId] = useState("");
@@ -40,18 +48,12 @@ export default function ProductsDashboared() {
   const [priceFilter, setPriceFilter] = useState("");
   const [stockFilter, setStockFilter] = useState("");
 
-  // ===> fetch products
-  const { data, isLoading } = useQuery({
-    queryKey: ["products"],
-    queryFn: () => getProducts(),
-  });
-
   // ===> fetch categories for filter
   const { categories } = useCategories();
 
   // Filter products
   const filteredProducts = useMemo(() => {
-    let filtered = data?.data || [];
+    let filtered = products || [];
 
     // ID filter
     if (searchId) {
@@ -110,7 +112,8 @@ export default function ProductsDashboared() {
 
     return filtered;
   }, [
-    data?.data,
+    products,
+    showDeleted, // ===> add showDeleted to dependency
     searchId,
     searchName,
     categoryFilter,
@@ -285,8 +288,8 @@ export default function ProductsDashboared() {
         const bg = isOut
           ? "bg-red-100 text-red-700"
           : isLow
-          ? "bg-yellow-100 text-yellow-700"
-          : "bg-green-100 text-green-700";
+            ? "bg-yellow-100 text-yellow-700"
+            : "bg-green-100 text-green-700";
 
         return (
           <span
@@ -396,10 +399,37 @@ export default function ProductsDashboared() {
         description="Manage pet products, medicines, and supplies available at Petique Clinic."
       />
 
-      <div className="mb-6">
+      <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
-          Products Management
+          {showDeleted ? "Archived Products" : "Products Management"}
         </h1>
+
+        {/* Unique Toggle Button */}
+        <div className="flex bg-gray-200/80 p-1.5 rounded-xl shadow-inner relative w-[240px]">
+          {/* Slider Background */}
+          <div
+            className={`absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${showDeleted ? "translate-x-full left-1.5" : "left-1.5"
+              }`}
+          />
+
+          <button
+            onClick={() => setShowDeleted(false)}
+            className={`flex-1 relative z-10 flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 ${!showDeleted ? "text-[var(--color-primary)]" : "text-gray-500 hover:text-gray-700"
+              }`}
+          >
+            <FaBoxOpen className={!showDeleted ? "animate-pulse" : ""} />
+            Active
+          </button>
+
+          <button
+            onClick={() => setShowDeleted(true)}
+            className={`flex-1 relative z-10 flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 ${showDeleted ? "text-red-500" : "text-gray-500 hover:text-gray-700"
+              }`}
+          >
+            <FaTrash className={showDeleted ? "animate-bounce" : ""} />
+            Archived
+          </button>
+        </div>
       </div>
 
       {/* Filter Section */}
@@ -560,12 +590,18 @@ export default function ProductsDashboared() {
         )}
       </div>
 
-      <DataTableComponent<IProduct>
-        columns={columns}
-        data={filteredProducts}
-        loading={isLoading}
-        pagination
-      />
+
+
+      {showDeleted ? (
+        <DeletedProductsTable searchId={searchId} searchName={searchName} />
+      ) : (
+        <DataTableComponent<IProduct>
+          columns={columns}
+          data={filteredProducts}
+          loading={isActiveLoading}
+          pagination
+        />
+      )}
       <ProductModal
         open={openModal}
         onClose={() => setOpenModal(false)}

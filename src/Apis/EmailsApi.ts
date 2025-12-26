@@ -79,3 +79,25 @@ export const deleteContact = async (id: string): Promise<any> => {
   const { data } = await axios.delete(`${BASE_URL}/${id}`, { headers });
   return data;
 };
+
+// ===> get Soft Deleted Contacts 
+export const getDeletedContacts = async (
+  page = 1,
+  limit = 8
+) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/getDeleted?page=${page}&limit=${limit}`,
+    { headers }
+  );
+  return data;
+};
+
+// ===> Restore Contact
+export const restoreContact = async (id: string) => {
+  const { data } = await axios.put(
+    `${BASE_URL}/restore/${id}`,
+    {},
+    { headers }
+  );
+  return data.data;
+};

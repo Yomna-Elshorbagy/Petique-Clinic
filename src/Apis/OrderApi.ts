@@ -42,3 +42,31 @@ export const verifyPayment = async (sessionId: string) => {
   );
   return data;
 };
+
+// ===> get Soft Deleted Orders
+export const getDeletedOrders = async (
+  page = 1,
+  limit = 10
+): Promise<{
+  data: IOrder[];
+  pagination: any;
+}> => {
+  const { data } = await axios.get(
+    `${baseURL}/order/getDeleted`,
+    {
+      headers: getHeaders(),
+      params: { page, limit },
+    }
+  );
+  return data;
+};
+
+// ===> restore Order
+export const restoreOrder = async (id: string) => {
+  const { data } = await axios.put(
+    `${baseURL}/order/restore/${id}`,
+    {},
+    { headers: getHeaders() }
+  );
+  return data.data;
+};

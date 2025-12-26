@@ -21,6 +21,8 @@ import { toast } from "react-toastify";
 import CategoryModal from "./Components/CategoryModal";
 import Swal from "sweetalert2";
 import SEO from "../../../Components/SEO/SEO";
+import DeletedCategoriesTable from "./Components/DeletedCategoriesTable";
+import { FaBoxOpen } from "react-icons/fa";
 
 export default function CategoriesDashboared() {
   const [showmodal, Setshowmodal] = useState(false);
@@ -31,6 +33,7 @@ export default function CategoriesDashboared() {
   const [errorMessage, setErrorMessage] = useState("");
   const [updateId, setUpdateId] = useState<string | null>(null);
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
+  const [showDeleted, setShowDeleted] = useState(false); // Toggle state
   // get categories
   const { data, isLoading } = useQuery({
     queryKey: ["categories"],
@@ -56,7 +59,7 @@ export default function CategoriesDashboared() {
     }
 
     return filtered;
-  }, [data, searchId, searchName]);
+  }, [data, searchId, searchName, showDeleted]);
 
   const resetFilters = () => {
     setSearchId("");
@@ -92,24 +95,24 @@ export default function CategoriesDashboared() {
   });
 
   const handleAddCategory = () => {
- let message = "";
- const trimmedName = newcategoryName.trim();
-  if (!trimmedName && !newcategoryImage) {
-    message = "Please enter category name and image";
-  } else if (!trimmedName) {
-    message = "Please enter category name";
-  }
-   else if (/\d/.test(trimmedName)) {   
-    message = "Please enter a valid category name";
-  } 
-   else if (!newcategoryImage) {
-    message = "Please select a category image";
-  }
+    let message = "";
+    const trimmedName = newcategoryName.trim();
+    if (!trimmedName && !newcategoryImage) {
+      message = "Please enter category name and image";
+    } else if (!trimmedName) {
+      message = "Please enter category name";
+    }
+    else if (/\d/.test(trimmedName)) {
+      message = "Please enter a valid category name";
+    }
+    else if (!newcategoryImage) {
+      message = "Please select a category image";
+    }
 
-  if (message) {
-    setErrorMessage(message);
-    return;
-  }
+    if (message) {
+      setErrorMessage(message);
+      return;
+    }
 
 
     //  setErrorMessage("");
@@ -122,8 +125,8 @@ export default function CategoriesDashboared() {
     const formData = new FormData();
     formData.append("name", newcategoryName);
     if (newcategoryImage) {
-  formData.append("image", newcategoryImage);
-}
+      formData.append("image", newcategoryImage);
+    }
     addmutation.mutate(formData);
   };
 
@@ -153,16 +156,16 @@ export default function CategoriesDashboared() {
     },
   });
   const handleUpdatecategory = () => {
-     const trimmedName = newcategoryName.trim();
+    const trimmedName = newcategoryName.trim();
     if (!trimmedName) {
       setErrorMessage("Please enter category name");
       return;
     }
-    if (/\d/.test(trimmedName))  {
+    if (/\d/.test(trimmedName)) {
       setErrorMessage("Please enter a valid category name");
       return;
     }
-    
+
     const formData = new FormData();
     formData.append("name", newcategoryName);
     if (newcategoryImage) formData.append("image", newcategoryImage);
@@ -393,23 +396,57 @@ export default function CategoriesDashboared() {
         description="Manage service and product categories for veterinary care and pet services in Petique Clinic."
       />
 
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-[#86654f]">Categories</h2>
-        <button
-          className="flex items-center gap-2 px-4 py-2 
-            bg-[var(--color-extra-1)] 
-            text-[var(--color-light-dark)]
-            font-semibold rounded-xl shadow-md
-            hover:bg-[var(--color-light-accent)]
-            transition-all duration-300 
-            hover:scale-105 active:scale-95"
-          onClick={() => {
-            resetForm();
-            Setshowmodal(true);
-          }}
-        >
-          <FaPlusCircle /> Add Category
-        </button>
+      <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <h1 className="text-3xl font-bold text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
+          {showDeleted ? "Archived Categories" : "Categories Management"}
+        </h1>
+
+        <div className="flex gap-4 items-center">
+          {/* Unique Toggle Button */}
+          <div className="flex bg-gray-200/80 p-1.5 rounded-xl shadow-inner relative w-[240px]">
+            {/* Slider Background */}
+            <div
+              className={`absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${showDeleted ? "translate-x-full left-1.5" : "left-1.5"
+                }`}
+            />
+
+            <button
+              onClick={() => setShowDeleted(false)}
+              className={`flex-1 relative z-10 flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 ${!showDeleted ? "text-[var(--color-primary)]" : "text-gray-500 hover:text-gray-700"
+                }`}
+            >
+              <FaBoxOpen className={!showDeleted ? "animate-pulse" : ""} />
+              Active
+            </button>
+
+            <button
+              onClick={() => setShowDeleted(true)}
+              className={`flex-1 relative z-10 flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-colors duration-200 ${showDeleted ? "text-red-500" : "text-gray-500 hover:text-gray-700"
+                }`}
+            >
+              <FaTrash className={showDeleted ? "animate-bounce" : ""} />
+              Archived
+            </button>
+          </div>
+
+          {!showDeleted && (
+            <button
+              className="flex items-center gap-2 px-4 py-2 
+                    bg-[var(--color-extra-1)] 
+                    text-[var(--color-light-dark)]
+                    font-semibold rounded-xl shadow-md
+                    hover:bg-[var(--color-light-accent)]
+                    transition-all duration-300 
+                    hover:scale-105 active:scale-95 whitespace-nowrap"
+              onClick={() => {
+                resetForm();
+                Setshowmodal(true);
+              }}
+            >
+              <FaPlusCircle /> Add Category
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Search Filters */}
@@ -479,12 +516,16 @@ export default function CategoriesDashboared() {
         )}
       </div>
 
-      <DataTableComponent<ICategory>
-        columns={categorycolumns}
-        loading={isLoading}
-        data={filteredCategories}
-        pagination
-      />
+      {showDeleted ? (
+        <DeletedCategoriesTable searchId={searchId} searchName={searchName} />
+      ) : (
+        <DataTableComponent<ICategory>
+          columns={categorycolumns}
+          loading={isLoading}
+          data={filteredCategories}
+          pagination
+        />
+      )}
 
       {showmodal && (
         <CategoryModal

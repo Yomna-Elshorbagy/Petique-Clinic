@@ -92,3 +92,28 @@ export const getUserPriceAlertSubscriptions =
     );
     return data;
   };
+
+  // ===> get Soft Deleted Products
+export const getDeletedProducts = async (
+  page = 1,
+  limit = 20
+) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/getDeleted`,
+    {
+      headers: getHeaders(),
+      params: { page, limit },
+    }
+  );
+  return data.data;
+};
+
+// ===> restore Product
+export const restoreProduct = async (id: string): Promise<IProduct> => {
+  const { data } = await axios.put(
+    `${BASE_URL}/restore/${id}`,
+    {},
+    { headers: getHeaders() }
+  );
+  return data.data;
+};

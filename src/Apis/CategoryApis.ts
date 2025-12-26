@@ -110,3 +110,28 @@ export const getRevenueDistribution = async (): Promise<
   const { data } = await axios.get(`${BASE_URL}/getRevenues`, { headers });
   return data.data;
 };
+
+// ===> get Soft Deleted Categories
+export const getDeletedCategories = async (
+  page = 1,
+  limit = 10
+) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/getDeleted`,
+    {
+      headers,
+      params: { page, limit },
+    }
+  );
+  return data;
+};
+
+// ===> restore Category
+export const restoreCategory = async (id: string): Promise<ICategory> => {
+  const { data } = await axios.put(
+    `${BASE_URL}/restore/${id}`,
+    {},
+    { headers }
+  );
+  return data.data;
+};

@@ -7,6 +7,7 @@ import {
     updateProduct,
 } from "../../Apis/ProductsDashboard";
 import Swal from "sweetalert2";
+import { getDeletedProducts, restoreProduct } from "../../Apis/ProductApis";
 
 export const useProducts = () => {
     const queryClient = useQueryClient();
@@ -82,4 +83,37 @@ export const useProducts = () => {
         isAdding: addProductMutation.isPending,
         isUpdating: updateProductMutation.isPending,
     };
+};
+
+export const useDeletedProducts = (page = 1, limit = 20) => {
+    const {
+        data: deletedData,
+        isLoading,
+        error,
+        refetch
+    } = useQuery({
+        queryKey: ["deletedProducts", page, limit],
+        queryFn: () => getDeletedProducts(page, limit),
+    });
+
+    return {
+        deletedProducts: deletedData || [],
+        total: deletedData?.results || 0,
+        isLoading,
+        error,
+        refetch,
+    };
+};
+
+export const useRestoreProduct = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (id: string) => restoreProduct(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["products"] });
+            queryClient.invalidateQueries({ queryKey: ["deletedProducts"] });
+            Swal.fire("Restored", "Product restored successfully", "success");
+        },
+    });
 };
