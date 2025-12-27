@@ -12,6 +12,11 @@ import DoctorProtectedRoute from "./Shared/ProtectedRoutes/DoctorProtectedRoutes
 import NotFoundPage from "./Components/NotFound/NotFound";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import LoaderPage from "./Shared/LoaderPage/LoaderPage";
+import StaffApointments from "./Staff/Pages/Appointments/StaffApointments";
+import Clients from "./Staff/Pages/Clients/Clients";
+import PetRecords from "./Staff/Pages/PetRecords/PetRecords";
+import StaffVaccinations from "./Staff/Pages/Vaccinations/StaffVaccinations";
+import StaffLayout from "./Staff/StaffLayout";
 
 // ===> Lazy imports
 const Layout = lazy(() => import("./Shared/Layout/layout"));
@@ -167,6 +172,17 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "forgetPass", element: <ForgetPassword /> },
       { path: "otp", element: <OtpConfirmation /> },
+      { path: "*", element: <NotFoundPage /> },
+    ],
+  },
+  {
+    path: "staff",
+    element: <StaffLayout />,
+    children: [
+      { path: "appointments", element: <StaffApointments /> },
+      { path: "clients", element: <Clients /> },
+      { path: "petRecord", element: <PetRecords /> },
+      { path: "vaccinations", element: <StaffVaccinations /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },
@@ -343,7 +359,7 @@ export default function App() {
             <Suspense
               fallback={
                 <div className="flex items-center justify-center h-screen text-lg font-semibold">
-                  <LoaderPage/>
+                  <LoaderPage />
                 </div>
               }
             >
