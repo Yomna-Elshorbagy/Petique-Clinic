@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import StaffSidebar from './Components/Sidebar';
+import StaffSidebar from './Components/Sidebar/Sidebar';
 import StaffNavbar from './Components/Navbar/StaffNavbar';
 
 export default function StaffLayout() {

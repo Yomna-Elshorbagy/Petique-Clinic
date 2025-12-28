@@ -93,10 +93,42 @@ export const getAllPetOwnersStaff = async () => {
 // ================= VACCINATIONS =================
 
 // vaccination overview
-export const getVaccinationOverviewStaff = async () => {
+export const getVaccinationOverviewStaff = async (params: any = {}) => {
   const { data } = await axios.get(
     `${STAFF_BASE_URL}/vaccinations/overview`,
+    {
+      headers,
+      params
+    }
+  );
+  return data.data;
+};
+
+// get pet owner details with pets & vaccinations
+export const getPetOwnerDetailsStaff = async (userId: string) => {
+  const { data } = await axios.get(
+    `${STAFF_BASE_URL}/pet-owners/${userId}`,
     { headers }
   );
+  return data.data;
+};
+
+// update vaccination status (staff)
+export const updatePetVaccinationStaff = async (
+  petId: string,
+  vaccinationHistoryId: string,
+  updates: {
+    status?: string;
+    date?: string;
+    nextDose?: string;
+    doseNumber?: number;
+  }
+) => {
+  const { data } = await axios.patch(
+    `${STAFF_BASE_URL}/pets/${petId}/vaccinations/${vaccinationHistoryId}`,
+    updates,
+    { headers }
+  );
+
   return data.data;
 };

@@ -1,5 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { assignDoctorToReservationStaff, getAllPetOwnersStaff, getAllPetsStaff, getAllReservationsStaff, getReservationsPerServiceStaff, getStaffDashboardStats, getTodayReservationsStaff, getVaccinationOverviewStaff, updateReservationStatusStaff } from "../../Apis/StaffApis";
+import {
+  assignDoctorToReservationStaff,
+  getAllPetOwnersStaff,
+  getAllPetsStaff,
+  getAllReservationsStaff,
+  getPetOwnerDetailsStaff,
+  getReservationsPerServiceStaff,
+  getStaffDashboardStats,
+  getTodayReservationsStaff,
+  getVaccinationOverviewStaff,
+  updatePetVaccinationStaff,
+  updateReservationStatusStaff,
+} from "../../Apis/StaffApis";
 
 // ================= RESERVATIONS =================
 
@@ -24,13 +36,8 @@ export const useUpdateReservationStatusStaff = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      id,
-      status,
-    }: {
-      id: string;
-      status: string;
-    }) => updateReservationStatusStaff(id, status),
+    mutationFn: ({ id, status }: { id: string; status: string }) =>
+      updateReservationStatusStaff(id, status),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["staff-reservations"] });
       queryClient.invalidateQueries({
@@ -97,9 +104,47 @@ export const useStaffPetOwners = () => {
 // ================= VACCINATIONS =================
 
 // vaccination overview
-export const useStaffVaccinationOverview = () => {
+export const useStaffVaccinationOverview = (params: any = {}) => {
   return useQuery({
-    queryKey: ["staff-vaccination-overview"],
-    queryFn: getVaccinationOverviewStaff,
+    queryKey: ["staff-vaccination-overview", params],
+    queryFn: () => getVaccinationOverviewStaff(params),
+  });
+};
+
+// update vaccination status
+export const useUpdatePetVaccinationStaff = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      petId,
+      vaccinationHistoryId,
+      updates,
+    }: {
+      petId: string;
+      vaccinationHistoryId: string;
+      updates: {
+        status?: string;
+        date?: string;
+        nextDose?: string;
+        doseNumber?: number;
+      };
+    }) =>
+      updatePetVaccinationStaff(petId, vaccinationHistoryId, updates),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["staff-vaccination-overview"],
+      });
+    },
+  });
+};
+// ================= PET OWNER DETAILS =================
+
+export const useStaffPetOwnerDetails = (userId: string) => {
+  return useQuery({
+    queryKey: ["staff-pet-owner-details", userId],
+    queryFn: () => getPetOwnerDetailsStaff(userId),
+    enabled: !!userId, // prevents firing before id exists
   });
 };

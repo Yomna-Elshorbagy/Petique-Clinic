@@ -1,10 +1,40 @@
-import React, { useMemo } from 'react';
-import { useStaffPetOwners } from '../../../Hooks/Staff/useStaff';
+import { useMemo, useState } from 'react';
+import { useStaffPetOwners, useStaffPets } from '../../../Hooks/Staff/useStaff';
 import DataTableComponent from '../../../Shared/Table/TableComponent';
-import { Mail, Phone, User, MapPin } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
+import ClientDetailsModal from './Components/ClientDetailsModal';
 
 export default function Clients() {
-  const { data: clients, isLoading } = useStaffPetOwners();
+  const { data: clients, isLoading: isClientsLoading } = useStaffPetOwners();
+  const { data: allPets, isLoading: isPetsLoading } = useStaffPets();
+
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Calculate pet counts per owner
+  const petCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    if (Array.isArray(allPets)) {
+      allPets.forEach((pet: any) => {
+        // Handle case where petOwner might be populated object or string ID
+        const ownerId = typeof pet.petOwner === 'object' ? pet.petOwner?._id : pet.petOwner;
+        if (ownerId) {
+          counts[ownerId] = (counts[ownerId] || 0) + 1;
+        }
+      });
+    }
+    return counts;
+  }, [allPets]);
+
+  const handleOpenModal = (id: string) => {
+    setSelectedClientId(id);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedClientId(null);
+  };
 
   const columns = useMemo(() => [
     {
@@ -35,23 +65,26 @@ export default function Clients() {
     },
     {
       name: "Pets",
-      selector: (row: any) => row.pets?.length || 0,
+      selector: (row: any) => petCounts[row._id] || 0,
       sortable: true,
       cell: (row: any) => (
         <span className="bg-[var(--color-extra-5)] text-[var(--color-text-primary)] px-2.5 py-1 rounded-md text-xs font-bold">
-          {row.pets?.length || 0} Pets
+          {petCounts[row._id] || 0} Pets
         </span>
       )
     },
     {
       name: "Actions",
       cell: (row: any) => (
-        <button className="text-[var(--color-light-accent)] hover:text-[var(--color-accent-dark)] font-medium text-sm transition-colors">
+        <button
+          onClick={() => handleOpenModal(row._id)}
+          className="text-[var(--color-light-accent)] hover:text-[var(--color-accent-dark)] font-medium text-sm transition-colors"
+        >
           View Profile
         </button>
       )
     }
-  ], []);
+  ], [petCounts]);
 
   return (
     <div className="space-y-6">
@@ -66,10 +99,16 @@ export default function Clients() {
         <DataTableComponent
           columns={columns}
           data={Array.isArray(clients) ? clients : []}
-          loading={isLoading}
+          loading={isClientsLoading || isPetsLoading}
           pagination
         />
       </div>
+
+      <ClientDetailsModal
+        userId={selectedClientId}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 }
