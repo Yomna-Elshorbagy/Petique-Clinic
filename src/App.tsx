@@ -180,6 +180,7 @@ const router = createBrowserRouter([
     path: "staff",
     element: <StaffLayout />,
     children: [
+      { path: "", element: <StaffApointments /> },
       { path: "reservation", element: <StaffReservation /> },
       { path: "appointments", element: <StaffApointments /> },
       { path: "clients", element: <Clients /> },

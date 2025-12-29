@@ -1,8 +1,12 @@
 import React from "react";
 
 import { CalendarIcon, ClockIcon, CheckIcon, XCircleIcon } from "lucide-react";
-import StatCard from "../../Vaccination/Components/StatCard";
-import { useReservationsByStatus, useTodayReservations, useUpcomingReservations } from "../../../../Hooks/Reservation/useReservation";
+import StatCard from "../../../../Shared/StateCard/StatCard";
+import {
+  useReservationsByStatus,
+  useTodayReservations,
+  useUpcomingReservations,
+} from "../../../../Hooks/Reservation/useReservation";
 
 const ReservationStats: React.FC = () => {
   const { data: today } = useTodayReservations();

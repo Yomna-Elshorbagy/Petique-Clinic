@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Calendar,
   Users,
@@ -8,7 +8,10 @@ import {
   Menu,
   ChevronLeft,
   LogOut,
+  ClipboardCheck,
 } from "lucide-react";
+import { useAppDispatch } from "../../../Store/store";
+import { clearUserToken } from "../../../Store/Slices/AuthSlice";
 
 const StaffSidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -16,10 +19,17 @@ const StaffSidebar = () => {
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(clearUserToken());
+    navigate("/login", { replace: true });
+  };
 
   const navItems = [
-    { path: "/staff/reservation", label: "Reservation", icon: Calendar },
     { path: "/staff/appointments", label: "Appointments", icon: Calendar },
+    { path: "/staff/reservation", label: "Reservation", icon: ClipboardCheck },
     { path: "/staff/clients", label: "Clients", icon: Users },
     { path: "/staff/petRecord", label: "Pet Records", icon: FileText },
     { path: "/staff/vaccinations", label: "Vaccinations", icon: Syringe },
@@ -105,6 +115,7 @@ const StaffSidebar = () => {
       {/* User Profile / Logout Section */}
       <div className="p-4 border-t border-[#A98868]/10">
         <button
+          onClick={handleLogout}
           className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-[#86654F] hover:bg-red-50 hover:text-red-500 transition-colors group ${
             isCollapsed ? "justify-center" : ""
           }`}

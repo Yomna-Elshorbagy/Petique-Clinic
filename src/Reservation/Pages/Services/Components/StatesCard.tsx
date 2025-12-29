@@ -1,10 +1,6 @@
 import React from "react";
-import {
-  FaStethoscope,
-  FaChartLine,
-  FaCalendarCheck,
-} from "react-icons/fa";
-import StatCard from "../../Vaccination/Components/StatCard";
+import { FaStethoscope, FaChartLine, FaCalendarCheck } from "react-icons/fa";
+import StatCard from "../../../../Shared/StateCard/StatCard";
 
 interface StatsProps {
   stats: {
@@ -49,7 +45,6 @@ export default function StatsCards({ stats }: StatsProps) {
       iconBg: "#E8A0A0",
       delay: 0.2,
     },
-
   ];
 
   return (

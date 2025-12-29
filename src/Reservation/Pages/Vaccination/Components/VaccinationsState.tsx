@@ -1,5 +1,5 @@
 import { AlertCircleIcon, CheckIcon, ClockIcon } from "lucide-react";
-import StatCard from "./StatCard";
+import StatCard from "../../../../Shared/StateCard/StatCard";
 import React from "react";
 import { useVaccinationRecords } from "../../../../Hooks/Pets/UsePets";
 

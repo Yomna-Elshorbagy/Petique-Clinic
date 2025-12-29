@@ -10,6 +10,7 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaSignOutAlt,
+  FaHeartbeat,
 } from "react-icons/fa";
 
 import { NavLink, useNavigate } from "react-router-dom";
@@ -46,10 +47,10 @@ const Sidebar: React.FC<SidebarProps> = ({
       label: "Reservations",
       to: "/resDashboard/reserv",
     },
-    { icon: <FaPaw />, label: "Animals", to: "/resDashboard/animals" },
+    { icon: <FaPaw />, label: "Pets", to: "/resDashboard/animals" },
     {
       icon: <FaTags />,
-      label: "Animals Category",
+      label: "Pets Category",
       to: "/resDashboard/animalCategory",
     },
     { icon: <FaUserMd />, label: "Doctors", to: "/resDashboard/doctors" },
@@ -64,7 +65,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       to: "/resDashboard/service",
     },
     {
-      icon: <FaClipboardList />,
+      icon: <FaHeartbeat />,
       label: "Medical OverView",
       to: "/resDashboard/medical",
     },
@@ -145,7 +146,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 }
                 onClick={() => {
                   if (!isDesktop) toggleMobile();
-                  if (isLogout) handleLogout(); // ✅ handle logout
+                  if (isLogout) handleLogout(); // handle logout
                 }}
               >
                 <div className="text-lg">{item.icon}</div>

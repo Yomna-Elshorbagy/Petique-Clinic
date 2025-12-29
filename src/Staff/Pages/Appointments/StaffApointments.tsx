@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import ReservationsTable from "../../Components/ReservationsTable/ReservationsTable";
 import Pagination from "../../Components/Pagination/Pagination";
 import { TIME_SLOTS } from "../../../Constants/timeSlots";
+import StaffStatsOverview from "../../Components/StaffStatsOverview";
 
 const EditReservationModal = ({
   isOpen,
@@ -251,6 +252,8 @@ export default function StaffAppointments() {
           </button>
         </div>
       </div>
+
+      <StaffStatsOverview />
 
       {/* Table */}
       <ReservationsTable
