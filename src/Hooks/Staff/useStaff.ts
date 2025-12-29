@@ -11,15 +11,17 @@ import {
   getVaccinationOverviewStaff,
   updatePetVaccinationStaff,
   updateReservationStatusStaff,
+  createFullReservationStaff,
 } from "../../Apis/StaffApis";
 
 // ================= RESERVATIONS =================
 
 // all reservations
-export const useStaffReservations = (params: any = {}) => {
+export const useStaffReservations = (params: any = {}, options: any = {}) => {
   return useQuery({
     queryKey: ["staff-reservations", params],
     queryFn: () => getAllReservationsStaff(params),
+    ...options,
   });
 };
 
@@ -106,6 +108,22 @@ export const useStaffPetOwners = () => {
   });
 };
 
+export const useCreateFullReservationStaff = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createFullReservationStaff,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["staffReservations"] });
+      queryClient.invalidateQueries({ queryKey: ["staffTodayReservations"] });
+      queryClient.invalidateQueries({ queryKey: ["staffDashboardStats"] });
+      queryClient.invalidateQueries({ queryKey: ["staffPets"] });
+      queryClient.invalidateQueries({ queryKey: ["staffPetOwners"] });
+    },
+  });
+};
+
 // ================= VACCINATIONS =================
 
 // vaccination overview
@@ -134,8 +152,7 @@ export const useUpdatePetVaccinationStaff = () => {
         nextDose?: string;
         doseNumber?: number;
       };
-    }) =>
-      updatePetVaccinationStaff(petId, vaccinationHistoryId, updates),
+    }) => updatePetVaccinationStaff(petId, vaccinationHistoryId, updates),
 
     onSuccess: () => {
       queryClient.invalidateQueries({

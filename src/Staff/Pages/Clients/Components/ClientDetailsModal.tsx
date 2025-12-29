@@ -73,10 +73,11 @@ const ClientDetailsModal: React.FC<ClientDetailsModalProps> = ({
                     </h3>
                     <span
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium mt-1
-                      ${data.user.status === "active"
+                      ${
+                        data.user.status === "active"
                           ? "bg-green-100 text-green-800"
                           : "bg-red-100 text-red-800"
-                        }`}
+                      }`}
                     >
                       {data.user.status || "Active"}
                     </span>
@@ -185,18 +186,21 @@ const ClientDetailsModal: React.FC<ClientDetailsModalProps> = ({
                                     )}
                                     <span
                                       className={`text-xs font-medium
-                                    ${vac.status === "completed"
-                                          ? "text-green-600"
-                                          : ""
-                                        }
-                                    ${vac.status === "scheduled"
-                                          ? "text-blue-600"
-                                          : ""
-                                        }
-                                    ${vac.status === "overdue"
-                                          ? "text-red-600"
-                                          : ""
-                                        }
+                                    ${
+                                      vac.status === "completed"
+                                        ? "text-green-600"
+                                        : ""
+                                    }
+                                    ${
+                                      vac.status === "scheduled"
+                                        ? "text-blue-600"
+                                        : ""
+                                    }
+                                    ${
+                                      vac.status === "overdue"
+                                        ? "text-red-600"
+                                        : ""
+                                    }
                                   `}
                                     >
                                       {vac.status.charAt(0).toUpperCase() +
@@ -227,7 +231,10 @@ const ClientDetailsModal: React.FC<ClientDetailsModalProps> = ({
               {/* Reservations Section */}
               <section>
                 <h3 className="text-lg font-semibold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
-                  <CalendarDays className="text-[var(--color-light-accent)]" size={20} />
+                  <CalendarDays
+                    className="text-[var(--color-light-accent)]"
+                    size={20}
+                  />
                   Reservations ({data.reservations?.length || 0})
                 </h3>
 
@@ -246,7 +253,10 @@ const ClientDetailsModal: React.FC<ClientDetailsModalProps> = ({
                         </thead>
                         <tbody className="divide-y divide-[var(--color-extra-3)]/30">
                           {data.reservations.map((res: any, idx: number) => (
-                            <tr key={idx} className="hover:bg-[var(--color-extra-5)]/20 transition-colors">
+                            <tr
+                              key={idx}
+                              className="hover:bg-[var(--color-extra-5)]/20 transition-colors"
+                            >
                               <td className="px-4 py-3 font-medium text-[var(--color-text-primary)]">
                                 {res.service?.title || "Unknown Service"}
                               </td>
@@ -260,13 +270,34 @@ const ClientDetailsModal: React.FC<ClientDetailsModalProps> = ({
                                 {new Date(res.date).toLocaleDateString()}
                               </td>
                               <td className="px-4 py-3">
-                                <span className={`px-2 py-1 rounded text-xs font-medium 
-                                    ${res.status === 'completed' ? 'bg-green-100 text-green-700' : ''}
-                                    ${res.status === 'pending' ? 'bg-yellow-100 text-yellow-700' : ''}
-                                    ${res.status === 'confirmed' ? 'bg-blue-100 text-blue-700' : ''}
-                                    ${res.status === 'cancelled' ? 'bg-red-100 text-red-700' : ''}
-                                   `}>
-                                  {res.status ? res.status.charAt(0).toUpperCase() + res.status.slice(1) : "Unknown"}
+                                <span
+                                  className={`px-2 py-1 rounded text-xs font-medium 
+                                    ${
+                                      res.status === "completed"
+                                        ? "bg-green-100 text-green-700"
+                                        : ""
+                                    }
+                                    ${
+                                      res.status === "pending"
+                                        ? "bg-yellow-100 text-yellow-700"
+                                        : ""
+                                    }
+                                    ${
+                                      res.status === "confirmed"
+                                        ? "bg-blue-100 text-blue-700"
+                                        : ""
+                                    }
+                                    ${
+                                      res.status === "cancelled"
+                                        ? "bg-red-100 text-red-700"
+                                        : ""
+                                    }
+                                   `}
+                                >
+                                  {res.status
+                                    ? res.status.charAt(0).toUpperCase() +
+                                      res.status.slice(1)
+                                    : "Unknown"}
                                 </span>
                               </td>
                             </tr>
@@ -281,7 +312,6 @@ const ClientDetailsModal: React.FC<ClientDetailsModalProps> = ({
                   )}
                 </div>
               </section>
-
             </>
           ) : (
             <div className="text-center py-10 text-[var(--color-text-muted)]">
@@ -300,8 +330,9 @@ const ClientDetailsModal: React.FC<ClientDetailsModalProps> = ({
           </button>
         </div>
       </div>
-    </div>
-    , document.body);
+    </div>,
+    document.body
+  );
 };
 
 export default ClientDetailsModal;

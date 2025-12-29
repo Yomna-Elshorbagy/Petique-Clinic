@@ -17,6 +17,7 @@ import Clients from "./Staff/Pages/Clients/Clients";
 import PetRecords from "./Staff/Pages/PetRecords/PetRecords";
 import StaffVaccinations from "./Staff/Pages/Vaccinations/StaffVaccinations";
 import StaffLayout from "./Staff/StaffLayout";
+import StaffReservation from "./Staff/Pages/StaffReservation/StaffReservation";
 
 // ===> Lazy imports
 const Layout = lazy(() => import("./Shared/Layout/layout"));
@@ -179,6 +180,7 @@ const router = createBrowserRouter([
     path: "staff",
     element: <StaffLayout />,
     children: [
+      { path: "reservation", element: <StaffReservation /> },
       { path: "appointments", element: <StaffApointments /> },
       { path: "clients", element: <Clients /> },
       { path: "petRecord", element: <PetRecords /> },

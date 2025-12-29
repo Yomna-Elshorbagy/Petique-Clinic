@@ -3,11 +3,12 @@ import { baseURL } from "./BaseUrl";
 
 const STAFF_BASE_URL = `${baseURL}/staff`;
 
-const token = localStorage.getItem("accessToken");
-
-const headers = {
-  authentication: `bearer ${token}`,
-  "Content-Type": "application/json",
+const getHeaders = () => {
+  const token = localStorage.getItem("accessToken");
+  return {
+    authentication: `bearer ${token}`,
+    "Content-Type": "application/json",
+  };
 };
 
 // ================= RESERVATIONS =================
@@ -15,7 +16,7 @@ const headers = {
 // get all reservations
 export const getAllReservationsStaff = async (params: any = {}) => {
   const { data } = await axios.get(`${STAFF_BASE_URL}/reservations`, {
-    headers,
+    headers: getHeaders(),
     params,
   });
   return data.data;
@@ -29,7 +30,7 @@ export const updateReservationStatusStaff = async (
   const { data } = await axios.patch(
     `${STAFF_BASE_URL}/reservations/${id}/status`,
     updates,
-    { headers }
+    { headers: getHeaders() }
   );
   return data.data;
 };
@@ -42,7 +43,7 @@ export const assignDoctorToReservationStaff = async (
   const { data } = await axios.patch(
     `${STAFF_BASE_URL}/reservations/${reservationId}/assign-doctor`,
     { doctorId },
-    { headers }
+    { headers: getHeaders() }
   );
   return data.data;
 };
@@ -51,7 +52,38 @@ export const assignDoctorToReservationStaff = async (
 export const getTodayReservationsStaff = async () => {
   const { data } = await axios.get(
     `${STAFF_BASE_URL}/reservations/today`,
-    { headers }
+    { headers: getHeaders() }
+  );
+  return data.data;
+};
+
+// create full reservation (user + pet + reservation)
+export const createFullReservationStaff = async (payload: {
+  user: {
+    userName: string;
+    email: string;
+    mobileNumber: string;
+    gender: string;
+  };
+  pet: {
+    name: string;
+    age: number;
+    weight: number;
+    category: string;
+    allergies: string[];
+  };
+  reservation: {
+    service: string;
+    doctor?: string;
+    date: string;
+    timeSlot: string;
+    notes?: string;
+  };
+}) => {
+  const { data } = await axios.post(
+    `${STAFF_BASE_URL}/full-reservation`,
+    payload,
+    { headers: getHeaders() }
   );
   return data.data;
 };
@@ -62,7 +94,7 @@ export const getTodayReservationsStaff = async () => {
 export const getStaffDashboardStats = async () => {
   const { data } = await axios.get(
     `${STAFF_BASE_URL}/dashboard/stats`,
-    { headers }
+    { headers: getHeaders() }
   );
   return data.data;
 };
@@ -71,7 +103,7 @@ export const getStaffDashboardStats = async () => {
 export const getReservationsPerServiceStaff = async () => {
   const { data } = await axios.get(
     `${STAFF_BASE_URL}/dashboard/reservations-per-service`,
-    { headers }
+    { headers: getHeaders() }
   );
   return data.data;
 };
@@ -80,13 +112,13 @@ export const getReservationsPerServiceStaff = async () => {
 
 // get all pets
 export const getAllPetsStaff = async () => {
-  const { data } = await axios.get(`${STAFF_BASE_URL}/pets`, { headers });
+  const { data } = await axios.get(`${STAFF_BASE_URL}/pets`, { headers: getHeaders() });
   return data.data;
 };
 
 // get all pet owners
 export const getAllPetOwnersStaff = async () => {
-  const { data } = await axios.get(`${STAFF_BASE_URL}/pet-owners`, { headers });
+  const { data } = await axios.get(`${STAFF_BASE_URL}/pet-owners`, { headers: getHeaders() });
   return data.data;
 };
 
@@ -97,7 +129,7 @@ export const getVaccinationOverviewStaff = async (params: any = {}) => {
   const { data } = await axios.get(
     `${STAFF_BASE_URL}/vaccinations/overview`,
     {
-      headers,
+      headers: getHeaders(),
       params
     }
   );
@@ -108,7 +140,7 @@ export const getVaccinationOverviewStaff = async (params: any = {}) => {
 export const getPetOwnerDetailsStaff = async (userId: string) => {
   const { data } = await axios.get(
     `${STAFF_BASE_URL}/pet-owners/${userId}`,
-    { headers }
+    { headers: getHeaders() }
   );
   return data.data;
 };
@@ -127,7 +159,7 @@ export const updatePetVaccinationStaff = async (
   const { data } = await axios.patch(
     `${STAFF_BASE_URL}/pets/${petId}/vaccinations/${vaccinationHistoryId}`,
     updates,
-    { headers }
+    { headers: getHeaders() }
   );
 
   return data.data;

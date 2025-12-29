@@ -35,9 +35,9 @@ const EditReservationModal = ({
 
   // Calculate unavailable slots
   const unavailableSlots = React.useMemo(() => {
-    if (!doctorReservations) return [];
+    if (!Array.isArray(doctorReservations)) return [];
     return doctorReservations
-      .filter((res: any) => res._id !== reservation?._id) // Exclude current reservation
+      .filter((res: any) => res._id !== reservation?._id)
       .map((res: any) => res.timeSlot);
   }, [doctorReservations, reservation]);
 
@@ -230,11 +230,10 @@ export default function StaffAppointments() {
               setViewMode("all");
               setCurrentPage(1);
             }}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
-              viewMode === "all"
-                ? "bg-white dark:bg-[var(--color-dark-card)] text-[var(--color-primary)] shadow-sm"
-                : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
-            }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${viewMode === "all"
+              ? "bg-white dark:bg-[var(--color-dark-card)] text-[var(--color-primary)] shadow-sm"
+              : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
+              }`}
           >
             <Filter size={16} /> All Reservations
           </button>
@@ -243,11 +242,10 @@ export default function StaffAppointments() {
               setViewMode("today");
               setCurrentPage(1);
             }}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
-              viewMode === "today"
-                ? "bg-white dark:bg-[var(--color-dark-card)] text-[var(--color-primary)] shadow-sm"
-                : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
-            }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${viewMode === "today"
+              ? "bg-white dark:bg-[var(--color-dark-card)] text-[var(--color-primary)] shadow-sm"
+              : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
+              }`}
           >
             <Calendar size={16} /> Today Only
           </button>
