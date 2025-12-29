@@ -9,6 +9,7 @@ import { Calendar, Filter } from "lucide-react";
 import Swal from "sweetalert2";
 import ReservationsTable from "../../Components/ReservationsTable/ReservationsTable";
 import Pagination from "../../Components/Pagination/Pagination";
+import { TIME_SLOTS } from "../../../Constants/timeSlots";
 
 const EditReservationModal = ({
   isOpen,
@@ -23,6 +24,35 @@ const EditReservationModal = ({
       ? new Date(reservation.date).toISOString().split("T")[0]
       : ""
   );
+  const [timeSlot, setTimeSlot] = useState(reservation?.timeSlot || "");
+
+  // Fetch taken slots for this doctor on this day
+  const { data: doctorReservations } = useStaffReservations({
+    doctor: reservation?.doctor?._id,
+    date: date, // Ensuring date format matches what API expects for filtering
+    isDeleted: false,
+  });
+
+  // Calculate unavailable slots
+  const unavailableSlots = React.useMemo(() => {
+    if (!doctorReservations) return [];
+    return doctorReservations
+      .filter((res: any) => res._id !== reservation?._id) // Exclude current reservation
+      .map((res: any) => res.timeSlot);
+  }, [doctorReservations, reservation]);
+
+  // Update local state when reservation changes
+  React.useEffect(() => {
+    if (isOpen && reservation) {
+      setStatus(reservation.status || "pending");
+      setDate(
+        reservation.date
+          ? new Date(reservation.date).toISOString().split("T")[0]
+          : ""
+      );
+      setTimeSlot(reservation.timeSlot || "");
+    }
+  }, [isOpen, reservation]);
 
   if (!isOpen) return null;
 
@@ -40,7 +70,8 @@ const EditReservationModal = ({
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="w-full p-2 border border-[var(--color-extra-3)] rounded-lg outline-none focus:border-[var(--color-light-accent)] bg-transparent dark:text-white"
+              disabled={reservation?.status === "completed"}
+              className="w-full p-2 border border-[var(--color-extra-3)] rounded-lg outline-none focus:border-[var(--color-light-accent)] bg-transparent dark:text-white disabled:opacity-50 disabled:bg-gray-100"
             >
               <option value="pending">Pending</option>
               <option value="confirmed">Confirmed</option>
@@ -48,17 +79,45 @@ const EditReservationModal = ({
               <option value="cancelled">Cancelled</option>
             </select>
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-1 text-[var(--color-text-muted)]">
-              Date
-            </label>
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="w-full p-2 border border-[var(--color-extra-3)] rounded-lg outline-none focus:border-[var(--color-light-accent)] bg-transparent dark:text-white"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1 text-[var(--color-text-muted)]">
+                Date
+              </label>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="w-full p-2 border border-[var(--color-extra-3)] rounded-lg outline-none focus:border-[var(--color-light-accent)] bg-transparent dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1 text-[var(--color-text-muted)]">
+                Time Slot
+              </label>
+              <select
+                value={timeSlot}
+                onChange={(e) => setTimeSlot(e.target.value)}
+                className="w-full p-2 border border-[var(--color-extra-3)] rounded-lg outline-none focus:border-[var(--color-light-accent)] bg-transparent dark:text-white"
+              >
+                <option value="">Select Time</option>
+                {TIME_SLOTS.map((slot) => {
+                  const isTaken = unavailableSlots.includes(slot);
+                  return (
+                    <option
+                      key={slot}
+                      value={slot}
+                      disabled={isTaken}
+                      className={isTaken ? "text-gray-400 bg-gray-100" : ""}
+                    >
+                      {slot} {isTaken ? "(Taken)" : ""}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
           </div>
+
           <div className="flex justify-end gap-2 mt-6">
             <button
               onClick={onClose}
@@ -67,7 +126,7 @@ const EditReservationModal = ({
               Cancel
             </button>
             <button
-              onClick={() => onSave(status, date)}
+              onClick={() => onSave(status, date, timeSlot)}
               disabled={isPending}
               className="px-4 py-2 text-sm font-medium bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary-dark)] transition-colors disabled:opacity-50"
             >
@@ -120,17 +179,20 @@ export default function StaffAppointments() {
     setIsEditModalOpen(true);
   };
 
-  const handleSave = (status: string, date: string) => {
+  const handleSave = (status: string, date: string, timeSlot: string) => {
     if (selectedRes) {
       updateReservation(
-        { id: selectedRes._id, status },
+        {
+          id: selectedRes._id,
+          updates: { status, date, timeSlot },
+        },
         {
           onSuccess: () => {
             setIsEditModalOpen(false);
             Swal.fire({
               icon: "success",
               title: "Success",
-              text: "Reservation status updated successfully",
+              text: "Reservation updated successfully",
               timer: 1500,
               showConfirmButton: false,
             });

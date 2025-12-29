@@ -36,8 +36,13 @@ export const useUpdateReservationStatusStaff = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, status }: { id: string; status: string }) =>
-      updateReservationStatusStaff(id, status),
+    mutationFn: ({
+      id,
+      updates,
+    }: {
+      id: string;
+      updates: { status?: string; date?: string; timeSlot?: string };
+    }) => updateReservationStatusStaff(id, updates),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["staff-reservations"] });
       queryClient.invalidateQueries({

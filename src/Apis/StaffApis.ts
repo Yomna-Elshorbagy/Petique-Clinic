@@ -24,11 +24,11 @@ export const getAllReservationsStaff = async (params: any = {}) => {
 // update reservation status
 export const updateReservationStatusStaff = async (
   id: string,
-  status: string
+  updates: { status?: string; date?: string; timeSlot?: string }
 ) => {
   const { data } = await axios.patch(
     `${STAFF_BASE_URL}/reservations/${id}/status`,
-    { status },
+    updates,
     { headers }
   );
   return data.data;

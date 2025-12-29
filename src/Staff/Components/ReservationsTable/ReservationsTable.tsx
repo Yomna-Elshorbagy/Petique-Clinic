@@ -232,8 +232,22 @@ const ReservationsTable: React.FC<ReservationsTableProps> = ({
                     <td className="px-6 py-4 text-right">
                       <button
                         onClick={() => onEdit(res)}
-                        className="p-2 rounded-lg hover:bg-[var(--color-extra-3)] text-[var(--color-text-muted)] transition-all active:scale-95"
-                        title="Edit Reservation"
+                        disabled={
+                          res.status === "completed" ||
+                          res.status === "cancelled"
+                        }
+                        className={`p-2 rounded-lg transition-all active:scale-95 
+                          ${
+                            res.status === "completed" ||
+                            res.status === "cancelled"
+                              ? "text-gray-300 cursor-not-allowed"
+                              : "hover:bg-[var(--color-extra-3)] text-[var(--color-text-muted)]"
+                          }`}
+                        title={
+                          res.status === "completed"
+                            ? "Completed reservations cannot be edited"
+                            : "Edit Reservation"
+                        }
                       >
                         <MoreVertical size={18} />
                       </button>
