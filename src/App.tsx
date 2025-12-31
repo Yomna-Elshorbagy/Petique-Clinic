@@ -12,6 +12,7 @@ import DoctorProtectedRoute from "./Shared/ProtectedRoutes/DoctorProtectedRoutes
 import NotFoundPage from "./Components/NotFound/NotFound";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import LoaderPage from "./Shared/LoaderPage/LoaderPage";
+import { SocketProvider } from "./contexts/SocketContext";
 import StaffApointments from "./Staff/Pages/Appointments/StaffApointments";
 import Clients from "./Staff/Pages/Clients/Clients";
 import PetRecords from "./Staff/Pages/PetRecords/PetRecords";
@@ -40,6 +41,7 @@ const ProductDetails = lazy(
 );
 const OrderDetails = lazy(() => import("./Pages/OrderDetails/OrderDetails"));
 const ClinicReviews = lazy(() => import("./Pages/ClinicReviews/ClinicReviews"));
+const ChatPage = lazy(() => import("./Pages/Chat/ChatPage"));
 
 // ==> Auth
 const AuthLayout = lazy(() => import("./Shared/AuthLayout/AuthLayout"));
@@ -162,6 +164,10 @@ const router = createBrowserRouter([
             <ClinicReviews />{" "}
           </ProtectedRoutes>
         ),
+      },
+      {
+        path: "chat",
+        element: <ChatPage />,
       },
     ],
   },
@@ -359,15 +365,17 @@ export default function App() {
       <GoogleOAuthProvider clientId="700704531343-884jrghj44cpak2fo1na231uudd889nj.apps.googleusercontent.com">
         <QueryClientProvider client={queryClient}>
           <Provider store={store}>
-            <Suspense
-              fallback={
-                <div className="flex items-center justify-center h-screen text-lg font-semibold">
-                  <LoaderPage />
-                </div>
-              }
-            >
-              <RouterProvider router={router} />
-            </Suspense>
+            <SocketProvider>
+              <Suspense
+                fallback={
+                  <div className="flex items-center justify-center h-screen text-lg font-semibold">
+                    <LoaderPage />
+                  </div>
+                }
+              >
+                <RouterProvider router={router} />
+              </Suspense>
+            </SocketProvider>
           </Provider>
         </QueryClientProvider>
       </GoogleOAuthProvider>
