@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   FaTachometerAlt,
   FaCalendarCheck,
@@ -11,17 +11,24 @@ import {
   FaChevronRight,
   FaSignOutAlt,
   FaHeartbeat,
+  FaUserTie,
 } from "react-icons/fa";
 
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../Store/store";
 import { clearUserToken } from "../../../Store/Slices/AuthSlice";
+import { jwtDecode } from "jwt-decode";
 
 interface SidebarProps {
   isOpen: boolean;
   isCollapsed: boolean;
   toggleMobile: () => void;
   toggleCollapse: () => void;
+}
+
+interface DecodedToken {
+  role: "owner" | "doctor";
+  exp: number;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -35,11 +42,22 @@ const Sidebar: React.FC<SidebarProps> = ({
   const navigate = useNavigate();
   const token = useAppSelector((state) => state.auth.token);
 
-  //====> handel logout
+  // ===== decode role safely
+  const role = useMemo<"owner" | "doctor" | null>(() => {
+    if (!token) return null;
+    try {
+      return jwtDecode<DecodedToken>(token).role;
+    } catch {
+      return null;
+    }
+  }, [token]);
+
+  // ===== handle logout
   const handleLogout = () => {
     dispatch(clearUserToken());
     navigate("/login");
   };
+
   const links = [
     { icon: <FaTachometerAlt />, label: "Clinic Board", to: "/resDashboard" },
     {
@@ -53,7 +71,12 @@ const Sidebar: React.FC<SidebarProps> = ({
       label: "Pets Category",
       to: "/resDashboard/animalCategory",
     },
-    { icon: <FaUserMd />, label: "Doctors", to: "/resDashboard/doctors" },
+    {
+      icon: <FaUserMd />,
+      label: "Doctors",
+      to: "/resDashboard/doctors",
+      ownerOnly: true,
+    },
     {
       icon: <FaSyringe />,
       label: "Vaccinations",
@@ -65,9 +88,15 @@ const Sidebar: React.FC<SidebarProps> = ({
       to: "/resDashboard/service",
     },
     {
+      icon: <FaUserTie />,
+      label: "Staff Employees",
+      to: "/resDashboard/staff",
+    },
+    {
       icon: <FaHeartbeat />,
       label: "Medical OverView",
       to: "/resDashboard/medical",
+      ownerOnly: true,
     },
     { icon: <FaSignOutAlt />, label: "Logout", to: "/login" },
   ];
@@ -83,8 +112,8 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       <aside
         className={`
-          fixed md:static top-0 left-0 z-40 
-          min-h-screen                     
+          fixed md:static top-0 left-0 z-40
+          min-h-screen
           bg-[#ECE7E2]
           text-[#86654F]
           shadow-lg flex flex-col p-4
@@ -101,6 +130,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           }
         `}
       >
+        {/* ===== Header ===== */}
         <div className="flex items-center justify-between mb-8 mt-2">
           <div
             className={`text-2xl font-bold flex items-center gap-3 transition-all 
@@ -125,35 +155,35 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
         </div>
 
+        {/* ===== Links ===== */}
         <ul className="space-y-2 text-base flex-1">
-          {links.map((item, i) => {
-            const isLogout = item.label === "Logout";
-
-            return (
+          {links
+            .filter((item) => !(role === "doctor" && item.ownerOnly))
+            .map((item, i) => (
               <NavLink
                 key={i}
                 to={item.to}
                 end={item.to === "/resDashboard"}
                 className={({ isActive }) =>
                   `
-          flex items-center gap-3 p-3 rounded-xl transition-all duration-200 font-medium
-          ${
-            isActive
-              ? "bg-[#86654F] text-[#ECE7E2] shadow-md"
-              : "hover:bg-[#A98770]/10 text-[#86654F]"
-          }
-          ${isCollapsed ? "justify-center" : ""}`
+                  flex items-center gap-3 p-3 rounded-xl transition-all duration-200 font-medium
+                  ${
+                    isActive
+                      ? "bg-[#86654F] text-[#ECE7E2] shadow-md"
+                      : "hover:bg-[#A98770]/10 text-[#86654F]"
+                  }
+                  ${isCollapsed ? "justify-center" : ""}
+                `
                 }
                 onClick={() => {
                   if (!isDesktop) toggleMobile();
-                  if (isLogout) handleLogout(); // handle logout
+                  if (item.label === "Logout") handleLogout();
                 }}
               >
                 <div className="text-lg">{item.icon}</div>
                 {!isCollapsed && <span>{item.label}</span>}
               </NavLink>
-            );
-          })}
+            ))}
         </ul>
 
         <div

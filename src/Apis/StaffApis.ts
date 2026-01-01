@@ -164,3 +164,64 @@ export const updatePetVaccinationStaff = async (
 
   return data.data;
 };
+
+// ================= EMPLOYEES =================
+
+// get all employees
+export const getAllEmployeesStaff = async () => {
+  const { data } = await axios.get(`${STAFF_BASE_URL}`, {
+    headers: getHeaders(),
+  });
+  return data.data;
+};
+
+// add new employee
+export const addEmployeeStaff = async (payload: FormData) => {
+  const { data } = await axios.post(`${STAFF_BASE_URL}`, payload, {
+    headers: {
+      authentication: `bearer ${localStorage.getItem("accessToken")}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return data.data;
+};
+
+// soft delete employee
+export const softDeleteEmployeeStaff = async (id: string) => {
+  const { data } = await axios.put(
+    `${STAFF_BASE_URL}/soft/${id}`,
+    {},
+    { headers: getHeaders() }
+  );
+  return data.data;
+};
+
+// hard delete employee
+export const deleteEmployeeStaff = async (id: string) => {
+  const { data } = await axios.delete(
+    `${STAFF_BASE_URL}/deleteDoc/${id}`,
+    { headers: getHeaders() }
+  );
+  return data.data;
+};
+
+// update employee
+export const updateEmployeeStaff = async ({
+  id,
+  payload,
+}: {
+  id: string;
+  payload: FormData;
+}) => {
+  const { data } = await axios.put(
+    `${STAFF_BASE_URL}/updateDoc/${id}`,
+    payload,
+    {
+      headers: {
+        authentication: `bearer ${localStorage.getItem("accessToken")}`,
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  return data.data;
+};

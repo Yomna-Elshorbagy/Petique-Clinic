@@ -93,6 +93,10 @@ const ServiceDashbored = lazy(
   () => import("./Reservation/Pages/Services/Service")
 );
 
+const Staff = lazy(
+  () => import("./Reservation/Pages/Staff/Staff")
+);
+
 //==> NotFound
 
 const NotFoundAnimated = lazy(() => import("./Components/NotFound/NotFound"));
@@ -350,6 +354,15 @@ const router = createBrowserRouter([
           <DoctorProtectedRoute>
             {" "}
             <ServiceDashbored />
+          </DoctorProtectedRoute>
+        ),
+      },
+          {
+        path: "staff",
+        element: (
+          <DoctorProtectedRoute>
+            {" "}
+            <Staff />
           </DoctorProtectedRoute>
         ),
       },
