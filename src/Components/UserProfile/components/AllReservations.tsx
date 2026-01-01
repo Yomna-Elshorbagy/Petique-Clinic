@@ -9,6 +9,7 @@ import {
   FaTimesCircle,
   FaHourglassHalf,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import LoaderPage from "../../../Shared/LoaderPage/LoaderPage";
 import { useMyReservations } from "../../../Hooks/Reservation/useReservation";
 import type { Reservation } from "../../../Interfaces/IReservations";
@@ -49,9 +50,9 @@ const getStatusConfig = (status: string) => {
   );
 };
 
-const formatDate = (dateString: string) => {
+const formatDate = (dateString: string, lng: string) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString(lng, {
     weekday: "short",
     year: "numeric",
     month: "short",
@@ -64,6 +65,7 @@ const formatTime = (timeString: string) => {
 };
 
 export default function AllReservations() {
+  const { t, i18n } = useTranslation();
   const { data: reservations = [], isLoading, isError } = useMyReservations();
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 4;
@@ -82,7 +84,7 @@ export default function AllReservations() {
           <FaTimesCircle className="text-red-500 text-2xl" />
         </div>
         <p className="text-red-600 dark:text-red-400 font-medium">
-          Failed to load reservations
+          {t("userProfile.appointments.error")}
         </p>
       </div>
     );
@@ -94,10 +96,10 @@ export default function AllReservations() {
           <FaCalendarAlt className="text-4xl text-[var(--color-light-accent)]" />
         </div>
         <h3 className="text-xl font-semibold text-[var(--color-text-primary)] mb-2">
-          No Reservations Yet
+          {t("userProfile.appointments.empty.title")}
         </h3>
         <p className="text-[var(--color-text-muted)]">
-          You haven't made any appointments yet. Book your first appointment!
+          {t("userProfile.appointments.empty.text")}
         </p>
       </div>
     );
@@ -123,7 +125,7 @@ export default function AllReservations() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-[var(--color-text-muted)] mb-1">
-                Total Appointments
+                {t("userProfile.appointments.stats.total")}
               </p>
               <p className="text-3xl font-bold text-[var(--color-text-primary)]">
                 {reservations.length}
@@ -139,7 +141,7 @@ export default function AllReservations() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-green-700 dark:text-green-400 mb-1">
-                Confirmed
+                {t("userProfile.appointments.status.confirmed")}
               </p>
               <p className="text-3xl font-bold text-green-600 dark:text-green-400">
                 {
@@ -159,7 +161,7 @@ export default function AllReservations() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-yellow-700 dark:text-yellow-400 mb-1">
-                Pending
+                {t("userProfile.appointments.status.pending")}
               </p>
               <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
                 {
@@ -211,8 +213,10 @@ export default function AllReservations() {
                     {reservation.pet?.name || "N/A"}
                   </h3>
                   <p className="text-sm text-[var(--color-text-muted)]">
-                    {reservation.pet?.type || "Pet Type"} • Age:{" "}
-                    {reservation.pet?.age || "N/A"} years
+                    {reservation.pet?.type || t("userProfile.common.petType")} •{" "}
+                    {t("userProfile.personalInfo.age") || "Age"}:{" "}
+                    {reservation.pet?.age || "N/A"}{" "}
+                    {t("userProfile.common.years") || "years"}
                   </p>
                 </div>
               </div>
@@ -223,10 +227,10 @@ export default function AllReservations() {
                   <FaCalendarAlt className="text-[var(--color-light-accent)] flex-shrink-0" />
                   <div>
                     <p className="text-xs text-[var(--color-text-muted)] mb-0.5">
-                      Date
+                      {t("userProfile.common.date")}
                     </p>
                     <p className="text-sm font-semibold text-[var(--color-text-primary)]">
-                      {formatDate(reservation.date)}
+                      {formatDate(reservation.date, i18n.language)}
                     </p>
                   </div>
                 </div>
@@ -234,7 +238,7 @@ export default function AllReservations() {
                   <FaClock className="text-[var(--color-light-accent)] flex-shrink-0" />
                   <div>
                     <p className="text-xs text-[var(--color-text-muted)] mb-0.5">
-                      Time
+                      {t("userProfile.common.time")}
                     </p>
                     <p className="text-sm font-semibold text-[var(--color-text-primary)]">
                       {formatTime(reservation.timeSlot)}
@@ -251,14 +255,15 @@ export default function AllReservations() {
                   </div>
                   <div className="flex-1">
                     <p className="text-xs text-[var(--color-text-muted)] mb-0.5">
-                      Service
+                      {t("userProfile.common.service")}
                     </p>
                     <p className="text-sm font-semibold text-[var(--color-text-primary)]">
                       {reservation.service?.title || "N/A"}
                     </p>
                     {reservation.service?.priceRange && (
                       <p className="text-xs text-[var(--color-light-accent)] mt-0.5">
-                        {reservation.service.priceRange} EGP
+                        {reservation.service.priceRange}{" "}
+                        {t("userProfile.common.currency")}
                       </p>
                     )}
                   </div>
@@ -270,10 +275,11 @@ export default function AllReservations() {
                   </div>
                   <div className="flex-1">
                     <p className="text-xs text-[var(--color-text-muted)] mb-0.5">
-                      Doctor
+                      {t("userProfile.common.doctor")}
                     </p>
                     <p className="text-sm font-semibold text-[var(--color-text-primary)]">
-                      Dr. {reservation.doctor?.userName || "N/A"}
+                      {t("userProfile.common.doctor")}.{" "}
+                      {reservation.doctor?.userName || "N/A"}
                     </p>
                   </div>
                 </div>

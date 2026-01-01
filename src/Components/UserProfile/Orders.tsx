@@ -1,13 +1,16 @@
 import { useState } from "react";
 import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
-import type { Order } from "../../Types/OrderType";
+import { useTranslation } from "react-i18next";
+import { FaBoxOpen } from "react-icons/fa";
 import { useUserOrders } from "../../Hooks/Orders/useOrderTracking";
 import SEO from "../SEO/SEO";
 import SharedPagination from "./components/SharedPagination";
+import type { Order } from "../../Types/OrderType";
 
-export default function UserOrders() {
+export default function Orders() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 2;
+  const { t } = useTranslation();
 
   const { data, isLoading, isError } = useUserOrders();
 
@@ -16,22 +19,21 @@ export default function UserOrders() {
   if (isError)
     return (
       <div className="text-center py-10 text-red-500 dark:text-red-400">
-        Failed to load orders.
+        {t("userProfile.orders.error")}
       </div>
     );
 
-  if (!data?.data || data.data.length === 0)
+  const orders = data?.data || [];
+
+  if (!orders.length)
     return (
-      <div className="text-center py-10">
-        <p className="text-gray-500 dark:text-gray-400 text-lg">
-          You have no orders yet.
-        </p>
+      <div className="text-center text-gray-500 dark:text-gray-400 py-10">
+        <FaBoxOpen size={40} className="mx-auto mb-3 opacity-60" />
+        <p>{t("userProfile.orders.empty")}</p>
       </div>
     );
 
-  const orders = data.data;
-
-  // 🔹 Pagination logic (same pattern as reservations)
+  // 🔹 Pagination logic
   const totalPages = Math.ceil(orders.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedOrders = orders.slice(startIndex, startIndex + itemsPerPage);
@@ -55,7 +57,7 @@ export default function UserOrders() {
       />
 
       <h2 className="text-3xl font-bold text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] mb-6">
-        Your Orders
+        {t("userProfile.orders.title")}
       </h2>
 
       {/* Orders */}
@@ -67,30 +69,29 @@ export default function UserOrders() {
           {/* Header */}
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-xl font-semibold text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
-              Order #{order._id}
+              {t("userProfile.orders.idPrefix")}{order._id}
             </h3>
             <span
-              className={`text-white px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r ${
-                statusColors[order.status] || "from-gray-400 to-gray-600"
-              }`}
+              className={`text-white px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r ${statusColors[order.status.toLowerCase()] || "from-gray-400 to-gray-600"
+                }`}
             >
-              {order.status.toUpperCase()}
+              {t(`userProfile.tracking.steps.${order.status.toLowerCase()}`) || order.status.toUpperCase()}
             </span>
           </div>
 
           {/* Order Details */}
           <div className="relative border-l-4 border-[#e9a66f] dark:border-[var(--color-dark-accent)] pl-5 mb-6">
             <p className="text-sm text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
-              <span className="font-semibold">Address:</span> {order.address}
+              <span className="font-semibold">{t("userProfile.orders.address")}:</span> {order.address}
             </p>
             <p className="text-sm text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
-              <span className="font-semibold">Phone:</span> {order.phone}
+              <span className="font-semibold">{t("userProfile.orders.phone")}:</span> {order.phone}
             </p>
             <p className="text-sm text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
-              <span className="font-semibold">Payment:</span> {order.payment}
+              <span className="font-semibold">{t("userProfile.orders.payment")}:</span> {order.payment}
             </p>
             <p className="text-sm text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
-              <span className="font-semibold">Placed On:</span>{" "}
+              <span className="font-semibold">{t("userProfile.orders.placedOn")}:</span>{" "}
               {new Date(order.createdAt).toLocaleString()}
             </p>
             <span className="absolute -left-2 top-0 w-4 h-4 bg-[#e9a66f] dark:bg-[var(--color-dark-accent)] rounded-full"></span>
@@ -99,28 +100,29 @@ export default function UserOrders() {
           {/* Products */}
           <div>
             <h4 className="text-lg font-semibold mb-3 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
-              Products
+              {t("userProfile.orders.products")}
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {order.products.map((p) => (
+              {order.products.map((p: any) => (
                 <div
                   key={p._id}
                   className="p-4 rounded-xl border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] bg-[var(--color-bg-cream)] dark:bg-[var(--color-dark-background)] shadow text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
                 >
-                  {p.productId.imageCover?.secure_url && (
+                  {p.productId?.imageCover?.secure_url && (
                     <img
                       src={p.productId.imageCover.secure_url}
                       className="w-full h-32 object-cover rounded-lg mb-3"
                     />
                   )}
                   <p className="font-semibold">{p.title}</p>
-                  <p className="text-sm">Qty: {p.quantity}</p>
-                  <p className="text-sm">
-                    Price:{" "}
-                    <span className="font-semibold">
-                      {p.finalPrice.toLocaleString()} EGP
+                  <div className="mt-3 flex items-center justify-between text-sm">
+                    <span className="text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-muted)]">
+                      {t("userProfile.orders.qty")}: {p.quantity}
                     </span>
-                  </p>
+                    <span className="font-bold text-[var(--color-light-accent)]">
+                      {t("userProfile.orders.price")}: {p.finalPrice.toLocaleString()} {t("userProfile.common.currency")}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
@@ -129,9 +131,9 @@ export default function UserOrders() {
           {/* Total */}
           <div className="mt-6 text-right">
             <p className="text-xl font-bold text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
-              Total:{" "}
+              {t("userProfile.orders.total")}:{" "}
               <span className="text-[#e9a66f] dark:text-[var(--color-dark-accent)]">
-                {order.finalPrice.toLocaleString()} EGP
+                {order.finalPrice.toLocaleString()} {t("userProfile.common.currency")}
               </span>
             </p>
           </div>

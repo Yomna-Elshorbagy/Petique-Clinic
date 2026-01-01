@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface UserUpdateDataProps {
   formData: {
@@ -25,6 +26,8 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
   showPassword,
   setShowPassword,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -32,7 +35,7 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
     >
       <div className="md:col-span-2">
         <label className="block text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] mb-1 font-medium">
-          Owner Name *
+          {t("userProfile.personalInfo.ownerName")} *
         </label>
         <input
           type="text"
@@ -45,7 +48,7 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
 
       <div className="md:col-span-2">
         <label className="block text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] mb-1 font-medium">
-          Email *
+          {t("userProfile.personalInfo.email")} *
         </label>
         <input
           type="email"
@@ -58,7 +61,7 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
 
       <div className="md:col-span-2">
         <label className="block text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] mb-1 font-medium">
-          Phone Number
+          {t("userProfile.personalInfo.phone")}
         </label>
         <input
           type="tel"
@@ -75,14 +78,14 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
           onClick={() => setShowPassword(!showPassword)}
           className="text-sm font-semibold px-4 py-2 rounded-md bg-[#F2A056] dark:bg-[var(--color-dark-accent)] text-white hover:bg-[#e9a66f] dark:hover:bg-[var(--color-dark-accent)]/80 transition"
         >
-          {showPassword ? "Hide Password Fields" : "Change Password"}
+          {showPassword ? t("userProfile.personalInfo.hidePassword") : t("userProfile.personalInfo.changePassword")}
         </button>
 
         {showPassword && (
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-5 animate-fadeIn">
             <div>
               <label className="block mb-1 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
-                New Password
+                {t("userProfile.personalInfo.newPassword")}
               </label>
               <input
                 type="password"
@@ -94,7 +97,7 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
 
             <div>
               <label className="block mb-1 text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]">
-                Confirm Password
+                {t("userProfile.personalInfo.confirmPassword")}
               </label>
               <input
                 type="password"
@@ -111,9 +114,9 @@ const UserUpdateData: React.FC<UserUpdateDataProps> = ({
         <button
           type="submit"
           disabled={mutation.isPending}
-          className="px-6 py-2 rounded-md transition text-white bg-[#F19645] dark:bg-[var(--color-dark-accent)] hover:bg-[#e9a66f] dark:hover:bg-[var(--color-dark-accent)]/80"
+          className="px-6 py-2 rounded-md transition text-white bg-[#F19645] dark:bg-[var(--color-dark-accent)] hover:bg-[#e9a66f] dark:hover:bg-[var(--color-dark-accent)]/80 font-bold"
         >
-          {mutation.isPending ? "Saving..." : "Save Changes"}
+          {mutation.isPending ? t("userProfile.personalInfo.saving") : t("userProfile.personalInfo.save")}
         </button>
       </div>
     </form>

@@ -7,23 +7,25 @@ import {
   FaStethoscope,
   FaArrowRight,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 import LoaderPage from "../../../Shared/LoaderPage/LoaderPage";
 import { useMyUpcomingReservations } from "../../../Hooks/Reservation/useReservation";
 import type { Reservation } from "../../../Interfaces/IReservations";
 import SharedPagination from "./SharedPagination";
 
-const formatDate = (dateString: string) => {
+const formatDate = (dateString: string, t: TFunction, lng: string) => {
   const date = new Date(dateString);
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
   if (date.toDateString() === today.toDateString()) {
-    return "Today";
+    return t("userProfile.common.today");
   } else if (date.toDateString() === tomorrow.toDateString()) {
-    return "Tomorrow";
+    return t("userProfile.common.tomorrow");
   } else {
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleDateString(lng, {
       weekday: "long",
       month: "short",
       day: "numeric",
@@ -46,6 +48,7 @@ const getDaysUntil = (dateString: string) => {
 };
 
 export default function UpcomingReservations() {
+  const { t, i18n } = useTranslation();
   const {
     data: reservations = [],
     isLoading,
@@ -68,7 +71,7 @@ export default function UpcomingReservations() {
           <FaClock className="text-red-500 text-2xl" />
         </div>
         <p className="text-red-600 dark:text-red-400 font-medium">
-          Failed to load upcoming reservations
+          {t("userProfile.appointments.error")}
         </p>
       </div>
     );
@@ -80,10 +83,10 @@ export default function UpcomingReservations() {
           <FaCalendarAlt className="text-4xl text-[var(--color-light-accent)]" />
         </div>
         <h3 className="text-xl font-semibold text-[var(--color-text-primary)] mb-2">
-          No Upcoming Appointments
+          {t("userProfile.appointments.empty.title")}
         </h3>
         <p className="text-[var(--color-text-muted)]">
-          You don't have any upcoming appointments scheduled.
+          {t("userProfile.appointments.empty.text")}
         </p>
       </div>
     );
@@ -117,7 +120,7 @@ export default function UpcomingReservations() {
         {/* Reservations Timeline */}
         <div className="space-y-8">
           {paginatedReservations.map(
-            (reservation: Reservation, index: number) => {
+            (reservation: Reservation) => {
               const daysUntil = getDaysUntil(reservation.date);
               const isToday = daysUntil === 0;
               const isTomorrow = daysUntil === 1;
@@ -130,18 +133,16 @@ export default function UpcomingReservations() {
                   {/* Timeline Dot */}
                   <div className="relative z-10 flex-shrink-0 hidden md:flex">
                     <div
-                      className={`w-16 h-16 rounded-full flex items-center justify-center border-4 shadow-lg transition-transform group-hover:scale-110 ${
-                        isToday
-                          ? "bg-[var(--color-light-accent)] border-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-accent)] dark:border-[var(--color-dark-card)] animate-pulse"
-                          : "bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] border-[var(--color-light-accent)] dark:border-[var(--color-dark-accent)]"
-                      }`}
+                      className={`w-16 h-16 rounded-full flex items-center justify-center border-4 shadow-lg transition-transform group-hover:scale-110 ${isToday
+                        ? "bg-[var(--color-light-accent)] border-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-accent)] dark:border-[var(--color-dark-card)] animate-pulse"
+                        : "bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] border-[var(--color-light-accent)] dark:border-[var(--color-dark-accent)]"
+                        }`}
                     >
                       <FaPaw
-                        className={`text-lg ${
-                          isToday
-                            ? "text-white"
-                            : "text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]"
-                        }`}
+                        className={`text-lg ${isToday
+                          ? "text-white"
+                          : "text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]"
+                          }`}
                       />
                     </div>
                   </div>
@@ -151,12 +152,12 @@ export default function UpcomingReservations() {
                     {/* Urgency Badge */}
                     {isToday && (
                       <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-[var(--color-light-accent)] to-[var(--color-accent-dark)] text-white text-xs font-bold rounded-full animate-pulse shadow-lg">
-                        TODAY
+                        {t("userProfile.common.today").toUpperCase()}
                       </div>
                     )}
                     {isTomorrow && !isToday && (
                       <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-[var(--color-accent-light)] to-[var(--color-light-accent)] text-white text-xs font-bold rounded-full shadow-lg">
-                        TOMORROW
+                        {t("userProfile.common.tomorrow").toUpperCase()}
                       </div>
                     )}
 
@@ -173,11 +174,13 @@ export default function UpcomingReservations() {
                             </div>
                             <div>
                               <h3 className="text-2xl font-bold text-[var(--color-text-primary)]">
-                                {formatDate(reservation.date)}
+                                {formatDate(reservation.date, t, i18n.language)}
                               </h3>
                               {daysUntil > 1 && (
                                 <p className="text-sm text-[var(--color-text-muted)]">
-                                  In {daysUntil} days
+                                  {t("userProfile.common.inDays", {
+                                    count: daysUntil,
+                                  })}
                                 </p>
                               )}
                             </div>
@@ -200,14 +203,14 @@ export default function UpcomingReservations() {
                           </div>
                           <div>
                             <p className="text-xs text-[var(--color-text-muted)] mb-1">
-                              Pet
+                              {t("userProfile.common.petType")}
                             </p>
                             <p className="text-lg font-bold text-[var(--color-text-primary)]">
                               {reservation.pet?.name || "N/A"}
                             </p>
                             <p className="text-xs text-[var(--color-text-muted)]">
                               {reservation.pet?.type} • {reservation.pet?.age}{" "}
-                              years
+                              {t("userProfile.common.years")}
                             </p>
                           </div>
                         </div>
@@ -218,14 +221,15 @@ export default function UpcomingReservations() {
                           </div>
                           <div className="flex-1">
                             <p className="text-xs text-[var(--color-text-muted)] mb-1">
-                              Service
+                              {t("userProfile.common.service")}
                             </p>
                             <p className="text-lg font-bold text-[var(--color-text-primary)]">
                               {reservation.service?.title || "N/A"}
                             </p>
                             {reservation.service?.priceRange && (
                               <p className="text-sm text-[var(--color-light-accent)] font-semibold">
-                                {reservation.service.priceRange} EGP
+                                {reservation.service.priceRange}{" "}
+                                {t("userProfile.common.currency")}
                               </p>
                             )}
                           </div>
@@ -240,10 +244,11 @@ export default function UpcomingReservations() {
                           </div>
                           <div>
                             <p className="text-xs text-[var(--color-text-muted)] mb-0.5">
-                              Assigned Doctor
+                              {t("userProfile.common.assignedDoctor")}
                             </p>
                             <p className="text-base font-semibold text-[var(--color-text-primary)]">
-                              Dr. {reservation.doctor?.userName || "N/A"}
+                              {t("userProfile.common.doctor")}.{" "}
+                              {reservation.doctor?.userName || "N/A"}
                             </p>
                           </div>
                         </div>
