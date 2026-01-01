@@ -10,6 +10,7 @@ import UserOrders from "../../Components/UserProfile/Orders";
 import PetOrderTracking from "../../Components/UserProfile/OrderTracking";
 import UserUpdateData from "../../Components/UserProfile/UserUpdateData";
 import Appointments from "../../Components/UserProfile/Appointments";
+import ShoppingAnalytics from "../../Components/UserProfile/ShoppingAnalytics";
 import NotificationBell from "../../Components/UserProfile/components/UserPell";
 
 export default function UserPetClinicProfile() {
@@ -34,6 +35,7 @@ export default function UserPetClinicProfile() {
     "Add New Pet",
     "Orders",
     "Order Tracking",
+    "Shopping Analytics",
   ];
 
   if (isLoading) return <LoaderPage />;
@@ -115,11 +117,10 @@ export default function UserPetClinicProfile() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`text-left px-5 py-3 font-medium rounded-md mb-2 transition shadow-sm ${
-                activeTab === tab
+              className={`text-left px-5 py-3 font-medium rounded-md mb-2 transition shadow-sm ${activeTab === tab
                   ? "text-white bg-[#F2A056] dark:bg-[var(--color-dark-accent)]"
                   : "text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] hover:bg-[#F2A056]/20 dark:hover:bg-[var(--color-dark-accent)]/20 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
-              }`}
+                }`}
             >
               {tab}
             </button>
@@ -165,6 +166,11 @@ export default function UserPetClinicProfile() {
           {activeTab === "Order Tracking" && (
             <div>
               <PetOrderTracking />
+            </div>
+          )}
+          {activeTab === "Shopping Analytics" && (
+            <div>
+              <ShoppingAnalytics />
             </div>
           )}
         </div>

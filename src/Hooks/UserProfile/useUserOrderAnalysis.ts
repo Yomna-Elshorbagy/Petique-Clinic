@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { IUserSpendingSummary, IUserTopCategory, IUserTopProduct } from './../../Interfaces/IUserOrdersAnalytics';
 import { getUserSpendingSummary, getUserTopCategories, getUserTopProducts } from './../../Apis/UserOrderAnalyticsApis';
+import type { IUserSpendingSummary, IUserTopCategory, IUserTopProduct } from "../../Interfaces/IUserOrdersAnalytics";
 
 // ================= USER ANALYTICS =================
 

@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { PawPrint, Phone, MapPin, Mail, Cat, Dog } from "lucide-react";
+import {
+  PawPrint,
+  Phone,
+  MapPin,
+  Mail,
+  Cat,
+  Dog,
+  MessagesSquare,
+  MessageCircle,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 import { sendContact } from "../../Apis/ContactApis";
 import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
@@ -132,6 +142,39 @@ export default function ContactUs() {
                 {t("contactUs.openHours")}
               </p>
             </div>
+
+            {/* Chat Integration Card */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="mt-8 p-6 rounded-2xl bg-gradient-to-br from-[#F2A056]/5 to-[#A98868]/10 border border-[#F2A056]/20 dark:border-[var(--color-dark-accent)]/20"
+            >
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-[#F2A056] text-white rounded-xl shadow-lg">
+                  <MessagesSquare size={24} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-[#443935] dark:text-white">
+                    Live Support
+                  </h4>
+                  <p className="text-sm text-[#A98868] dark:text-gray-400 mb-4 mt-1">
+                    Have a quick question? Chat directly with our veterinary
+                    experts for real-time assistance.
+                  </p>
+                  <Link
+                    to="/chat"
+                    className="inline-flex items-center gap-2 text-sm font-bold text-[#F2A056] hover:text-[#C58D52] transition-colors group"
+                  >
+                    Start a Conversation
+                    <motion.span
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      →
+                    </motion.span>
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -253,6 +296,31 @@ export default function ContactUs() {
               >
                 {loading ? t("contactUs.sending") : t("contactUs.sendMessage")}
               </motion.button>
+
+              {/* Chat Button */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.4, type: "spring" }}
+                className="flex justify-center mt-4"
+              >
+                <Link
+                  to="/chat"
+                  className="relative flex items-center gap-3 px-6 py-3
+                  bg-[#F2A056] text-white rounded-full shadow-xl
+                  hover:bg-[#C58D52] transition-all duration-300 group"
+                >
+                  {/* hover glow */}
+                  <span className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-10 transition"></span>
+
+                  <MessageCircle
+                    size={22}
+                    className="group-hover:rotate-12 transition-transform"
+                  />
+
+                  <span className="font-semibold">Chat with Experts</span>
+                </Link>
+              </motion.div>
             </form>
           </motion.div>
         </div>
