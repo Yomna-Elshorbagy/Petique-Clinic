@@ -1,0 +1,73 @@
+.chat-staff-wrapper {
+    --color-light-background: #FCF9F4;
+    --color-light-accent: #C58D52;
+    --color-accent-dark: #A98770;
+    --color-bg-cream: #F3EDE6;
+    --color-text-primary: #86654F;
+    --color-text-muted: #A98770;
+    --color-border-light: rgba(169, 136, 104, 0.15);
+}
+
+.chat-staff-wrapper .h-screen {
+    height: calc(100vh - 120px);
+    margin: 10px;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.1);
+    background: white;
+    border: 1px solid var(--color-border-light);
+    animation: staffChatFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.chat-staff-wrapper .bg-\[var\(--color-light-accent\)\] {
+    background: linear-gradient(135deg, #C58D52 0%, #A98770 100%) !important;
+    box-shadow: 0 4px 15px rgba(197, 141, 82, 0.25);
+}
+
+.chat-staff-wrapper .bg-white {
+    background-color: #FFFFFF !important;
+}
+
+.chat-staff-wrapper .hover\:bg-\[var\(--color-bg-cream\)\]:hover {
+    background-color: #F3EDE6 !important;
+    transform: scale(1.01) translateX(4px);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.chat-staff-wrapper .border-l-\[var\(--color-light-accent\)\] {
+    border-left: 5px solid #C58D52 !important;
+}
+
+.chat-staff-wrapper .bg-\[var\(--color-light-accent\)\]\/10 {
+    background-color: rgba(197, 141, 82, 0.1) !important;
+}
+
+@keyframes staffChatFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Professional scrollbar architecture */
+.chat-staff-wrapper ::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chat-staff-wrapper ::-webkit-scrollbar-track {
+    background: #fdfbf8;
+}
+
+.chat-staff-wrapper ::-webkit-scrollbar-thumb {
+    background: #D1C4B5;
+    border-radius: 10px;
+}
+
+.chat-staff-wrapper ::-webkit-scrollbar-thumb:hover {
+    background: #A98770;
+}

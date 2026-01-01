@@ -11,6 +11,7 @@ import {
   FaChartBar,
   FaChevronLeft,
   FaChevronRight,
+  FaHeadset,
 } from "react-icons/fa";
 import { useAppDispatch } from "../../../Store/store";
 import { clearUserToken } from "../../../Store/Slices/AuthSlice";
@@ -55,6 +56,7 @@ const Sidebar = ({
     { name: "Coupons", icon: FaTags, path: "/ecoDashboard/coupons" },
     { name: "Orders", icon: FaShoppingCart, path: "/ecoDashboard/orders" },
     { name: "Emails", icon: FaEnvelopeOpenText, path: "/ecoDashboard/emails" },
+    { name: "Chat Support", icon: FaHeadset, path: "/ecoDashboard/chat" },
     { name: "Reports", icon: FaChartBar, path: "/ecoDashboard/reports" },
   ];
 

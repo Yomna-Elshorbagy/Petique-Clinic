@@ -1,0 +1,54 @@
+.chat-reservation-wrapper {
+    /* Override global CSS variables for this container */
+    --color-light-background: #ECE7E2;
+    --color-light-accent: #86654F;
+    --color-accent-dark: #6D5240;
+    --color-bg-cream: #F5F0EA;
+    --color-text-primary: #86654F;
+    --color-text-muted: #A98770;
+    --color-border-light: rgba(169, 135, 112, 0.2);
+}
+
+.chat-reservation-wrapper .h-screen {
+    height: calc(100vh - 140px);
+    /* Margins for a more professional floating look */
+    margin: 10px;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(134, 101, 79, 0.1);
+}
+
+.chat-reservation-wrapper .bg-\[var\(--color-light-accent\)\] {
+    background: linear-gradient(to bottom right, #86654F, #6D5240) !important;
+}
+
+.chat-reservation-wrapper .bg-white {
+    background-color: #FCF9F4 !important;
+}
+
+.chat-reservation-wrapper .hover\:bg-\[var\(--color-bg-cream\)\]:hover {
+    background-color: #F5F0EA !important;
+    transition: background-color 0.2s ease;
+}
+
+.chat-reservation-wrapper .border-l-\[var\(--color-light-accent\)\] {
+    border-left: 4px solid #86654F !important;
+}
+
+.chat-reservation-wrapper .bg-\[var\(--color-light-accent\)\]\/10 {
+    background-color: rgba(134, 101, 79, 0.08) !important;
+}
+
+.chat-reservation-wrapper .text-white {
+    color: #ECE7E2 !important;
+}
+
+.chat-reservation-wrapper .bg-green-400 {
+    background-color: #8fb339 !important;
+}
+
+/* Smooth transition for chat window */
+.chat-reservation-wrapper .flex-1 {
+    transition: all 0.3s ease-in-out;
+}

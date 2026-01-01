@@ -12,6 +12,7 @@ import {
   FaSignOutAlt,
   FaHeartbeat,
   FaUserTie,
+  FaCommentDots,
 } from "react-icons/fa";
 
 import { NavLink, useNavigate } from "react-router-dom";
@@ -88,9 +89,15 @@ const Sidebar: React.FC<SidebarProps> = ({
       to: "/resDashboard/service",
     },
     {
+      icon: <FaCommentDots />,
+      label: "Chat Support",
+      to: "/resDashboard/chat",
+    },
+    {
       icon: <FaUserTie />,
       label: "Staff Employees",
       to: "/resDashboard/staff",
+      ownerOnly: true,
     },
     {
       icon: <FaHeartbeat />,

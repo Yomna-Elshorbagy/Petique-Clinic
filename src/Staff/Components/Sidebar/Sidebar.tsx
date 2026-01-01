@@ -9,6 +9,7 @@ import {
   ChevronLeft,
   LogOut,
   ClipboardCheck,
+  MessagesSquare,
 } from "lucide-react";
 import { useAppDispatch } from "../../../Store/store";
 import { clearUserToken } from "../../../Store/Slices/AuthSlice";
@@ -32,6 +33,7 @@ const StaffSidebar = () => {
     { path: "/staff/reservation", label: "Reservation", icon: ClipboardCheck },
     { path: "/staff/clients", label: "Clients", icon: Users },
     { path: "/staff/petRecord", label: "Pet Records", icon: FileText },
+    { path: "/staff/chat", label: "Chat Support", icon: MessagesSquare },
     { path: "/staff/vaccinations", label: "Vaccinations", icon: Syringe },
   ];
 

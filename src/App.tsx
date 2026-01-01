@@ -93,9 +93,19 @@ const ServiceDashbored = lazy(
   () => import("./Reservation/Pages/Services/Service")
 );
 
-const Staff = lazy(
-  () => import("./Reservation/Pages/Staff/Staff")
+const ChatReservation = lazy(
+  () => import("./Reservation/Pages/Chat/ChatReservation")
 );
+
+const ChatEcoDashboard = lazy(
+  () => import("./Dashboard/Pages/Chat/ChatEcoDashboard")
+);
+
+const ChatStaffDashboard = lazy(
+  () => import("./Staff/Pages/Chat/ChatStaffDashboard")
+);
+
+const Staff = lazy(() => import("./Reservation/Pages/Staff/Staff"));
 
 //==> NotFound
 
@@ -195,6 +205,7 @@ const router = createBrowserRouter([
       { path: "appointments", element: <StaffApointments /> },
       { path: "clients", element: <Clients /> },
       { path: "petRecord", element: <PetRecords /> },
+      { path: "chat", element: <ChatStaffDashboard /> },
       { path: "vaccinations", element: <StaffVaccinations /> },
       { path: "*", element: <NotFoundPage /> },
     ],
@@ -262,6 +273,15 @@ const router = createBrowserRouter([
           <AdminProtectedRoute>
             {" "}
             <Emails />
+          </AdminProtectedRoute>
+        ),
+      },
+      {
+        path: "chat",
+        element: (
+          <AdminProtectedRoute>
+            {" "}
+            <ChatEcoDashboard />
           </AdminProtectedRoute>
         ),
       },
@@ -357,12 +377,21 @@ const router = createBrowserRouter([
           </DoctorProtectedRoute>
         ),
       },
-          {
+      {
         path: "staff",
         element: (
           <DoctorProtectedRoute>
             {" "}
             <Staff />
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "chat",
+        element: (
+          <DoctorProtectedRoute>
+            {" "}
+            <ChatReservation />
           </DoctorProtectedRoute>
         ),
       },
