@@ -82,16 +82,21 @@ const ChatList: React.FC<ChatListProps> = ({
           <div
             key={conversation._id}
             onClick={() => onSelectConversation(conversation)}
-            className={`p-4 border-b border-[var(--color-border-light)] cursor-pointer transition-colors ${
-              isActive
-                ? "bg-[var(--color-light-accent)]/10 border-l-4 border-l-[var(--color-light-accent)]"
-                : "hover:bg-[var(--color-bg-cream)]"
-            }`}
+            className={`px-5 py-4 cursor-pointer transition-all duration-300 relative group ${isActive
+                ? "bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] z-10"
+                : "hover:bg-white/50"
+              }`}
           >
-            <div className="flex items-start gap-3">
+            {/* Active Indicator */}
+            {isActive && (
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-[var(--color-light-accent)] rounded-r-full" />
+            )}
+
+            <div className="flex items-center gap-4">
               {/* Avatar */}
               <div className="relative flex-shrink-0">
-                <div className="w-12 h-12 rounded-full bg-[var(--color-light-accent)] flex items-center justify-center overflow-hidden">
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105 ${isActive ? "ring-2 ring-[var(--color-light-accent)] ring-offset-2" : "border border-[var(--color-border-light)]"
+                  } bg-white shadow-sm`}>
                   {otherUser.image?.secure_url ? (
                     <img
                       src={otherUser.image.secure_url}
@@ -99,45 +104,55 @@ const ChatList: React.FC<ChatListProps> = ({
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <span className="text-white font-semibold text-lg">
-                      {otherUser.userName.charAt(0).toUpperCase()}
-                    </span>
+                    <div className="w-full h-full bg-[var(--color-light-accent)]/10 flex items-center justify-center">
+                      <span className="text-[var(--color-light-accent)] font-bold text-xl">
+                        {otherUser.userName.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
                   )}
                 </div>
                 {isOnline && (
-                  <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
+                  <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-500 rounded-full border-[3px] border-white shadow-sm" />
                 )}
               </div>
 
               {/* Content */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-1">
-                  <h4 className="font-semibold text-[var(--color-text-primary)] truncate">
+                  <h4 className={`font-bold transition-colors truncate ${isActive ? "text-[var(--color-light-accent)]" : "text-[var(--color-text-primary)]"
+                    }`}>
                     {otherUser.userName}
                   </h4>
                   {conversation.lastMessageAt && (
-                    <span className="text-xs text-[var(--color-text-muted)] flex-shrink-0 ml-2">
+                    <span className="text-[10px] uppercase tracking-wider font-bold text-[var(--color-text-muted)] opacity-60">
                       {formatTime(conversation.lastMessageAt)}
                     </span>
                   )}
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <p className="text-sm text-[var(--color-text-muted)] truncate">
-                    {conversation.lastMessage?.message || "No messages yet"}
+                <div className="flex items-center justify-between gap-2">
+                  <p className={`text-xs truncate flex items-center gap-1.5 ${unreadCount > 0 ? "text-[var(--color-text-primary)] font-semibold" : "text-[var(--color-text-muted)]"
+                    }`}>
+                    {conversation.lastMessage?.messageType === "voice" ? (
+                      <>
+                        <span className="text-[var(--color-light-accent)]">🎤</span>
+                        <span>Voice message</span>
+                      </>
+                    ) : conversation.lastMessage?.messageType === "image" ? (
+                      <>
+                        <span className="text-[var(--color-light-accent)]">📷</span>
+                        <span>Photo</span>
+                      </>
+                    ) : (
+                      conversation.lastMessage?.message || <span className="italic opacity-50">No messages yet</span>
+                    )}
                   </p>
+
                   {unreadCount > 0 && (
-                    <span className="flex-shrink-0 ml-2 bg-[var(--color-light-accent)] text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+                    <span className="flex-shrink-0 bg-[var(--color-light-accent)] text-white text-[10px] font-bold h-5 min-w-[20px] flex items-center justify-center px-1 rounded-full shadow-lg shadow-[var(--color-light-accent)]/30">
                       {unreadCount > 9 ? "9+" : unreadCount}
                     </span>
                   )}
-                </div>
-
-                {/* Role badge */}
-                <div className="mt-1">
-                  <span className="text-xs px-2 py-0.5 bg-[var(--color-bg-cream)] text-[var(--color-text-secondary)] rounded">
-                    {otherUser.role}
-                  </span>
                 </div>
               </div>
             </div>

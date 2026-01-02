@@ -15,7 +15,7 @@ interface SocketContextType {
   onlineUsers: string[];
   setCurrentConversation: (conversation: IConversation | null) => void;
   setSelectedUser: (user: IUser | null) => void;
-  sendMessage: (message: string, receiverId: string, conversationId?: string) => void;
+  sendMessage: (message: string, receiverId: string, conversationId?: string, messageType?: "text" | "voice" | "image" | "file") => void;
   joinConversation: (conversationId: string) => void;
   leaveConversation: (conversationId: string) => void;
   startTyping: (conversationId: string, receiverId: string) => void;
@@ -58,14 +58,14 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   // ===> 2- initialize socket connection
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
-    
+
     if (!token) {
       console.log("No token found, skipping socket connection");
       return;
     }
 
     try {
-      
+
       // ===> 3- create socket connection
       const newSocket = io(baseURL, {
         auth: {
@@ -95,7 +95,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
       // ===> 4- listen for new messages
       newSocket.on("new_message", (data: { message: IMessage; conversationId: string }) => {
         console.log("📨 New message received:", data);
-        
+
         setMessages((prev) => {
           // avoid duplicates
           if (prev.some((msg) => msg._id === data.message._id)) {
@@ -223,13 +223,13 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // ===> 13- Send a message
   const sendMessage = useCallback(
-    (message: string, receiverId: string, conversationId?: string) => {
+    (message: string, receiverId: string, conversationId?: string, messageType: "text" | "voice" | "image" | "file" = "text") => {
       if (socket && isConnected && message.trim()) {
         socket.emit("send_message", {
           conversationId,
           receiverId,
           message: message.trim(),
-          messageType: "text",
+          messageType,
         });
       }
     },
@@ -270,12 +270,12 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     if (currentConversation && socket && isConnected) {
       joinConversation(currentConversation._id);
-      
+
       // Mark messages as read when opening conversation
       const unreadMessageIds = messages
         .filter((msg) => !msg.isRead && msg.receiverId._id !== socket.id)
         .map((msg) => msg._id);
-      
+
       if (unreadMessageIds.length > 0) {
         markAsRead(currentConversation._id, unreadMessageIds);
       }
