@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSocket } from "../../../contexts/SocketContext";
-import { Send, Smile, Mic, Square, Trash2, Image as ImageIcon } from "lucide-react";
+import { Send, Smile, Mic, Square, Trash2, Image as ImageIcon, Loader2 } from "lucide-react";
+import { deleteMessage } from "../../../Apis/ChatApis";
+import Swal from "sweetalert2";
 import EmojiPicker, { Theme, type EmojiClickData } from "emoji-picker-react";
 import type { IConversation, IUser, IMessage } from "../../../Interfaces/IChat";
 
@@ -10,6 +12,10 @@ interface ChatWindowProps {
   messages: IMessage[];
   onlineUsers: string[];
   isLoading: boolean;
+  onLoadMore: () => void;
+  hasMore: boolean;
+  isLoadingMore: boolean;
+  setMessages: React.Dispatch<React.SetStateAction<IMessage[]>>;
 }
 
 const ChatWindow: React.FC<ChatWindowProps> = ({
@@ -18,8 +24,12 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   messages,
   onlineUsers,
   isLoading,
+  onLoadMore,
+  hasMore,
+  isLoadingMore,
+  setMessages,
 }) => {
-  const { sendMessage, startTyping, stopTyping, typingUsers, socket } =
+  const { sendMessage, startTyping, stopTyping, typingUsers } =
     useSocket();
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -33,6 +43,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const emojiPickerRef = useRef<HTMLDivElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [prevScrollHeight, setPrevScrollHeight] = useState(0);
 
   // ===> Close emoji picker when clicking outside
   useEffect(() => {
@@ -69,12 +81,43 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   const isOnline = onlineUsers.includes(selectedUser._id);
   const otherUserTyping = typingUsers[selectedUser._id] || false;
 
-  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    const container = scrollContainerRef.current;
+    if (!container) return;
 
-  // Handle typing indicator
+    if (isLoadingMore) {
+      setPrevScrollHeight(container.scrollHeight);
+    } else if (prevScrollHeight > 0) {
+      const currentScrollHeight = container.scrollHeight;
+      container.scrollTop = currentScrollHeight - prevScrollHeight;
+      setPrevScrollHeight(0);
+    } else {
+      // my notes for handling smart scroll:
+      //**** >> SMART SCROLL: Only auto-scroll to bottom if:
+      // 1. User is already near the bottom (within 150px)
+      // 2. It's the initial load (few messages or scroll is at 0)
+      // 3. User just sent a message ( ===> we can detect this if the last message sender is current user)
+
+      const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 150;
+      const isInitialLoad = container.scrollTop === 0 && messages.length <= 50;
+      const lastMessage = messages[messages.length - 1];
+      const sentByMe = lastMessage && (typeof lastMessage.senderId === 'object' ? lastMessage.senderId._id : lastMessage.senderId) === userId;
+
+      if (isNearBottom || isInitialLoad || sentByMe) {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [messages, isLoadingMore, userId]);
+
+  // ===> Infinite Scroll Handler
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.currentTarget;
+    if (target.scrollTop === 0 && hasMore && !isLoadingMore) {
+      onLoadMore();
+    }
+  };
+
+  // ===> Handle typing indicator
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputMessage(e.target.value);
 
@@ -152,7 +195,13 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
         // Ensure we have data
         if (audioChunksRef.current.length === 0) {
           console.error("❌ No audio data captured");
-          alert("Recording was too short or failed to capture audio.");
+          Swal.fire({
+            title: "Recording Empty",
+            text: "Recording was too short or failed to capture audio.",
+            icon: "info",
+            background: "var(--color-bg-cream)",
+            color: "var(--color-text-primary)",
+          });
           return;
         }
 
@@ -178,7 +227,13 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
       }, 1000);
     } catch (error) {
       console.error("❌ Microphone error:", error);
-      alert("Could not access microphone. Please ensure permissions are granted.");
+      Swal.fire({
+        title: "Microphone Access Denied",
+        text: "Could not access microphone. Please ensure permissions are granted.",
+        icon: "error",
+        background: "var(--color-bg-cream)",
+        color: "var(--color-text-primary)",
+      });
     }
   };
 
@@ -225,7 +280,13 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     const file = e.target.files?.[0];
     if (file) {
       if (!file.type.startsWith("image/")) {
-        alert("Please select an image file.");
+        Swal.fire({
+          title: "Invalid File",
+          text: "Please select an image file.",
+          icon: "warning",
+          background: "var(--color-bg-cream)",
+          color: "var(--color-text-primary)",
+        });
         return;
       }
 
@@ -252,8 +313,52 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     });
   };
 
+  const handleDelete = async (messageId: string) => {
+    const result = await Swal.fire({
+      title: "Delete message?",
+      text: "This will remove the message for you. Other participants will still be able to see it.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "var(--color-light-accent)",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel",
+      background: "var(--color-bg-cream)",
+      color: "var(--color-text-primary)",
+      customClass: {
+        popup: 'rounded-3xl'
+      }
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      await deleteMessage(messageId);
+      setMessages((prev) => prev.filter((msg) => msg._id !== messageId));
+
+      Swal.fire({
+        title: "Deleted!",
+        text: "Message removed.",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+        background: "var(--color-bg-cream)",
+        color: "var(--color-text-primary)",
+      });
+    } catch (error: any) {
+      console.error("Error deleting message:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to delete message.",
+        icon: "error",
+        background: "var(--color-bg-cream)",
+        color: "var(--color-text-primary)",
+      });
+    }
+  };
+
   return (
-    <div className="flex-1 flex flex-col bg-white relative">
+    <div className="flex-1 flex flex-col bg-white relative h-full overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
         style={{ backgroundImage: 'radial-gradient(var(--color-light-accent) 1px, transparent 1px)', backgroundSize: '32px 32px' }}
@@ -298,8 +403,16 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6 custom-scrollbar scroll-smooth relative z-10"
+      <div
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        className="flex-1 min-h-0 overflow-y-auto px-8 py-6 space-y-6 custom-scrollbar relative z-10"
         style={{ scrollbarWidth: 'thin', scrollbarColor: 'var(--color-light-accent) transparent' }}>
+        {isLoadingMore && (
+          <div className="flex justify-center py-2">
+            <Loader2 className="w-6 h-6 animate-spin text-[var(--color-light-accent)]" />
+          </div>
+        )}
         {isLoading && messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full gap-4">
             <div className="w-10 h-10 border-4 border-[var(--color-light-accent)] border-t-transparent rounded-full animate-spin" />
@@ -379,6 +492,18 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                           <p className="whitespace-pre-wrap break-words">{message.message}</p>
                         )}
                       </div>
+
+                      {/* Delete Option (Visible on Hover for Sent Messages Only) */}
+                      {isSent && (
+                        <button
+                          onClick={() => handleDelete(message._id)}
+                          className={`absolute top-1/2 -translate-y-1/2 ${isSent ? "-left-10" : "-right-10"
+                            } p-2 text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all duration-200`}
+                          title="Delete message"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      )}
                     </div>
 
                     <div

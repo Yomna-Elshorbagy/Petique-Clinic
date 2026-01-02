@@ -7,6 +7,7 @@ interface ChatListProps {
   onSelectConversation: (conversation: IConversation) => void;
   onlineUsers: string[];
   isLoading: boolean;
+  onClearAll: () => void;
 }
 
 const ChatList: React.FC<ChatListProps> = ({
@@ -15,6 +16,7 @@ const ChatList: React.FC<ChatListProps> = ({
   onSelectConversation,
   onlineUsers,
   isLoading,
+  onClearAll,
 }) => {
   const formatTime = (date: Date | string) => {
     const d = new Date(date);
@@ -71,94 +73,112 @@ const ChatList: React.FC<ChatListProps> = ({
   }
 
   return (
-    <div className="flex-1 overflow-y-auto">
-      {conversations.map((conversation) => {
-        const otherUser = getOtherParticipant(conversation);
-        const isOnline = onlineUsers.includes(otherUser._id);
-        const isActive = currentConversation?._id === conversation._id;
-        const unreadCount = conversation.unreadCount || 0;
+    <div className="flex-1 flex flex-col overflow-hidden">
+      {/* Search/Header for Chat List */}
+      <div className="px-5 py-2 border-b border-[var(--color-border-light)] flex items-center justify-between bg-white/30 backdrop-blur-sm">
+        <span className="text-[10px] font-black uppercase tracking-widest text-[var(--color-text-muted)] opacity-50">
+          All Conversations
+        </span>
+        {conversations.length > 0 && (
+          <button
+            onClick={onClearAll}
+            className="text-[10px] font-black uppercase tracking-widest text-red-500 hover:text-red-700 transition-colors p-2"
+            title="Clear all messages"
+          >
+            Clear All
+          </button>
+        )}
+      </div>
 
-        return (
-          <div
-            key={conversation._id}
-            onClick={() => onSelectConversation(conversation)}
-            className={`px-5 py-4 cursor-pointer transition-all duration-300 relative group ${isActive
+      <div className="flex-1 overflow-y-auto">
+        {conversations.map((conversation) => {
+          const otherUser = getOtherParticipant(conversation);
+          const isOnline = onlineUsers.includes(otherUser._id);
+          const isActive = currentConversation?._id === conversation._id;
+          const unreadCount = conversation.unreadCount || 0;
+
+          return (
+            <div
+              key={conversation._id}
+              onClick={() => onSelectConversation(conversation)}
+              className={`px-5 py-4 cursor-pointer transition-all duration-300 relative group ${isActive
                 ? "bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] z-10"
                 : "hover:bg-white/50"
-              }`}
-          >
-            {/* Active Indicator */}
-            {isActive && (
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-[var(--color-light-accent)] rounded-r-full" />
-            )}
+                }`}
+            >
+              {/* Active Indicator */}
+              {isActive && (
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-[var(--color-light-accent)] rounded-r-full" />
+              )}
 
-            <div className="flex items-center gap-4">
-              {/* Avatar */}
-              <div className="relative flex-shrink-0">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105 ${isActive ? "ring-2 ring-[var(--color-light-accent)] ring-offset-2" : "border border-[var(--color-border-light)]"
-                  } bg-white shadow-sm`}>
-                  {otherUser.image?.secure_url ? (
-                    <img
-                      src={otherUser.image.secure_url}
-                      alt={otherUser.userName}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-[var(--color-light-accent)]/10 flex items-center justify-center">
-                      <span className="text-[var(--color-light-accent)] font-bold text-xl">
-                        {otherUser.userName.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                  )}
-                </div>
-                {isOnline && (
-                  <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-500 rounded-full border-[3px] border-white shadow-sm" />
-                )}
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-1">
-                  <h4 className={`font-bold transition-colors truncate ${isActive ? "text-[var(--color-light-accent)]" : "text-[var(--color-text-primary)]"
-                    }`}>
-                    {otherUser.userName}
-                  </h4>
-                  {conversation.lastMessageAt && (
-                    <span className="text-[10px] uppercase tracking-wider font-bold text-[var(--color-text-muted)] opacity-60">
-                      {formatTime(conversation.lastMessageAt)}
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-between gap-2">
-                  <p className={`text-xs truncate flex items-center gap-1.5 ${unreadCount > 0 ? "text-[var(--color-text-primary)] font-semibold" : "text-[var(--color-text-muted)]"
-                    }`}>
-                    {conversation.lastMessage?.messageType === "voice" ? (
-                      <>
-                        <span className="text-[var(--color-light-accent)]">🎤</span>
-                        <span>Voice message</span>
-                      </>
-                    ) : conversation.lastMessage?.messageType === "image" ? (
-                      <>
-                        <span className="text-[var(--color-light-accent)]">📷</span>
-                        <span>Photo</span>
-                      </>
+              <div className="flex items-center gap-4">
+                {/* Avatar */}
+                <div className="relative flex-shrink-0">
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105 ${isActive ? "ring-2 ring-[var(--color-light-accent)] ring-offset-2" : "border border-[var(--color-border-light)]"
+                    } bg-white shadow-sm`}>
+                    {otherUser.image?.secure_url ? (
+                      <img
+                        src={otherUser.image.secure_url}
+                        alt={otherUser.userName}
+                        className="w-full h-full object-cover"
+                      />
                     ) : (
-                      conversation.lastMessage?.message || <span className="italic opacity-50">No messages yet</span>
+                      <div className="w-full h-full bg-[var(--color-light-accent)]/10 flex items-center justify-center">
+                        <span className="text-[var(--color-light-accent)] font-bold text-xl">
+                          {otherUser.userName.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
                     )}
-                  </p>
-
-                  {unreadCount > 0 && (
-                    <span className="flex-shrink-0 bg-[var(--color-light-accent)] text-white text-[10px] font-bold h-5 min-w-[20px] flex items-center justify-center px-1 rounded-full shadow-lg shadow-[var(--color-light-accent)]/30">
-                      {unreadCount > 9 ? "9+" : unreadCount}
-                    </span>
+                  </div>
+                  {isOnline && (
+                    <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-500 rounded-full border-[3px] border-white shadow-sm" />
                   )}
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between mb-1">
+                    <h4 className={`font-bold transition-colors truncate ${isActive ? "text-[var(--color-light-accent)]" : "text-[var(--color-text-primary)]"
+                      }`}>
+                      {otherUser.userName}
+                    </h4>
+                    {conversation.lastMessageAt && (
+                      <span className="text-[10px] uppercase tracking-wider font-bold text-[var(--color-text-muted)] opacity-60">
+                        {formatTime(conversation.lastMessageAt)}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-between gap-2">
+                    <p className={`text-xs truncate flex items-center gap-1.5 ${unreadCount > 0 ? "text-[var(--color-text-primary)] font-semibold" : "text-[var(--color-text-muted)]"
+                      }`}>
+                      {conversation.lastMessage?.messageType === "voice" ? (
+                        <>
+                          <span className="text-[var(--color-light-accent)]">🎤</span>
+                          <span>Voice message</span>
+                        </>
+                      ) : conversation.lastMessage?.messageType === "image" ? (
+                        <>
+                          <span className="text-[var(--color-light-accent)]">📷</span>
+                          <span>Photo</span>
+                        </>
+                      ) : (
+                        conversation.lastMessage?.message || <span className="italic opacity-50">No messages yet</span>
+                      )}
+                    </p>
+
+                    {unreadCount > 0 && (
+                      <span className="flex-shrink-0 bg-[var(--color-light-accent)] text-white text-[10px] font-bold h-5 min-w-[20px] flex items-center justify-center px-1 rounded-full shadow-lg shadow-[var(--color-light-accent)]/30">
+                        {unreadCount > 9 ? "9+" : unreadCount}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };

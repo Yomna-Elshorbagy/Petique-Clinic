@@ -5,15 +5,16 @@ import {
   getMessages,
   getAvailableUsers,
   getOrCreateConversation,
+  clearAllChats,
 } from "../../../Apis/ChatApis";
 import ChatList from "./ChatList";
 import ChatWindow from "./ChatWindow";
 import UserSelector from "./UserSelector";
 import type { IConversation, IUser, IMessage } from "../../../Interfaces/IChat";
+import Swal from "sweetalert2";
 
 const ChatContainer: React.FC = () => {
   const {
-    socket,
     isConnected,
     conversations: socketConversations,
     currentConversation,
@@ -29,7 +30,14 @@ const ChatContainer: React.FC = () => {
   const [availableUsers, setAvailableUsers] = useState<IUser[]>([]);
   const [showUserSelector, setShowUserSelector] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [showChat] = useState(true);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 50,
+    total: 0,
+    pages: 1,
+  });
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // ===> 1- Use socket conversations directly
   const conversations = socketConversations;
@@ -74,13 +82,78 @@ const ChatContainer: React.FC = () => {
     }
   };
 
-  const loadMessages = async (conversationId: string) => {
+  const loadMessages = async (conversationId: string, page: number = 1) => {
     try {
-      setIsLoading(true);
-      const response = await getMessages(conversationId);
-      setMessages(response.data.messages || []);
+      if (page === 1) setIsLoading(true);
+      else setIsLoadingMore(true);
+
+      const response = await getMessages(conversationId, page);
+      const newMessages = response.data.messages || [];
+      const paginationData = response.data.pagination;
+
+      if (page === 1) {
+        setMessages(newMessages);
+      } else {
+        setMessages((prev) => [...newMessages, ...prev]);
+      }
+
+      setPagination(paginationData);
+      setHasMore(paginationData.page < paginationData.pages);
     } catch (error: any) {
       console.error("Error loading messages:", error);
+    } finally {
+      setIsLoading(false);
+      setIsLoadingMore(false);
+    }
+  };
+
+  const loadMoreMessages = async () => {
+    if (!currentConversation || isLoadingMore || !hasMore) return;
+    await loadMessages(currentConversation._id, pagination.page + 1);
+  };
+
+  const handleClearChats = async () => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This will delete all messages for you. This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "var(--color-light-accent)",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, clear all!",
+      cancelButtonText: "Cancel",
+      background: "var(--color-bg-cream)",
+      color: "var(--color-text-primary)",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      setIsLoading(true);
+      await clearAllChats();
+      setMessages([]);
+      await loadConversations();
+      setCurrentConversation(null);
+      setSelectedUser(null);
+
+      Swal.fire({
+        title: "Cleared!",
+        text: "Your chat history has been cleared.",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+        background: "var(--color-bg-cream)",
+        color: "var(--color-text-primary)",
+      });
+    } catch (error: any) {
+      console.error("Error clearing chats:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to clear chats. Please try again.",
+        icon: "error",
+        background: "var(--color-bg-cream)",
+        color: "var(--color-text-primary)",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -142,7 +215,13 @@ const ChatContainer: React.FC = () => {
     } catch (error: any) {
       console.error("Error selecting user:", error);
       // Show error to user
-      alert(error.response?.data?.message || "Failed to start conversation");
+      Swal.fire({
+        title: "Error!",
+        text: error.response?.data?.message || "Failed to start conversation",
+        icon: "error",
+        background: "var(--color-bg-cream)",
+        color: "var(--color-text-primary)",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -201,6 +280,7 @@ const ChatContainer: React.FC = () => {
             onSelectConversation={handleSelectConversation}
             onlineUsers={onlineUsers}
             isLoading={isLoading}
+            onClearAll={handleClearChats}
           />
         </div>
 
@@ -213,6 +293,10 @@ const ChatContainer: React.FC = () => {
               messages={messages}
               onlineUsers={onlineUsers}
               isLoading={isLoading}
+              onLoadMore={loadMoreMessages}
+              hasMore={hasMore}
+              isLoadingMore={isLoadingMore}
+              setMessages={setMessages}
             />
           ) : (
             <div className="flex-1 flex items-center justify-center bg-[var(--color-bg-cream)]/20 relative">
