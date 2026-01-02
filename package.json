@@ -27,6 +27,7 @@
     "echarts": "^6.0.0",
     "echarts-for-react": "^3.0.5",
     "embla-carousel-autoplay": "^8.6.0",
+    "emoji-picker-react": "^4.16.1",
     "flowbite": "^4.0.1",
     "framer-motion": "^12.23.24",
     "gsap": "^3.13.0",

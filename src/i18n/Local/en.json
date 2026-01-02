@@ -884,7 +884,8 @@
   },
   "breadcrumbs": {
     "home": "Home",
-    "shop": "Shop"
+    "shop": "Shop",
+    "myAccount": "My Account"
   },
   "products": {
     "title": "Our Products",
@@ -995,6 +996,7 @@
     "error": "Failed to load doctors"
   },
   "userProfile": {
+    "title": "Pet Owner Dashboard",
     "tabs": {
       "appointments": "Appointments",
       "personalInformation": "Personal Information",
@@ -1003,6 +1005,11 @@
       "orders": "Orders",
       "orderTracking": "Order Tracking",
       "shoppingAnalytics": "Shopping Analytics"
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "shop": "Shop",
+      "myAccount": "My Account"
     },
     "common": {
       "currency": "EGP",
@@ -1031,6 +1038,8 @@
     "error": "Failed to load user profile. Please try again later.",
     "appointments": {
       "title": "Your Appointments",
+      "subtitle": "Manage and track all your pet clinic appointments",
+
       "tabs": {
         "all": "All",
         "upcoming": "Upcoming",

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSocket } from "../../../contexts/SocketContext";
-import { Send } from "lucide-react";
+import { Send, Smile } from "lucide-react";
+import EmojiPicker, { Theme, type EmojiClickData } from "emoji-picker-react";
 import type { IConversation, IUser, IMessage } from "../../../Interfaces/IChat";
 
 interface ChatWindowProps {
@@ -22,8 +23,29 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     useSocket();
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
+
+  // ===> Close emoji picker when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        emojiPickerRef.current &&
+        !emojiPickerRef.current.contains(event.target as Node)
+      ) {
+        setShowEmojiPicker(false);
+      }
+    };
+
+    if (showEmojiPicker) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showEmojiPicker]);
 
   // Get current user ID from token
   const getCurrentUserId = () => {
@@ -82,6 +104,16 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
+    }
+  };
+
+  //===> emojis
+  const onEmojiClick = (emojiData: EmojiClickData) => {
+    setInputMessage((prev) => prev + emojiData.emoji);
+    // Focus back on input after selecting emoji
+    const inputElement = document.getElementById("chat-input");
+    if (inputElement) {
+      inputElement.focus();
     }
   };
 
@@ -210,10 +242,33 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
         )}
       </div>
 
-      {/* Input */}
-      <div className="px-6 py-4 border-t border-[var(--color-border-light)] bg-white">
+      {/* Input  with emojis */}
+      <div className="px-6 py-4 border-t border-[var(--color-border-light)] bg-white relative">
         <div className="flex items-center gap-3">
+          <div className="relative" ref={emojiPickerRef}>
+            <button
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              className="p-2 text-[var(--color-text-muted)] hover:text-[var(--color-light-accent)] transition-colors rounded-lg hover:bg-gray-100"
+              type="button"
+            >
+              <Smile size={24} />
+            </button>
+
+            {showEmojiPicker && (
+              <div className="absolute bottom-full left-0 mb-2 z-50 shadow-xl">
+                <EmojiPicker
+                  onEmojiClick={onEmojiClick}
+                  autoFocusSearch={false}
+                  theme={Theme.LIGHT}
+                  width={350}
+                  height={400}
+                />
+              </div>
+            )}
+          </div>
+
           <input
+            id="chat-input"
             type="text"
             value={inputMessage}
             onChange={handleInputChange}
