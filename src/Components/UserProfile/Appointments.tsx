@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import AllReservations from "./components/AllReservations";
 import UpcomingReservations from "./components/UpcomingReservations";
 import PastReservations from "./components/PastReservations";
@@ -8,27 +9,40 @@ import SEO from "../SEO/SEO";
 type TabType = "all" | "upcoming" | "past";
 
 export default function Appointments() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<TabType>("all");
 
   const tabs = [
-    { id: "all" as TabType, label: "All Reservations", count: null },
-    { id: "upcoming" as TabType, label: "Upcoming", count: null },
-    { id: "past" as TabType, label: "Past", count: null },
+    {
+      id: "all" as TabType,
+      label: t("userProfile.appointments.tabs.all"),
+      count: null,
+    },
+    {
+      id: "upcoming" as TabType,
+      label: t("userProfile.appointments.tabs.upcoming"),
+      count: null,
+    },
+    {
+      id: "past" as TabType,
+      label: t("userProfile.appointments.tabs.past"),
+      count: null,
+    },
   ];
 
   return (
     <div className="w-full">
       <SEO
-        title="Appointments | Pet Clinic"
-        description="Manage your personal info, pets, and appointments."
+        title={t("userProfile.seo.title")}
+        description={t("userProfile.seo.description")}
       />
       {/* Header */}
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-[var(--color-text-primary)] mb-2">
-          My Appointments
+          {t("userProfile.appointments.title")}
         </h2>
         <p className="text-[var(--color-text-muted)]">
-          Manage and track all your pet clinic appointments
+          {t("userProfile.appointments.subtitle")}
         </p>
       </div>
 
@@ -41,10 +55,9 @@ export default function Appointments() {
               onClick={() => setActiveTab(tab.id)}
               className={`
                 relative px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300
-                ${
-                  activeTab === tab.id
-                    ? "text-white shadow-lg"
-                    : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-warm)] dark:hover:bg-[var(--color-dark-bg-hover)]"
+                ${activeTab === tab.id
+                  ? "text-white shadow-lg"
+                  : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-warm)] dark:hover:bg-[var(--color-dark-bg-hover)]"
                 }
               `}
               style={{

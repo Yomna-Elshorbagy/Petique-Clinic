@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { FaPen } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
 import profileImage from "../../assets/images/pet1.jpg";
 import SEO from "../../Components/SEO/SEO";
 import { useUserProfile } from "../../Hooks/UserProfile/useUserProfile";
-import AddPetForm from "../../Components/UserProfile/AddPet";
+import AddPet from "../../Components/UserProfile/AddPet";
 import UserPets from "../../Components/UserProfile/UserPets";
-import UserOrders from "../../Components/UserProfile/Orders";
+import Orders from "../../Components/UserProfile/Orders";
 import PetOrderTracking from "../../Components/UserProfile/OrderTracking";
 import UserUpdateData from "../../Components/UserProfile/UserUpdateData";
 import Appointments from "../../Components/UserProfile/Appointments";
@@ -14,6 +15,7 @@ import ShoppingAnalytics from "../../Components/UserProfile/ShoppingAnalytics";
 import NotificationBell from "../../Components/UserProfile/components/UserPell";
 
 export default function UserPetClinicProfile() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("Appointments");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -29,13 +31,19 @@ export default function UserPetClinicProfile() {
   } = useUserProfile();
 
   const tabs = [
-    "Appointments",
-    "Personal Information",
-    "My Pets",
-    "Add New Pet",
-    "Orders",
-    "Order Tracking",
-    "Shopping Analytics",
+    { key: "Appointments", label: t("userProfile.tabs.appointments") },
+    {
+      key: "Personal Information",
+      label: t("userProfile.tabs.personalInformation"),
+    },
+    { key: "My Pets", label: t("userProfile.tabs.myPets") },
+    { key: "Add New Pet", label: t("userProfile.tabs.addNewPet") },
+    { key: "Orders", label: t("userProfile.tabs.orders") },
+    { key: "Order Tracking", label: t("userProfile.tabs.orderTracking") },
+    {
+      key: "Shopping Analytics",
+      label: t("userProfile.tabs.shoppingAnalytics"),
+    },
   ];
 
   if (isLoading) return <LoaderPage />;
@@ -43,15 +51,15 @@ export default function UserPetClinicProfile() {
   if (isError)
     return (
       <p className="text-center py-10 text-[#443935] dark:text-[var(--color-dark-text)]">
-        Error loading User Profile
+        {t("userProfile.error")}
       </p>
     );
 
   return (
     <div className="relative min-h-screen py-10 px-5 text-[#443935] dark:text-[var(--color-dark-text)] bg-[var(--color-light-background)] dark:bg-[var(--color-dark-background)] transition-colors duration-300">
       <SEO
-        title="Profile | Pet Clinic"
-        description="Manage your personal info, pets, and appointments."
+        title={t("userProfile.seo.title")}
+        description={t("userProfile.seo.description")}
       />
 
       {/* ===> paw print background <=== */}
@@ -67,13 +75,11 @@ export default function UserPetClinicProfile() {
       <div className="relative flex flex-col md:flex-row items-center justify-center mb-10 mt-5 md:mt-0">
         <div className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold font-serif text-[#443935] dark:text-[var(--color-dark-text)]">
-            Pet Owner Dashboard
+            {t("userProfile.title")}
           </h2>
           <p className="mt-2 text-[#A98868] dark:text-gray-400">
-            Home /{" "}
-            <span className="text-[#F2A056] dark:text-[var(--color-dark-accent)]">
-              My Account
-            </span>
+            {t("userProfile.breadcrumb.home")} /{" "}
+            {t("userProfile.breadcrumb.myAccount")}
           </p>
         </div>
         <div className="absolute top-0 right-20 md:top-2 md:right-80 hidden md:block">
@@ -92,7 +98,7 @@ export default function UserPetClinicProfile() {
             <div className="relative w-28 h-28">
               <img
                 src={preview || profileImage}
-                alt="Profile"
+                alt={t("userProfile.profileAlt")}
                 className="w-full h-full rounded-full object-cover border-4 border-[#F2A056] dark:border-[var(--color-dark-accent)]"
               />
 
@@ -115,14 +121,14 @@ export default function UserPetClinicProfile() {
 
           {tabs.map((tab) => (
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`text-left px-5 py-3 font-medium rounded-md mb-2 transition shadow-sm ${activeTab === tab
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`text-left px-5 py-3 font-medium rounded-md mb-2 transition shadow-sm ${activeTab === tab.key
                   ? "text-white bg-[#F2A056] dark:bg-[var(--color-dark-accent)]"
                   : "text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] hover:bg-[#F2A056]/20 dark:hover:bg-[var(--color-dark-accent)]/20 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
                 }`}
             >
-              {tab}
+              {tab.label}
             </button>
           ))}
         </div>
@@ -153,13 +159,13 @@ export default function UserPetClinicProfile() {
           )}
           {activeTab === "Add New Pet" && (
             <div>
-              <AddPetForm />
+              <AddPet />
             </div>
           )}
           {activeTab === "Orders" && (
             <div>
               {" "}
-              <UserOrders />
+              <Orders />
             </div>
           )}
 

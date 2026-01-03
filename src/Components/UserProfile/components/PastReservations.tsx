@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 import {
   FaCalendarAlt,
   FaClock,
@@ -14,9 +16,9 @@ import { useMyPastReservations } from "../../../Hooks/Reservation/useReservation
 import type { Reservation } from "../../../Interfaces/IReservations";
 import SharedPagination from "./SharedPagination";
 
-const formatDate = (dateString: string) => {
+const formatDate = (dateString: string, lng: string) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString(lng, {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -42,6 +44,7 @@ const getStatusColor = (status: string) => {
 };
 
 export default function PastReservations() {
+  const { t, i18n } = useTranslation();
   const {
     data: reservations = [],
     isLoading,
@@ -70,7 +73,7 @@ export default function PastReservations() {
           <FaCalendarAlt className="text-red-500 text-2xl" />
         </div>
         <p className="text-red-600 dark:text-red-400 font-medium">
-          Failed to load past reservations
+          {t("userProfile.appointments.error")}
         </p>
       </div>
     );
@@ -82,10 +85,10 @@ export default function PastReservations() {
           <FaCalendarAlt className="text-4xl text-[var(--color-light-accent)]" />
         </div>
         <h3 className="text-xl font-semibold text-[var(--color-text-primary)] mb-2">
-          No Past Appointments
+          {t("userProfile.appointments.empty.title")}
         </h3>
         <p className="text-sm text-[var(--color-text-muted)]">
-          You don't have any past appointments yet.
+          {t("userProfile.appointments.empty.text")}
         </p>
       </div>
     );
@@ -105,7 +108,7 @@ export default function PastReservations() {
   const groupedByMonth = currentReservations.reduce(
     (acc: Record<string, Reservation[]>, reservation: Reservation) => {
       const date = new Date(reservation.date);
-      const monthKey = date.toLocaleDateString("en-US", {
+      const monthKey = date.toLocaleDateString(i18n.language, {
         month: "long",
         year: "numeric",
       });
@@ -132,7 +135,7 @@ export default function PastReservations() {
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-[var(--color-text-primary)] mb-1">
-              Total Past Appointments
+              {t("userProfile.appointments.stats.total")}
             </h3>
             <p className="text-3xl font-bold text-[var(--color-light-accent)]">
               {reservations.length}
@@ -155,8 +158,10 @@ export default function PastReservations() {
                 {month}
               </h3>
               <p className="text-sm text-[var(--color-text-muted)]">
-                {monthReservations.length} appointment
-                {monthReservations.length !== 1 ? "s" : ""}
+                {monthReservations.length}{" "}
+                {monthReservations.length === 1
+                  ? t("userProfile.appointments.stats.total").split(" ")[1] // Fallback or better use a singular/plural logic
+                  : t("userProfile.appointments.stats.total").split(" ")[1] + "s"}
               </p>
             </div>
 
@@ -231,12 +236,14 @@ export default function PastReservations() {
                             <FaPaw className="text-[var(--color-light-accent)] flex-shrink-0" />
                             <div>
                               <p className="text-xs text-[var(--color-text-muted)] mb-0.5">
-                                Pet Information
+                                {t("userProfile.pets.title")}
                               </p>
                               <p className="text-sm font-semibold text-[var(--color-text-primary)]">
                                 {reservation.pet?.name || "N/A"} •{" "}
-                                {reservation.pet?.type || "N/A"} • Age:{" "}
-                                {reservation.pet?.age || "N/A"} years
+                                {reservation.pet?.type || "N/A"} •{" "}
+                                {t("userProfile.personalInfo.age") || "Age"}:{" "}
+                                {reservation.pet?.age || "N/A"}{" "}
+                                {t("userProfile.common.years") || "years"}
                               </p>
                             </div>
                           </div>
@@ -246,14 +253,15 @@ export default function PastReservations() {
                             <FaStethoscope className="text-[var(--color-light-accent)] flex-shrink-0" />
                             <div className="flex-1">
                               <p className="text-xs text-[var(--color-text-muted)] mb-0.5">
-                                Service
+                                {t("userProfile.common.service")}
                               </p>
                               <p className="text-sm font-semibold text-[var(--color-text-primary)]">
                                 {reservation.service?.title || "N/A"}
                               </p>
                               {reservation.service?.priceRange && (
                                 <p className="text-xs text-[var(--color-light-accent)] mt-0.5">
-                                  {reservation.service.priceRange} EGP
+                                  {reservation.service.priceRange}{" "}
+                                  {t("userProfile.common.currency")}
                                 </p>
                               )}
                             </div>
@@ -264,10 +272,11 @@ export default function PastReservations() {
                             <FaUserMd className="text-[var(--color-light-accent)] flex-shrink-0" />
                             <div>
                               <p className="text-xs text-[var(--color-text-muted)] mb-0.5">
-                                Doctor
+                                {t("userProfile.common.doctor")}
                               </p>
                               <p className="text-sm font-semibold text-[var(--color-text-primary)]">
-                                Dr. {reservation.doctor?.userName || "N/A"}
+                                {t("userProfile.common.doctor")}.{" "}
+                                {reservation.doctor?.userName || "N/A"}
                               </p>
                               {reservation.doctor?.email && (
                                 <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
@@ -281,15 +290,15 @@ export default function PastReservations() {
                           <div className="grid grid-cols-2 gap-3">
                             <div className="p-3 rounded-lg bg-[var(--color-bg-cream)] dark:bg-[var(--color-dark-bg-hover)]">
                               <p className="text-xs text-[var(--color-text-muted)] mb-1">
-                                Date
+                                {t("userProfile.common.date")}
                               </p>
                               <p className="text-sm font-semibold text-[var(--color-text-primary)]">
-                                {formatDate(reservation.date)}
+                                {formatDate(reservation.date, i18n.language)}
                               </p>
                             </div>
                             <div className="p-3 rounded-lg bg-[var(--color-bg-cream)] dark:bg-[var(--color-dark-bg-hover)]">
                               <p className="text-xs text-[var(--color-text-muted)] mb-1">
-                                Time
+                                {t("userProfile.common.time")}
                               </p>
                               <p className="text-sm font-semibold text-[var(--color-text-primary)]">
                                 {formatTime(reservation.timeSlot)}

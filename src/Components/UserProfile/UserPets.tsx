@@ -7,15 +7,17 @@ import {
   FaTrash,
 } from "react-icons/fa";
 import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
+import { useState } from "react";
 import { useUserPets } from "../../Hooks/UserProfile/useUserPets";
 import SEO from "../SEO/SEO";
 import SharedPagination from "./components/SharedPagination";
-import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Swal from "sweetalert2";
 import { useSoftDeletePet, useUpdatePet } from "../../Hooks/Pets/UsePets";
 import EditPetModal from "./components/EditPetModal";
 
 export default function UserPets() {
+  const { t } = useTranslation();
   const { data: pets = [], isLoading, isError } = useUserPets();
   const { mutate: updatePet, isPending: updating } = useUpdatePet();
   const { mutate: deletePet } = useSoftDeletePet();
@@ -35,7 +37,7 @@ export default function UserPets() {
   if (isError)
     return (
       <div className="text-center py-10 text-red-500 dark:text-red-400">
-        Failed to load your pets.
+        {t("userProfile.pets.error")}
       </div>
     );
 
@@ -43,17 +45,18 @@ export default function UserPets() {
     return (
       <div className="text-center text-gray-500 dark:text-gray-400 py-10">
         <FaPaw size={40} className="mx-auto mb-3 opacity-60" />
-        <p>No pets found. Add your first pet!</p>
+        <p>{t("userProfile.pets.empty")}</p>
       </div>
     );
 
   const handleDelete = (id: string) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "This pet will be removed",
+      title: t("userProfile.common.deleteConfirmTitle"),
+      text: t("userProfile.common.deleteConfirmText"),
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, delete",
+      confirmButtonText: t("userProfile.common.yesDelete"),
+      cancelButtonText: t("userProfile.common.cancel"),
     }).then((result) => {
       if (result.isConfirmed) {
         deletePet(id);
@@ -82,7 +85,7 @@ export default function UserPets() {
 
       <div>
         <h3 className="text-2xl font-semibold text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] mb-4">
-          My Pets
+          {t("userProfile.pets.title")}
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -127,17 +130,23 @@ export default function UserPets() {
 
               <div className="mt-4 space-y-2">
                 <p className="flex items-center gap-2">
-                  <FaCalendar /> Age:{" "}
-                  <span className="font-medium">{pet.age} years</span>
+                  <FaCalendar /> {t("userProfile.personalInfo.age") || "Age"}:{" "}
+                  <span className="font-medium">
+                    {t("userProfile.pets.age", { age: pet.age })}
+                  </span>
                 </p>
 
                 <p className="flex items-center gap-2">
-                  <FaWeight /> Weight:{" "}
-                  <span className="font-medium">{pet.weight} kg</span>
+                  <FaWeight /> {t("userProfile.addPet.placeholders.weight")}:{" "}
+                  <span className="font-medium">
+                    {t("userProfile.pets.weight", { weight: pet.weight })}
+                  </span>
                 </p>
                 {pet.allergies?.length > 0 && (
                   <div className="mt-2">
-                    <h5 className="font-medium mb-1">Allergies</h5>
+                    <h5 className="font-medium mb-1">
+                      {t("userProfile.pets.allergies")}
+                    </h5>
                     <ul className="list-disc list-inside space-y-1">
                       {pet.allergies.map((allergy: string, index: number) => (
                         <li key={index}>{allergy}</li>
@@ -150,7 +159,7 @@ export default function UserPets() {
               {pet.vaccinationHistory?.length > 0 && (
                 <div className="mt-4 border-t pt-3">
                   <h5 className="font-medium mb-2 flex items-center gap-2">
-                    <FaSyringe /> Vaccinations
+                    <FaSyringe /> {t("userProfile.pets.vaccinations")}
                   </h5>
 
                   {pet.vaccinationHistory.map((v: any) => (
@@ -159,9 +168,13 @@ export default function UserPets() {
                       className="text-sm bg-[var(--color-bg-cream)] p-2 rounded-md mb-1"
                     >
                       <p className="font-semibold">{v.vaccine?.name}</p>
-                      <p>Date: {new Date(v.date).toLocaleDateString()}</p>
                       <p>
-                        Next Dose: {new Date(v.nextDose).toLocaleDateString()}
+                        {t("userProfile.common.date")}:{" "}
+                        {new Date(v.date).toLocaleDateString()}
+                      </p>
+                      <p>
+                        {t("userProfile.pets.nextDose")}:{" "}
+                        {new Date(v.nextDose).toLocaleDateString()}
                       </p>
                     </div>
                   ))}

@@ -79,3 +79,10 @@ export const toggleArchiveConversation = async (conversationId: string) => {
   );
   return response.data;
 };
+// ===> 7- Clear all chats
+export const clearAllChats = async () => {
+  const response = await axios.delete(`${CHAT_BASE_URL}/clear`, {
+    headers: getHeaders(),
+  });
+  return response.data;
+};

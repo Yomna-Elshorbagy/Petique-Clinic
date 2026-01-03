@@ -15,7 +15,7 @@ export interface IMessage {
   senderId: IUser;
   receiverId: IUser;
   message: string;
-  messageType: "text" | "image" | "file";
+  messageType: "text" | "image" | "file" | "voice";
   isRead: boolean;
   readAt?: Date;
   deletedFor: string[];
