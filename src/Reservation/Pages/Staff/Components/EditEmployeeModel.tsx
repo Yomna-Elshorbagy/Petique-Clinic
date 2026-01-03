@@ -1,0 +1,310 @@
+import { useState, useEffect } from "react";
+import { FaTimes, FaCamera, FaSpinner } from "react-icons/fa";
+import Swal from "sweetalert2";
+import type { IUser } from "../../../../Interfaces/IUser";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useUpdateEmployeeStaff } from "../../../../Hooks/Staff/useStaffEmployees";
+
+interface EditEmployeeModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  employee: IUser;
+  onSuccess: () => void;
+}
+
+const employeeSchema = z
+  .object({
+    userName: z.string().min(3, "Full Name must be at least 3 characters"),
+
+    mobileNumber: z
+      .string()
+      .refine((val) => val.trim() !== "", {
+        message: "Mobile Number is required",
+      })
+      .refine((val) => /^01[0125][0-9]{8}$/.test(val), {
+        message: "Enter a valid Egyptian mobile number",
+      }),
+
+    gender: z.enum(["male", "female"]),
+
+    newPassword: z.string().optional(),
+    confirmPassword: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      if (!data.newPassword && !data.confirmPassword) return true;
+      if (data.newPassword && data.newPassword.length < 6) return false;
+      return data.newPassword === data.confirmPassword;
+    },
+    {
+      message:
+        "Password must be at least 6 characters and passwords must match",
+      path: ["confirmPassword"],
+    }
+  );
+
+type FormValues = z.infer<typeof employeeSchema>;
+
+export default function EditEmployeeModal({
+  isOpen,
+  onClose,
+  employee,
+  onSuccess,
+}: EditEmployeeModalProps) {
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const { mutate, isPending } = useUpdateEmployeeStaff();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(employeeSchema),
+    defaultValues: {
+      userName: employee.userName,
+      mobileNumber: employee.mobileNumber,
+      gender: "female",
+      newPassword: "",
+      confirmPassword: "",
+    },
+  });
+
+  useEffect(() => {
+    if (employee) {
+      const gender =
+        employee.gender?.toLowerCase() === "male" ? "male" : "female";
+
+      setTimeout(() => {
+        reset({
+          userName: employee.userName || "",
+          mobileNumber: employee.mobileNumber || "",
+          gender,
+          newPassword: "",
+          confirmPassword: "",
+        });
+        setPreviewUrl(employee.image?.secure_url || null);
+      }, 0);
+    }
+  }, [employee, reset]);
+
+  if (!isOpen) return null;
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+      setImageFile(e.target.files[0]);
+      setPreviewUrl(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
+  const onSubmit = (data: FormValues) => {
+    const fd = new FormData();
+    fd.append("userName", data.userName);
+    fd.append("mobileNumber", data.mobileNumber);
+    fd.append("gender", data.gender);
+    if (data.newPassword) fd.append("newPassword", data.newPassword);
+    if (data.newPassword && data.confirmPassword) {
+      fd.append("confirmPassword", data.confirmPassword);
+    }
+
+    if (imageFile) fd.append("image", imageFile);
+
+    mutate(
+      { id: employee._id, payload: fd },
+      {
+        onSuccess: () => {
+          Swal.fire({
+            icon: "success",
+            title: "Updated!",
+            text: "Employee profile updated successfully",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+          onSuccess();
+          onClose();
+        },
+        onError: (error: unknown) => {
+          const e = error as { response?: { data?: { message?: string } } };
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: e.response?.data?.message || "Failed to add employee",
+          });
+        },
+      }
+    );
+  };
+
+  
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+      <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden animate-fade-in">
+        {/*Header*/}
+        <div className="bg-[#86654F] px-6 py-4 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-white">Edit Employee Profile</h2>
+          <button
+            onClick={onClose}
+            className="text-white/80 hover:text-white transition-colors"
+          >
+            <FaTimes size={20} />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-5">
+          {/*Image Upload*/}
+          <div className="flex justify-center">
+            <div className="relative group cursor-pointer">
+              <div className="w-28 h-28 rounded-full bg-[#FCF9F4] border-2 border-dashed border-[#A98770] flex items-center justify-center overflow-hidden">
+                {previewUrl ? (
+                  <img
+                    src={previewUrl}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="text-center text-[#A98770]">
+                    <FaCamera size={24} className="mx-auto mb-1" />
+                    <span className="text-xs">Upload Photo</span>
+                  </div>
+                )}
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+            </div>
+          </div>
+
+          {/*Fields*/}
+          <div className="space-y-4">
+            {/*Full Name*/}
+            <div>
+              <label className="block text-sm font-medium text-[#86654F] mb-1">
+                Full Name
+              </label>
+              <input
+                type="text"
+                {...register("userName")}
+                className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#6D5240]"
+              />
+              {errors.userName && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.userName.message}
+                </p>
+              )}
+            </div>
+
+            {/*Mobile Number*/}
+            <div>
+              <label className="block text-sm font-medium text-[#86654F] mb-1">
+                Mobile Number
+              </label>
+              <input
+                type="tel"
+                {...register("mobileNumber")}
+                className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#6D5240]"
+              />
+              {errors.mobileNumber && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.mobileNumber.message}
+                </p>
+              )}
+            </div>
+
+            {/*Gender*/}
+            <div>
+              <label className="block text-sm font-medium text-[#86654F] mb-1">
+                Gender
+              </label>
+              <div className="flex gap-4">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    value="male"
+                    {...register("gender")}
+                    className="accent-[#86654F]"
+                  />
+                  <span className="text-[#6D5240]">Male</span>
+                </label>
+
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    value="female"
+                    {...register("gender")}
+                    className="accent-[#86654F]"
+                  />
+                  <span className="text-[#6D5240]">Female</span>
+                </label>
+              </div>
+              {errors.gender && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.gender.message}
+                </p>
+              )}
+            </div>
+
+            {/*New Password*/}
+            <div>
+              <label className="block text-sm font-medium text-[#86654F] mb-1">
+                New Password
+              </label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                {...register("newPassword")}
+                className={`w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#6D5240]`}
+              />
+              {errors.newPassword && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.newPassword.message}
+                </p>
+              )}
+            </div>
+
+            {/*Confirm Password*/}
+            <div>
+              <div>
+                <label className="block text-sm font-medium text-[#86654F] mb-1">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  {...register("confirmPassword")}
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none text-[#6D5240]"
+                />
+                {errors.confirmPassword && (
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/*Submit*/}
+          <button
+            type="submit"
+            disabled={isPending}
+            className="w-full bg-[#86654F] text-white py-3 rounded-xl font-bold hover:bg-[#6D5240] transition-colors shadow-lg shadow-[#86654F]/20 flex items-center justify-center gap-2 disabled:opacity-70"
+          >
+            {isPending ? (
+              <>
+                <FaSpinner className="animate-spin" />
+                Updating...
+              </>
+            ) : (
+              "Update Employee"
+            )}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}

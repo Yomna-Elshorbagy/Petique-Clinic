@@ -5,6 +5,7 @@ const STAFF_BASE_URL = `${baseURL}/staff`;
 
 const getHeaders = () => {
   const token = localStorage.getItem("accessToken");
+  
   return {
     authentication: `bearer ${token}`,
     "Content-Type": "application/json",
@@ -184,6 +185,7 @@ export const addEmployeeStaff = async (payload: FormData) => {
     },
   });
   return data.data;
+  
 };
 
 // soft delete employee
