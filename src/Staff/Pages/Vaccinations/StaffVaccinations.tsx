@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useStaffVaccinationOverview } from '../../../Hooks/Staff/useStaff';
 import VaccinationCard from './Components/VaccinationCard';
 import Pagination from '../../Components/Pagination/Pagination';
+import { useSearch } from './Components/useSearch';
+import SharedSearch from '../../../Shared/SharedSearch/SharedSearch';
 
 export default function StaffVaccinations() {
   const { data: vaccinations, isLoading } = useStaffVaccinationOverview();
@@ -11,9 +13,17 @@ export default function StaffVaccinations() {
   // Client-side pagination logic
   // (Assuming API returns all records for now. If API becomes paginated, update here)
   const allRecords = Array.isArray(vaccinations) ? vaccinations : [];
-  const totalPages = Math.ceil(allRecords.length / itemsPerPage);
+  const {
+  vaccineName,
+  setVaccineName,
+  status,
+  setStatus,
+  filteredRecords,
+} = useSearch(allRecords);
 
-  const currentRecords = allRecords.slice(
+  const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
+
+  const currentRecords = filteredRecords.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -38,6 +48,28 @@ export default function StaffVaccinations() {
         </div>
       ) : allRecords.length > 0 ? (
         <>
+          <SharedSearch
+            searches={[
+              {
+                value: vaccineName,
+                onChange: setVaccineName,
+                placeholder: "Search by vaccine...",
+              },
+            ]}
+            filters={[
+              {
+                value: status,
+                onChange: setStatus,
+                options: [
+                  { label: "All Status", value: "all" },
+                  { label: "Completed", value: "completed" },
+                  { label: "Overdue", value: "overdue" },
+                  { label: "Scheduled", value: "scheduled" },
+                ],
+              },
+            ]}
+          />
+
           <div className="space-y-4">
             {currentRecords.map((record: any, idx: number) => (
               <VaccinationCard key={`${record.petId}-${record.vaccineName}-${idx}`} record={record} />

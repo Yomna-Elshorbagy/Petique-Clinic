@@ -11,6 +11,8 @@ import ReservationsTable from "../../Components/ReservationsTable/ReservationsTa
 import Pagination from "../../Components/Pagination/Pagination";
 import { TIME_SLOTS } from "../../../Constants/timeSlots";
 import StaffStatsOverview from "../../Components/StaffStatsOverview";
+import { useReservationSearch } from "../../Components/ReservationsTable/Hook/useReservationSearch";
+import SharedSearch from "../../../Shared/SharedSearch/SharedSearch";
 
 const EditReservationModal = ({
   isOpen,
@@ -160,8 +162,21 @@ export default function StaffAppointments() {
 
   // Pagination Logic
   const allRecords = Array.isArray(reservations) ? reservations : [];
-  const totalPages = Math.ceil(allRecords.length / itemsPerPage);
-  const currentRecords = allRecords.slice(
+  const {
+  filteredRecords,
+  emailSearch,
+  setEmailSearch,
+  petSearch,
+  setPetSearch,
+  doctor,
+  setDoctor,
+  service,
+  setService,
+  doctorOptions,
+  serviceOptions,
+} = useReservationSearch(allRecords);
+  const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
+  const currentRecords = filteredRecords.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -254,6 +269,33 @@ export default function StaffAppointments() {
       </div>
 
       <StaffStatsOverview />
+
+      <SharedSearch
+        searches={[
+          {
+            placeholder: "Search by Email",
+            value: emailSearch,
+            onChange: setEmailSearch,
+          },
+          {
+            placeholder: "Search by Pet Name",
+            value: petSearch,
+            onChange: setPetSearch,
+          },
+        ]}
+        filters={[
+          {
+            value: doctor,
+            onChange: setDoctor,
+            options: doctorOptions,
+          },
+          {
+            value: service,
+            onChange: setService,
+            options: serviceOptions,
+          },
+        ]}
+      />
 
       {/* Table */}
       <ReservationsTable
