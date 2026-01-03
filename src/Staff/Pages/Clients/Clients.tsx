@@ -3,6 +3,8 @@ import { useStaffPetOwners, useStaffPets } from "../../../Hooks/Staff/useStaff";
 import DataTableComponent from "../../../Shared/Table/TableComponent";
 import { Mail, Phone } from "lucide-react";
 import ClientDetailsModal from "./Components/ClientDetailsModal";
+import { useClientSearch } from "./Components/useClientSearch";
+import { FaSearch } from "react-icons/fa";
 
 export default function Clients() {
   const { data: clients, isLoading: isClientsLoading } = useStaffPetOwners();
@@ -92,6 +94,13 @@ export default function Clients() {
     ],
     [petCounts]
   );
+  const searchClients = Array.isArray(clients) ? clients : [];
+
+  const {
+    search,
+    setSearch,
+    filteredClients,
+  } = useClientSearch(searchClients);
 
   return (
     <div className="space-y-6">
@@ -106,10 +115,23 @@ export default function Clients() {
         </div>
       </div>
 
+      <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <div className="relative flex-1">
+          <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A98770]" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by  Name, Email, or Phone..."
+            className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#FCF9F4] border-none focus:ring-2 focus:ring-[#A98770]/50 text-[#86654F] placeholder-[#A98770]/70 shadow-sm"
+          />
+        </div>
+      </div>
+      
       <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl shadow-sm border border-[var(--color-extra-3)]/30 dark:border-gray-800 overflow-hidden">
         <DataTableComponent
           columns={columns}
-          data={Array.isArray(clients) ? clients : []}
+          data={filteredClients}
           loading={isClientsLoading || isPetsLoading}
           pagination
         />

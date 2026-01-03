@@ -2,6 +2,8 @@ import { useMemo } from "react";
 import DataTableComponent from "../../../../Shared/Table/TableComponent";
 import { useStaffVaccinationOverview } from "../../../../Hooks/Staff/useStaff";
 import { Phone, MoreHorizontal, Edit2 } from "lucide-react";
+import { useVaccinationSearch } from "../Hooks/useVaccinationSearch";
+import { FaSearch } from "react-icons/fa";
 
 const VaccinationRecordsTable = () => {
   const { data: records, isLoading } = useStaffVaccinationOverview();
@@ -162,16 +164,38 @@ const VaccinationRecordsTable = () => {
     []
   );
 
+  const searchVaccinations = Array.isArray(records) ? records : [];
+  const {
+  search,
+  setSearch,
+  filteredRecords,
+} = useVaccinationSearch(searchVaccinations);
+
   return (
+    <>
+    <div className="flex flex-col md:flex-row gap-4 mb-8">
+      <div className="relative flex-1">
+        <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A98770]" />
+        <input
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search by Owner, Pet Name, or Age..."
+        className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#FCF9F4] border-none focus:ring-2 focus:ring-[#A98770]/50 text-[#86654F] placeholder-[#A98770]/70 shadow-sm"
+      />
+      </div>
+    </div>
     <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl shadow-sm border border-[var(--color-extra-3)]/30 overflow-hidden">
       <DataTableComponent
         columns={columns}
-        data={Array.isArray(records) ? records : []}
+        data={filteredRecords}
         loading={isLoading}
         pagination
         title="Pet History"
       />
     </div>
+    </>
+    
   );
 };
 
