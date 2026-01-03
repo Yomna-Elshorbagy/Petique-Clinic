@@ -66,6 +66,11 @@ const Sidebar: React.FC<SidebarProps> = ({
       label: "Reservations",
       to: "/resDashboard/reserv",
     },
+    {
+      icon: <FaCalendarCheck />,
+      label: "Doctor Profile",
+      to: "/resDashboard/profile",
+    },
     { icon: <FaPaw />, label: "Pets", to: "/resDashboard/animals" },
     {
       icon: <FaTags />,

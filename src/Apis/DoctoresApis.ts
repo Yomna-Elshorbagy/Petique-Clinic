@@ -47,16 +47,27 @@ export const deleteDoctor = async (id: string) => {
 };
 
 export const updateDoctor = async (id: string, formData: FormData) => {
+  const token = localStorage.getItem("accessToken");
   const { data } = await axios.put(
     `${DOCTOR_BASE_URL}/updateDoc/${id}`,
     formData,
     {
       headers: {
         authentication: `bearer ${token}`,
-        "Content-Type": "multipart/form-data",
       },
     }
   );
 
   return data;
+};
+
+export const getDoctorProfile = async () => {
+  const token = localStorage.getItem("accessToken");
+  // Assuming the doctor is a 'user' in the system and this endpoint returns their info
+  const { data } = await axios.get(`${baseURL}/user/profile`, {
+    headers: {
+      authentication: `bearer ${token}`,
+    },
+  });
+  return data.data;
 };

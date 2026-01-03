@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addNewDoctor, deleteDoctor, getAllDoctors, softDeleteDoctor, updateDoctor } from "../../Apis/DoctoresApis";
+import { addNewDoctor, deleteDoctor, getAllDoctors, softDeleteDoctor, updateDoctor, getDoctorProfile } from "../../Apis/DoctoresApis";
 
 export const useUpdateDoctor = () => {
   const queryClient = useQueryClient();
@@ -10,7 +10,15 @@ export const useUpdateDoctor = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["doctors"] });
+      queryClient.invalidateQueries({ queryKey: ["doctorProfile"] });
     },
+  });
+};
+
+export const useGetDoctorProfile = () => {
+  return useQuery({
+    queryKey: ["doctorProfile"],
+    queryFn: getDoctorProfile,
   });
 };
 

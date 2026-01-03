@@ -239,7 +239,7 @@ export default function SymptomChecker() {
                   value={formData.petId}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-lg bg-white dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
+                  className="w-full px-4 py-2 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-lg bg-white dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[#b57c48] dark:focus:ring-[var(--color-dark-accent)] "
                 >
                   <option value="">Choose a pet</option>
                   {pets.map((pet: any) => (
@@ -262,7 +262,7 @@ export default function SymptomChecker() {
                   onChange={handleChange}
                   placeholder="e.g., 2 years, 6 months"
                   required
-                  className="w-full px-4 py-2 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-lg bg-white dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
+                  className="w-full px-4 py-2 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-lg bg-white dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[#b57c48] dark:focus:ring-[var(--color-dark-accent)] "
                 />
               </div>
 
@@ -276,7 +276,7 @@ export default function SymptomChecker() {
                   value={formData.appetite}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-lg bg-white dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
+                  className="w-full px-4 py-2 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-lg bg-white dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[#b57c48] dark:focus:ring-[var(--color-dark-accent)] "
                 >
                   <option value="normal">Normal</option>
                   <option value="decreased">Decreased</option>
@@ -295,7 +295,7 @@ export default function SymptomChecker() {
                   value={formData.energy}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-lg bg-white dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
+                  className="w-full px-4 py-2 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-lg bg-white dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[#b57c48] dark:focus:ring-[var(--color-dark-accent)] "
                 >
                   <option value="normal">Normal</option>
                   <option value="low">Low</option>
@@ -312,7 +312,7 @@ export default function SymptomChecker() {
                   id="vomiting"
                   checked={formData.vomiting}
                   onChange={handleChange}
-                  className="w-4 h-4 text-[#F2A056] border-gray-300 rounded focus:ring-[#F2A056]"
+                  className="w-4 h-4 text-[#F2A056] border-gray-300 rounded focus:ring-[#F2A056] focus:ring-2 focus:ring-[#b57c48] dark:focus:ring-[var(--color-dark-accent)] "
                 />
                 <label
                   htmlFor="vomiting"
@@ -333,7 +333,7 @@ export default function SymptomChecker() {
                   onChange={handleChange}
                   rows={3}
                   placeholder="Any other symptoms or concerns..."
-                  className="w-full px-4 py-2 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-lg bg-white dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
+                  className="w-full px-4 py-2 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] rounded-lg bg-white dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-[#b57c48] dark:focus:ring-[var(--color-dark-accent)] "
                 />
               </div>
 
