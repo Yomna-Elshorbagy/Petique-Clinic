@@ -1004,7 +1004,8 @@
       "addNewPet": "Add New Pet",
       "orders": "Orders",
       "orderTracking": "Order Tracking",
-      "shoppingAnalytics": "Shopping Analytics"
+      "shoppingAnalytics": "Shopping Analytics",
+      "symptomChecker": "AI Symptom Checker"
     },
     "breadcrumb": {
       "home": "Home",

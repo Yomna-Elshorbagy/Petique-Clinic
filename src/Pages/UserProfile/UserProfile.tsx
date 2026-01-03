@@ -12,6 +12,7 @@ import PetOrderTracking from "../../Components/UserProfile/OrderTracking";
 import UserUpdateData from "../../Components/UserProfile/UserUpdateData";
 import Appointments from "../../Components/UserProfile/Appointments";
 import ShoppingAnalytics from "../../Components/UserProfile/ShoppingAnalytics";
+import SymptomChecker from "../../Components/UserProfile/SymptomChecker";
 import NotificationBell from "../../Components/UserProfile/components/UserPell";
 
 export default function UserPetClinicProfile() {
@@ -43,6 +44,10 @@ export default function UserPetClinicProfile() {
     {
       key: "Shopping Analytics",
       label: t("userProfile.tabs.shoppingAnalytics"),
+    },
+    {
+      key: "Symptom Checker",
+      label: t("userProfile.tabs.symptomChecker") || "AI Symptom Checker",
     },
   ];
 
@@ -123,10 +128,11 @@ export default function UserPetClinicProfile() {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`text-left px-5 py-3 font-medium rounded-md mb-2 transition shadow-sm ${activeTab === tab.key
+              className={`text-left px-5 py-3 font-medium rounded-md mb-2 transition shadow-sm ${
+                activeTab === tab.key
                   ? "text-white bg-[#F2A056] dark:bg-[var(--color-dark-accent)]"
                   : "text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] hover:bg-[#F2A056]/20 dark:hover:bg-[var(--color-dark-accent)]/20 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
-                }`}
+              }`}
             >
               {tab.label}
             </button>
@@ -177,6 +183,11 @@ export default function UserPetClinicProfile() {
           {activeTab === "Shopping Analytics" && (
             <div>
               <ShoppingAnalytics />
+            </div>
+          )}
+          {activeTab === "Symptom Checker" && (
+            <div>
+              <SymptomChecker />
             </div>
           )}
         </div>

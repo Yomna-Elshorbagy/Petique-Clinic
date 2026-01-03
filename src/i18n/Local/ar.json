@@ -1022,7 +1022,8 @@
       "addNewPet": "إضافة حيوان أليف جديد",
       "orders": "الطلبات",
       "orderTracking": "تتبع الطلبات",
-      "shoppingAnalytics": "تحليلات التسوق"
+      "shoppingAnalytics": "تحليلات التسوق",
+      "symptomChecker": "تحليل فحص الاعراض"
     },
     "seo": {
       "title": "الملف الشخصي | عيادة الحيوانات الأليفة",
