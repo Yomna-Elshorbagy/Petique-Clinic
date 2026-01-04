@@ -1029,7 +1029,9 @@
       "save": "Save Changes",
       "saving": "Saving...",
       "deleteConfirmTitle": "Are you sure?",
-      "deleteConfirmText": "This pet will be removed"
+      "deleteConfirmText": "This pet will be removed",
+      "yesDelete": "Yes, delete it!",
+      "cancel": "Cancel"
     },
     "seo": {
       "title": "Profile | Pet Clinic",

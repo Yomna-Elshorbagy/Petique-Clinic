@@ -70,6 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       icon: <FaCalendarCheck />,
       label: "Doctor Profile",
       to: "/resDashboard/profile",
+      doctorOnly: true,
     },
     { icon: <FaPaw />, label: "Pets", to: "/resDashboard/animals" },
     {
@@ -170,7 +171,14 @@ const Sidebar: React.FC<SidebarProps> = ({
         {/* ===== Links ===== */}
         <ul className="space-y-2 text-base flex-1">
           {links
-            .filter((item) => !(role === "doctor" && item.ownerOnly))
+            .filter((item) => {
+              if (!role) return false;
+
+              if (item.ownerOnly && role !== "owner") return false;
+              if (item.doctorOnly && role !== "doctor") return false;
+
+              return true;
+            })
             .map((item, i) => (
               <NavLink
                 key={i}

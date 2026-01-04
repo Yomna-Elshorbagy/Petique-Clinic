@@ -189,3 +189,17 @@ export const getMyPastReservations = async () => {
   });
   return data.data;
 };
+
+// ===> get track reservations
+export const getTrackReservations = async () => {
+  const explicitToken = localStorage.getItem("accessToken");
+  const { data } = await axios.get(`${BASE_URL}/track/my`, {
+    headers: {
+      authentication: `bearer ${explicitToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+  console.log("Track Reservations Response:", data);
+  return data.data;
+};
+

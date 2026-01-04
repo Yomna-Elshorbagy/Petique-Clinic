@@ -1,13 +1,15 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useAddPet } from "../../Hooks/UserProfile/useAddPet";
-import { useCategories } from "../../Hooks/Categories/useCategories";
 import { petSchema } from "../../Utils/Schema/petSchema";
+import { useAnimalCategories } from "../../Hooks/AnimalCategoey/UseAnimalCategory";
 
 export default function AddPet() {
   const { t } = useTranslation();
   const { formData, setFormData, mutation } = useAddPet();
-  const { categories, loading: isLoadingCategories } = useCategories();
+  const { data: categoriesData, isLoading: isLoadingCategories } =
+    useAnimalCategories();
+  const categories = categoriesData || [];
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   //===> Field changes
@@ -105,7 +107,9 @@ export default function AddPet() {
         {/* Category */}
         <div className="flex flex-col">
           {isLoadingCategories ? (
-            <p className="text-[var(--color-text-muted)]">{t("userProfile.common.loadingCategories")}</p>
+            <p className="text-[var(--color-text-muted)]">
+              {t("userProfile.common.loadingCategories")}
+            </p>
           ) : (
             <select
               name="category"
@@ -146,7 +150,10 @@ export default function AddPet() {
             onChange={(e) =>
               setFormData((prev) => ({
                 ...prev,
-                allergies: e.target.value.split(",").map(a => a.trim()).filter(a => a !== ""),
+                allergies: e.target.value
+                  .split(",")
+                  .map((a) => a.trim())
+                  .filter((a) => a !== ""),
               }))
             }
             className="w-full border border-[var(--color-border-medium)] dark:border-[var(--color-dark-border-light)] rounded-md px-3 py-2 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500"

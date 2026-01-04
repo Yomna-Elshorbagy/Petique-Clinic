@@ -14,6 +14,7 @@ import Appointments from "../../Components/UserProfile/Appointments";
 import ShoppingAnalytics from "../../Components/UserProfile/ShoppingAnalytics";
 import SymptomChecker from "../../Components/UserProfile/SymptomChecker";
 import NotificationBell from "../../Components/UserProfile/components/UserPell";
+import ReservationTracker from "../reservation/ReservationTracker";
 
 export default function UserPetClinicProfile() {
   const { t } = useTranslation();
@@ -39,6 +40,7 @@ export default function UserPetClinicProfile() {
     },
     { key: "My Pets", label: t("userProfile.tabs.myPets") },
     { key: "Add New Pet", label: t("userProfile.tabs.addNewPet") },
+    { key: "Reservation Tracker", label: "Reservation Tracker" },
     { key: "Orders", label: t("userProfile.tabs.orders") },
     { key: "Order Tracking", label: t("userProfile.tabs.orderTracking") },
     {
@@ -128,11 +130,10 @@ export default function UserPetClinicProfile() {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`text-left px-5 py-3 font-medium rounded-md mb-2 transition shadow-sm ${
-                activeTab === tab.key
-                  ? "text-white bg-[#F2A056] dark:bg-[var(--color-dark-accent)]"
-                  : "text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] hover:bg-[#F2A056]/20 dark:hover:bg-[var(--color-dark-accent)]/20 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
-              }`}
+              className={`text-left px-5 py-3 font-medium rounded-md mb-2 transition shadow-sm ${activeTab === tab.key
+                ? "text-white bg-[#F2A056] dark:bg-[var(--color-dark-accent)]"
+                : "text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] hover:bg-[#F2A056]/20 dark:hover:bg-[var(--color-dark-accent)]/20 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-background)] border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
+                }`}
             >
               {tab.label}
             </button>
@@ -188,6 +189,11 @@ export default function UserPetClinicProfile() {
           {activeTab === "Symptom Checker" && (
             <div>
               <SymptomChecker />
+            </div>
+          )}
+          {activeTab === "Reservation Tracker" && (
+            <div>
+              <ReservationTracker />
             </div>
           )}
         </div>

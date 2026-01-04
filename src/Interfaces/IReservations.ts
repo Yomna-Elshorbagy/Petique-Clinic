@@ -15,7 +15,9 @@ export interface Reservation {
     _id: string;
     name: string;
     age: number;
-    type: string;
+    category: {
+      name:string
+    };
   };
 
   service: {
@@ -45,4 +47,8 @@ export interface ReservationResponse {
     nextPage: number | null;
   };
   data: Reservation[];
+}
+
+export interface ITrackedReservation extends Reservation {
+  trackerStatus: "cancelled" | "completed" | "no_show" | "confirmed" | "waiting" | "scheduled";
 }

@@ -213,7 +213,7 @@ export default function AllReservations() {
                     {reservation.pet?.name || "N/A"}
                   </h3>
                   <p className="text-sm text-[var(--color-text-muted)]">
-                    {reservation.pet?.type || t("userProfile.common.petType")} •{" "}
+                    {reservation.pet?.category.name || t("userProfile.common.petType")} •{" "}
                     {t("userProfile.personalInfo.age") || "Age"}:{" "}
                     {reservation.pet?.age || "N/A"}{" "}
                     {t("userProfile.common.years") || "years"}
