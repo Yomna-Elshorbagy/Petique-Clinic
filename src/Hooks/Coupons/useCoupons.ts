@@ -1,5 +1,4 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 import {
   getCoupons,
   createCoupon,
@@ -10,7 +9,7 @@ import {
   getDeletedCoupons,
   restoreCoupon,
 } from "../../Apis/CouponApis";
-import type { ICoupon, ICouponCreate, ICouponUpdate } from "../../Interfaces/ICoupon";
+import type {  ICouponCreate, ICouponUpdate } from "../../Interfaces/ICoupon";
 import Swal from "sweetalert2";
 
 export const useCoupons = (page: number = 1, limit: number = 10) => {

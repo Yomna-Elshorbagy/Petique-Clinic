@@ -1,4 +1,3 @@
-import React from "react";
 import MonthlyRevenues from "./Components/MonthlyRevenues";
 import TopSellingProducts from "./Components/TopSellingProducts";
 import OrderStatusOverview from "./Components/OrderStatusOverview";

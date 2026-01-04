@@ -96,7 +96,7 @@ const CheckoutForm = ({ couponCode }: CheckoutFormProps) => {
     try {
       checkoutSchema.parse(formData);
 
-      const result = await dispatch(addOrder(formData));
+      const result = await dispatch(addOrder(formData as any));
 
       if (addOrder.rejected.match(result)) {
         console.error("Failed to add order:", result.payload);
@@ -273,12 +273,29 @@ const CheckoutForm = ({ couponCode }: CheckoutFormProps) => {
                     : "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
                 }`}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
                 </svg>
               </div>
               <div className="text-left">
-                <p className={`font-semibold ${formData.payment === "Cash on Delivery" ? "text-[var(--color-light-accent)]" : "text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]"}`}>
+                <p
+                  className={`font-semibold ${
+                    formData.payment === "Cash on Delivery"
+                      ? "text-[var(--color-light-accent)]"
+                      : "text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]"
+                  }`}
+                >
                   {t("checkout.cashOnDelivery")}
                 </p>
                 <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
@@ -309,15 +326,32 @@ const CheckoutForm = ({ couponCode }: CheckoutFormProps) => {
                     : "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
                 }`}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                  />
                 </svg>
               </div>
               <div className="text-left">
-                <p className={`font-semibold ${formData.payment === "visa" ? "text-[var(--color-light-accent)]" : "text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]"}`}>
+                <p
+                  className={`font-semibold ${
+                    formData.payment === "visa"
+                      ? "text-[var(--color-light-accent)]"
+                      : "text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]"
+                  }`}
+                >
                   {t("checkout.visaPayment")}
                 </p>
-                
+
                 <p className="text-sm text-[var(--color-light-textSecondary)] dark:text-[var(--color-dark-textSecondary)]">
                   {t("checkout.visaPaymentDesc")}
                 </p>

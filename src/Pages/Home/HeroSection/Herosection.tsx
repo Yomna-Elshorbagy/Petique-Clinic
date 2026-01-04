@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { FaPaw } from "react-icons/fa";
 import { useTranslation } from "react-i18next";

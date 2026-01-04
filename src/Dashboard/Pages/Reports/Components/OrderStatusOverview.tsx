@@ -35,8 +35,6 @@ const OrderStatusOverview: React.FC = () => {
         }));
     }, [orders]);
 
-    const total = summaryData.reduce((sum, s) => sum + s.count, 0);
-
     const getColor = (percentage: number) => {
         if (percentage >= 70) return "bg-green-500";
         if (percentage >= 30) return "bg-yellow-500";
@@ -64,7 +62,7 @@ const OrderStatusOverview: React.FC = () => {
             header: "Percentage",
             accessor: "percentage",
             className: "w-1/2",
-            render: (value: string, row: any) => {
+            render: (value: string, _row: any) => {
                 const percentNum = parseFloat(value);
                 return (
                     <div className="flex items-center gap-3">

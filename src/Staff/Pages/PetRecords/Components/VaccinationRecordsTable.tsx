@@ -152,7 +152,7 @@ const VaccinationRecordsTable = () => {
       },
       {
         name: "Actions",
-        cell: (row: any) => (
+        cell: (_row: any) => (
           <button className="p-1.5 hover:bg-[var(--color-extra-5)] rounded-full text-[var(--color-text-muted)] transition-colors">
             <MoreHorizontal size={16} />
           </button>

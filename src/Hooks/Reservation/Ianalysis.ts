@@ -68,11 +68,12 @@ export interface UpcomingVaccinationResponse {
 }
 
 /* ================= CATEGORY ================= */
-
 export interface TopCategory {
-  _id: string;
-  categoryName: string;
-  totalPets: number;
+  _id: {
+    id: string;
+    name: string;
+  };
+  total: number;
 }
 
 export interface TopCategoriesResponse {

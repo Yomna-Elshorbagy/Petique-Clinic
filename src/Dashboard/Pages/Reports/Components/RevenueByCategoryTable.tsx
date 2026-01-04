@@ -11,13 +11,11 @@ const RevenueByCategoryTable: React.FC = () => {
   } = useRevenueDistribution();
 
   const columns = useMemo(() => {
-    const total = revenueData.reduce((sum, r) => sum + r.totalRevenue, 0);
-
     return [
       {
         header: "#",
         accessor: "index",
-        render: (_: any, __: any, index?: number) => (
+        render: (_: any, __: any, _index?: number) => (
           <span className="font-medium text-[var(--color-text-muted)]">
             {_}
           </span>

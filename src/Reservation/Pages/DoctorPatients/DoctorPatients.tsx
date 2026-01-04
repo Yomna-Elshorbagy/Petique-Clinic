@@ -6,7 +6,6 @@ import {
   FaPaw,
   FaUser,
   FaPhone,
-  FaClock,
 } from "react-icons/fa";
 import {
   useDoctorSearchPets,

@@ -1,4 +1,3 @@
-import { FcGoogle } from "react-icons/fc";
 import { MdEmail, MdLock } from "react-icons/md";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import {

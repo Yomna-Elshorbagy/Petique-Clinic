@@ -15,7 +15,7 @@ import SEO from "../../../Components/SEO/SEO";
 export default function Animals() {
   const [pets, setPets] = useState<IPet[]>([]);
   const [loading, setLoading] = useState(true);
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [viewMode, _setViewMode] = useState<"grid" | "list">("grid");
   const [activeCategory, setActiveCategory] = useState("All");
   const [isModalOpen, setIsModalOpen] = useState(false);
 

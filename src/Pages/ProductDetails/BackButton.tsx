@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom';
 import { IoArrowBack } from "react-icons/io5";
 export default function BackButton() {

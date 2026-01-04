@@ -13,7 +13,7 @@ interface StatItem {
 }
 
 const VaccinationStats: React.FC = () => {
-  const { data: records, isLoading } = useVaccinationRecords();
+  const { data: records } = useVaccinationRecords();
 
   const completed =
     records?.filter((r: any) => r.status === "completed").length ?? 0;

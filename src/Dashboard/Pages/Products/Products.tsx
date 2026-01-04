@@ -282,8 +282,6 @@ export default function ProductsDashboared() {
       cell: (row) => {
         const isOut = row.stock === 0 || row.status === "out";
         const isLow = row.stock > 0 && row.stock <= 5;
-        const isAvailable = row.stock > 5 && row.status !== "out";
-
         const label = isOut ? "Out" : isLow ? "Low" : "Available";
         const bg = isOut
           ? "bg-red-100 text-red-700"

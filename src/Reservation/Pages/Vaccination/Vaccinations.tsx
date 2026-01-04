@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaPlus, FaSyringe } from "react-icons/fa";
 import { motion } from "framer-motion";
 import VaccinationStats from "./Components/VaccinationsState";

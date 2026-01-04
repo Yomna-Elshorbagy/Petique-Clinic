@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaTimes, FaCloudUploadAlt, FaSpinner } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";

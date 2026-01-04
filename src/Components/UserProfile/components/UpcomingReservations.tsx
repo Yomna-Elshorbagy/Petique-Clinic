@@ -209,7 +209,7 @@ export default function UpcomingReservations() {
                               {reservation.pet?.name || "N/A"}
                             </p>
                             <p className="text-xs text-[var(--color-text-muted)]">
-                              {reservation.pet?.type} • {reservation.pet?.age}{" "}
+                              {reservation.pet?.category.name} • {reservation.pet?.age}{" "}
                               {t("userProfile.common.years")}
                             </p>
                           </div>

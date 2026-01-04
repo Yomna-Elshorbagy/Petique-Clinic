@@ -1,5 +1,5 @@
 import React from "react";
-import { FaPaw, FaCalendarAlt, FaCreditCard, FaChevronRight } from "react-icons/fa";
+import { FaPaw, FaCalendarAlt, FaCreditCard } from "react-icons/fa";
 
 const steps = [
   { id: 1, name: "Pet & Contact", icon: FaPaw, status: "current" },

@@ -1,5 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Bell } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 import { useReservationsNotifications } from "../../../Hooks/Reservation/useReservationNotification";
 import { FaBell } from "react-icons/fa";
 

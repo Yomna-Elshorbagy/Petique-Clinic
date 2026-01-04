@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type {
   productdetails,
@@ -8,7 +8,6 @@ import type {
   Users,
 } from "../../Types/ProductDetailsType";
 import { baseURL } from "../../Apis/BaseUrl";
-import { toast, ToastContainer } from "react-toastify";
 import { FaPaw } from "react-icons/fa";
 import RelatedProductsSlider from "./RelatedProductsSlider";
 import Loader from "./Loader";

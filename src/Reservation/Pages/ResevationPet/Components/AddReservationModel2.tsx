@@ -106,7 +106,6 @@ export default function AddReservationModal2({
     watch,
     reset,
     formState: { errors },
-    setValue,
   } = useForm<ReservationAddAdmin>({
     resolver: zodResolver(reservationSchema) as any,
     defaultValues: {

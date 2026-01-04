@@ -3,7 +3,6 @@ import {
     addProduct,
     deleteProduct,
     getProducts,
-    softDeleteProducts,
     updateProduct,
 } from "../../Apis/ProductsDashboard";
 import Swal from "sweetalert2";

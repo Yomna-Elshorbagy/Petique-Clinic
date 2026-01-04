@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import type { TFunction } from "i18next";
 import {
   FaCalendarAlt,
   FaClock,
@@ -240,7 +239,7 @@ export default function PastReservations() {
                               </p>
                               <p className="text-sm font-semibold text-[var(--color-text-primary)]">
                                 {reservation.pet?.name || "N/A"} •{" "}
-                                {reservation.pet?.type || "N/A"} •{" "}
+                                {reservation.pet?.category.name || "N/A"} •{" "}
                                 {t("userProfile.personalInfo.age") || "Age"}:{" "}
                                 {reservation.pet?.age || "N/A"}{" "}
                                 {t("userProfile.common.years") || "years"}

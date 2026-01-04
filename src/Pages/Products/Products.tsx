@@ -46,7 +46,7 @@ const initialFilters: FilterState = {
 const Products: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryFromUrl = searchParams.get("category");
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const [productsState, setProductsState] = useState<ProductsState>({
     items: [],

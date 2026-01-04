@@ -1,4 +1,3 @@
-import React from 'react'
 import { MdErrorOutline } from 'react-icons/md';
 export default function ErrorMessage() {
   return (

@@ -2,14 +2,7 @@ import React from "react";
 import ReactECharts from "echarts-for-react";
 import { COLORS } from "../Shared/Colors";
 import { useTopVaccinatedCategories } from "../../../../Hooks/Reservation/useanalytics";
-
-interface TopCategory {
-  _id: {
-    id: string;
-    name: string;
-  };
-  total: number;
-}
+import type { TopCategory } from "../../../../Hooks/Reservation/Ianalysis";
 
 const TopVaccinatedCategoriesChart: React.FC = () => {
   const { data } = useTopVaccinatedCategories();

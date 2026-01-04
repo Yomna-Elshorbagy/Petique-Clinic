@@ -9,14 +9,12 @@ import {
   useGetDoctorProfile,
   useUpdateDoctor,
 } from "../../../Hooks/Doctor/useDoctor";
-import { FaCamera, FaSave, FaSpinner, FaUserMd } from "react-icons/fa";
+import { FaCamera, FaSpinner, FaUserMd } from "react-icons/fa";
 import Swal from "sweetalert2";
 import LoaderPage from "../../../Shared/LoaderPage/LoaderPage";
-import { useTranslation } from "react-i18next";
 import SEO from "../../../Components/SEO/SEO";
 
 export default function DoctorProfile() {
-  const { t } = useTranslation();
   const [preview, setPreview] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
 

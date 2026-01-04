@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { useReservations } from "../../../../Hooks/Reservation/useReservation";
 import {
@@ -69,7 +69,7 @@ const AllReservationsPage = () => {
         isOpen={editOpen}
         onClose={() => setEditOpen(false)}
         reservation={activeReservation}
-          onUpdated={(updated) => setActiveReservation(updated)}
+        onUpdated={(updated) => setActiveReservation(updated)}
       />
 
       <h1 className="text-2xl font-bold text-[#4A3F35] mb-4">
@@ -77,8 +77,16 @@ const AllReservationsPage = () => {
       </h1>
       <SharedSearch
         searches={[
-          { placeholder: "Search by Pet", value: petSearch, onChange: setPetSearch },
-          { placeholder: "Search by Owner", value: ownerSearch, onChange: setOwnerSearch },
+          {
+            placeholder: "Search by Pet",
+            value: petSearch,
+            onChange: setPetSearch,
+          },
+          {
+            placeholder: "Search by Owner",
+            value: ownerSearch,
+            onChange: setOwnerSearch,
+          },
         ]}
         filters={[
           {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaTimes, FaSyringe } from "react-icons/fa";
 import { Edit, Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
