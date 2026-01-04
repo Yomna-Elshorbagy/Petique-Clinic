@@ -108,12 +108,6 @@ export default function EditVaccinationModal({
       Swal.fire("Error", "Missing required IDs", "error");
       return;
     }
-    console.log("SUBMIT DATA", {
-      petId,
-      vaccinationId,
-      data,
-    });
-
     updateMutation.mutate(
       {
         petId,

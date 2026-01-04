@@ -52,7 +52,6 @@ const DeletedCouponsTable: React.FC<DeletedCouponsTableProps> = ({ searchCode })
 
             Swal.close();
         } catch (error: any) {
-            console.error("Restore failed", error);
             Swal.close();
             Swal.fire({
                 title: "Error",

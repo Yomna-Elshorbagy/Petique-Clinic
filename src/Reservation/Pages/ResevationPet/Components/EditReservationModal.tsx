@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { baseURL } from "../../../../Apis/BaseUrl";
 
 interface ReservationEdit {
   _id?: string;
@@ -103,7 +104,7 @@ export default function EditReservationModal({
   const { data: allReservations = [], refetch } = useQuery<ReservationEdit[]>({
     queryKey: ["allReservations"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/reserve", {
+      const res = await axios.get(`${baseURL}/reserve`, {
         headers: { authentication: `bearer ${token}` },
       });
       return res.data.data;

@@ -58,10 +58,8 @@ export default function Blog() {
     image: post.image,
     ...getTranslatedPost(post),
   }));
-  console.log(translatedPosts);
 
   const categories = [...new Set(translatedPosts.map((post) => post.category))];
-  console.log(categories);
   const allTags = [...new Set(translatedPosts.flatMap((post) => post.tags))];
   const latestPosts = translatedPosts.slice(0, 6);
 

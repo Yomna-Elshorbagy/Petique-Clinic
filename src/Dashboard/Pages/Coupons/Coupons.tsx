@@ -126,7 +126,6 @@ export default function Coupons() {
         showConfirmButton: false,
       });
     } catch (error: any) {
-      console.error("Hard delete failed", error);
       Swal.close();
       Swal.fire({
         title: "Error",

@@ -76,7 +76,6 @@ export default function Doctors() {
       });
       await fetchDoctors();
     } catch (error: any) {
-      console.error("Soft delete failed", error);
       Swal.close();
       Swal.fire({
         title: "Error",
@@ -119,7 +118,6 @@ export default function Doctors() {
       });
       await fetchDoctors();
     } catch (error: any) {
-      console.error("Hard delete failed", error);
       Swal.close();
       Swal.fire({
         title: "Error",

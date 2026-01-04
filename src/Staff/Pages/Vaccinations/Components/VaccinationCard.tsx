@@ -8,7 +8,6 @@ interface VaccinationCardProps {
 }
 
 const VaccinationCard: React.FC<VaccinationCardProps> = ({ record }) => {
-    console.log("Vaccination Record:", record);
     const { mutate: updateStatus, isPending } = useUpdatePetVaccinationStaff();
     const [isRescheduling, setIsRescheduling] = useState(false);
     const [newDate, setNewDate] = useState(

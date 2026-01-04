@@ -55,7 +55,6 @@ const DeletedOrdersTable: React.FC<DeletedOrdersTableProps> = ({ searchTerm }) =
 
             Swal.close();
         } catch (error: any) {
-            console.error("Restore failed", error);
             Swal.close();
             Swal.fire({
                 title: "Error",

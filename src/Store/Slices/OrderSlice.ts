@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { IOrder } from "../../Interfaces/Iorder";
+import { baseURL } from "../../Apis/BaseUrl";
 
 const initialState = {
   orders: [],
@@ -14,22 +15,12 @@ export const getAllOrders = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const token = localStorage.getItem("accessToken");
-      console.log("Token:", token ? "Found" : "Missing");
-      console.log(" Fetching orders from: http://localhost:3000/order");
-
-      const res = await axios.get("http://localhost:3000/order/allorders", {
+      const res = await axios.get(`${baseURL}/order/allorders`, {
         headers: { authentication: `bearer ${token}` },
       });
 
-      console.log(" API Response:", res.data);
-      console.log(
-        " Orders count:",
-        res.data?.data?.length || res.data?.length || 0
-      );
-
       return res.data;
     } catch (err: any) {
-      console.error("API Error:", err.response?.data || err.message);
       return thunkAPI.rejectWithValue(err.response?.data);
     }
   }
@@ -42,7 +33,7 @@ export const getOrderById = createAsyncThunk(
   async (id: string, thunkAPI) => {
     try {
       const token = localStorage.getItem("accessToken");
-      const res = await axios.get(`http://localhost:3000/order/${id}`, {
+      const res = await axios.get(`${baseURL}/order/${id}`, {
         headers: { authentication: `bearer ${token}` },
       });
       return res.data;
@@ -58,7 +49,7 @@ export const deleteOrderById = createAsyncThunk(
     try {
       const token = localStorage.getItem("accessToken");
       const res = await axios.put(
-        `http://localhost:3000/order/soft/${id}`,
+        `${baseURL}/order/soft/${id}`,
         {},
         {
           headers: {
@@ -69,8 +60,6 @@ export const deleteOrderById = createAsyncThunk(
       );
       return res.data;
     } catch (err: any) {
-      console.log("deleted");
-
       return thunkAPI.rejectWithValue(err.response?.data);
     }
   }
@@ -82,7 +71,7 @@ export const deleteOrderhard = createAsyncThunk(
   async (id: string, thunkAPI) => {
     try {
       const token = localStorage.getItem("accessToken");
-      const res = await axios.delete(`http://localhost:3000/order/hard/${id}`, {
+      const res = await axios.delete(`${baseURL}/order/hard/${id}`, {
         headers: {
           authentication: `bearer ${token}`,
           "Content-Type": "application/json",
@@ -104,7 +93,7 @@ export const updateOrderStatus = createAsyncThunk(
       const token = localStorage.getItem("accessToken");
 
       const res = await axios.put(
-        `http://localhost:3000/order/status/${id}`,
+        `${baseURL}/order/status/${id}`,
         { status },
         {
           headers: {
@@ -146,7 +135,7 @@ export const updateOrderDetails = createAsyncThunk(
     try {
       const token = localStorage.getItem("accessToken");
       const res = await axios.put(
-        `http://localhost:3000/order/${id}`,
+        `${baseURL}/order/${id}`,
         { fullName, phone, address, status, finalPrice, notes },
         {
           headers: {
@@ -168,13 +157,12 @@ export const addOrder = createAsyncThunk(
   async (order: IOrder, thunkAPI) => {
     try {
       const token = localStorage.getItem("accessToken");
-      const res = await axios.post("http://localhost:3000/order", order, {
+      const res = await axios.post(`${baseURL}/order`, order, {
         headers: { authentication: `bearer ${token}` },
       });
-      console.log(res.data.data.checkoutUrl);
-      if (res.data.data.checkoutUrl){
-          window.location.href = res.data.data.checkoutUrl;
-        return
+      if (res.data.data.checkoutUrl) {
+        window.location.href = res.data.data.checkoutUrl;
+        return;
       }
       return res.data;
     } catch (err: any) {
@@ -194,7 +182,6 @@ const orderSlice = createSlice({
     });
     builder.addCase(getAllOrders.fulfilled, (state, action) => {
       state.loading = false;
-      console.log("Orders API Response:", action.payload);
       state.orders = action.payload.data || action.payload;
     });
     builder.addCase(getAllOrders.rejected, (state) => {
@@ -220,7 +207,9 @@ const orderSlice = createSlice({
       state.loading = false;
       // Remove the deleted order from the state
       const deletedOrderId = action.meta.arg;
-      state.orders = state.orders.filter((order: any) => order._id !== deletedOrderId);
+      state.orders = state.orders.filter(
+        (order: any) => order._id !== deletedOrderId
+      );
     });
     builder.addCase(deleteOrderById.rejected, (state) => {
       state.loading = false;
@@ -234,7 +223,9 @@ const orderSlice = createSlice({
       state.loading = false;
       // Remove the deleted order from the state
       const deletedOrderId = action.meta.arg;
-      state.orders = state.orders.filter((order: any) => order._id !== deletedOrderId);
+      state.orders = state.orders.filter(
+        (order: any) => order._id !== deletedOrderId
+      );
     });
     builder.addCase(deleteOrderhard.rejected, (state) => {
       state.loading = false;
@@ -248,7 +239,9 @@ const orderSlice = createSlice({
       state.loading = false;
       // Update the order in the state
       const { id, status } = action.meta.arg;
-      const orderIndex = state.orders.findIndex((order: any) => order._id === id);
+      const orderIndex = state.orders.findIndex(
+        (order: any) => order._id === id
+      );
       if (orderIndex !== -1) {
         (state.orders[orderIndex] as any).status = status;
       }
@@ -264,8 +257,11 @@ const orderSlice = createSlice({
     builder.addCase(updateOrderDetails.fulfilled, (state, action) => {
       state.loading = false;
       // Update the order in the state
-      const { id, fullName, phone, address, status, finalPrice, notes } = action.meta.arg;
-      const orderIndex = state.orders.findIndex((order: any) => order._id === id);
+      const { id, fullName, phone, address, status, finalPrice, notes } =
+        action.meta.arg;
+      const orderIndex = state.orders.findIndex(
+        (order: any) => order._id === id
+      );
       if (orderIndex !== -1) {
         const order = state.orders[orderIndex] as any;
         order.fullName = fullName;

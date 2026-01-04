@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import SEO from "../../Components/SEO/SEO";
+import { baseURL } from "../../Apis/BaseUrl";
 
 type ReservationPayload = {
   petOwner: string;
@@ -40,7 +41,6 @@ export default function Reservation() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  console.log(i18n.language);
   const isRTL = i18n.language === "ar";
 
   const stepKeys = [
@@ -60,14 +60,11 @@ export default function Reservation() {
   if (token) {
     try {
       const payload = JSON.parse(atob(token.split(".")[1]));
-      console.log(payload);
       userId = payload._id || payload.id || payload.userId || null;
     } catch (e) {
       console.error("Failed to decode token", e);
     }
   }
-
-  console.log("User ID:", userId);
 
   const timeOptions = React.useMemo(
     () => [
@@ -95,7 +92,7 @@ export default function Reservation() {
     queryKey: ["pets"],
     queryFn: async () => {
       if (!token) return [];
-      const res = await axios.get("http://localhost:3000/pet/userPet", {
+      const res = await axios.get(`${baseURL}/pet/userPet`, {
         headers: { authentication: `bearer ${token}` },
       });
       return res.data.data;
@@ -107,7 +104,7 @@ export default function Reservation() {
   const { data: services } = useQuery<IService[]>({
     queryKey: ["services"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/service");
+      const res = await axios.get(`${baseURL}/service`);
       return res.data.data;
     },
   });
@@ -117,7 +114,7 @@ export default function Reservation() {
     queryKey: ["doctors"],
     queryFn: async () => {
       if (!token) return [] as IUser[];
-      const res = await axios.get("http://localhost:3000/user/allUsers", {
+      const res = await axios.get(`${baseURL}/user/allUsers`, {
         headers: { authentication: `bearer ${token}` },
       });
       return res.data.data.filter((u: IUser) => u.role === "doctor") as IUser[];
@@ -132,15 +129,13 @@ export default function Reservation() {
     queryKey: ["allReservations"],
 
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/reserve", {
+      const res = await axios.get(`${baseURL}/reserve`, {
         headers: { authentication: `bearer ${token}` },
       });
       return res.data.data;
     },
     enabled: !!token,
   });
-
-  console.log(allReservations);
 
   useEffect(() => {
     if (!date || !doctor || !allReservations) return;
@@ -209,7 +204,7 @@ export default function Reservation() {
       if (notes) payload.notes = notes;
 
       const res = await axios.post(
-        "http://localhost:3000/reserve",
+        `${baseURL}/reserve`,
         { petOwner: userId, pet, service, doctor, date, timeSlot, notes },
         { headers: { authentication: `bearer ${token}` } }
       );

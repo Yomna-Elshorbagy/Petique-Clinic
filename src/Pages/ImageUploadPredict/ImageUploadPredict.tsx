@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { baseURL } from "../../Apis/BaseUrl";
 
 const ImageUploadPredict: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -30,13 +31,12 @@ const ImageUploadPredict: React.FC = () => {
     formData.append("image", file);
 
     try {
-      const response = await axios.post("http://localhost:3000/chat/disease", formData, {
+      const response = await axios.post(`${baseURL}/chat/disease`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
       setResult(response.data);
     } catch (err: any) {
-      console.error(err);
       setError(err.response?.data?.message || "Error uploading image");
     } finally {
       setLoading(false);

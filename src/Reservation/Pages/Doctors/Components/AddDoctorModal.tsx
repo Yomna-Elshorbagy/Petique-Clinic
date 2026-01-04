@@ -99,12 +99,6 @@ export default function AddDoctorModal({
         timer: 1500,
         showConfirmButton: false,
       });
-
-      // pass secure URL to parent
-      //   if (secureUrl) {
-      //     console.log("Uploaded Image URL:", secureUrl);
-      //   }
-
       onSuccess();
       onClose();
       reset();

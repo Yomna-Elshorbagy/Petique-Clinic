@@ -104,7 +104,6 @@ export default function ForgetPassword() {
       });
       setCurrentStep(2);
     } catch (error: any) {
-      console.error(error);
       const message =
         error?.response?.data?.message ||
         error?.response?.data?.error ||

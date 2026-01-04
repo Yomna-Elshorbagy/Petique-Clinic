@@ -226,7 +226,6 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
         setRecordingDuration((prev) => prev + 1);
       }, 1000);
     } catch (error) {
-      console.error("❌ Microphone error:", error);
       Swal.fire({
         title: "Microphone Access Denied",
         text: "Could not access microphone. Please ensure permissions are granted.",

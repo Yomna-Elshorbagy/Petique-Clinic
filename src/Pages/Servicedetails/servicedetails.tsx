@@ -11,14 +11,15 @@ import { Link } from "react-router-dom";
 import { PawPrint } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import SEO from "../../Components/SEO/SEO";
+import { baseURL } from "../../Apis/BaseUrl";
 
 const fetchServices = async (): Promise<IService[]> => {
-  const res = await axios.get("http://localhost:3000/service");
+  const res = await axios.get(`${baseURL}/service`);
   return res.data.data;
 };
 
 const fetchServiceById = async (id: string): Promise<IService> => {
-  const res = await axios.get(`http://localhost:3000/service/${id}`);
+  const res = await axios.get(`${baseURL}/service/${id}`);
   return res.data.data;
 };
 
@@ -74,8 +75,6 @@ export default function Servicesdetails() {
       });
     }
   }, [isLoadingService, isRTL]);
-
-  console.log("services data:", services);
 
   if (isLoadingAll || isLoadingService) return <p>Loading...</p>;
   if (isErrorAll || isErrorService || !service)

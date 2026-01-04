@@ -50,7 +50,6 @@ const OrderNotificationBell: React.FC = () => {
         lastIdsRef.current = currentIds;
         setOrders(data);
       } catch (err: any) {
-        console.error("Error fetching orders:", err);
         setError(
           err?.response?.data?.message ||
             err?.message ||

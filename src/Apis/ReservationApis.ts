@@ -199,7 +199,6 @@ export const getTrackReservations = async () => {
       "Content-Type": "application/json",
     },
   });
-  console.log("Track Reservations Response:", data);
   return data.data;
 };
 

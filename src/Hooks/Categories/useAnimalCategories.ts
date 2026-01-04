@@ -19,9 +19,7 @@ export const useAnimalCategories = () => {
           authentication: `bearer ${token}`,
         },
       }
-      );
-      console.log(res);
-      
+      );      
       return res.data.data;
     },
   });

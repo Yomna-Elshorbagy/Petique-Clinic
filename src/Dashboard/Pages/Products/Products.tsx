@@ -168,7 +168,6 @@ export default function ProductsDashboared() {
       });
       queryClient.invalidateQueries({ queryKey: ["products"] });
     } catch (error: any) {
-      console.error("Soft delete failed", error);
       Swal.close();
       Swal.fire({
         title: "Error",
@@ -211,7 +210,6 @@ export default function ProductsDashboared() {
       });
       queryClient.invalidateQueries({ queryKey: ["products"] });
     } catch (error: any) {
-      console.error("Hard delete failed", error);
       Swal.close();
       Swal.fire({
         title: "Error",

@@ -36,7 +36,6 @@ export default function AdminProtectedRoute({
 
     return <>{children}</>;
   } catch (error) {
-    console.error("failed to decode token:", error);
     localStorage.removeItem("accessToken");
     return <Navigate to="/login" />;
   }

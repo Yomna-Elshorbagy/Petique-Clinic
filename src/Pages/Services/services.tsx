@@ -10,9 +10,10 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SEO from "../../Components/SEO/SEO";
 import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
+import { baseURL } from "../../Apis/BaseUrl";
 
 const fetchServices = async (): Promise<IService[]> => {
-  const res = await axios.get("http://localhost:3000/service");
+  const res = await axios.get(`${baseURL}/service`);
   return res.data.data;
 };
 

@@ -85,7 +85,6 @@ export default function CategoriesDashboared() {
       Setshowmodal(false);
     },
     onError: (error: any) => {
-      console.error("add category failed", error);
       Swal.fire({
         title: "Error",
         text: error?.response?.data?.message || "Failed to add Category",
@@ -147,7 +146,6 @@ export default function CategoriesDashboared() {
       setUpdateId(null);
     },
     onError: (error: any) => {
-      console.error("update category failed", error);
       Swal.fire({
         title: "Error",
         text: error?.response?.data?.message || "Failed to update Category",
@@ -227,7 +225,6 @@ export default function CategoriesDashboared() {
       });
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     } catch (error: any) {
-      console.error("Hard delete failed", error);
       Swal.close();
       Swal.fire({
         title: "Error",
@@ -277,7 +274,6 @@ export default function CategoriesDashboared() {
       });
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     } catch (error: any) {
-      console.error("Soft delete failed", error);
       Swal.close();
       Swal.fire({
         title: "Error",

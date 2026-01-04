@@ -65,7 +65,6 @@ const DeletedProductsTable: React.FC<DeletedProductsTableProps> = ({ searchId, s
                 showConfirmButton: false,
             });
         } catch (error: any) {
-            console.error("Restore failed", error);
             Swal.close();
             Swal.fire({
                 title: "Error",

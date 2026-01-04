@@ -60,17 +60,13 @@ export const softDeleteClinicReview = async (reviewId: string) => {
 export const getClinicReviewById = async (
   id: string
 ): Promise<IClinicReviewWithUser> => {
-  const { data } = await axios.get(`${BASE_URL}/${id}`, { headers });
-  console.log(data);
-  
+  const { data } = await axios.get(`${BASE_URL}/${id}`, { headers });  
   return data.data;
 };
 
 //==> get all reviews 
 export const getAllClinicReviews = async (): Promise<IClinicReviewWithUser[]> => {
-  const { data } = await axios.get(`${BASE_URL}`, { headers });
-  console.log(data);
-  
+  const { data } = await axios.get(`${BASE_URL}`, { headers });  
   return data.data;
 };
 

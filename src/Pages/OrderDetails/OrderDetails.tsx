@@ -12,8 +12,6 @@ const OrderDetails: React.FC = () => {
 
   const orderData = location.state?.order?.data ?? location.state?.order;
 
-  console.log(orderData);
-
   /* -------------------- Helpers -------------------- */
 
   const getStatusIcon = (status: string) => {

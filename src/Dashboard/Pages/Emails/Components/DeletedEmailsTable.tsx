@@ -58,7 +58,6 @@ const DeletedEmailsTable: React.FC<DeletedEmailsTableProps> = ({ searchEmail, se
 
             Swal.close();
         } catch (error: any) {
-            console.error("Restore failed", error);
             Swal.close();
             Swal.fire({
                 title: "Error",

@@ -102,7 +102,6 @@ if (token) {
         },
       }
     );
-    console.log(reviews.data);
     return reviews.data;
   }
   let {
@@ -121,7 +120,6 @@ if (token) {
         "Content-Type": "application/json",
       },
     });
-    console.log(user.data);
     return user.data;
   }
   const { data: userdata } = useQuery<Users[]>({
@@ -152,8 +150,7 @@ if (token) {
       });
       queryClient.invalidateQueries({ queryKey: ["Reviews", id] });
     },
-    onError: (error: any) => {
-      console.log("delete review error:", error);
+    onError: (_error: any) => {
       Swal.fire({
         position: "top-end",
         icon: "error",
@@ -184,7 +181,6 @@ if (token) {
           },
         }
       );
-      console.log("new review", data);
       return data;
     },
     onSuccess: () => {
@@ -202,9 +198,7 @@ if (token) {
 
       queryClient.invalidateQueries({ queryKey: ["Reviews", id] });
     },
-    onError: (error: any) => {
-      console.log("add review error", error);
-
+    onError: (_error: any) => {
       Swal.fire({
         position: "top-end",
         icon: "error",
@@ -228,7 +222,6 @@ if (token) {
   const isOutOfStock =   data.stock === 0  ;
   //counter
   const handleIncrease = () => {
-    console.log(data.stock);
     if (quantity < data.stock) setQuantity(quantity + 1);
   };
   const handleDecrease = () => {
@@ -270,7 +263,6 @@ const handleaddtocart=async(dispatch:AppDispatch,productId:string,quantity:numbe
       customClass: { popup: "swal-toast-custom" },
     });
     } catch (err: any) {
-      console.log(err?.message);
     Swal.fire({
       position: "top-end",
       icon: "error",

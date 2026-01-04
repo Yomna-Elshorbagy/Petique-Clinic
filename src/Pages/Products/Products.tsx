@@ -96,8 +96,6 @@ const Products: React.FC = () => {
       setProductsState((prev) => ({ ...prev, loading: true, error: null }));
 
       const response = await getAllProducts(page, pagination.limit);
-      console.log("Products Array:", response.data);
-
       setProductsState({
         items: response.data,
         allItems: response.data,

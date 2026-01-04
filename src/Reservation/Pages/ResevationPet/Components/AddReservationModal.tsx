@@ -15,6 +15,7 @@ import { useMemo } from "react";
 import { useUserPets } from "../../../../Hooks/UserProfile/useUserPets";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { baseURL } from "../../../../Apis/BaseUrl";
 
 interface ReservationAdd {
   _id?: string;
@@ -70,7 +71,6 @@ export default function AddReservationModal({
   const { data: servicesData } = useServices();
 
   const pets = petsData ?? [];
-  console.log(petsData);
   const doctors = doctorsData ?? [];
   const services = servicesData?.data ?? [];
   const token = localStorage.getItem("accessToken");
@@ -100,7 +100,7 @@ export default function AddReservationModal({
   const { data: allReservations = [], refetch } = useQuery<ReservationAdd[]>({
     queryKey: ["allReservations"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/reserve", {
+      const res = await axios.get(`${baseURL}/reserve`, {
         headers: { authentication: `bearer ${token}` },
       });
       return res.data.data;
@@ -127,8 +127,6 @@ export default function AddReservationModal({
   );
 
   const onSubmit = (data: ReservationAdd) => {
-    console.log("Submitting reservation:", data);
-
     addMutation.mutate(data, {
       onSuccess: (res) => {
         reset();
@@ -172,9 +170,6 @@ export default function AddReservationModal({
   }, [availableSlotsRaw, allReservations, selectedDoctor, selectedDate]);
 
   if (!isOpen) return null;
-
-  console.log(errors);
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
       <motion.form

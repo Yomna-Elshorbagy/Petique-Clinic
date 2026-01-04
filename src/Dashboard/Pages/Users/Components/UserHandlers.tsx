@@ -59,7 +59,6 @@ export const handleSoftDeleteUser = async (id: string, dispatch: AppDispatch) =>
 
     dispatch(getAllUsersThunk());
   } catch (error: any) {
-    console.error("Soft delete failed", error);
     Swal.close();
     Swal.fire({
       title: "Error",
@@ -104,7 +103,6 @@ export const handleHardDeleteUser = async (id: string, dispatch: AppDispatch) =>
 
     dispatch(getAllUsersThunk());
   } catch (error: any) {
-    console.error("Hard delete failed", error);
     Swal.close();
     Swal.fire({
       title: "Error",

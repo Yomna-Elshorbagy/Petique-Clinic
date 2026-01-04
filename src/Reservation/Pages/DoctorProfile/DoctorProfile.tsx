@@ -88,8 +88,7 @@ export default function DoctorProfile() {
       updateDoctor(
         { id: doctorData._id, formData },
         {
-          onSuccess: (res: any) => {
-            console.log("Update Success:", res);
+          onSuccess: (_res: any) => {
             Swal.fire({
               icon: "success",
               title: "Profile Updated",
@@ -102,7 +101,6 @@ export default function DoctorProfile() {
             setValue("confirmPassword", "");
           },
           onError: (error: any) => {
-            console.error("Update Error Details:", error);
             const errorMessage =
               error?.response?.data?.message ||
               error?.message ||
@@ -143,8 +141,7 @@ export default function DoctorProfile() {
 
         <div className="bg-[#FCF9F4] rounded-[2rem] shadow-xl shadow-[#A98770]/10 overflow-hidden border border-white/50">
           <form
-            onSubmit={handleSubmit(onSubmit, (errors) => {
-              console.error("Validation Errors:", errors);
+            onSubmit={handleSubmit(onSubmit, (_errors) => {
               Swal.fire({
                 icon: "warning",
                 title: "Validation Error",

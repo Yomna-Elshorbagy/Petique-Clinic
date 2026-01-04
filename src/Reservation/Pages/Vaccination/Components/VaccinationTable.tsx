@@ -76,7 +76,6 @@ const VaccinationTable = () => {
     const vaccinationId = record.vaccinationId || record._id;
 
     if (!vaccinationId) {
-      console.error("Vaccination record structure:", record);
       Swal.fire("Error", "Missing vaccination ID", "error");
       return;
     }
@@ -123,7 +122,6 @@ const VaccinationTable = () => {
     const vaccinationId = record.vaccinationId || record._id;
 
     if (!vaccinationId) {
-      console.error("Vaccination record structure:", record);
       Swal.fire(
         "Error",
         "Missing vaccination ID. Cannot edit this record.",
@@ -150,10 +148,6 @@ const VaccinationTable = () => {
           const vaccineId = editingRecord.vaccineId || "";
 
           if (!vaccinationId) {
-            console.error(
-              "Cannot edit - missing vaccination ID:",
-              editingRecord
-            );
             return null;
           }
 

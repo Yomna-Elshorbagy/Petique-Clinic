@@ -28,7 +28,6 @@ export default function PetDetailsModal({ petId, isOpen, onClose }: Props) {
     const vaccinationId = vaccination._id || vaccination.vaccinationId;
 
     if (!vaccinationId) {
-      console.error("Vaccination structure:", vaccination);
       Swal.fire(
         "Error",
         "Missing vaccination ID. Please check the console for details.",
@@ -79,7 +78,6 @@ export default function PetDetailsModal({ petId, isOpen, onClose }: Props) {
     const vaccinationId = vaccination._id || vaccination.vaccinationId;
 
     if (!vaccinationId) {
-      console.error("Vaccination structure:", vaccination);
       Swal.fire(
         "Error",
         "Missing vaccination ID. Cannot edit this record.",
@@ -109,10 +107,6 @@ export default function PetDetailsModal({ petId, isOpen, onClose }: Props) {
               : editingVaccination.vaccine?._id || "";
 
           if (!vaccinationId) {
-            console.error(
-              "Cannot edit - missing vaccination ID:",
-              editingVaccination
-            );
             return null;
           }
 

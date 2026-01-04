@@ -7,6 +7,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import axios, { type AxiosResponse } from "axios";
+import { baseURL } from "../../Apis/BaseUrl";
 export interface ReservationAddAdmin {
   _id?: string;
   userId?: string;
@@ -97,7 +98,7 @@ export const useAddReservationByAdmin = () => {
 
   return useMutation<AxiosResponse<any>, any, ReservationAddAdmin>({
     mutationFn: (data: ReservationAddAdmin) =>
-      axios.post("http://localhost:3000/reserve/addByAdmin", data, {
+      axios.post(`${baseURL}/reserve/addByAdmin`, data, {
         headers: { authentication: `bearer ${token}` },
       }),
     onSuccess: () => {
