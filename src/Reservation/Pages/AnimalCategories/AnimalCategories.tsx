@@ -187,7 +187,7 @@ export default function AnimalCategories() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
           <h1 className="text-3xl font-bold text-[#86654F] mb-1">
-            Animal Categories
+            Pet Categories
           </h1>
           <p className="text-[#A98770]">Organize pets by species</p>
         </div>

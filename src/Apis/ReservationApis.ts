@@ -203,3 +203,21 @@ export const getTrackReservations = async () => {
   return data.data;
 };
 
+// ===> Doctor Search Pets
+export const doctorSearchPets = async (search: string) => {
+  const { data } = await axios.get(`${BASE_URL}/search/param`, {
+    headers,
+    params: { search },
+  });
+  return data.data;
+};
+
+// ===> Doctor Today Alerts
+export const doctorTodayWithVaccinationAlerts = async () => {
+  const { data } = await axios.get(`${BASE_URL}/today-with-alerts`, {
+    headers,
+  });
+  return data.data;
+};
+
+

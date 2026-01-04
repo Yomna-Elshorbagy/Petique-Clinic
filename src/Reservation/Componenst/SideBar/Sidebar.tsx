@@ -13,6 +13,8 @@ import {
   FaHeartbeat,
   FaUserTie,
   FaCommentDots,
+  FaUserInjured,
+  FaStethoscope,
 } from "react-icons/fa";
 
 import { NavLink, useNavigate } from "react-router-dom";
@@ -67,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       to: "/resDashboard/reserv",
     },
     {
-      icon: <FaCalendarCheck />,
+      icon: <FaStethoscope />,
       label: "Doctor Profile",
       to: "/resDashboard/profile",
       doctorOnly: true,
@@ -93,6 +95,12 @@ const Sidebar: React.FC<SidebarProps> = ({
       icon: <FaClipboardList />,
       label: "Services",
       to: "/resDashboard/service",
+    },
+    {
+      icon: <FaUserInjured />,
+      label: "Patients & Alerts",
+      to: "/resDashboard/patients",
+      doctorOnly: true,
     },
     {
       icon: <FaCommentDots />,
@@ -132,12 +140,11 @@ const Sidebar: React.FC<SidebarProps> = ({
           shadow-lg flex flex-col p-4
           transition-all duration-300
           border-r border-[#A98770]/20
-          ${
-            isDesktop
-              ? isCollapsed
-                ? "w-20"
-                : "w-64"
-              : isOpen
+          ${isDesktop
+            ? isCollapsed
+              ? "w-20"
+              : "w-64"
+            : isOpen
               ? "w-64"
               : "w-0"
           }
@@ -187,10 +194,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                 className={({ isActive }) =>
                   `
                   flex items-center gap-3 p-3 rounded-xl transition-all duration-200 font-medium
-                  ${
-                    isActive
-                      ? "bg-[#86654F] text-[#ECE7E2] shadow-md"
-                      : "hover:bg-[#A98770]/10 text-[#86654F]"
+                  ${isActive
+                    ? "bg-[#86654F] text-[#ECE7E2] shadow-md"
+                    : "hover:bg-[#A98770]/10 text-[#86654F]"
                   }
                   ${isCollapsed ? "justify-center" : ""}
                 `
@@ -207,9 +213,8 @@ const Sidebar: React.FC<SidebarProps> = ({
         </ul>
 
         <div
-          className={`mt-auto text-sm text-[#A98770] ${
-            isCollapsed ? "text-center" : ""
-          }`}
+          className={`mt-auto text-sm text-[#A98770] ${isCollapsed ? "text-center" : ""
+            }`}
         >
           {!isCollapsed && "© 2025 Petique"}
         </div>

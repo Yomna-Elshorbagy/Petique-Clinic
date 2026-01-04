@@ -107,6 +107,7 @@ const ChatStaffDashboard = lazy(
 );
 
 const Staff = lazy(() => import("./Reservation/Pages/Staff/Staff"));
+const DoctorPatients = lazy(() => import("./Reservation/Pages/DoctorPatients/DoctorPatients"));
 
 //==> NotFound
 
@@ -327,7 +328,7 @@ const router = createBrowserRouter([
           </DoctorProtectedRoute>
         ),
       },
-          {
+      {
         path: "profile",
         element: (
           <DoctorProtectedRoute>
@@ -402,6 +403,14 @@ const router = createBrowserRouter([
           <DoctorProtectedRoute>
             {" "}
             <ChatReservation />
+          </DoctorProtectedRoute>
+        ),
+      },
+      {
+        path: "patients",
+        element: (
+          <DoctorProtectedRoute>
+            <DoctorPatients />
           </DoctorProtectedRoute>
         ),
       },
