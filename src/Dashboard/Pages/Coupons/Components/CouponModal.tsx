@@ -117,7 +117,7 @@ const CouponView = ({ coupon }: { coupon?: ICoupon | null }) => {
         {
           label: "Used Users",
           content: (
-            <p className="text-lg font-bold">{coupon.assignedUser.length}</p>
+            <p className="text-lg font-bold">{coupon.usedBy?.length || 0}</p>
           ),
         },
       ].map(({ label, content }, i) => (
@@ -193,4 +193,3 @@ const CouponView = ({ coupon }: { coupon?: ICoupon | null }) => {
     </div>
   );
 };
-

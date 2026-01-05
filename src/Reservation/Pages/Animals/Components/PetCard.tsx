@@ -43,31 +43,35 @@ export default function PetCard({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <h3 className="text-xl font-bold text-[#86654F]">{pet.name}</h3>
-            <span className="text-[10px] font-mono text-[#A98770] bg-[#F7F3EF] px-1.5 py-0.5 rounded-md border border-[#E9DFD5]">
-              #{pet._id?.slice(-6).toUpperCase()}
-            </span>
           </div>
           <p className="text-[#A98770] text-sm flex items-center gap-1">
             <FaWeight size={12} /> {pet.weight} kg
           </p>
         </div>
 
-        <div className="flex gap-2">
-          <button
-            className="p-2 bg-yellow-100 text-yellow-700 rounded-lg hover:bg-yellow-200"
-            title="Soft Delete"
-            onClick={() => pet._id && onSoftDelete?.(pet._id)}
-          >
-            <FaTrashAlt size={14} />
-          </button>
+        <div className="flex flex-col items-end gap-2">
+          <div className="flex gap-2">
+            <button
+              className="p-2 bg-yellow-100 text-yellow-700 rounded-lg hover:bg-yellow-200"
+              title="Soft Delete"
+              onClick={() => pet._id && onSoftDelete?.(pet._id)}
+            >
+              <FaTrashAlt size={14} />
+            </button>
 
-          <button
-            className="p-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200"
-            title="Hard Delete"
-            onClick={() => pet._id && onHardDelete?.(pet._id)}
-          >
-            <FaTrash size={14} />
-          </button>
+            <button
+              className="p-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200"
+              title="Hard Delete"
+              onClick={() => pet._id && onHardDelete?.(pet._id)}
+            >
+              <FaTrash size={14} />
+            </button>
+          </div>
+
+          {/* ID under delete icons */}
+          <span className="text-[10px] font-mono text-[#A98770] bg-[#F7F3EF] px-1.5 py-0.5 rounded-md border border-[#E9DFD5]">
+            #{pet._id?.slice(-6).toUpperCase()}
+          </span>
         </div>
       </div>
 

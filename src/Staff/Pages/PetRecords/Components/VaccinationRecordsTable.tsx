@@ -1,9 +1,10 @@
 import { useMemo } from "react";
 import DataTableComponent from "../../../../Shared/Table/TableComponent";
 import { useStaffVaccinationOverview } from "../../../../Hooks/Staff/useStaff";
-import { Phone, MoreHorizontal, Edit2 } from "lucide-react";
+import { Phone, Edit2 } from "lucide-react";
 import { useVaccinationSearch } from "../Hooks/useVaccinationSearch";
 import { FaSearch } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 const VaccinationRecordsTable = () => {
   const { data: records, isLoading } = useStaffVaccinationOverview();
@@ -33,10 +34,10 @@ const VaccinationRecordsTable = () => {
                 {row.petName}
               </div>
               <div className="text-xs text-[var(--color-text-muted)]">
-                {row.category}
+                category: {row.category}
               </div>
               <div className="text-xs text-[var(--color-text-muted)]">
-                {row.weight}
+                {row.weight} Kg
               </div>
             </div>
           </div>
@@ -56,6 +57,10 @@ const VaccinationRecordsTable = () => {
               <Phone size={10} className="text-[var(--color-light-accent)]" />
               {row.ownerMobile || "No Phone"}
             </div>
+            <div className="flex items-center gap-1 text-xs text-[var(--color-text-muted)]">
+              <MdEmail size={10} className="text-[var(--color-light-accent)]" />
+              {row.ownerEmail || "No Email"}
+            </div>
           </div>
         ),
       },
@@ -66,7 +71,7 @@ const VaccinationRecordsTable = () => {
         width: "100px",
         cell: (row: any) => (
           <span className="text-[var(--color-text-muted)] text-sm">
-            {row.age}{" "}
+            {row.age} Year
           </span>
         ),
       },
@@ -114,6 +119,17 @@ const VaccinationRecordsTable = () => {
         ),
       },
       {
+        name: "Vaccine Name",
+        selector: (row: any) => row.vaccineName,
+        sortable: true,
+        minWidth: "180px",
+        cell: (row: any) => (
+          <span className="text-[var(--color-text-muted)] text-sm">
+            {row.vaccineName}
+          </span>
+        ),
+      },
+      {
         name: "Status",
         selector: (row: any) => row.status,
         sortable: true,
@@ -123,7 +139,7 @@ const VaccinationRecordsTable = () => {
 
           switch (row.status) {
             case "completed":
-            case "healthy": 
+            case "healthy":
               statusStyles = "bg-green-100 text-green-700 border-green-200";
               label = "Completed";
               break;
@@ -150,52 +166,38 @@ const VaccinationRecordsTable = () => {
           );
         },
       },
-      {
-        name: "Actions",
-        cell: (_row: any) => (
-          <button className="p-1.5 hover:bg-[var(--color-extra-5)] rounded-full text-[var(--color-text-muted)] transition-colors">
-            <MoreHorizontal size={16} />
-          </button>
-        ),
-        width: "80px",
-        center: true,
-      },
     ],
     []
   );
 
   const searchVaccinations = Array.isArray(records) ? records : [];
-  const {
-  search,
-  setSearch,
-  filteredRecords,
-} = useVaccinationSearch(searchVaccinations);
+  const { search, setSearch, filteredRecords } =
+    useVaccinationSearch(searchVaccinations);
 
   return (
     <>
-    <div className="flex flex-col md:flex-row gap-4 mb-8">
-      <div className="relative flex-1">
-        <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A98770]" />
-        <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search by Owner, Pet Name, or Age..."
-        className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#FCF9F4] border-none focus:ring-2 focus:ring-[#A98770]/50 text-[#86654F] placeholder-[#A98770]/70 shadow-sm"
-      />
+      <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <div className="relative flex-1">
+          <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A98770]" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by Owner, Email, Pet Name, or Age..."
+            className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#FCF9F4] border-none focus:ring-2 focus:ring-[#A98770]/50 text-[#86654F] placeholder-[#A98770]/70 shadow-sm"
+          />
+        </div>
       </div>
-    </div>
-    <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl shadow-sm border border-[var(--color-extra-3)]/30 overflow-hidden">
-      <DataTableComponent
-        columns={columns}
-        data={filteredRecords}
-        loading={isLoading}
-        pagination
-        title="Pet History"
-      />
-    </div>
+      <div className="bg-white dark:bg-[var(--color-dark-card)] rounded-2xl shadow-sm border border-[var(--color-extra-3)]/30 overflow-hidden">
+        <DataTableComponent
+          columns={columns}
+          data={filteredRecords}
+          loading={isLoading}
+          pagination
+          title="Pet History"
+        />
+      </div>
     </>
-    
   );
 };
 

@@ -131,7 +131,20 @@ const EditReservationModal = ({
             <button
               onClick={() => onSave(status, date, timeSlot)}
               disabled={isPending}
-              className="px-4 py-2 text-sm font-medium bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary-dark)] transition-colors disabled:opacity-50"
+              className="
+                  px-5 py-2.5 text-sm font-semibold
+                  bg-[var(--color-extra-5)]
+                  text-[#996c49]
+                  rounded-xl
+                  shadow-sm
+                  hover:bg-[var(--color-extra-3)]
+                  hover:shadow-md
+                  active:scale-95
+                  transition-all
+                  disabled:opacity-50
+                  disabled:cursor-not-allowed
+                  disabled:hover:shadow-none
+                "
             >
               {isPending ? "Saving..." : "Save Changes"}
             </button>
@@ -163,18 +176,18 @@ export default function StaffAppointments() {
   // Pagination Logic
   const allRecords = Array.isArray(reservations) ? reservations : [];
   const {
-  filteredRecords,
-  emailSearch,
-  setEmailSearch,
-  petSearch,
-  setPetSearch,
-  doctor,
-  setDoctor,
-  service,
-  setService,
-  doctorOptions,
-  serviceOptions,
-} = useReservationSearch(allRecords);
+    filteredRecords,
+    emailSearch,
+    setEmailSearch,
+    petSearch,
+    setPetSearch,
+    doctor,
+    setDoctor,
+    service,
+    setService,
+    doctorOptions,
+    serviceOptions,
+  } = useReservationSearch(allRecords);
   const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
   const currentRecords = filteredRecords.slice(
     (currentPage - 1) * itemsPerPage,
@@ -246,10 +259,11 @@ export default function StaffAppointments() {
               setViewMode("all");
               setCurrentPage(1);
             }}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${viewMode === "all"
-              ? "bg-white dark:bg-[var(--color-dark-card)] text-[var(--color-primary)] shadow-sm"
-              : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
-              }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+              viewMode === "all"
+                ? "bg-white dark:bg-[var(--color-dark-card)] text-[var(--color-primary)] shadow-sm"
+                : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
+            }`}
           >
             <Filter size={16} /> All Reservations
           </button>
@@ -258,10 +272,11 @@ export default function StaffAppointments() {
               setViewMode("today");
               setCurrentPage(1);
             }}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${viewMode === "today"
-              ? "bg-white dark:bg-[var(--color-dark-card)] text-[var(--color-primary)] shadow-sm"
-              : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
-              }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+              viewMode === "today"
+                ? "bg-white dark:bg-[var(--color-dark-card)] text-[var(--color-primary)] shadow-sm"
+                : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
+            }`}
           >
             <Calendar size={16} /> Today Only
           </button>

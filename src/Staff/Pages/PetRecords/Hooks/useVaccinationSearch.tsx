@@ -10,11 +10,13 @@ export const useVaccinationSearch = (records: any[]) => {
 
     return records.filter((row: any) => {
       const ownerName = row.ownerName?.toLowerCase() || "";
+      const ownerEmail = row.ownerEmail?.toLowerCase() || "";
       const petName = row.petName?.toLowerCase() || "";
       const age = String(row.age || "");
 
       return (
         ownerName.includes(lower) ||
+        ownerEmail.includes(lower) ||
         petName.includes(lower) ||
         age.includes(lower)
       );

@@ -262,7 +262,7 @@ export default function AddVaccinationModal({
                     recurring: false,
                   })
                 }
-                className="btn btn-sm bg-[#86654F] text-white border-none hover:bg-[#6d5240] gap-1"
+                className="mb-4 flex items-center gap-2 bg-[#86654F] text-white px-3 py-1 rounded"
               >
                 <FaPlus size={12} /> Add Dose
               </button>

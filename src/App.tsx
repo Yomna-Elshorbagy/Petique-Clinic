@@ -9,17 +9,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProtectedRoutes from "./Shared/ProtectedRoutes/ProtectedRoutes";
 import AdminProtectedRoute from "./Shared/ProtectedRoutes/AdminProtectedRoutes";
 import DoctorProtectedRoute from "./Shared/ProtectedRoutes/DoctorProtectedRoutes";
-import NotFoundPage from "./Components/NotFound/NotFound";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import LoaderPage from "./Shared/LoaderPage/LoaderPage";
 import { SocketProvider } from "./contexts/SocketContext";
-import StaffApointments from "./Staff/Pages/Appointments/StaffApointments";
-import Clients from "./Staff/Pages/Clients/Clients";
-import PetRecords from "./Staff/Pages/PetRecords/PetRecords";
-import StaffVaccinations from "./Staff/Pages/Vaccinations/StaffVaccinations";
 import StaffLayout from "./Staff/StaffLayout";
-import StaffReservation from "./Staff/Pages/StaffReservation/StaffReservation";
-import DoctorProfile from "./Reservation/Pages/DoctorProfile/DoctorProfile";
+import StaffProtectedRoute from "./Shared/ProtectedRoutes/StaffProtectedRoutes";
 
 // ===> Lazy imports
 const Layout = lazy(() => import("./Shared/Layout/layout"));
@@ -102,16 +96,34 @@ const ChatEcoDashboard = lazy(
   () => import("./Dashboard/Pages/Chat/ChatEcoDashboard")
 );
 
-const ChatStaffDashboard = lazy(
-  () => import("./Staff/Pages/Chat/ChatStaffDashboard")
-);
-
 const Staff = lazy(() => import("./Reservation/Pages/Staff/Staff"));
-const DoctorPatients = lazy(() => import("./Reservation/Pages/DoctorPatients/DoctorPatients"));
-
+// ===== Doctor Pages =====
+const DoctorProfile = lazy(
+  () => import("./Reservation/Pages/DoctorProfile/DoctorProfile")
+);
+const DoctorPatients = lazy(
+  () => import("./Reservation/Pages/DoctorPatients/DoctorPatients")
+);
 //==> NotFound
 
 const NotFoundAnimated = lazy(() => import("./Components/NotFound/NotFound"));
+const NotFoundPage = lazy(() => import("./Components/NotFound/NotFound"));
+
+// ===== Staff Pages =====
+const StaffApointments = lazy(
+  () => import("./Staff/Pages/Appointments/StaffApointments")
+);
+const StaffReservation = lazy(
+  () => import("./Staff/Pages/StaffReservation/StaffReservation")
+);
+const Clients = lazy(() => import("./Staff/Pages/Clients/Clients"));
+const PetRecords = lazy(() => import("./Staff/Pages/PetRecords/PetRecords"));
+const StaffVaccinations = lazy(
+  () => import("./Staff/Pages/Vaccinations/StaffVaccinations")
+);
+const ChatStaffDashboard = lazy(
+  () => import("./Staff/Pages/Chat/ChatStaffDashboard")
+);
 
 const router = createBrowserRouter([
   {
@@ -202,13 +214,60 @@ const router = createBrowserRouter([
     path: "staff",
     element: <StaffLayout />,
     children: [
-      { path: "", element: <StaffApointments /> },
-      { path: "reservation", element: <StaffReservation /> },
-      { path: "appointments", element: <StaffApointments /> },
-      { path: "clients", element: <Clients /> },
+      {
+        path: "",
+        element: (
+          <StaffProtectedRoute>
+            {" "}
+            <StaffApointments />{" "}
+          </StaffProtectedRoute>
+        ),
+      },
+      {
+        path: "reservation",
+        element: (
+          <StaffProtectedRoute>
+            {" "}
+            <StaffReservation />
+          </StaffProtectedRoute>
+        ),
+      },
+      {
+        path: "appointments",
+        element: (
+          <StaffProtectedRoute>
+            {" "}
+            <StaffApointments />{" "}
+          </StaffProtectedRoute>
+        ),
+      },
+      {
+        path: "clients",
+        element: (
+          <StaffProtectedRoute>
+            {" "}
+            <Clients />{" "}
+          </StaffProtectedRoute>
+        ),
+      },
       { path: "petRecord", element: <PetRecords /> },
-      { path: "chat", element: <ChatStaffDashboard /> },
-      { path: "vaccinations", element: <StaffVaccinations /> },
+      {
+        path: "chat",
+        element: (
+          <StaffProtectedRoute>
+            <ChatStaffDashboard />{" "}
+          </StaffProtectedRoute>
+        ),
+      },
+      {
+        path: "vaccinations",
+        element: (
+          <StaffProtectedRoute>
+            {" "}
+            <StaffVaccinations />{" "}
+          </StaffProtectedRoute>
+        ),
+      },
       { path: "*", element: <NotFoundPage /> },
     ],
   },

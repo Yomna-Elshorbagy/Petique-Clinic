@@ -7,7 +7,7 @@ export interface ICoupon {
   discount: number;
   createdBy: string;
   isDeleted: boolean;
-  assignedUser: string[];
+  usedBy: { user: string; count: number }[];
   createdAt: string;
   updatedAt: string;
 }
@@ -33,8 +33,6 @@ export interface ICouponCreate {
   fromDate: string;
   expire: string;
   discount: number;
-  assignedUser?: string[];
-  
 }
 
-export interface ICouponUpdate extends Partial<ICouponCreate> {}
+export interface ICouponUpdate extends Partial<ICouponCreate> { }

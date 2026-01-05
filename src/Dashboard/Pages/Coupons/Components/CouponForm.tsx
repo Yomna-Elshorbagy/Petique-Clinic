@@ -75,9 +75,8 @@ const CouponForm: React.FC<CouponFormProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      const { assignedUser, ...submitData } = formData;
       onSubmit({
-        ...submitData,
+        ...formData,
         fromDate: new Date(formData.fromDate).toISOString(),
         expire: new Date(formData.expire).toISOString(),
       });
@@ -110,7 +109,9 @@ const CouponForm: React.FC<CouponFormProps> = ({
           value={formData.code}
           onChange={handleChange}
           className={`w-full border ${
-            errors.code ? "border-red-500" : "border-[var(--color-light-secondary)]/40"
+            errors.code
+              ? "border-red-500"
+              : "border-[var(--color-light-secondary)]/40"
           } p-2 rounded-xl bg-[var(--color-extra-5)] focus:ring-2 focus:ring-[var(--color-light-accent)] outline-none transition`}
           placeholder="e.g., DISCOUNT25"
         />
@@ -147,7 +148,9 @@ const CouponForm: React.FC<CouponFormProps> = ({
           min="0"
           max={formData.type === "percentage" ? "100" : undefined}
           className={`w-full border ${
-            errors.discount ? "border-red-500" : "border-[var(--color-light-secondary)]/40"
+            errors.discount
+              ? "border-red-500"
+              : "border-[var(--color-light-secondary)]/40"
           } p-2 rounded-xl bg-[var(--color-extra-5)] focus:ring-2 focus:ring-[var(--color-light-accent)] outline-none transition`}
           placeholder="Enter discount value"
         />
@@ -168,7 +171,9 @@ const CouponForm: React.FC<CouponFormProps> = ({
             value={formData.fromDate}
             onChange={handleChange}
             className={`w-full border ${
-              errors.fromDate ? "border-red-500" : "border-[var(--color-light-secondary)]/40"
+              errors.fromDate
+                ? "border-red-500"
+                : "border-[var(--color-light-secondary)]/40"
             } p-2 rounded-xl bg-[var(--color-extra-5)] focus:ring-2 focus:ring-[var(--color-light-accent)] outline-none transition`}
           />
           {errors.fromDate && (
@@ -187,7 +192,9 @@ const CouponForm: React.FC<CouponFormProps> = ({
             onChange={handleChange}
             min={formData.fromDate}
             className={`w-full border ${
-              errors.expire ? "border-red-500" : "border-[var(--color-light-secondary)]/40"
+              errors.expire
+                ? "border-red-500"
+                : "border-[var(--color-light-secondary)]/40"
             } p-2 rounded-xl bg-[var(--color-extra-5)] focus:ring-2 focus:ring-[var(--color-light-accent)] outline-none transition`}
           />
           {errors.expire && (
@@ -218,4 +225,3 @@ const CouponForm: React.FC<CouponFormProps> = ({
 };
 
 export default CouponForm;
-

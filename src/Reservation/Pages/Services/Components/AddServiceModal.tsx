@@ -27,6 +27,12 @@ const serviceSchema = z.object({
     .instanceof(File, { message: "Main image is required" })
     .refine((file) => file.size > 0, { message: "Image cannot be empty" }),
   subImages: z.any().optional(),
+  category: z.enum(
+    ["Consultations", "Preventive Care", "Hygiene", "Dental Care"],
+    {
+      message: "Please select a valid category",
+    }
+  ),
 });
 
 type ServiceFormData = z.infer<typeof serviceSchema>;
@@ -58,6 +64,7 @@ export default function AddServiceModal({
       duration: "",
       image: undefined,
       subImages: undefined,
+      category: "Consultations",
     },
   });
 
@@ -80,6 +87,7 @@ export default function AddServiceModal({
     fd.append("benefits", data.benefits || "");
     fd.append("duration", data.duration || "");
     fd.append("tips", data.tips || "");
+    fd.append("category", data.category);
     fd.append("image", data.image);
 
     if (data.subImages) {
@@ -188,6 +196,27 @@ export default function AddServiceModal({
             {errors.priceRange && (
               <span className="text-red-500 text-xs">
                 {errors.priceRange.message}
+              </span>
+            )}
+          </div>
+
+          {/* Category */}
+          <div>
+            <label className="font-semibold text-sm text-[#86654F]">
+              Category
+            </label>
+            <select
+              className="w-full p-4 rounded-xl bg-[#FCF9F4] border border-[#ECE7E2] focus:ring-2 focus:ring-[#A98770] outline-none transition-all text-[#6D5240]"
+              {...register("category")}
+            >
+              <option value="Consultations">Consultations</option>
+              <option value="Preventive Care">Preventive Care</option>
+              <option value="Hygiene">Hygiene</option>
+              <option value="Dental Care">Dental Care</option>
+            </select>
+            {errors.category && (
+              <span className="text-red-500 text-xs">
+                {errors.category.message}
               </span>
             )}
           </div>
