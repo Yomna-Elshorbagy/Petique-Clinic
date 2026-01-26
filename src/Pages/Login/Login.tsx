@@ -59,6 +59,8 @@ export default function Login() {
           destination = "/ecoDashboard";
         } else if (role === "doctor" || role === "owner") {
           destination = "/resDashboard";
+        } else if (role === "staff") {
+          destination = "/staff";
         } else {
           destination = "/home";
         }
@@ -70,8 +72,8 @@ export default function Login() {
         role === "admin"
           ? `Welcome Admin ${username}!`
           : role === "doctor"
-          ? `Welcome Dr. ${username}!`
-          : `Welcome ${username}!`;
+            ? `Welcome Dr. ${username}!`
+            : `Welcome ${username}!`;
 
       Swal.fire({
         title: `👋 ${welcomeText}`,

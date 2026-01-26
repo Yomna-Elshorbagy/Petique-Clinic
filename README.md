@@ -15,7 +15,7 @@ Petique Clinic enables:
 - Full business control and analytics for owners
 - Ai integration through ChatBot text prediction and image analyzing for pets disease 
 
-The platform consists of **3 websites** and **4 user roles**.
+The platform consists of **4 websites** and **5 user roles**.
 
 ---
 
@@ -59,31 +59,109 @@ The platform consists of **3 websites** and **4 user roles**.
 
 ---
 
-## 🌐 Websites
+## 🔐 Test Credentials
 
-1. Pet Owner Website
-2. Doctor Reservation Dashboard
-3. Admin Shopping Dashboard
-4. Owner Super Admin Full Access
+Use the following credentials to explore the different system functionalities:
+
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **Owner** | `yumnamohamed30@gmail.com` | `Yomn123` |
+| **Doctor** | `doctor@gmail.com` | `Yomna123` |
+| **Pet Owner** | `yomnaelshorbage@gmail.com` | `Yomn123` |
+| **Staff** | `yomnamo@gmail.com` | `Yomna123` |
+| **Seller** | `seller@gmail.com` | `Yomna123` |
+
+---
+
+## 🌐 Websites & Access
+1. **Pet Owner Website**: Main portal for pet services, shopping, and AI assistance.
+2. **Seller Dashboard**: E-commerce and product management.
+3. **Doctor Dashboard**: Clinical appointment and patient management.
+4. **Staff Dashboard**: Clinic operations, reservations, and client relations.
+5. **Owner Dashboard**: Full administrative oversight and clinic analytics.
 
 ---
 
 ## 📅 Reservation Workflow
-
-PENDING → CONFIRMED → COMPLETED  
-CANCELED
+`PENDING` → `CONFIRMED` → `COMPLETED`  
+`CANCELED`
 
 ---
 
 ## 💉 Vaccination Management
+- Linked to pet, doctor, and reservation.
+- Editable by doctors, staff, owner and managed by status.
+- Automatic next dose calculation and email reminders.
+- Full audit logs viewable by clinic owner.
 
-- Linked to pet, doctor, and reservation
-- Editable by doctors
-- Viewable by pet owners
-- Auditable by owner
-- managed by status
-- automatic calculated nex does and sending reminders mails
+---
 
+## 🌟 Detailed Features
+
+### 👤 3.2 - User Profile
+A multi-tabbed interface for comprehensive pet and account management:
+- **Profile Data**: Edit personal information and upload profile images.
+- **Add Animal**: Register new pets into the clinic system.
+- **My Animals**: Directory of all pets added by the user.
+- **Order History**: View all past orders for animal products.
+- **Order Tracking**: Real-time status updates on product deliveries.
+- **Reservation Tracking**: Monitor upcoming and past clinical visits.
+- **Shopping Analysis**: Insights into completing orders products with analysis summary.
+- **AI Symptom Checker**: Predict actions based on pet symptoms and save history for review.
+
+### 📞 3.9 - Contact Us
+- **Contact Form**: Direct messaging to clinic support.
+- **About Section**: Comprehensive clinic info with a **QR Code** for quick site access.
+- **Direct Connect**: Icons to launch real-time chats with **Sellers**, **Staff**, and **Doctors**.
+
+### 🤖 3.12 - AI Assistant
+- **Disease Prediction**: Advanced AI chat predicting diseases using both **text input** and **image analysis**.
+
+---
+
+## 🛠️ Dashboard Architecture
+
+All dashboard pages feature a consistent design language:
+- **Actions**: ADD, EDIT, SOFT DELETE, HARD DELETE.
+- **UI Components**: Shared tables with advanced Filtering and Pagination.
+
+### 🛒 4 - Seller Dashboard
+- **4.1 Overview**: Analytics for users, products, categories, and revenues.
+- **4.2 Users**: Manage customer accounts.
+- **4.3 Products & 4.4 Categories**: Full inventory and catalog control.
+- **4.5 Orders**: Track and fulfill customer purchases.
+- **4.6 Reports**: Business intelligence and full needed reports & managing printing it 
+- **4.7 Emails**: Support system to replay for all users Queries and questions.
+- **4.8 Chat**: Real-time interaction with pet owners.
+- **4.9 Archive**: View all archived products and categories and all soft deleted data and ability to restore them.
+
+### 🩺 5 - Doctor Dashboard
+- **5.1 Overview**: Clinical summary and daily performance.
+- **5.2 Reservations**: Manage and update patient appointments.
+- **5.3 Pet Categories & 5.4 Pets**: Access detailed patient records.
+- **5.5 Vaccinations**: Manage immunization schedules.
+- **5.6 Chat**: Direct clinical communication with pet owners.
+- **6.7 Doctor Profile**: Manage their own data and update it.
+
+### 🏥 6 - Staff Dashboard (Clinic Operations)
+- **6.1 New Reservations**: Onboard new clients and pets.
+- **6.2 Appointment Center**: View and update all appointments; manage rescheduling.
+- **6.3 Clients**: View full client history (reservations, pets, vaccinations).
+- **6.4 Pets History**: Detailed vaccination tracking and next dose monitoring.
+- **6.5 Vaccination Management**: Complete or reschedule immunization tasks.
+- **6.6 Chat**: Real-time coordination with pet owners.
+
+### 👑 7 - Owner Dashboard
+- **Full Access**: Includes all functionalities of Staff and Seller dashboards.
+- **7.1 Doctors & 7.2 Staff Management**: Complete personnel oversight.
+- **7.3 Executive Chat**: Direct line to pet owners.
+- **7.4 Analytics**: High-level clinic overview and complex business analysis.
+
+---
+
+## 🌍 Localization
+The platform supports **4 languages**, providing a local experience for a global user base.
+- (Arabic - English - German - French)
 ---
 
 ## 🛠️ Tech Stack
@@ -141,14 +219,7 @@ CANCELED
 
 ## 🪝 Custom Hooks for APIs
 
-Reusable hooks wrap API logic:
-
-- useGetReservations
-- useAddReservation
-- useUpdateReservation
-- useGetOrders
-- useGetProducts
-- and more ....
+Reusable hooks wrap API logic
 
 Benefits:
 
@@ -166,6 +237,7 @@ Implemented for:
 - Orders
 - Products
 - Users
+- and more needed ...
 
 Handled using:
 
@@ -183,7 +255,7 @@ Reusable UI components across all dashboards:
 - Tables
 - Modals
 - Forms (Zod validation)
-- Badges & buttons
+- Badges & buttons & inputs
 - Loaders & empty states
 
 ---
@@ -203,22 +275,15 @@ Channels:
 ---
 
 ## 📁 Project Structure
-
 ```text
 petique-clinic/
-│
-├── backend/
-│   ├── controllers/
-│   ├── routes/
-│   ├── models/
-│   ├── middlewares/
-│   └── utils/
-│
-├── pet-owner-frontend/
-├── doctor-dashboard/
-├── admin-shopping-dashboard/
+├── backend/                  # Node.js API
+├── pet-owner-frontend/       # Client Web App
+├── doctor-dashboard/         # Clinical Portal
+├── admin-dashboard/          # Seller/Staff/Owner Dashboards
 └── README.md
 ```
+
 ---
 ## 🐾 Petique Clinic
 
