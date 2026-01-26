@@ -12,6 +12,7 @@ import { PawPrint } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import SEO from "../../Components/SEO/SEO";
 import { baseURL } from "../../Apis/BaseUrl";
+import catImg from "../../assets/images/pic-2.png";
 
 const fetchServices = async (): Promise<IService[]> => {
   const res = await axios.get(`${baseURL}/service`);
@@ -108,18 +109,16 @@ export default function Servicesdetails() {
             <Bone
               key={i18n.language}
               ref={boneRef}
-              className={`bone-icon w-25 h-30 text-white ${
-                isRTL
-                  ? "ml-0 mr-[-30px] scale-y-[-1]"
-                  : "ml-[-30px] mr-0 scale-y-[1]"
-              }`}
+              className={`bone-icon w-25 h-30 text-white ${isRTL
+                ? "ml-0 mr-[-30px] scale-y-[-1]"
+                : "ml-[-30px] mr-0 scale-y-[1]"
+                }`}
               strokeWidth={2.5}
               color="#fde5d3"
             />
             <h1
-              className={`text-white text-3xl md:text-4xl font-extrabold mt-4 ${
-                isRTL ? "text-right" : "text-left"
-              }`}
+              className={`text-white text-3xl md:text-4xl font-extrabold mt-4 ${isRTL ? "text-right" : "text-left"
+                }`}
             >
               {service.title}
             </h1>
@@ -149,11 +148,10 @@ export default function Servicesdetails() {
           </div>
 
           <img
-            src="/src/assets/images/pic-2.png"
+            src={catImg}
             alt="cat"
-            className={`hidden md:block absolute bottom-[-90px] w-[600px] z-10 ${
-              isRTL ? "left-0" : "right-0"
-            }`}
+            className={`hidden md:block absolute bottom-[-90px] w-[600px] z-10 ${isRTL ? "left-0" : "right-0"
+              }`}
           />
         </div>
 
@@ -176,11 +174,10 @@ export default function Servicesdetails() {
                       setActiveId(s._id);
                       navigate(`/service/${s._id}`);
                     }}
-                    className={`flex items-center rounded-full shadow-md p-3 cursor-pointer transition transform hover:scale-105 ${
-                      s._id === activeId
-                        ? "bg-[#e9a66f] text-white border-2 border-[#e9a66f]"
-                        : "bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] border-2 border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
-                    }`}
+                    className={`flex items-center rounded-full shadow-md p-3 cursor-pointer transition transform hover:scale-105 ${s._id === activeId
+                      ? "bg-[#e9a66f] text-white border-2 border-[#e9a66f]"
+                      : "bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)] border-2 border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)]"
+                      }`}
                   >
                     <img
                       src={serviceImg}
@@ -188,9 +185,8 @@ export default function Servicesdetails() {
                       className="w-16 h-16 object-cover rounded-full"
                     />
                     <span
-                      className={`ml-3 font-semibold ${
-                        isRTL ? "mr-3 ml-0" : "ml-3"
-                      }`}
+                      className={`ml-3 font-semibold ${isRTL ? "mr-3 ml-0" : "ml-3"
+                        }`}
                     >
                       {s.title}
                     </span>
@@ -202,9 +198,8 @@ export default function Servicesdetails() {
             {/* Right Side */}
 
             <div
-              className={`w-full md:w-3/4 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] p-6 rounded-lg shadow space-y-4 transition-colors duration-300 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] ${
-                isRTL ? "text-right" : "text-left"
-              }`}
+              className={`w-full md:w-3/4 bg-[var(--color-bg-lighter)] dark:bg-[var(--color-dark-card)] p-6 rounded-lg shadow space-y-4 transition-colors duration-300 border border-[var(--color-border-light)] dark:border-[var(--color-dark-border-light)] ${isRTL ? "text-right" : "text-left"
+                }`}
             >
               <img
                 src={img1}

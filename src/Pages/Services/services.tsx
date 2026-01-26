@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import SEO from "../../Components/SEO/SEO";
 import LoaderPage from "../../Shared/LoaderPage/LoaderPage";
 import { baseURL } from "../../Apis/BaseUrl";
+import catImg from "../../assets/images/pic-2.png";
 
 const fetchServices = async (): Promise<IService[]> => {
   const res = await axios.get(`${baseURL}/service`);
@@ -60,18 +61,16 @@ export default function Services() {
               <Bone
                 key={i18n.language}
                 ref={boneRef}
-                className={`bone-icon w-25 h-30 text-white ${
-                  isRTL
-                    ? "ml-0 mr-[-30px] scale-y-[-1]"
-                    : "ml-[-30px] mr-0 scale-y-[1]"
-                }`}
+                className={`bone-icon w-25 h-30 text-white ${isRTL
+                  ? "ml-0 mr-[-30px] scale-y-[-1]"
+                  : "ml-[-30px] mr-0 scale-y-[1]"
+                  }`}
                 strokeWidth={2.5}
                 color="#fde5d3"
               />
               <h1
-                className={`text-white text-3xl md:text-4xl font-extrabold mt-4 ${
-                  isRTL ? "text-right" : "text-left"
-                }`}
+                className={`text-white text-3xl md:text-4xl font-extrabold mt-4 ${isRTL ? "text-right" : "text-left"
+                  }`}
               >
                 {t("services.services")}
               </h1>
@@ -91,11 +90,10 @@ export default function Services() {
             </div>
 
             <img
-              src="/src/assets/images/pic-2.png"
+              src={catImg}
               alt="cat"
-              className={`hidden md:block absolute bottom-[-90px] w-[600px] z-10 ${
-                isRTL ? "left-0" : "right-5"
-              }`}
+              className={`hidden md:block absolute bottom-[-90px] w-[600px] z-10 ${isRTL ? "left-0" : "right-5"
+                }`}
             />
           </div>
 

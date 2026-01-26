@@ -1,0 +1,1298 @@
+{
+  "navbar": {
+    "home": "Accueil",
+    "products": "Produits",
+    "services": "Services",
+    "reservation": "Réservation",
+    "contactUs": "Contactez-nous",
+    "blog": "Blog",
+    "profile": "Profil",
+    "reviews": "Avis",
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "logout": "Déconnexion",
+    "cart": "Panier",
+    "toggleTheme": "Basculer le thème",
+    "reservationBoard": "Tableau E-commerce"
+  },
+  "contactUs": {
+    "title": "Contactez-nous",
+    "ourLocation": "Notre emplacement",
+    "fullName": "Nom complet",
+    "email": "E-mail",
+    "category": "Catégorie",
+    "urgency": "Urgence",
+    "petAge": "Âge de l'animal (optionnel)",
+    "describeIssue": "Décrivez votre problème...",
+    "sendMessage": "Envoyer le message",
+    "sending": "Envoi en cours...",
+    "categoryOptions": {
+      "general": "Demande générale",
+      "appointment": "Rendez-vous",
+      "health": "Santé",
+      "emergency": "Urgence",
+      "vaccination": "Vaccination"
+    },
+    "urgencyOptions": {
+      "high": "Haute",
+      "medium": "Moyenne",
+      "low": "Faible",
+      "emergency": "Urgence"
+    },
+    "openHours": "Ouvert : 10h – 22h tous les jours",
+    "successMessage": "Votre demande a été livrée avec succès !",
+    "successTitle": "Message envoyé 🎉",
+    "errorTitle": "Oups...",
+    "errorMessage": "Quelque chose s'est mal passé !"
+  },
+  "servicesSection": {
+    "ourService": "Notre Service",
+    "title": "Créer des souvenirs à travers le monde, ensemble",
+    "petTaxiTitle": "Taxi animalier 24/7",
+    "petTaxiDesc": "Transport sûr et fiable pour vos animaux, disponible 24h/24 et 7j/7.",
+    "petGroomingTitle": "Toilettage d'animaux",
+    "petGroomingDesc": "Services de toilettage professionnels pour que vos animaux soient beaux et se sentent bien.",
+    "petTrainingTitle": "Dressage d'animaux",
+    "petTrainingDesc": "Programmes de dressage experts pour aider vos animaux à apprendre et à mieux se comporter.",
+    "viewServices": "VOIR LES SERVICES"
+  },
+  "qrSection": {
+    "title": "QR d'accès rapide",
+    "description": "Scannez ce QR pour accéder instantanément aux dossiers des animaux, aux rendez-vous et à l'enregistrement rapide dans notre clinique.",
+    "whyUse": "Pourquoi utiliser ce QR ?",
+    "benefits": {
+      "access": "Accès instantané aux antécédents médicaux de l'animal",
+      "checkin": "Enregistrement rapide dans notre clinique",
+      "secure": "Sécurisé et expire toutes les heures",
+      "noLogin": "Aucune connexion requise — scannez et partez"
+    },
+    "refresh": "Actualiser le QR",
+    "autoRefresh": "S'actualise automatiquement toutes les heures."
+  },
+  "clinicReviews": {
+    "title": "Avis récents",
+    "reviewsCount": "{{count}} avis trouvés",
+    "writeReview": "Écrire un avis",
+    "filters": {
+      "all": "Tous les avis",
+      "doctors": "Docteurs",
+      "services": "Services",
+      "clinic": "Clinique"
+    },
+    "noReviews": "Aucun avis trouvé",
+    "noReviewsDesc": "Soyez le premier à partager votre expérience !",
+    "shareExperience": "Partager l'expérience",
+    "valueFeedback": "Nous apprécions vos commentaires",
+    "whatReviewing": "Que révisez-vous ?",
+    "doctor": "Docteur",
+    "service": "Service",
+    "clinicLabel": "Clinique",
+    "selectDoctor": "Sélectionner un docteur",
+    "chooseDoctor": "Choisissez un docteur...",
+    "pleaseSelectDoctor": "Veuillez sélectionner un docteur",
+    "selectService": "Sélectionner un service",
+    "chooseService": "Choisissez un service...",
+    "pleaseSelectService": "Veuillez sélectionner un service",
+    "rateExperience": "Évaluez votre expérience",
+    "yourReview": "Votre avis",
+    "tellExperience": "Racontez-nous votre expérience...",
+    "pleaseWriteComment": "Veuillez écrire un commentaire",
+    "minCharacters": "Minimum 10 caractères",
+    "submitReview": "Soumettre l'avis",
+    "error": "Erreur",
+    "selectRating": "Veuillez sélectionner une note",
+    "thankYou": "Merci !",
+    "reviewSubmitted": "Votre avis a été soumis avec succès.",
+    "failedSubmit": "Échec de la soumission de l'avis",
+    "doctorLabel": "Docteur :",
+    "serviceLabel": "Service :",
+    "reservationLabel": "Réservation :",
+    "clinicReview": "Avis sur la clinique",
+    "anonymous": "Anonyme"
+  },
+  "blog": {
+    "latestArticles": "Derniers articles de blog",
+    "home": "Accueil",
+    "blog": "Blog",
+    "search": "rechercher",
+    "readMore": "lire la suite",
+    "showLess": "montrer moins",
+    "latestPosts": "derniers articles",
+    "AllCategories": "Toutes les catégories",
+    "tags": "étiquettes",
+    "posts": [
+      {
+        "id": 1,
+        "title": "Comment garder votre animal en bonne santé et heureux",
+        "image": [
+          "https://i.postimg.cc/0ydhBn2c/1.jpg",
+          "https://i.postimg.cc/cLMPbh4Q/2.jpg",
+          "https://i.postimg.cc/JzcS2x4j/3.jpg"
+        ],
+        "description": "Étapes simples que chaque propriétaire d'animal devrait suivre pour améliorer la santé et le bien-être quotidiens de son animal.",
+        "category": "Santé",
+        "author": "Clinique Petique",
+        "date": "2024-11-25",
+        "tags": [
+          "AnimauxHeureux",
+          "AnimauxEnBonneSanté"
+        ],
+        "content": {
+          "intro": "Garder votre animal en bonne santé ne se résume pas à des visites régulières chez le vétérinaire : il s'agit de créer des habitudes quotidiennes qui le protègent physiquement et émotionnellement. De nombreux propriétaires d'animaux sous-estiment à quel point des routines simples comme le brossage, l'hydratation et les séances de jeu régulières peuvent considérablement améliorer la durée de vie d'un animal. Dans cet article, nous explorerons des conseils pratiques qui s'intègrent facilement dans votre emploi du temps quotidien et font une réelle différence dans le bien-être général de votre animal.",
+          "head": "Conseils pour appliquer cela",
+          "tips": [
+            "Brossez le pelage de votre animal au moins 3 à 4 fois par semaine.",
+            "Fournissez de l'eau potable fraîche et propre à tout moment.",
+            "Planifiez des séances de jeu courtes mais régulières chaque jour.",
+            "Vérifiez la présence de puces et de tiques chaque semaine.",
+            "Maintenez une zone de sommeil propre."
+          ],
+          "body": "Un animal en bonne santé commence par une combinaison équilibrée de nutrition, d'exercice, d'hygiène et d'engagement émotionnel. Une bonne nutrition garantit que votre animal reçoit les vitamines et les minéraux nécessaires à sa croissance, à sa réparation et à son immunité. L'exercice régulier maintient ses muscles forts et prévient l'obésité, qui est l'un des problèmes de santé à long terme les plus courants chez les animaux aujourd'hui. De plus, le maintien d'une hygiène appropriée réduit le risque d'infections et de maladies de la peau. Les animaux ont également besoin de soins émotionnels : une interaction régulière, de l'affection et une stimulation mentale aident à réduire le stress et les problèmes de comportement. Ces petites actions peuvent sembler simples, mais lorsqu'elles sont combinées, elles créent un environnement stable et heureux qui favorise une santé à long terme.",
+          "conclusion": "La cohérence est la clé pour élever un animal en bonne santé. De petites habitudes quotidiennes, lorsqu'elles sont pratiquées régulièrement, peuvent protéger votre animal des maladies courantes et améliorer sa qualité de vie. N'oubliez pas que votre animal compte sur vous et que chaque minute que vous investissez dans ses soins fait une différence significative."
+        }
+      },
+      {
+        "id": 2,
+        "title": "19 aliments sains et sûrs que vous pouvez donner à votre chien",
+        "image": [
+          "https://i.postimg.cc/zGS4c7Xk/4.jpg",
+          "https://i.postimg.cc/jSQBFcdD/5.jpg",
+          "https://i.postimg.cc/NjwWDSYR/6.jpg"
+        ],
+        "description": "Un guide de 19 aliments humains qui sont sûrs, nutritifs et bénéfiques pour les chiens.",
+        "category": "Nutrition",
+        "author": "Clinique Petique",
+        "date": "2025-12-01",
+        "tags": [
+          "SantéAnimale",
+          "BienÊtreAnimal"
+        ],
+        "content": {
+          "intro": "Vous cherchez des friandises saines pour votre chiot ? Ces 19 aliments comprennent des viandes, des fruits et des légumes qui sont nutritifs pour les chiens. Donnez-les toujours avec modération et surveillez la tolérance de votre chien aux nouveaux aliments.",
+          "head": "Conseils pour appliquer cela",
+          "body": "Les chiens peuvent bénéficier de divers aliments humains qui sont sûrs et sains. Les fruits comme les pommes, les bananes et les myrtilles fournissent des vitamines et des antioxydants. Les légumes tels que les carottes, le céleri, les concombres, les haricots verts et le chou-fleur offrent des fibres, des vitamines et aident à maintenir la santé digestive. Les protéines comme le poulet cuit, la dinde, le bœuf, les œufs et le poisson fournissent des acides aminés essentiels et soutiennent la croissance musculaire. D'autres aliments comme la citrouille, le yaourt et le riz blanc aident à la digestion et à la santé intestinale. Les noix telles que les arachides non salées et le beurre d'arachide fournissent des graisses saines, tandis que les fruits comme la mangue et la pastèque offrent hydratation et vitamines. Retirez toujours les graines, les noyaux, les peaux ou les os qui pourraient être nocifs, et donnez des friandises avec modération.",
+          "tips": [
+            "Les friandises ne doivent pas représenter plus de 10 % de l'alimentation quotidienne de votre chien.",
+            "Introduisez progressivement de nouveaux aliments et surveillez toute réaction indésirable.",
+            "Retirez les graines, les noyaux et les os avant de nourrir votre chien pour éviter tout risque d'étouffement ou de toxicité.",
+            "Consultez votre vétérinaire si vous n'êtes pas sûr d'un aliment particulier ou de la taille de la portion."
+          ],
+          "conclusion": "Donner à votre chien des aliments humains sûrs et sains peut compléter son alimentation et favoriser son bien-être général. La cohérence, la modération et une sélection minutieuse sont les clés pour garder votre chien heureux, en bonne santé et épanoui."
+        }
+      },
+      {
+        "id": 3,
+        "title": "Conseils de nutrition pour les chiots",
+        "image": [
+          "https://i.postimg.cc/t4HLkwy6/7.jpg",
+          "https://i.postimg.cc/jSrGcmKW/8.jpg",
+          "https://i.postimg.cc/kgdksz9G/9.jpg"
+        ],
+        "description": "Un guide sur quoi, combien et à quelle fréquence nourrir votre chiot pour une croissance saine.",
+        "category": "Nutrition",
+        "author": "Clinique Petique",
+        "date": "2025-12-01",
+        "tags": [
+          "SantéAnimale",
+          "ApprouvéParVétérinaire"
+        ],
+        "content": {
+          "intro": "Nourrir correctement votre chiot est essentiel pour une croissance saine, une bonne digestion et un bien-être à long terme. Les chiots ont des estomacs plus petits et des besoins nutritionnels spécifiques, il est donc important pour chaque propriétaire d'animal de comprendre comment les nourrir, à quelle fréquence et quand passer à l'alimentation pour adultes.",
+          "head": "Conseils pour appliquer cela",
+          "body": "Commencez par faire passer progressivement votre chiot à un nouvel aliment. Au cours de la première ou des deux premières semaines suivant l'arrivée de votre chiot à la maison, continuez à lui donner la nourriture qu'il recevait auparavant pour éviter de stresser son système digestif. Mélangez de petites quantités de la nouvelle nourriture à l'ancienne et augmentez lentement la proportion chaque jour jusqu'à la transition complète. \n\nMesurez soigneusement la nourriture de votre chiot pour éviter de trop le nourrir ou de sous-alimenter, ce qui peut affecter sa croissance. Suivez les quantités recommandées en fonction de l'âge et de la race, en vous concentrant sur le poids adulte cible plutôt que sur le poids actuel. Les chiots doivent être nourris plus fréquemment en raison de leur petit estomac : jusqu'à 4 mois – 4 repas par jour, jusqu'à 6 mois – 3 repas par jour, 6 mois et plus – 2 repas par jour. \n\nDe petites friandises ou des portions de la ration alimentaire quotidienne peuvent être données entre les repas, mais doivent être comptabilisées dans l'apport quotidien total. La durée de l'alimentation pour chiots dépend de la taille de la race : petites races (jusqu'à 10 kg) – 9-12 mois, races moyennes (11-25 kg) – 12-15 mois, races géantes (plus de 26 kg) – 15-18 mois. Passez à une nourriture pour adultes appropriée à la race, au niveau d'activité et aux besoins énergétiques.",
+          "tips": [
+            "Introduisez la nouvelle nourriture progressivement pour éviter les troubles digestifs.",
+            "Mesurez la nourriture en fonction du poids cible recommandé pour la race et l'âge.",
+            "Nourrissez les chiots 2 à 4 fois par jour selon leur âge.",
+            "Les friandises doivent être données avec parcimonie et comptées dans la ration alimentaire quotidienne.",
+            "Passez à l'alimentation pour adultes selon la taille de la race et les étapes de croissance."
+          ],
+          "conclusion": "Une alimentation appropriée pendant la période de chiot jette les bases d'un chien adulte en bonne santé. La cohérence, les transitions progressives et l'attention portée à la taille des portions garantissent que votre chiot grandit fort, en bonne santé et heureux."
+        }
+      },
+      {
+        "id": 4,
+        "title": "Prendre soin des chatons : De la naissance à six mois",
+        "image": [
+          "https://i.postimg.cc/L8MrDwRX/10.jpg",
+          "https://i.postimg.cc/nht62gZc/11.jpg",
+          "https://i.postimg.cc/4xTrPqZJ/12.jpg"
+        ],
+        "description": "Un guide étape par étape sur l'éducation des chatons, couvrant la socialisation, les vaccinations, l'alimentation et le dressage de la naissance à six mois.",
+        "category": "Comportement",
+        "author": "Clinique Petique",
+        "date": "2025-12-01",
+        "tags": [
+          "AnimauxSains",
+          "ApprouvéParVétérinaire"
+        ],
+        "content": {
+          "intro": "Élever un chaton nécessite une attention particulière à la socialisation, aux soins de santé, à l'alimentation et au dressage. Les premières expériences façonnent le comportement futur, il est donc essentiel de fournir des expériences positives et des soins appropriés pour développer un chat adulte confiant et en bonne santé.",
+          "head": "Conseils pour appliquer cela",
+          "body": "Jusqu'à huit semaines : Avant de ramener votre chaton à la maison, assurez-vous qu'il a commencé ses premières vaccinations, l'apprentissage de la litière et une socialisation précoce. Préparez votre maison avec des espaces sûrs pour jouer et se reposer, des jouets, des poteaux à griffer, des bacs à litière et des couvertures familières. Sécurisez votre maison et trouvez un vétérinaire et une assurance pour animaux.\n\nHuit à 12 semaines : Continuez la socialisation en présentant votre chaton à de nouvelles personnes et à d'autres animaux, en le manipulant, en le brossant et en utilisant des cages de transport. Établissez une routine cohérente et récompensez les bons comportements. Maintenez la même routine alimentaire avec de petits repas réguliers.\n\nÀ partir de 12 semaines : Les chatons ont besoin de leurs deuxièmes vaccinations et doivent être programmés pour la stérilisation à quatre mois. Le vermifuge doit également être discuté avec le vétérinaire. Le jeu et la stimulation mentale sont importants, alors engagez votre chaton dans des jeux et des séances de dressage. Accordez-lui un repos adéquat pour favoriser sa croissance.\n\nÀ partir de six mois : Gardez des expériences positives et continuez à surveiller le comportement et les besoins alimentaires. Consultez votre vétérinaire pour toute préoccupation comportementale. Des expériences précoces positives aident les chatons à devenir des chats adultes confiants.",
+          "tips": [
+            "Commencez la socialisation tôt en présentant les chatons à de nouvelles personnes et expériences.",
+            "Assurez-vous que les chatons ont reçu leurs premières vaccinations avant de rentrer à la maison.",
+            "Aménagez des espaces sûrs, des bacs à litière, des jouets et des poteaux à griffer.",
+            "Maintenez une routine alimentaire cohérente avec de petits repas fréquents.",
+            "Engagez des sessions de dressage courtes et des périodes de jeu pour la stimulation mentale.",
+            "Programmez la stérilisation vers quatre mois et suivez les calendriers de vermifugation.",
+            "Surveillez le comportement et consultez votre vétérinaire pour toute préoccupation."
+          ],
+          "conclusion": "En fournissant des soins appropriés, des expériences positives et des routines cohérentes dès le premier jour, les chatons peuvent devenir des chats adultes sains et confiants. Une attention précoce à la socialisation, à la santé et à l'enrichissement rend la vie agréable pour vous et votre compagnon félin."
+        }
+      },
+      {
+        "id": 5,
+        "title": "Toilettage pour chiens et chats",
+        "image": [
+          "https://i.postimg.cc/bwjKgW8j/13.jpg",
+          "https://i.postimg.cc/sgRtmqy3/14.jpg",
+          "https://i.postimg.cc/7Zyp9d4F/15.jpg"
+        ],
+        "description": "Conseils essentiels de toilettage pour chiens et chats, couvrant le bain, le brossage, la coupe des griffes, les coupes de poils et les services de toilettage professionnels.",
+        "category": "Toilettage",
+        "author": "Clinique Petique",
+        "date": "2025-12-01",
+        "tags": [
+          "AnimauxHeureux",
+          "BienÊtreAnimal"
+        ],
+        "content": {
+          "intro": "Un toilettage régulier est essentiel pour la santé et le bien-être de vos animaux. Il aide à maintenir la santé de la peau et du pelage, prévient les nœuds, réduit la perte de poils et vous permet de surveiller l'état général de votre animal. Le toilettage approprié varie selon l'espèce et la race, il est donc essentiel de comprendre les besoins de votre chien ou de votre chat.",
+          "head": "Conseils pour appliquer cela",
+          "body": "Toilettage pour chiens : Les chiens ont généralement besoin d'un bain, d'un brossage, d'une coupe de griffes et parfois de coupes de poils. Le bain élimine la saleté et les débris, mais ne doit être fait qu'une fois par mois à une fois tous les trois mois pour éviter l'irritation de la peau. Le brossage élimine les poils morts, prévient les nœuds et réduit la perte de poils ; la fréquence dépend de la longueur du pelage. La coupe des griffes doit être effectuée avec des coupe-ongles spécifiques aux chiens, ou par un professionnel si nécessaire. Les coupes de poils varient selon la race ; commencez par un bain, séchez à la serviette, brossez, taillez la face et les pattes, puis utilisez une tondeuse pour le reste.\n\nToilettage pour chats : Les chats nécessitent un brossage, des bains occasionnels, des soins pour les griffes et les pattes, des soins des oreilles, des soins dentaires et des soins des yeux. Le brossage une ou deux fois par semaine élimine la saleté et les poils morts tout en stimulant la circulation. Le bain est rarement nécessaire sauf si le chat est particulièrement sale ; utilisez un shampooing spécifique pour chats et de l'eau tiède. Vérifiez et nettoyez régulièrement les pattes, et coupez les griffes avec précaution. Une désensibilisation progressive aide les chats à tolérer la coupe des griffes.\n\nToilettage professionnel : Si le toilettage à domicile est difficile ou prend trop de temps, des services professionnels sont disponibles pour maintenir l'hygiène et l'apparence de votre animal. Les centres médicaux pour animaux proposent des rendez-vous pour chiens et chats, garantissant un toilettage sûr et complet.",
+          "tips": [
+            "Lavez les chiens une fois par mois à une fois tous les trois mois avec un shampooing spécifique pour chiens.",
+            "Brossez les chiens fréquemment selon la longueur du pelage ; les chats une ou deux fois par semaine.",
+            "Coupez les griffes avec précaution à l'aide de coupe-ongles spécifiques à l'espèce, ou faites appel à un professionnel.",
+            "Réalisez des coupes de poils pour chiens au besoin, selon la race et le type de pelage.",
+            "Vérifiez régulièrement les pattes de chat et assurez des soins appropriés des griffes et des pattes.",
+            "Utilisez un shampooing spécifique pour chats et de l'eau tiède pour laver les chats.",
+            "Envisagez des services de toilettage professionnels si le toilettage à domicile est difficile."
+          ],
+          "conclusion": "Le toilettage est plus que cosmétique — c'est un aspect clé de la santé et du bien-être des animaux. Des soins réguliers permettent de détecter rapidement les problèmes de peau, de pelage et de griffes, et offrent une opportunité de créer un lien. La cohérence et les techniques appropriées aident les chiens et les chats à rester heureux, confortables et en bonne santé."
+        }
+      },
+      {
+        "id": 6,
+        "title": "Pourquoi votre chien ou votre chat devrait-il être vermifugé régulièrement ?",
+        "image": [
+          "https://i.postimg.cc/bNn7QpXq/16.jpg",
+          "https://i.postimg.cc/VLtxjmy1/17.jpg",
+          "https://i.postimg.cc/NfX31BhB/18.jpg"
+        ],
+        "description": "Apprenez pourquoi une vermifugation de routine est essentielle pour la santé de votre animal et les calendriers recommandés pour les chiots, les chatons et les animaux adultes.",
+        "category": "Santé",
+        "author": "Clinique Petique",
+        "date": "2025-11-13",
+        "tags": [
+          "SantéAnimale",
+          "BienÊtreAnimal",
+          "ApprouvéParVétérinaire"
+        ],
+        "content": {
+          "intro": "La vermifugation est un élément crucial pour garder vos animaux en bonne santé. Les vers peuvent causer de graves problèmes de santé pour vos animaux et votre famille. La fréquence de la vermifugation dépend de l'âge, du mode de vie et de la santé. Ce guide fournit des recommandations clés pour la prévention de routine des parasites.",
+          "head": "Conseils pour vermifuger votre animal",
+          "body": "À quelle fréquence les animaux doivent-ils être vermifugés ?\n\n- Chiots et chatons : Toutes les 2 à 3 semaines jusqu'à l'âge de 12 semaines, puis mensuellement jusqu'à l'âge de 6 mois.\n- Chiens et chats adultes : Au moins tous les 3 à 6 mois, ou selon les recommandations lors des examens de santé.\n- Animaux qui chassent ou errent à l'extérieur : Peuvent nécessiter une vermifugation plus fréquente en raison du risque accru.\n- Prévention toute l'année : De nombreux préventifs contre les vers du cœur aident également à contrôler les parasites intestinaux.\n\nLes horaires peuvent varier selon le mode de vie et les risques d'exposition, il est donc important d'adapter les recommandations à chaque animal.\n\nQuand faut-il s'inquiéter ?\nSurveillez les signes tels que des vers visibles dans les selles, le frottement du train arrière (traîneau), un léchage excessif, une perte de poids inexpliquée, un ventre gonflé, de la diarrhée ou des vomissements. Des tests et des traitements rapides peuvent généralement résoudre le problème rapidement.",
+          "tips": [
+            "Chiots et chatons : Vermifugez toutes les 2 à 3 semaines jusqu'à 12 semaines, puis mensuellement jusqu'à 6 mois.",
+            "Chiens et chats adultes : Vermifugez tous les 3 à 6 mois ou selon les conseils de votre vétérinaire.",
+            "Les animaux à haut risque qui chassent ou errent à l'extérieur peuvent avoir besoin d'une vermifugation plus fréquente.",
+            "Surveillez les vers dans les selles, les ballonnements, les glissades, la diarrhée, les vomissements ou la perte de poids.",
+            "Consultez votre vétérinaire si vous n'êtes pas sûr ou si vous remarquez des symptômes."
+          ],
+          "conclusion": "La vermifugation de routine protège vos animaux des parasites et favorise leur santé globale. En suivant un calendrier approprié et en surveillant les signes d'alerte, vous pouvez garder votre chien ou votre chat heureux et sans parasites. En cas de doute, contactez votre vétérinaire pour obtenir des conseils."
+        }
+      },
+      {
+        "id": 7,
+        "title": "Soins dentaires pour chiens et chats",
+        "image": [
+          "https://i.postimg.cc/xTmwKnrr/19.jpg",
+          "https://i.postimg.cc/KvT6nF66/20.jpg",
+          "https://i.postimg.cc/4NcDzZDj/21.jpg"
+        ],
+        "description": "La santé dentaire est cruciale pour le bien-être général de votre animal. Apprenez à prévenir et à gérer les maladies dentaires chez les chats et les chiens.",
+        "category": "Santé",
+        "author": "Clinique Petique",
+        "date": "2025-11-13",
+        "tags": [
+          "SantéAnimale",
+          "BienÊtreAnimal"
+        ],
+        "content": {
+          "intro": "La mauvaise haleine chez les animaux n'est pas normale et peut indiquer une maladie dentaire. Les problèmes dentaires non traités peuvent entraîner de la douleur, de l'inconfort et même affecter la santé du cœur, du foie et des reins. Des soins dentaires réguliers, y compris des examens professionnels et un entretien à domicile, aident à prévenir les maladies dentaires et à garder votre animal en bonne santé.",
+          "head": "Conseils pour appliquer cela",
+          "body": "La maladie dentaire, ou maladie parodontale, est causée par l'accumulation de plaque sur les dents et les gencives. La plaque se calcifie en tartre si elle n'est pas éliminée, provoquant une gingivite et des dommages aux tissus de soutien des dents. Les signes de maladie dentaire comprennent la mauvaise haleine, des dents décolorées ou déchaussées, la salivation, des gencives enflammées, de la douleur, un gonflement facial, des changements de comportement et un grattage de la gueule. Environ 80 % des chats et des chiens de plus de trois ans présentent une forme de maladie dentaire.",
+          "tips": [
+            "Brossez les dents de votre animal quotidiennement avec un dentifrice et une brosse à dents spécifiques pour animaux.",
+            "Utilisez des brosses à dents spéciales pour chiens ou chats, ou des brosses pour tout-petits pour les petits animaux.",
+            "Introduisez le brossage des dents progressivement, en commençant par les dents de devant et par des sessions courtes.",
+            "Fournissez des friandises dentaires et des bâtonnets à mâcher pour aider à éliminer la plaque.",
+            "Utilisez des régimes dentaires ou des aliments premium pour animaux conçus pour maintenir la santé bucco-dentaire.",
+            "Envisagez des rinçages ou des gels buccaux pour les animaux présentant de graves problèmes dentaires.",
+            "Offrez des jouets dentaires pour encourager la mastication.",
+            "Programmez des traitements dentaires vétérinaires professionnels, y compris le détartrage, le polissage et les radiographies dentaires si nécessaire."
+          ],
+          "conclusion": "La prévention et la gestion des maladies dentaires chez les animaux nécessitent un brossage régulier, des friandises dentaires, des régimes appropriés et des soins vétérinaires professionnels. Si vous soupçonnez que votre animal a des problèmes dentaires, consultez votre vétérinaire pour un plan de soins dentaires personnalisé."
+        }
+      },
+      {
+        "id": 8,
+        "title": "Conseils de sécurité pour les animaux par temps chaud",
+        "image": [
+          "https://i.postimg.cc/8Pv2hD2y/22.jpg",
+          "https://i.postimg.cc/HsMqQHq3/23.jpg",
+          "https://i.postimg.cc/zXhsn5sF/24.jpg"
+        ],
+        "description": "Assurez-vous que vos animaux restent en sécurité et en bonne santé pendant les chaudes journées d'été grâce à ces conseils de sécurité essentiels de l'ASPCA.",
+        "category": "Santé",
+        "author": "Clinique Petique",
+        "date": "2025-12-01",
+        "tags": [
+          "SantéAnimale",
+          "BienÊtreAnimal",
+          "ApprouvéParVétérinaire"
+        ],
+        "content": {
+          "intro": "L'été apporte de longues journées ensoleillées à apprécier à l'extérieur avec vos animaux, mais il s'accompagne aussi de dangers. Suivez ces conseils d'experts pour garder vos amis à fourrure en sécurité, en bonne santé et heureux par temps chaud.",
+          "head": "Conseils pour appliquer cela",
+          "body": "Les animaux sont plus sensibles aux maladies liées à la chaleur, à la déshydratation et aux accidents par temps chaud. Les températures élevées, la lumière directe du soleil et les activités estivales peuvent les mettre en danger. Les animaux au museau aplati (comme les Carlins et les chats Persans), les animaux âgés, en surpoids, et ceux souffrant de problèmes cardiaques ou pulmonaires sont particulièrement vulnérables. Fournissez toujours de l'ombre, de l'eau fraîche et évitez les exercices excessifs lors de chaleurs extrêmes.",
+          "tips": [
+            "Visitez votre vétérinaire pour un examen de début d'été et assurez-vous que la prévention contre les vers du cœur est en place.",
+            "Fournissez de l'eau fraîche et propre et des zones ombragées, et gardez les animaux à l'intérieur pendant les chaleurs extrêmes.",
+            "Reconnaissez les symptômes de la surchauffe : halètement excessif, salivation, faiblesse, collapsus, convulsions, diarrhée, vomissements ou température corporelle supérieure à 40°C.",
+            "Ne laissez jamais d'animaux dans des véhicules stationnés — le coup de chaleur peut être mortel.",
+            "Surveillez les animaux près des piscines ou des lacs ; présentez-les progressivement à l'eau et utilisez des dispositifs de flottaison si nécessaire.",
+            "Gardez les fenêtres et les portes sans moustiquaires fermées pour éviter les chutes.",
+            "Taillez les poils longs mais ne rasez pas les chiens ; brossez les chats plus souvent. Utilisez un écran solaire et des répulsifs pour animaux si nécessaire.",
+            "Évitez de laisser les chiens marcher sur l'asphalte chaud ; cela peut brûler les coussinets.",
+            "Utilisez les herbicides, insecticides, engrais et produits à la citronnelle avec prudence ; éloignez les animaux jusqu'à ce que ce soit sûr.",
+            "Soyez attentif aux plantes de votre jardin ; certaines peuvent être toxiques ou causer des maux d'estomac.",
+            "Respectez le régime alimentaire habituel de votre animal ; gardez les ordures, l'alcool et les aliments dangereux hors de portée.",
+            "N'utilisez jamais de feux d'artifice à proximité des animaux ; les bruits forts et les dangers peuvent causer des traumatismes ou des blessures."
+          ],
+          "conclusion": "En suivant ces conseils de sécurité estivale, vous pouvez protéger vos animaux des coups de chaleur, des blessures et des expositions toxiques, garantissant ainsi une saison amusante et saine. Si vous soupçonnez que votre animal a ingéré quelque chose de nocif, contactez immédiatement votre vétérinaire."
+        }
+      },
+      {
+        "id": 9,
+        "title": "Conseils de sécurité pour les animaux par temps froid",
+        "image": [
+          "https://i.postimg.cc/h4NFzh52/25.jpg",
+          "https://i.postimg.cc/c1Pqg6b9/26.jpg",
+          "https://i.postimg.cc/xjBrJq4t/27.jpg"
+        ],
+        "description": "Gardez vos animaux en sécurité et à l'aise pendant l'hiver grâce à ces conseils d'experts de l'ASPCA Animal Poison Control Center.",
+        "category": "Santé",
+        "author": "Clinique Petique",
+        "date": "2025-12-01",
+        "tags": [
+          "SantéAnimale",
+          "BienÊtreAnimal",
+          "ApprouvéParVétérinaire"
+        ],
+        "content": {
+          "intro": "L'hiver peut être rude pour les animaux, avec l'air froid, la neige, la glace et les produits chimiques posant des risques pour leur santé. Suivez ces conseils pour garder vos amis à fourrure au chaud, en sécurité et en bonne santé pendant les mois les plus froids.",
+          "head": "Conseils pour appliquer cela",
+          "body": "Les animaux sont vulnérables aux dangers de l'hiver tels que les engelures, l'hypothermie, les pattes gercées, la peau sèche et l'exposition chimique aux agents de déglaçage. Les animaux âgés, malades ou de petite taille, ainsi que ceux à poils courts, sont particulièrement à risque.",
+          "tips": [
+            "S'il fait trop froid pour vous, il fait trop froid pour votre animal — gardez les animaux à l'intérieur.",
+            "Ne laissez jamais d'animaux seuls dans une voiture en hiver ; ils peuvent geler rapidement.",
+            "Maintenez votre maison humidifiée et séchez les animaux à la serviette après être rentrés pour prévenir la peau sèche.",
+            "Vérifiez les pattes après les promenades ; retirez les boules de neige et la glace, et utilisez de la vaseline ou des protecteurs de pattes approuvés. Les bottines offrent une protection supplémentaire.",
+            "Utilisez des déglaçants respectueux des animaux lorsque cela est possible.",
+            "Ne rasez pas les chiens en hiver ; les poils longs fournissent de la chaleur. Taillez les chiens à poils longs pour réduire l'accumulation de glace et de sel. Les chiens à poils courts peuvent avoir besoin de manteaux.",
+            "Lavez et séchez les pattes et le ventre de votre animal après les promenades pour éliminer la glace, le sel et les produits chimiques. Vérifiez la présence de fissures ou de rougeurs."
+          ],
+          "conclusion": "En suivant ces conseils de sécurité par temps froid, vous pouvez protéger vos animaux des engelures, de l'hypothermie, des blessures et des toxines, garantissant ainsi un hiver sûr, sain et confortable. Si votre animal ingère de l'antigel ou une toxine potentielle, contactez immédiatement votre vétérinaire."
+        }
+      },
+      {
+        "id": 10,
+        "title": "Premiers secours pour animaux : Les bases",
+        "author": "Dr. Melody R. Conklin",
+        "category": "Santé",
+        "description": "Apprenez les techniques essentielles de premiers secours pour animaux et comment créer une trousse de premiers secours pour votre chien ou votre chat afin de gérer les urgences efficacement.",
+        "date": "2025-12-01",
+        "tags": [
+          "SantéAnimale",
+          "BienÊtreAnimal"
+        ],
+        "image": [
+          "https://i.postimg.cc/T2B8Lh4c/28.jpg",
+          "https://i.postimg.cc/jqBVwCFH/29.jpg",
+          "https://i.postimg.cc/KcCXk4HB/30.jpg"
+        ],
+        "content": {
+          "intro": "Les accidents et les urgences arrivent. Apprendre les techniques de base des premiers secours pour animaux et avoir une trousse de premiers secours appropriée pour votre chien ou votre chat vous aidera à gérer les accidents plus efficacement. Savoir ce que vous pouvez gérer à domicile, les étapes à suivre avant de chercher des soins vétérinaires et quand les soins vétérinaires constituent une urgence est essentiel pour les propriétaires d'animaux. Envisagez de suivre un cours de premiers secours pour chiens et chats.",
+          "head": "Conseils pour appliquer cela",
+          "body": "Les premiers secours de base pour chiens et chats sont essentiellement les mêmes. L'important est d'avoir les bons outils pour le travail. Une trousse de premiers secours pour animaux, remplie des articles appropriés et stockée dans un endroit facilement accessible, vous aidera à réagir calmement en cas d'urgence. N'oubliez pas de garder la trousse hors de portée des enfants. Commencez par une boîte de rangement clairement étiquetée comme trousse de premiers secours pour animaux. Tous les quelques mois, assurez-vous que rien n'est expiré.",
+          "tips": [
+            "Incluez des compresses de gaze absorbantes et non collantes, de la gaze en rouleau, du ruban médical adhésif, des bandages auto-adhésifs, des boules de coton et des tampons.",
+            "Ayez des gants jetables, de grandes et petites serviettes, un thermomètre rectal avec lubrifiant, de la diphenhydramine et de la poudre styptique.",
+            "Incluez des lingettes alcoolisées, du peroxyde d'hydrogène à 3% (utiliser avec prudence), un spray ou une pommade antibactérienne, un nettoyant à la povidone iodée ou à la chlorhexidine, et une solution saline pour le rinçage des yeux.",
+            "Gardez des larmes artificielles, du lubrifiant stérile, des ciseaux à bouts ronds, des pinces, une loupe, une lampe de poche, une poche de glace instantanée, une seringue orale, de l'eau, un shampooing hypoallergénique, une muselière souple et un bol d'eau pliable.",
+            "Avant d'administrer les premiers secours : évaluez la sécurité de la situation, muselez si nécessaire (pas pendant les vomissements), gardez l'animal au chaud et au calme, minimisez les mouvements en cas de traumatisme et appelez votre vétérinaire pour obtenir des conseils."
+          ],
+          "conclusion": "Avoir une trousse de premiers secours bien garnie et connaître les précautions de base permet aux propriétaires d'animaux de réagir efficacement dans les urgences. Vérifiez régulièrement les fournitures, suivez les procédures de sécurité et demandez conseil à un professionnel si nécessaire."
+        }
+      },
+      {
+        "id": 11,
+        "title": "Comprendre le comportement des chats : Guide du langage corporel félin",
+        "author": "Lolley Samba",
+        "category": "Comportement",
+        "description": "Décodez le langage corporel de votre chat avec ce guide complet pour comprendre le comportement et la communication des félins.",
+        "date": "2025-03-26",
+        "tags": [
+          "AnimauxHeureux",
+          "AnimauxSains"
+        ],
+        "image": [
+          "https://i.postimg.cc/RC2r6qDH/31.jpg",
+          "https://i.postimg.cc/XNtMGXzZ/32.jpg",
+          "https://i.postimg.cc/ZYXkB0MC/33.jpg"
+        ],
+        "content": {
+          "intro": "Les chats sont depuis longtemps des compagnons mystérieux et fascinants pour les humains. Leur comportement est une mosaïque complexe de signaux, et décoder les subtilités du langage corporel félin peut approfondir le lien entre les humains et leurs amis à fourrure. Que vous soyez un propriétaire de chat chevronné ou un novice, comprendre le comportement des chats peut vous aider à naviguer dans le monde unique de ces créatures énigmatiques.",
+          "head": "Conseils et astuces pour connaître votre animal",
+          "body": "La clé pour comprendre votre chat réside dans l'observation de sa queue, de ses oreilles, de ses yeux, de ses moustaches, de sa posture et de ses vocalisations. Chacune de ces caractéristiques transmet des émotions et des intentions spécifiques. Par exemple, une queue droite signale la confiance, tandis qu'une queue gonflée indique la peur. Des oreilles vers l'avant montrent de la curiosité, tandis que des oreilles plates suggèrent de la peur ou de la colère.",
+          "tips": [
+            "Langage de la queue : Queue droite = heureux/confiant ; queue gonflée = peur/agitation ; queue qui frétille = excitation/irritation.",
+            "Expressions des oreilles : Oreilles vers l'avant = curiosité/excitation ; oreilles plates = peur/colère/soumission ; oreilles qui bougent = irritation/anticipation.",
+            "Contact visuel : Clignement lent = confiance/affection ; pupilles dilatées = peur/excitation/agression ; regard fixe sans cligner = défi/inconfort.",
+            "Sagesse des moustaches : Moustaches vers l'arrière = peur/agression ; moustaches vers l'avant = content/relaxé ; mouvement rapide des moustaches = excitation/anticipation.",
+            "Posture et positionnement : Dos voussé/poils hérissés = peur/agression ; détendu/étalé = content ; position accroupie = peur ou prêt à jouer.",
+            "Vocalisations : Ronronnement = contentement ou détresse ; sifflement/grognement = défensif ; miaulement = faim, excitation ou détresse."
+          ],
+          "conclusion": "Déchiffrer le langage corporel de votre chat est un processus continu qui renforce le lien entre vous et votre ami félin. En comprenant ces indices subtils, vous pouvez garantir une relation harmonieuse avec votre chat, favorisant la confiance et une communication claire. La prochaine fois que votre chat communiquera avec vous, prenez un moment pour décoder son message."
+        }
+      },
+      {
+        "id": 12,
+        "title": "Quels sont les avantages de dresser mon chien ?",
+        "author": "Clinique Petique",
+        "category": "Comportement",
+        "date": "2025-01-15",
+        "tags": [
+          "AnimauxHeureux"
+        ],
+        "image": [
+          "https://i.postimg.cc/NGZh9LzK/34.jpg",
+          "https://i.postimg.cc/gcxF23NJ/36.jpg",
+          "https://i.postimg.cc/y6D480v3/35.jpg"
+        ],
+        "description": "Découvrez pourquoi le dressage des chiens est essentiel pour la sécurité, le lien et la prévention de l'ennui, ainsi que des conseils pour aider votre chien à apprendre efficacement.",
+        "content": {
+          "intro": "Dresser votre chien ne se limite pas à lui apprendre des ordres — c'est un élément clé pour le garder en sécurité, confiant, stimulé mentalement et heureux. Les chiens sont des animaux intelligents, et apprendre de nouvelles choses les aide à éviter l'ennui et à profiter d'une plus grande liberté.",
+          "head": "Conseils pour dresser votre chien correctement",
+          "body": "L'obéissance de base, comme s'asseoir, attendre et revenir au rappel, donne à votre chien la liberté de profiter de ses activités en toute sécurité — comme courir sans laisse et socialiser avec des personnes ou d'autres animaux. Le dressage est plus efficace lorsqu'il est basé sur la récompense. L'utilisation de friandises, de jouets ou de louanges pour renforcer les bons comportements rend votre chien plus susceptible de les répéter. Il est important de découvrir ce qui motive le plus votre chien. Le dressage efficace nécessite des sessions courtes et cohérentes dans des environnements sans distractions. La patience est cruciale, car chaque chien apprend à son propre rythme. Terminez toujours la session par quelque chose que votre chien sait déjà faire pour renforcer sa confiance et rendre le dressage amusant. Le dressage renforce également votre lien avec votre chien, l'aidant à vous faire confiance et à comprendre ce qui est attendu de lui.",
+          "tips": [
+            "Minimisez les distractions en commençant le dressage dans une pièce calme.",
+            "Gardez les sessions courtes mais fréquentes pour éviter de submerger votre chien.",
+            "Soyez patient — chaque chien apprend à son propre rythme.",
+            "Terminez chaque session par un comportement que votre chien connaît déjà.",
+            "Amusez-vous ! Le dressage renforce votre lien."
+          ],
+          "conclusion": "Le dressage des chiens est un investissement précieux pour la sécurité, le comportement et le bonheur de votre chien. Les méthodes basées sur la récompense rendent l'apprentissage agréable. Pour obtenir de l'aide sur des problèmes spécifiques comme l'agression, le brollement ou les phobies, envisagez de consulter un comportementaliste professionnel."
+        }
+      },
+      {
+        "id": 13,
+        "title": "Pourquoi la nourriture maison pour chiens est plus saine pour votre animal",
+        "author": "Clinique Petique",
+        "category": "Nutrition",
+        "date": "2025-01-20",
+        "tags": [
+          "SantéAnimale",
+          "BienÊtreAnimal"
+        ],
+        "image": [
+          "https://i.postimg.cc/BZj9n2MX/37.jpg",
+          "https://i.postimg.cc/h4XWtVp4/38.jpg",
+          "https://i.postimg.cc/XNrSY9QS/39.jpg"
+        ],
+        "description": "Apprenez pourquoi la nourriture maison de qualité humaine peut améliorer l'énergie, la longévité, la santé intestinale et le bien-être général de votre chien — et comment commencer en toute sécurité.",
+        "content": {
+          "intro": "Passer à la nourriture maison pour chiens est plus facile que vous ne le pensez. Vous pouvez commencer progressivement — en mélangeant seulement 25 % d'aliments frais et entiers à l'alimentation habituelle de votre chien — et augmenter jusqu'à 50/50 ou même 100 % de repas faits maison. Les chiens s'épanouissent avec des ingrédients de qualité humaine, et de nombreux propriétaires signalent une meilleure énergie et une meilleure digestion.",
+          "head": "Conseils et astuces",
+          "body": "Les aliments commerciaux pour chiens contiennent souvent des sous-produits de viande de mauvaise qualité, des vitamines synthétiques et des glucides excessifs. Les recherches montrent une augmentation des taux de cancer, d'obésité et de maladies chroniques chez les animaux de compagnie par rapport aux décennies précédentes. L'alimentation faite maison remplace ces ingrédients par des protéines réelles, des graisses saines, des légumes cuits, des fruits et des céréales sûres. Même préparer la moitié des repas de votre chien à la maison peut favoriser la santé intestinale, réduire les sensibilités, améliorer la vitalité et augmenter la durée de vie. La nutrition canine de base comprend des protéines de qualité, suivies de légumes, de céréales, de graisses saines et de petites quantités de fruits. Les chiens ont également besoin de vitamines A, complexe B, C, D, E, K et de minéraux essentiels comme le calcium, le phosphore, le zinc et le sélénium. De nouvelles recherches montrent que l'ajout de légumes cuits trois fois par semaine réduit les risques pour la santé, tandis que les fruits fournissent des antioxydants. Les céréales comme l'avoine, le quinoa ou le riz brun stabilisent l'énergie. L'ail, malgré les mythes courants, est sûr en petites doses appropriées.",
+          "tips": [
+            "Commencez lentement : introduisez 25 % de nourriture maison pendant les trois premiers jours.",
+            "Augmentez à 50 % de J4 à J6, 75 % de J7 à J9, et atteignez 100 % entre J10 et J14.",
+            "Faites cuire légèrement tous les légumes — les chiens ne digèrent pas bien les légumes crus.",
+            "Variez les protéines et les légumes pour une nutrition complète.",
+            "Consultez un vétérinaire si votre chien a des problèmes de santé.",
+            "Observez le poids, l'énergie et la qualité des selles pendant la transition."
+          ],
+          "conclusion": "La nourriture faite maison pour chiens supprime les toxines présentes dans de nombreux régimes commerciaux et les remplace par des ingrédients propres de qualité humaine qui favorisent la santé à long terme. Que vous choisissiez le 50/50 ou le fait maison intégral, toute quantité de nourriture réelle améliore la vitalité. Commencez doucement, gardez les repas simples et profitez-en."
+        }
+      },
+      {
+        "id": 14,
+        "title": "Comprendre le langage corporel des chiens",
+        "image": [
+          "https://i.postimg.cc/xjXD1Lgh/40.jpg",
+          "https://i.postimg.cc/dQhPVGnf/41.jpg",
+          "https://i.postimg.cc/mkvSbvVj/42.jpg"
+        ],
+        "description": "Un guide complet expliquant le remuement de queue, les poils hérissés, la posture, les expressions faciales et comment lire correctement les émotions de votre chien.",
+        "category": "Comportement",
+        "author": "Clinique Petique",
+        "date": "2025-12-01",
+        "tags": [
+          "AnimauxHeureux"
+        ],
+        "content": {
+          "intro": "Le langage corporel des chiens comprend de nombreux signaux subtils — du mouvement de la queue aux expressions faciales. Comprendre ces indices aide à prévenir les malentendus et renforce la communication entre vous et votre chien.",
+          "head": "Comprendre votre chien",
+          "body": "Remuement de queue : Une queue qui remue ne signifie pas toujours le bonheur. Cela montre simplement une excitation émotionnelle. La vitesse, la direction et la hauteur indiquent des sentiments différents. Des remuements plus rapides montrent une excitation plus élevée, tandis qu'une queue tenue haute signale la confiance ou une possible agression.\n\nPoils hérissés : Lorsque les poils du dos d'un chien se redressent (piloérection), cela signale une excitation, qui peut être de l'enthousiasme, du stress ou une concentration intense. Ce n'est pas toujours de l'agression.\n\nPosture : Un chien qui s'accroupit bas montre de la peur ou du stress. Se rouler sur le dos peut être de l'apaisement, pas seulement une demande de caresses sur le ventre. Les chiens qui se penchent en avant peuvent montrer de l'intérêt ou une intention offensive. Une révérence de jeu (poitrine au sol, arrière relevé) signale un désir de jouer. Une patte levée peut indiquer une incertitude.\n\nExpressions faciales : Les chiens bâillent lorsqu'ils sont stressés, pas seulement fatigués. Le léchage des babines est souvent un signe d'anxiété. Le sourire peut être soit agressif (grogner), soit amical (sourire subversif), selon la posture et le contexte.\n\nYeux : Des yeux doux montrent le calme, tandis que des yeux durs signalent la tension. Éviter le contact visuel signifie que le chien essaie de calmer une situation. Montrer le blanc des yeux (œil de baleine) indique du stress.\n\nLire les signaux ensemble : Aucun indice de langage corporel n'est isolé. La compréhension de l'ensemble de la combinaison aide à comprendre l'état émotionnel de votre chien.",
+          "tips": [
+            "Regardez l'ensemble du corps, pas seulement un signal.",
+            "Remuements de queue rapides = excitation émotionnelle plus élevée, pas forcément du bonheur.",
+            "Une patte levée signale souvent une incertitude.",
+            "Évitez de forcer le contact visuel avec des chiens stressés.",
+            "Apprenez la position naturelle de la queue de votre chien pour repérer les changements émotionnels.",
+            "Les poils hérissés sont de l'excitation, pas automatiquement de l'agression.",
+            "Les bâillements et le léchage des babines peuvent être des signes de stress."
+          ],
+          "conclusion": "Comprendre le langage corporel de votre chien renforce votre lien et vous aide à répondre de manière appropriée à ses besoins. En lisant les signaux comme une image complète, vous pouvez prévenir les problèmes et instaurer la confiance."
+        }
+      },
+      {
+        "id": 15,
+        "title": "Prévenir l'agression chez les chiens : Ce qu'il faut savoir",
+        "image": [
+          "https://i.postimg.cc/vTJvQJXt/43.jpg",
+          "https://i.postimg.cc/sxkJVkK9/44.jpg",
+          "https://i.postimg.cc/ZnGLTGj8/45.jpg"
+        ],
+        "description": "Un guide complet sur la compréhension de l'agression canine, le rôle de la socialisation, de la santé, de l'enrichissement et comment garder les chiens en sécurité.",
+        "category": "Comportement",
+        "author": "Stephanie Gibeault, MSc, CPDT",
+        "date": "2024-09-13",
+        "tags": [
+          "SantéAnimale",
+          "BienÊtreAnimal",
+          "ApprouvéParVétérinaire"
+        ],
+        "content": {
+          "intro": "L'agression chez les chiens peut être extrêmement stressante pour les propriétaires, qu'il s'agisse de grognements ou de morsures. Bien qu'aucun propriétaire de chien ne puisse garantir que son chien ne montrera jamais d'agression, plusieurs mesures proactives peuvent réduire considérablement le risque.",
+          "head": "Conseils pour prévenir l'agression chez le chien",
+          "body": "L'agression canine est un comportement naturel, et tout chien peut agir de manière agressive dans certaines circonstances — que ce soit par peur, douleur ou menace perçue. Les experts décrivent l'agression comme un comportement visant à augmenter la distance par rapport à une menace perçue ou à l'éliminer. Pour les chiens mal socialisés, la liste des situations « menaçantes » est longue. Une exposition positive précoce pendant la période de chiot réduit considérablement la probabilité d'une agression future.\n\nLa santé joue également un rôle essentiel. Les chiens cachent souvent leur douleur, il est donc facile de négliger des conditions médicales sous-jacentes qui causent une irritabilité. Des soins vétérinaires réguliers sont essentiels.\n\nLa stimulation mentale et l'activité physique sont tout aussi importantes pour maintenir l'équilibre émotionnel. Lorsque les chiens ne reçoivent pas assez d'exercice ou d'enrichissement, la frustration — y compris l'agression — est plus probable. Enfin, s'assurer que les chiens se sentent en sécurité. Remarquer les signes précoces d'inconfort — comme les bâillements ou le léchage des babines — et intervenir avant que le stress n'augmente aide à instaurer la confiance.",
+          "tips": [
+            "Privilégiez la socialisation précoce — une exposition positive réduit l'agression basée sur la peur plus tard.",
+            "Surveillez attentivement la santé de votre chien, car la douleur est un déclencheur courant de comportement agressif.",
+            "Fournissez un enrichissement quotidien et un exercice physique approprié.",
+            "Apprenez le langage corporel unique de votre chien et remarquez les signes subtils de stress.",
+            "Défendez la sécurité de votre chien en évitant les situations accablantes.",
+            "Utilisez la désensibilisation et le contre-conditionnement pour aider les chiens à créer des associations positives.",
+            "Demandez l'aide de dresseurs qualifiés pour les problèmes de peur ou d'agression persistants."
+          ],
+          "conclusion": "Bien qu'aucun chien ne puisse être garanti sans agression, réduire le stress, améliorer la socialisation et assurer la sécurité émotionnelle diminue considérablement les risques. En soutenant votre chien avec empathie, vous lui donnez les meilleures chances d'une vie stable."
+        }
+      },
+      {
+        "id": 16,
+        "title": "Anxiété de séparation canine : Comment aider votre chien",
+        "image": [
+          "https://i.postimg.cc/d3b9qbny/46.jpg",
+          "https://i.postimg.cc/br7Rz7Ls/47.jpg",
+          "https://i.postimg.cc/J0fQ1fKh/48.jpg"
+        ],
+        "description": "Apprenez-en plus sur l'anxiété de séparation chez le chien, ses causes, ses symptômes et ses stratégies efficaces pour aider votre chien à se sentir en sécurité.",
+        "category": "Comportement",
+        "author": "Humane World for Animals",
+        "date": "2025-12-01",
+        "tags": [
+          "SantéAnimale",
+          "BienÊtreAnimal"
+        ],
+        "content": {
+          "intro": "L'anxiété de séparation survient lorsqu'un chien éprouve de la détresse en étant laissé seul. Elle peut causer des tremblements, des vocalisations excessives, des accidents à l'intérieur et même un comportement destructeur. Comprendre les causes et mettre en œuvre les bonnes stratégies peut aider votre chien à se sentir en sécurité.",
+          "head": "Conseils pour aider votre chien",
+          "body": "L'anxiété de séparation se distingue de l'ennui car elle survient spécifiquement lorsque le chien est seul et se manifeste par une panique excessive. Les causes incluent les changements de routine, les déménagements ou les événements traumatisants. Les symptômes comprennent souvent des tremblements, des destructions ou des hurlements.\n\nS'attaquer à l'anxiété de séparation implique une préparation physique et mentale. Fournir de l'exercice et des jouets d'enrichissement avant de partir peut aider. Établir une routine cohérente réduit le stress. Certains chiens bénéficient d'une musique apaisante ou de pièces sécurisées avec des objets portant l'odeur de leur propriétaire.\n\nDans les cas graves, les vétérinaires peuvent prescrire des médicaments. Le dressage par renforcement positif aide à gérer les déclencheurs. Punir le chien ne doit jamais être utilisé car cela aggrave l'anxiété.",
+          "tips": [
+            "Fatiguez votre chien physiquement et mentalement avant de partir.",
+            "Maintenez des routines cohérentes pour les départs et les arrivées.",
+            "Utilisez des pièces sécurisées avec des objets ayant votre odeur.",
+            "Envisagez des garderies ou des pet-sitters pour un soutien supplémentaire.",
+            "Essayez une musique apaisante mais surveillez la réaction de votre chien.",
+            "Ne punissez jamais les comportements liés à l'anxiété de séparation.",
+            "Consultez un vétérinaire pour des médicaments si l'anxiété est grave.",
+            "Travaillez avec un dresseur professionnel pour désensibiliser progressivement votre chien."
+          ],
+          "conclusion": "Traiter l'anxiété de séparation nécessite de la patience et de la compassion. Bien que les progrès puissent prendre des mois, la plupart des chiens s'améliorent avec un enrichissement et une routine appropriés."
+        }
+      },
+      {
+        "id": 17,
+        "title": "Renforcement positif dans le dressage des chiens : Guide",
+        "image": [
+          "https://i.postimg.cc/L5cVHcvY/49.jpg",
+          "https://i.postimg.cc/MHCYWCtc/50.jpg",
+          "https://i.postimg.cc/Gt8QnLPp/51.jpg"
+        ],
+        "description": "Comprenez le renforcement positif dans le dressage des chiens, en quoi il diffère du renforcement négatif et des conseils pour renforcer les comportements souhaitables.",
+        "category": "Comportement",
+        "author": "Stephanie Gibeault, MSc, CPDT",
+        "date": "2025-12-01",
+        "tags": [
+          "AnimauxSains",
+          "SantéAnimale",
+          "BienÊtreAnimal"
+        ],
+        "content": {
+          "intro": "Le renforcement positif est une méthode utilisée pour renforcer les comportements souhaitables chez les chiens en ajoutant quelque chose que le chien aime immédiatement après le comportement. Cela renforce la confiance et améliore la communication.",
+          "head": "Conseils pour appliquer cela",
+          "body": "Le renforcement positif consiste à donner des friandises, des louanges ou du jeu lorsque l'animal effectue l'action souhaitée. Le succès se mesure par la fiabilité accrue du comportement. Le renforcement négatif, en revanche, consiste à supprimer un stimulus désagréable ; il peut créer de l'anxiété. Le mouvement du renforcement positif privilégie les méthodes humaines. L'utilisation de marqueurs comme des clics ou des mots aide le chien à comprendre quelle action a été récompensée.",
+          "tips": [
+            "Suivez vos progrès pour vous assurer que le comportement s'améliore.",
+            "Pratiquez dans des environnements peu distrayants.",
+            "Choisissez soigneusement les récompenses selon les préférences de votre chien.",
+            "Utilisez des marqueurs pour signaler précisément le comportement souhaité.",
+            "Gardez les sessions courtes et amusantes — 5 à 10 minutes par compétence.",
+            "Terminez les sessions alors que votre chien s'amuse encore.",
+            "Concentrez-vous sur le renforcement du bon comportement plutôt que sur la punition.",
+            "Faites du dressage une expérience positive."
+          ],
+          "conclusion": "Le renforcement positif est un moyen efficace et humain de dresser les chiens. En récompensant les bons comportements, les propriétaires peuvent instaurer la confiance et renforcer le lien avec leur compagnon."
+        }
+      }
+    ]
+  },
+  "services": {
+    "ourServices": "Nos Services",
+    "home": "Accueil",
+    "services": "Services"
+  },
+  "serviceDetails": {
+    "home": "Accueil",
+    "services": "Services"
+  },
+  "cart": {
+    "emptyTitle": "Votre panier est vide",
+    "emptyDesc": "On dirait que vous n'avez encore rien ajouté.",
+    "startShopping": "Commencer vos achats",
+    "continueShopping": "Continuer vos achats",
+    "myCart": "Mon Panier",
+    "showEmpty": "Afficher le panier vide",
+    "each": "chacun",
+    "orderSummary": "Résumé de la commande",
+    "promoCode": "Code Promo",
+    "enterCode": "Entrer le code",
+    "apply": "Appliquer",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "free": "Gratuit",
+    "total": "Total",
+    "proceedToCheckout": "Passer à la caisse",
+    "secureCheckout": "Paiement Sécurisé",
+    "fastDelivery": "Livraison Rapide",
+    "freeConsultation": "Consultation vétérinaire gratuite pour les commandes de plus de 100 $ !",
+    "consultationDesc": "Vos animaux méritent les meilleurs soins. Nous sommes là pour vous aider."
+  },
+  "reservation": {
+    "title": "Réservez le rendez-vous de votre animal avec nos vétérinaires experts",
+    "steps": {
+      "pet": "Animal",
+      "service": "Service",
+      "doctor": "Docteur",
+      "dateTime": "Date / Heure",
+      "notes": "Notes"
+    },
+    "selectPet": "Sélectionnez votre animal",
+    "choosePet": "Choisissez votre animal",
+    "selectService": "Sélectionner un service",
+    "selectDoctor": "Sélectionner un docteur",
+    "selectDateTime": "Sélectionner la date et l'heure",
+    "notesLabel": "Notes",
+    "notesPlaceholder": "Notes optionnelles",
+    "confirm": "Confirmer",
+    "successTitle": "Succès !",
+    "successMessage": "Réservation créée avec succès",
+    "modal": {
+      "title": "Confirmer la réservation",
+      "pet": "Animal",
+      "service": "Service",
+      "doctor": "Docteur",
+      "date": "Date",
+      "time": "Heure",
+      "notes": "Notes",
+      "cancel": "Annuler",
+      "confirm": "Confirmer"
+    },
+    "errors": {
+      "missingFields": "Veuillez remplir tous les champs obligatoires avant de soumettre.",
+      "noPets": "Vous n'avez pas encore d'animaux enregistrés. Veuillez d'abord ajouter un animal.",
+      "petNotSelected": "Veuillez sélectionner un animal avant de soumettre.",
+      "missingFieldTitle": "Champs manquants",
+      "noPetsTitle": "Aucun animal trouvé",
+      "nopetSelected": "Animal non sélectionné"
+    }
+  },
+  "hero": {
+    "happyCustomersLine1": "Plus de 100 000 clients heureux",
+    "happyCustomersLine2": "À travers le monde"
+  },
+  "heroSection": {
+    "welcome": "Bienvenue chez Petique",
+    "takingCareOf": "Prendre soin des",
+    "pets": "Animaux",
+    "asIfThey": "comme s'ils",
+    "wereOurOwn": "étaient les nôtres",
+    "description": "Nous fournissons les meilleurs services médicaux pour vos animaux de compagnie adorés. Du toilettage aux chirurgies, nous avons tout ce dont votre ami à quatre pattes a besoin.",
+    "contactUs": "CONTACTEZ-NOUS"
+  },
+  "categorySlider": {
+    "title": "Acheter des catégories populaires",
+    "explore": "Tout explorer",
+    "error": "Erreur lors du chargement des catégories"
+  },
+  "checkout": {
+    "title": "Informations sur l'animal et contact",
+    "description": "Dites-nous en plus sur vous et votre ami à quatre pattes",
+    "fullName": "Nom complet",
+    "address": "Adresse",
+    "phone": "Numéro de téléphone",
+    "note": "Note (Optionnel)",
+    "required": "*",
+    "fullNamePlaceholder": "Jean Dupont",
+    "addressPlaceholder": "123 Rue Principale, Ville, Pays",
+    "phonePlaceholder": "+33 6 XX XX XX XX",
+    "notePlaceholder": "Toutes demandes spéciales ou informations que nous devrions connaître...",
+    "continue": "Continuer",
+    "orderSummary": "Résumé de la commande",
+    "subtotal": "Sous-total",
+    "tax": "TVA (8%)",
+    "delivery": "Livraison",
+    "free": "Gratuit",
+    "total": "Total",
+    "secure": "Sécurisé",
+    "fastDelivery": "Livraison Rapide",
+    "petFriendly": "Adapté aux animaux",
+    "haveCoupon": "Avez-vous un code promo ?",
+    "hideCoupon": "Masquer le coupon",
+    "enterCoupon": "Entrer le code promo",
+    "apply": "Appliquer",
+    "paymentMethod": "Mode de paiement",
+    "cashOnDelivery": "Paiement à la livraison",
+    "cashOnDeliveryDesc": "Payez à la réception de votre commande",
+    "visaPayment": "Paiement par carte",
+    "visaPaymentDesc": "Payez en toute sécurité avec Visa, Mastercard, etc."
+  },
+  "orderDetails": {
+    "noOrderDataTitle": "Aucune donnée de commande trouvée",
+    "noOrderDataDesc": "Veuillez revenir en arrière et sélectionner une commande pour voir ses détails.",
+    "goToHomepage": "Aller à l'accueil",
+    "orderNumber": "Commande #",
+    "placedOn": "Passée le",
+    "customerInfo": "Informations client",
+    "fullName": "Nom complet",
+    "phoneNumber": "Numéro de téléphone",
+    "deliveryAddress": "Adresse de livraison",
+    "specialNotes": "Notes spéciales",
+    "orderItems": "Articles de la commande",
+    "qty": "Qté :",
+    "save": "Économiser :",
+    "noItems": "Aucun article dans cette commande",
+    "orderSummary": "Résumé de la commande",
+    "subtotal": "Sous-total",
+    "coupon": "Coupon",
+    "total": "Total",
+    "paymentMethod": "Mode de paiement",
+    "orderDate": "Date de la commande",
+    "status": "Statut",
+    "continueShopping": "Continuer vos achats",
+    "statusPlaced": "Passée",
+    "statusShipped": "Expédiée",
+    "statusDelivered": "Livrée"
+  },
+  "quote": {
+    "text": "Le chien est le seul être sur terre qui vous aime plus qu'il ne s'aime lui-même",
+    "button": "Plus de détails"
+  },
+  "faq": {
+    "subtitle": "N'hésitez pas à demander des détails ?",
+    "title": "Foire Aux Questions",
+    "badge": "Nous nous soucions",
+    "imageAlt": "Vétérinaire s'occupant d'un animal heureux",
+    "items": [
+      {
+        "question": "Quelles sont vos heures d'ouverture ?",
+        "answer": "Nous sommes ouverts du lundi au vendredi de 8h00 à 18h00, et le samedi de 9h00 à 15h00. Nous sommes fermés le dimanche et les jours fériés."
+      },
+      {
+        "question": "Proposez-vous des services d'urgence ?",
+        "answer": "Oui, nous fournissons des services vétérinaires d'urgence 24h/24 et 7j/7. Pour les urgences après les heures d'ouverture, veuillez appeler notre ligne d'urgence."
+      },
+      {
+        "question": "Quels types d'animaux traitez-vous ?",
+        "answer": "Nous traitons une grande variété d'animaux, notamment des chiens, des chats, des oiseaux, des lapins, des cochons d'Inde, des hamsters, des reptiles et d'autres petits animaux exotiques."
+      },
+      {
+        "question": "Proposez-vous des services de pension ?",
+        "answer": "Oui, nous proposons des installations de pension confortables pour chiens et chats avec des soins et une surveillance quotidiens."
+      },
+      {
+        "question": "Comment puis-je préparer mon animal pour sa visite ?",
+        "answer": "Apportez les dossiers médicaux précédents, gardez votre animal à jeun si nécessaire, et assurez-vous que les chats sont dans des cages de transport et les chiens en laisse."
+      },
+      {
+        "question": "À quelle fréquence mon animal devrait-il passer un examen ?",
+        "answer": "Des examens annuels sont recommandés pour les animaux adultes, tandis que les animaux seniors peuvent avoir besoin de visites semestrielles."
+      }
+    ]
+  },
+  "productsSection": {
+    "bestValue": {
+      "title": "Produits au meilleur prix",
+      "subtitle": "Découvrez nos produits premium aux prix les plus bas pour vos animaux adorés",
+      "cta": "Acheter maintenant"
+    },
+    "errors": {
+      "loadFailed": "Échec du chargement des produits"
+    }
+  },
+  "footer": {
+    "brand": {
+      "tagline": "Soins vétérinaires de confiance"
+    },
+    "description": "Nous sommes là pour prendre soin de vos animaux et répondre à toutes vos questions. Que vous soyez un nouveau parent d'un animal ou que vous souhaitiez prendre rendez-vous.",
+    "newsletter": {
+      "placeholder": "Adresse e-mail"
+    },
+    "services": {
+      "title": "Nos Services",
+      "items": [
+        "Cytologie cutanée et auriculaire",
+        "Services d'échographie",
+        "Soins dentaires et nettoyages",
+        "Conseils nutritionnels",
+        "Programme de bien-être pour chiots",
+        "Services chirurgicaux pour animaux"
+      ]
+    },
+    "quickLinks": {
+      "title": "Liens rapides",
+      "items": {
+        "about": "À propos",
+        "faq": "FAQ",
+        "services": "Nos Services",
+        "team": "Équipe",
+        "portfolio": "Portfolio",
+        "blog": "Blog"
+      }
+    },
+    "openingHours": {
+      "title": "Heures d'ouverture",
+      "items": [
+        {
+          "day": "Lun - Mar",
+          "time": "09h00 - 18h00"
+        },
+        {
+          "day": "Mer - Jeu",
+          "time": "09h00 - 18h00"
+        },
+        {
+          "day": "Ven - Sam",
+          "time": "09h00 - 18h00"
+        },
+        {
+          "day": "Dimanche",
+          "time": "Urgences uniquement"
+        }
+      ]
+    },
+    "images": {
+      "cat": "Chat",
+      "dog": "Chien"
+    },
+    "copyright": "© Copyright 2024. Tous droits réservés. Petique. Conçu par l'équipe ITI."
+  },
+  "features": {
+    "items": [
+      {
+        "icon": "shopping",
+        "title": "Large sélection",
+        "desc": "Grande variété de produits pour chiens, chats et plus"
+      },
+      {
+        "icon": "care",
+        "title": "Soins de qualité",
+        "desc": "Produits approuvés par les vétérinaires auxquels vous pouvez faire confiance"
+      },
+      {
+        "icon": "happy",
+        "title": "Animaux heureux",
+        "desc": "Faire remuer les queues depuis 2024"
+      }
+    ]
+  },
+  "productsHero": {
+    "title": "Boutique",
+    "imageAlt": "Chat relaxant"
+  },
+  "breadcrumbs": {
+    "home": "Accueil",
+    "shop": "Boutique",
+    "myAccount": "Mon compte"
+  },
+  "products": {
+    "title": "Nos Produits",
+    "subtitle": "Découvrez des produits de qualité supérieure pour vos animaux adorés",
+    "filters": {
+      "title": "Filtrer les produits",
+      "active": "Filtres actifs",
+      "search": "Rechercher",
+      "searchPlaceholder": "Rechercher par nom",
+      "category": "Catégorie",
+      "allCategories": "Toutes les catégories",
+      "priceMin": "Prix (min)",
+      "priceMax": "Prix (max)",
+      "min": "Min",
+      "max": "Max",
+      "stock": "Stock",
+      "all": "Tout",
+      "inStock": "En stock",
+      "outStock": "En rupture de stock"
+    },
+    "empty": {
+      "title": "Aucun produit trouvé",
+      "subtitle": "Essayez d'ajuster vos critères de recherche",
+      "clear": "Effacer les filtres"
+    }
+  },
+  "pagination": {
+    "showing": "Affichage de",
+    "of": "sur",
+    "products": "produits",
+    "prev": "Préc.",
+    "next": "Suiv."
+  },
+  "common": {
+    "reset": "Réinitialiser"
+  },
+  "ProductDetails": {
+    "price": "Prix",
+    "category": "Catégorie",
+    "addTocart": "Ajouter au panier",
+    "addReview": "Ajouter un avis",
+    "readMore": "Lire la suite",
+    "showLess": "Montrer moins",
+    "submit": "Soumettre",
+    "cancel": "Annuler",
+    "addNewReview": "Ajouter un nouvel avis",
+    "rating": "Note",
+    "comment": "Commentaire",
+    "productReview": "Avis sur le produit",
+    "relatedProduct": "Produits connexes",
+    "showReviews": "Afficher les avis",
+    "hideReviews": "Masquer les avis",
+    "placeholder": "Écrivez votre avis ici...",
+    "deletemessage": "Êtes-vous sûr de vouloir supprimer cet avis ?",
+    "delete": "Supprimer",
+    "priceDropNotification": "Être averti quand le prix baisse",
+    "update": "Mise à jour...",
+    "unsubscribe": "Se désabonner",
+    "notifyMe": "M'avertir en cas de baisse de prix",
+    "deleteReviewTitle": "Supprimer définitivement ?",
+    "deleteReviewText": "Ceci supprimera définitivement l'avis et ne pourra pas être annulé.",
+    "deleteReviewConfirm": "Oui, supprimer définitivement",
+    "deleteReviewCancel": "Annuler",
+    "deleteReviewloading": "Suppression...",
+    "successdelReviewTitle": "Avis supprimé avec succès",
+    "faildelReviewTitle": "Échec de la suppression de l'avis",
+    "successAddReviewTitle": "Avis ajouté avec succès",
+    "failAddReviewTitle": "Échec de l'ajout de l'avis",
+    "addproducttocart": "Ajout...",
+    "outOfStock": "Rupture de stock",
+    "failedAddToCart": "Échec de l'ajout au panier",
+    "addedToCart": "Ajouté au panier",
+    "item": "article",
+    "items": "articles",
+    "unsubscribedToast": "Désabonné des alertes de baisse de prix",
+    "subscribedToast": "Abonné aux alertes de baisse de prix 🔔",
+    "subscriptionFailed": "Échec de l'abonnement",
+    "notallowed": "Non autorisé",
+    "loginRequiredTitle": "Connexion requise",
+    "loginRequiredText": "Vous devez vous connecter pour ajouter des produits au panier",
+    "login": "Connexion",
+    "continueShopping": "Continuer les achats"
+  },
+  "about": {
+    "badge": "À propos",
+    "title": "Nous fournissons les meilleurs services de soins pour animaux",
+    "card": {
+      "title": "Confiance de nos clients",
+      "description": "Éduquer les propriétaires sur la lecture des listes d'ingrédients, le choix d'aliments de qualité et la reconnaissance des ingrédients nocifs."
+    },
+    "features": {
+      "nutrition": "Nutrition et régime",
+      "mental": "Bien-être mental et émotionnel",
+      "exercise": "Exercice et activité physique",
+      "preventive": "Santé préventive",
+      "grooming": "Toilettage et hygiène",
+      "specialNeeds": "Animaux à besoins spéciaux"
+    },
+    "images": {
+      "bunnyAlt": "Lapin",
+      "petAlt": "Vétérinaire tenant un chien"
+    }
+  },
+  "stuff": {
+    "subtitle": "Nos Spécialistes",
+    "title": "Rencontrez notre équipe expérimentée de soins pour animaux",
+    "loading": "Chargement des docteurs...",
+    "error": "Échec du chargement des docteurs"
+  },
+  "userProfile": {
+    "title": "Tableau de bord du propriétaire",
+    "tabs": {
+      "appointments": "Rendez-vous",
+      "personalInformation": "Informations personnelles",
+      "myPets": "Mes animaux",
+      "addNewPet": "Ajouter un nouvel animal",
+      "orders": "Commandes",
+      "orderTracking": "Suivi de commande",
+      "shoppingAnalytics": "Analyse d'achat",
+      "symptomChecker": "Vériﬁcateur de symptômes IA"
+    },
+    "breadcrumb": {
+      "home": "Accueil",
+      "shop": "Boutique",
+      "myAccount": "Mon compte"
+    },
+    "common": {
+      "currency": "EGP",
+      "search": "Rechercher",
+      "noData": "Aucune donnée disponible",
+      "years": "ans",
+      "today": "Aujourd'hui",
+      "tomorrow": "Demain",
+      "inDays": "Dans {{count}} jours",
+      "assignedDoctor": "Docteur attitré",
+      "doctor": "Docteur",
+      "petType": "Type d'animal",
+      "service": "Service",
+      "date": "Date",
+      "time": "Heure",
+      "save": "Enregistrer les modifications",
+      "saving": "Enregistrement...",
+      "deleteConfirmTitle": "Êtes-vous sûr ?",
+      "deleteConfirmText": "Cet animal sera supprimé",
+      "yesDelete": "Oui, supprimez-le !",
+      "cancel": "Annuler"
+    },
+    "seo": {
+      "title": "Profil | Clinique vétérinaire",
+      "description": "Gérez vos informations personnelles, vos animaux et vos rendez-vous."
+    },
+    "profileAlt": "Profil",
+    "error": "Échec du chargement du profil utilisateur. Veuillez réessayer plus tard.",
+    "appointments": {
+      "title": "Vos rendez-vous",
+      "subtitle": "Gérez et suivez tous vos rendez-vous en clinique",
+      "tabs": {
+        "all": "Tout",
+        "upcoming": "À venir",
+        "past": "Passés"
+      },
+      "stats": {
+        "total": "Total des rendez-vous",
+        "confirmed": "Confirmés",
+        "pending": "En attente",
+        "cancelled": "Annulés",
+        "completed": "Terminés"
+      },
+      "status": {
+        "confirmed": "Confirmé",
+        "pending": "En attente",
+        "cancelled": "Annulé",
+        "completed": "Terminé"
+      },
+      "empty": {
+        "title": "Aucune réservation pour le moment",
+        "text": "Vous n'avez pas encore pris de rendez-vous. Réservez votre premier rendez-vous !"
+      },
+      "error": "Échec du chargement des réservations"
+    },
+    "pets": {
+      "title": "Mes Animaux",
+      "error": "Échec du chargement de vos animaux.",
+      "empty": "Aucun animal trouvé. Ajoutez votre premier animal !",
+      "age": "{{age}} ans",
+      "weight": "{{weight}} kg",
+      "allergies": "Allergies",
+      "vaccinations": "Vaccinations",
+      "nextDose": "Prochaine dose",
+      "deleteConfirm": {
+        "title": "Êtes-vous sûr ?",
+        "text": "Vous ne pourrez pas revenir en arrière !",
+        "confirm": "Oui, supprimez-le !",
+        "cancel": "Annuler",
+        "deleted": "Supprimé !",
+        "success": "Le dossier de votre animal a été supprimé.",
+        "error": "Échec de la suppression de l'animal."
+      }
+    },
+    "addPet": {
+      "title": "Ajouter un nouvel animal",
+      "submit": "Ajouter l'animal",
+      "submitting": "Ajout...",
+      "placeholders": {
+        "name": "Nom de l'animal",
+        "age": "Âge",
+        "weight": "Poids",
+        "category": "Sélectionner une catégorie",
+        "allergies": "Allergies (séparées par des virgules)"
+      }
+    },
+    "orders": {
+      "title": "Vos Commandes",
+      "error": "Échec du chargement des commandes.",
+      "empty": "Vous n'avez pas encore de commandes.",
+      "idPrefix": "Commande #",
+      "address": "Adresse",
+      "phone": "Téléphone",
+      "payment": "Paiement",
+      "placedOn": "Passée le",
+      "products": "Produits",
+      "qty": "Qté",
+      "price": "Prix",
+      "total": "Total",
+      "status": "Statut"
+    },
+    "tracking": {
+      "title": "Suivre votre commande",
+      "searchPlaceholder": "Entrez l'ID de la commande (ex: A12X45)...",
+      "error": "Commande non trouvée. Veuillez vérifier votre ID.",
+      "steps": {
+        "pending": "En attente",
+        "placed": "Commande passée",
+        "shipping": "En chemin",
+        "completed": "Livrée",
+        "canceled": "Annulée",
+        "refund": "Remboursée",
+        "shipped": "Expédiée"
+      }
+    },
+    "analytics": {
+      "cards": {
+        "totalSpending": "Dépenses totales",
+        "totalOrders": "Total des commandes",
+        "avgOrderValue": "Valeur moyenne des commandes"
+      },
+      "sections": {
+        "topCategories": "Catégories les plus achetées",
+        "favoriteProducts": "Produits favoris"
+      },
+      "itemsBought": "articles",
+      "timesPurchased": "fois achetés"
+    },
+    "personalInfo": {
+      "title": "Informations personnelles",
+      "ownerName": "Nom du propriétaire",
+      "email": "E-mail",
+      "phone": "Numéro de téléphone",
+      "changePassword": "Changer le mot de passe",
+      "hidePassword": "Masquer les champs de mot de passe",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "saving": "Enregistrement...",
+      "save": "Enregistrer les modifications",
+      "age": "âge"
+    }
+  },
+  "auth": {
+    "common": {
+      "email": "votre e-mail",
+      "password": "votre mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "newPassword": "Nouveau mot de passe",
+      "repeatPassword": "Répéter le mot de passe",
+      "name": "Votre nom",
+      "phone": "Numéro de téléphone",
+      "otp": "Entrez le code OTP",
+      "male": "Homme",
+      "female": "Femme",
+      "or": "OU",
+      "loading": "Chargement...",
+      "backToLogin": "Retour à la connexion",
+      "login": "Connexion",
+      "signup": "S'inscrire",
+      "verify": "Vérifier",
+      "emailError": "Veuillez entrer un e-mail correct",
+      "passwordError": "Veuillez entrer un mot de passe correct"
+    },
+    "login": {
+      "welcomeTitle": "Bon retour !",
+      "welcomeSubtitle": "Pour une meilleure expérience avec vos animaux.",
+      "title": "Connexion",
+      "submit": "Se connecter",
+      "loading": "Connexion en cours...",
+      "createAccount": "Créer un nouveau compte ?",
+      "signupHere": "Inscrivez-vous ici",
+      "forgetPassword": "Mot de passe oublié ?",
+      "forget": "mot de passe oublié",
+      "successTitle": "Connexion réussie !",
+      "successText": "Bon retour chez Petique 🐶",
+      "errorTitle": "Échec de la connexion",
+      "errorDefault": "E-mail ou mot de passe invalide"
+    },
+    "register": {
+      "title": "S'inscrire",
+      "submit": "S'inscrire",
+      "loading": "Création...",
+      "alreadyHaveAccount": "Vous avez déjà un compte ?",
+      "confirmOtp": "Confirmer l'OTP",
+      "alreadyRegister": "Déjà inscrit ?",
+      "rightTitle": "Rejoindre Petique",
+      "rightSubtitle": "Créez un compte et profitez de votre monde animal.",
+      "successTitle": "Compte créé !",
+      "successText": "Consultez votre courrier Redirection vers la connexion ... 🐱🐾",
+      "errorTitle": "Erreur d'inscription",
+      "errorDefault": "L'inscription a échoué !"
+    },
+    "forgetPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "subtitle": "Suivez les étapes pour récupérer votre compte en toute sécurité.",
+      "step1": {
+        "title": "Entrez votre e-mail",
+        "submit": "Envoyer l'OTP",
+        "successTitle": "OTP envoyé ! Consultez votre e-mail",
+        "errorTitle": "Échec de l'envoi de l'OTP ❌"
+      },
+      "step2": {
+        "title": "Entrez l'OTP",
+        "submit": "Vérifier le code",
+        "invalidOtp": "OTP invalide ❌",
+        "errorMsg": "L'OTP doit comporter 6 chiffres"
+      },
+      "step3": {
+        "title": "Nouveau mot de passe",
+        "submit": "Réinitialiser le mot de passe",
+        "successTitle": "🎉 Mot de passe mis à jour",
+        "successText": "Votre mot de passe a été modifié avec succès.",
+        "errorTitle": "Échec de la mise à jour du mot de passe ❌"
+      },
+      "remember": "Vous vous souvenez de votre mot de passe ?",
+      "defaultError": "Quelque chose s'est mal passé. Veuillez réessayer."
+    },
+    "otp": {
+      "leftTitle": "Vérifiez votre e-mail",
+      "leftSubtitle": "Entrez l'OTP envoyé à votre e-mail.",
+      "title": "Vérification OTP",
+      "submit": "Vérifier",
+      "loading": "Vérification...",
+      "successTitle": "Compte vérifié !",
+      "successText": "Votre compte a été activé avec succès.",
+      "errorTitle": "Échec de la vérification",
+      "errorDefault": "OTP invalide ou expiré",
+      "required": "Le code OTP est requis"
+    }
+  }
+}

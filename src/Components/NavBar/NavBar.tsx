@@ -23,6 +23,7 @@ import { jwtDecode } from "jwt-decode";
 export default function NavBar() {
   const [open, setOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const [isDark, setIsDark] = useState(() => {
     if (typeof window === "undefined") return false;
     const stored = localStorage.getItem("theme");
@@ -57,8 +58,8 @@ export default function NavBar() {
     role === "admin"
       ? "/ecoDashboard"
       : role === "doctor" || role === "owner"
-      ? "/resDashboard"
-      : null;
+        ? "/resDashboard"
+        : null;
 
   const isDoctor = role === "owner";
 
@@ -77,13 +78,20 @@ export default function NavBar() {
     { label: t("navbar.contactUs"), href: "/contact" },
   ];
 
-  const toggleLanguage = () => {
-    const newLang = i18n.language === "en" ? "ar" : "en";
+  const changeLanguage = (newLang: string) => {
     i18n.changeLanguage(newLang);
     localStorage.setItem("i18nextLng", newLang);
     document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = newLang;
+    setShowLanguageMenu(false);
   };
+
+  const languages = [
+    { code: "en", label: "English", flag: "🇺🇸" },
+    { code: "ar", label: "العربية", flag: "🇪🇬" },
+    { code: "de", label: "Deutsch", flag: "🇩🇪" },
+    { code: "fr", label: "Français", flag: "🇫🇷" },
+  ];
 
   useEffect(() => {
     const root = document.documentElement;
@@ -170,13 +178,37 @@ export default function NavBar() {
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <button
-              aria-label={t("navbar.toggleLanguage")}
-              onClick={toggleLanguage}
-              className="p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
-            >
-              <FaGlobe className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
-            </button>
+            <div className="relative">
+              <button
+                aria-label={t("navbar.toggleLanguage")}
+                onClick={() => setShowLanguageMenu((p) => !p)}
+                className="p-3 rounded-full bg-white/80 dark:bg-black/30 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all flex items-center gap-1"
+              >
+                <FaGlobe className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
+                <span className="text-xs font-bold uppercase text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
+                  {i18n.language.split("-")[0]}
+                </span>
+              </button>
+
+              {showLanguageMenu && (
+                <div className="absolute right-0 mt-3 w-40 rounded-2xl bg-white dark:bg-[var(--color-dark-card)] border border-[var(--color-light-secondary)]/20 shadow-2xl p-2 space-y-1 z-[10000]">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => changeLanguage(lang.code)}
+                      className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                        i18n.language === lang.code
+                          ? "bg-[var(--color-light-accent)]/10 text-[var(--color-light-accent)] font-bold"
+                          : "text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30"
+                      }`}
+                    >
+                      <span>{lang.flag}</span>
+                      <span>{lang.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <button
               aria-label={t("navbar.toggleTheme")}
@@ -279,7 +311,7 @@ export default function NavBar() {
                         >
                           {item.label}
                         </Link>
-                      )
+                      ),
                     )}
                 </div>
               )}
@@ -317,13 +349,39 @@ export default function NavBar() {
               ))}
 
               <div className="flex items-center gap-3">
-                <button
-                  aria-label={t("navbar.toggleLanguage")}
-                  onClick={toggleLanguage}
-                  className="p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all"
-                >
-                  <FaGlobe className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
-                </button>
+                <div className="relative">
+                  <button
+                    aria-label={t("navbar.toggleLanguage")}
+                    onClick={() => setShowLanguageMenu((p) => !p)}
+                    className="p-3 rounded-full bg-white/80 dark:bg-black/40 border border-[var(--color-light-secondary)]/30 shadow-sm hover:-translate-y-0.5 transition-all flex items-center gap-1"
+                  >
+                    <FaGlobe className="text-[var(--color-light-accent)] dark:text-[var(--color-dark-accent)]" />
+                    <span className="text-xs font-bold uppercase text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)]">
+                      {i18n.language.split("-")[0]}
+                    </span>
+                  </button>
+                  {showLanguageMenu && (
+                    <div className="absolute left-0 bottom-full mb-3 w-40 rounded-2xl bg-white dark:bg-[var(--color-dark-card)] border border-[var(--color-light-secondary)]/20 shadow-2xl p-2 space-y-1 z-[10000]">
+                      {languages.map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => {
+                            changeLanguage(lang.code);
+                            setOpen(false);
+                          }}
+                          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                            i18n.language === lang.code
+                              ? "bg-[var(--color-light-accent)]/10 text-[var(--color-light-accent)] font-bold"
+                              : "text-[var(--color-light-dark)] dark:text-[var(--color-dark-text)] hover:bg-[var(--color-light-background)] dark:hover:bg-black/30"
+                          }`}
+                        >
+                          <span>{lang.flag}</span>
+                          <span>{lang.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <button
                   aria-label={t("navbar.toggleTheme")}
                   onClick={() => setIsDark(!isDark)}

@@ -5,6 +5,7 @@ import { posts } from "./posts";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SEO from "../../Components/SEO/SEO";
+import catImg from "../../assets/images/pic-2.png";
 
 export default function Blog() {
   const { t, i18n } = useTranslation();
@@ -93,18 +94,16 @@ export default function Blog() {
           <div className="max-w-7xl text-center md:text-left w-full">
             <Bone
               key={i18n.language}
-              className={`bone-icon w-25 h-30 text-white ${
-                isRTL
-                  ? "ml-0 mr-[-30px] scale-y-[-1]"
-                  : "ml-[-30px] mr-0 scale-y-[1]"
-              }`}
+              className={`bone-icon w-25 h-30 text-white ${isRTL
+                ? "ml-0 mr-[-30px] scale-y-[-1]"
+                : "ml-[-30px] mr-0 scale-y-[1]"
+                }`}
               strokeWidth={2.5}
-               color="#fde5d3"
+              color="#fde5d3"
             />
             <h1
-              className={`text-white text-3xl md:text-4xl font-extrabold mt-4 ${
-                isRTL ? "text-right" : "text-left"
-              }`}
+              className={`text-white text-3xl md:text-4xl font-extrabold mt-4 ${isRTL ? "text-right" : "text-left"
+                }`}
             >
               {t("blog.latestArticles")}
             </h1>
@@ -119,11 +118,10 @@ export default function Blog() {
           </div>
 
           <img
-            src="/src/assets/images/pic-2.png"
+            src={catImg}
             alt="cat"
-            className={`hidden md:block absolute bottom-[-90px] w-[600px] z-10 ${
-              isRTL ? "left-0" : "right-5"
-            }`}
+            className={`hidden md:block absolute bottom-[-90px] w-[600px] z-10 ${isRTL ? "left-0" : "right-5"
+              }`}
           />
         </div>
 
@@ -168,11 +166,10 @@ export default function Blog() {
                   {[...Array(totalPages)].map((_, i) => (
                     <button
                       key={i}
-                      className={`px-3 py-1 border rounded ${
-                        currentPage === i + 1
-                          ? "bg-[#e9a66f] text-white"
-                          : "text-gray-500 dark:text-gray-400 border-gray-300 dark:border-gray-600"
-                      }`}
+                      className={`px-3 py-1 border rounded ${currentPage === i + 1
+                        ? "bg-[#e9a66f] text-white"
+                        : "text-gray-500 dark:text-gray-400 border-gray-300 dark:border-gray-600"
+                        }`}
                       onClick={() => setCurrentPage(i + 1)}
                     >
                       {i + 1}
@@ -313,11 +310,10 @@ export default function Blog() {
               {/* <h3 className="font-bold mb-2 text-white">{t("blog.AllCategories")}</h3> */}
               <ul>
                 <li
-                  className={`cursor-pointer mb-1 font-semibold ${
-                    selectedCategory === null
-                      ? "text-[#e9a66f]"
-                      : "text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
-                  }`}
+                  className={`cursor-pointer mb-1 font-semibold ${selectedCategory === null
+                    ? "text-[#e9a66f]"
+                    : "text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
+                    }`}
                   onClick={() => {
                     setSelectedCategory(null);
                     setExpandedPostId(null);
@@ -329,11 +325,10 @@ export default function Blog() {
                 {categories?.map((cat) => (
                   <li
                     key={cat}
-                    className={`cursor-pointer mb-1 ${
-                      selectedCategory === cat
-                        ? "text-[#e9a66f]"
-                        : "text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
-                    }`}
+                    className={`cursor-pointer mb-1 ${selectedCategory === cat
+                      ? "text-[#e9a66f]"
+                      : "text-[var(--color-text-primary)] dark:text-[var(--color-dark-text)]"
+                      }`}
                     onClick={() => {
                       setSelectedCategory(cat);
                       setExpandedPostId(null);
@@ -359,11 +354,10 @@ export default function Blog() {
                 ).map((tag, idx) => (
                   <span
                     key={idx}
-                    className={`text-xs px-3 py-1 rounded-full cursor-pointer ${
-                      selectedTag === tag
-                        ? "bg-[#e9a66f] text-white"
-                        : "bg-gray-200 dark:bg-[var(--color-dark-background)] text-gray-800 dark:text-[var(--color-dark-text)]"
-                    }`}
+                    className={`text-xs px-3 py-1 rounded-full cursor-pointer ${selectedTag === tag
+                      ? "bg-[#e9a66f] text-white"
+                      : "bg-gray-200 dark:bg-[var(--color-dark-background)] text-gray-800 dark:text-[var(--color-dark-text)]"
+                      }`}
                     onClick={() => {
                       setSelectedTag(tag);
                       setExpandedPostId(null);

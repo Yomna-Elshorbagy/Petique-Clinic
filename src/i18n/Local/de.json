@@ -1,0 +1,1298 @@
+{
+  "navbar": {
+    "home": "Startseite",
+    "products": "Produkte",
+    "services": "Dienstleistungen",
+    "reservation": "Reservierung",
+    "contactUs": "Kontaktieren Sie uns",
+    "blog": "Blog",
+    "profile": "Profil",
+    "reviews": "Bewertungen",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "logout": "Abmelden",
+    "cart": "Warenkorb",
+    "toggleTheme": "Thema umschalten",
+    "reservationBoard": "E-Commerce-Board"
+  },
+  "contactUs": {
+    "title": "Kontaktieren Sie uns",
+    "ourLocation": "Unser Standort",
+    "fullName": "Vollständiger Name",
+    "email": "E-Mail",
+    "category": "Kategorie",
+    "urgency": "Dringlichkeit",
+    "petAge": "Haustieralter (optional)",
+    "describeIssue": "Beschreiben Sie Ihr Anliegen...",
+    "sendMessage": "Nachricht senden",
+    "sending": "Wird gesendet...",
+    "categoryOptions": {
+      "general": "Allgemeine Anfrage",
+      "appointment": "Termin",
+      "health": "Gesundheit",
+      "emergency": "Notfall",
+      "vaccination": "Impfung"
+    },
+    "urgencyOptions": {
+      "high": "Hoch",
+      "medium": "Mittel",
+      "low": "Niedrig",
+      "emergency": "Notfall"
+    },
+    "openHours": "Geöffnet: Täglich 10:00 – 22:00 Uhr",
+    "successMessage": "Ihre Anfrage wurde erfolgreich übermittelt!",
+    "successTitle": "Nachricht gesendet 🎉",
+    "errorTitle": "Hoppla...",
+    "errorMessage": "Etwas ist schiefgelaufen!"
+  },
+  "servicesSection": {
+    "ourService": "Unser Service",
+    "title": "Gemeinsam weltweit Erinnerungen schaffen",
+    "petTaxiTitle": "Haustier-Taxi 24/7",
+    "petTaxiDesc": "Sicherer und zuverlässiger Transport für Ihre Haustiere, rund um die Uhr verfügbar.",
+    "petGroomingTitle": "Haustierpflege",
+    "petGroomingDesc": "Professionelle Pflegedienste, damit Ihre Haustiere gut aussehen und sich wohlfühlen.",
+    "petTrainingTitle": "Haustiertraining",
+    "petTrainingDesc": "Experten-Trainingsprogramme, damit Ihre Haustiere lernen und sich besser verhalten.",
+    "viewServices": "DIENSTLEISTUNGEN ANZEIGEN"
+  },
+  "qrSection": {
+    "title": "Schnellzugriff-QR",
+    "description": "Scannen Sie diesen QR-Code, um sofort auf Tierarztberichte, Termine und den schnellen Check-in in unserer Klinik zuzugreifen.",
+    "whyUse": "Warum diesen QR-Code verwenden?",
+    "benefits": {
+      "access": "Sofortiger Zugriff auf die medizinische Vorgeschichte des Haustieres",
+      "checkin": "Schneller Check-in in unserer Klinik",
+      "secure": "Sicher & läuft jede Stunde ab",
+      "noLogin": "Keine Anmeldung erforderlich – Scannen & Loslegen"
+    },
+    "refresh": "QR aktualisieren",
+    "autoRefresh": "Aktualisiert sich automatisch jede Stunde."
+  },
+  "clinicReviews": {
+    "title": "Aktuelle Bewertungen",
+    "reviewsCount": "{{count}} Bewertungen gefunden",
+    "writeReview": "Bewertung schreiben",
+    "filters": {
+      "all": "Alle Bewertungen",
+      "doctors": "Ärzte",
+      "services": "Dienstleistungen",
+      "clinic": "Klinik"
+    },
+    "noReviews": "Keine Bewertungen gefunden",
+    "noReviewsDesc": "Seien Sie der Erste, der seine Erfahrungen teilt!",
+    "shareExperience": "Erfahrung teilen",
+    "valueFeedback": "Wir schätzen Ihr Feedback",
+    "whatReviewing": "Was bewerten Sie?",
+    "doctor": "Arzt",
+    "service": "Dienstleistung",
+    "clinicLabel": "Klinik",
+    "selectDoctor": "Arzt auswählen",
+    "chooseDoctor": "Wählen Sie einen Arzt...",
+    "pleaseSelectDoctor": "Bitte wählen Sie einen Arzt",
+    "selectService": "Dienstleistung auswählen",
+    "chooseService": "Wählen Sie eine Dienstleistung...",
+    "pleaseSelectService": "Bitte wählen Sie eine Dienstleistung",
+    "rateExperience": "Bewerten Sie Ihre Erfahrung",
+    "yourReview": "Ihre Bewertung",
+    "tellExperience": "Erzählen Sie uns von Ihren Erfahrungen...",
+    "pleaseWriteComment": "Bitte schreiben Sie einen Kommentar",
+    "minCharacters": "Mindestens 10 Zeichen",
+    "submitReview": "Bewertung absenden",
+    "error": "Fehler",
+    "selectRating": "Bitte wählen Sie eine Bewertung",
+    "thankYou": "Vielen Dank!",
+    "reviewSubmitted": "Ihre Bewertung wurde erfolgreich übermittelt.",
+    "failedSubmit": "Bewertung konnte nicht gesendet werden",
+    "doctorLabel": "Arzt:",
+    "serviceLabel": "Dienstleistung:",
+    "reservationLabel": "Reservierung:",
+    "clinicReview": "Klinikbewertung",
+    "anonymous": "Anonym"
+  },
+  "blog": {
+    "latestArticles": "Neueste Blog-Artikel",
+    "home": "Startseite",
+    "blog": "Blog",
+    "search": "Suche",
+    "readMore": "Weiterlesen",
+    "showLess": "Weniger anzeigen",
+    "latestPosts": "Neueste Beiträge",
+    "AllCategories": "Alle Kategorien",
+    "tags": "Tags",
+    "posts": [
+      {
+        "id": 1,
+        "title": "So halten Sie Ihr Haustier gesund und glücklich",
+        "image": [
+          "https://i.postimg.cc/0ydhBn2c/1.jpg",
+          "https://i.postimg.cc/cLMPbh4Q/2.jpg",
+          "https://i.postimg.cc/JzcS2x4j/3.jpg"
+        ],
+        "description": "Einfache Schritte, die jeder Tierbesitzer befolgen sollte, um die tägliche Gesundheit und das Wohlbefinden seines Tieres zu verbessern.",
+        "category": "Gesundheit",
+        "author": "Petique Klinik",
+        "date": "2024-11-25",
+        "tags": [
+          "GlücklicheTiere",
+          "GesundeTiere"
+        ],
+        "content": {
+          "intro": "Ihr Haustier gesund zu halten bedeutet nicht nur regelmäßige Tierarztbesuche – es geht darum, tägliche Gewohnheiten aufzubauen, die es körperlich und emotional schützen. Viele Tierbesitzer unterschätzen, wie einfache Routinen wie Bürsten, Flüssigkeitszufuhr und regelmäßiges Spielen die Lebensdauer eines Tieres erheblich verbessern können. In diesem Artikel stellen wir praktische Tipps vor, die leicht in Ihren Tagesablauf passen und einen echten Unterschied für das allgemeine Wohlbefinden Ihres Tieres machen.",
+          "head": "Tipps zur Anwendung",
+          "tips": [
+            "Bürsten Sie das Fell Ihres Tieres mindestens 3–4 Mal pro Woche.",
+            "Stellen Sie jederzeit frisches, sauberes Trinkwasser bereit.",
+            "Planen Sie jeden Tag kurze, aber konsequente Spielstunden ein.",
+            "Suchen Sie wöchentlich nach Flöhen und Zecken.",
+            "Sorgen Sie für einen sauberen Schlafplatz."
+          ],
+          "body": "Ein gesundes Haustier beginnt mit einer ausgewogenen Kombination aus Ernährung, Bewegung, Hygiene und emotionalem Engagement. Gute Ernährung stellt sicher, dass Ihr Haustier die Vitamine und Mineralien erhält, die es für Wachstum, Reparatur und Immunität benötigt. Regelmäßige Bewegung hält die Muskeln stark und beugt Fettleibigkeit vor, die heute eines der häufigsten langfristigen Gesundheitsprobleme bei Haustieren ist. Darüber hinaus verringert die Aufrechterhaltung der richtigen Hygiene das Risiko von Infektionen und Hauterkrankungen. Haustiere benötigen auch emotionale Pflege – regelmäßige Interaktion, Zuneigung und mentale Stimulation helfen, Stress und Verhaltensprobleme abzubauen. Diese kleinen Maßnahmen mögen einfach erscheinen, aber wenn sie kombiniert werden, schaffen sie eine stabile und glückliche Umgebung, die die langfristige Gesundheit unterstützt.",
+          "conclusion": "Beständigkeit ist der Schlüssel zur Erziehung eines gesunden Haustieres. Kleine tägliche Gewohnheiten können Ihr Tier bei regelmäßiger Durchführung vor häufigen Krankheiten schützen und seine Lebensqualität verbessern. Denken Sie daran – Ihr Haustier verlässt sich auf Sie, und jede Minute, die Sie in seine Pflege investieren, macht einen bedeutenden Unterschied."
+        }
+      },
+      {
+        "id": 2,
+        "title": "19 gesunde und sichere Lebensmittel, die Sie Ihrem Hund füttern können",
+        "image": [
+          "https://i.postimg.cc/zGS4c7Xk/4.jpg",
+          "https://i.postimg.cc/jSQBFcdD/5.jpg",
+          "https://i.postimg.cc/NjwWDSYR/6.jpg"
+        ],
+        "description": "Ein Leitfaden zu 19 menschlichen Lebensmitteln, die für Hunde sicher, nahrhaft und vorteilhaft sind.",
+        "category": "Ernährung",
+        "author": "Petique Klinik",
+        "date": "2025-12-01",
+        "tags": [
+          "Haustiergesundheit",
+          "Haustier-Wellness"
+        ],
+        "content": {
+          "intro": "Suchen Sie nach gesunden Leckerlis für Ihren Welpen? Diese 19 Lebensmittel enthalten Fleisch, Obst und Gemüse, die für Hunde nahrhaft sind. Füttern Sie sie immer in Maßen und überwachen Sie die Verträglichkeit neuer Lebensmittel bei Ihrem Hund.",
+          "head": "Tipps zur Anwendung",
+          "body": "Hunde können von einer Vielzahl menschlicher Lebensmittel profitieren, die sicher und gesund sind. Früchte wie Äpfel, Bananen und Heidelbeeren liefern Vitamine und Antioxidantien. Gemüse wie Karotten, Sellerie, Gurken, grüne Bohnen und Blumenkohl bieten Ballaststoffe, Vitamine und helfen bei der Aufrechterhaltung der Verdauungsgesundheit. Proteine wie gekochtes Huhn, Pute, Rindfleisch, Eier und Fisch liefern essentielle Aminosäuren und unterstützen das Muskelwachstum. Andere Lebensmittel wie Kürbis, Joghurt und weißer Reis helfen bei der Verdauung und Darmgesundheit. Nüsse wie ungesalzene Erdnüsse und Erdnussbutter liefern gesunde Fette, während Früchte wie Mango und Wassermelone Flüssigkeit und Vitamine bieten. Entfernen Sie immer Samen, Kerne, Schalen oder Knochen, die schädlich sein könnten, und füttern Sie Leckerlis in Maßen.",
+          "tips": [
+            "Leckerlis sollten nicht mehr als 10 % der täglichen Ernährung Ihres Hundes ausmachen.",
+            "Führen Sie neue Lebensmittel schrittweise ein und überwachen Sie eventuelle Nebenwirkungen.",
+            "Entfernen Sie Samen, Kerne und Knochen vor der Fütterung, um Erstickungsgefahr oder Vergiftungen zu vermeiden.",
+            "Konsultieren Sie Ihren Tierärzt, wenn Sie sich bei einem bestimmten Lebensmittel oder einer Portionsgröße unsicher sind."
+          ],
+          "conclusion": "Die Fütterung Ihres Hundes mit sicheren und gesunden menschlichen Lebensmitteln kann seine Ernährung ergänzen und das allgemeine Wohlbefinden fördern. Beständigkeit, Mäßigung und sorgfältige Auswahl sind der Schlüssel, um Ihren Hund glücklich, gesund und gedeihend zu halten."
+        }
+      },
+      {
+        "id": 3,
+        "title": "Fütterungstipps für Welpen",
+        "image": [
+          "https://i.postimg.cc/t4HLkwy6/7.jpg",
+          "https://i.postimg.cc/jSrGcmKW/8.jpg",
+          "https://i.postimg.cc/kgdksz9G/9.jpg"
+        ],
+        "description": "Ein Leitfaden dazu, was, wie viel und wie oft Sie Ihren Welpen für ein gesundes Wachstum füttern sollten.",
+        "category": "Ernährung",
+        "author": "Petique Klinik",
+        "date": "2025-12-01",
+        "tags": [
+          "Haustiergesundheit",
+          "VomTierarztGeprüft"
+        ],
+        "content": {
+          "intro": "Die richtige Fütterung Ihres Welpen ist entscheidend für gesundes Wachstum, richtige Verdauung und langfristiges Wohlbefinden. Welpen haben kleinere Mägen und spezifische Ernährungsbedürfnisse. Daher ist es für jeden Tierbesitzer wichtig zu verstehen, wie man sie füttert, wie oft und wann man auf Erwachsenenfutter umstellt.",
+          "head": "Tipps zur Anwendung",
+          "body": "Beginnen Sie damit, Ihren Welpen schrittweise auf ein neues Futter umzustellen. Füttern Sie in den ersten ein oder zwei Wochen, nachdem Sie Ihren Welpen nach Hause gebracht haben, weiterhin das Futter, das er zuvor erhalten hat, um sein Verdauungssystem nicht zu belasten. Mischen Sie kleine Mengen des neuen Futters in das alte Futter und erhöhen Sie den Anteil täglich langsam, bis die Umstellung abgeschlossen ist. \n\nMessen Sie das Futter Ihres Welpen sorgfältig ab, um Über- oder Unterfütterung zu vermeiden, die das Wachstum beeinträchtigen kann. Folgen Sie den empfohlenen Mengen basierend auf Alter und Rasse und konzentrieren Sie sich eher auf das Zielgewicht im Erwachsenenalter als auf das aktuelle Gewicht. Welpen sollten aufgrund ihrer kleinen Mägen häufiger gefüttert werden: bis zu 4 Monate alt – 4 Mahlzeiten pro Tag, bis zu 6 Monate – 3 Mahlzeiten pro Tag, ab 6 Monaten – 2 Mahlzeiten pro Tag. \n\nKleine Leckerlis oder Teile der täglichen Futterration können zwischen den Mahlzeiten gegeben werden, sollten aber als Teil der gesamten täglichen Aufnahme gezählt werden. Wie lange Welpenfutter gefüttert werden sollte, hängt von der Rassegröße ab: Kleine Rassen (bis 10 kg) – 9-12 Monate, Mittlere Rassen (11-25 kg) – 12-15 Monate, Riesenrassen (über 26 kg) – 15-18 Monate. Stellen Sie auf ein Erwachsenenfutter um, das der Rasse, dem Aktivitätsniveau und dem Energiebedarf entspricht.",
+          "tips": [
+            "Führen Sie neues Futter schrittweise ein, um Verdauungsstörungen vorzubeugen.",
+            "Messen Sie das Futter basierend auf dem empfohlenen Zielgewicht für Rasse und Alter ab.",
+            "Füttern Sie Welpen je nach Alter 2–4 Mal täglich.",
+            "Leckerlis sollten sparsam gegeben und in die tägliche Futterration eingerechnet werden.",
+            "Stellen Sie entsprechend der Rassegröße und den Wachstumsmeilensteinen auf Erwachsenenfutter um."
+          ],
+          "conclusion": "Die richtige Fütterung im Welpenalter legt den Grundstein für einen gesunden erwachsenen Hund. Beständigkeit, schrittweise Übergänge und Aufmerksamkeit für Portionsgrößen sorgen dafür, dass Ihr Welpe stark, gesund und glücklich aufwächst."
+        }
+      },
+      {
+        "id": 4,
+        "title": "Pflege von Kätzchen: Von der Geburt bis zum sechsten Monat",
+        "image": [
+          "https://i.postimg.cc/L8MrDwRX/10.jpg",
+          "https://i.postimg.cc/nht62gZc/11.jpg",
+          "https://i.postimg.cc/4xTrPqZJ/12.jpg"
+        ],
+        "description": "Ein Schritt-für-Schritt-Leitfaden zur Aufzucht von Kätzchen, der Sozialisierung, Impfungen, Fütterung und Training von der Geburt bis zum sechsten Monat abdeckt.",
+        "category": "Verhalten",
+        "author": "Petique Klinik",
+        "date": "2025-12-01",
+        "tags": [
+          "GesundeTiere",
+          "VomTierarztGeprüft"
+        ],
+        "content": {
+          "intro": "Die Aufzucht eines Kätzchens erfordert sorgfältige Aufmerksamkeit für Sozialisierung, Gesundheitsfürsorge, Fütterung und Training. Frühe Erfahrungen prägen das zukünftige Verhalten. Daher ist die Bereitstellung positiver Erfahrungen und richtiger Pflege entscheidend für die Entwicklung einer selbstbewussten und gesunden erwachsenen Katze.",
+          "head": "Tipps zur Anwendung",
+          "body": "Bis zu acht Wochen: Bevor Sie Ihr Kätzchen nach Hause bringen, stellen Sie sicher, dass es mit den ersten Impfungen, dem Toilettentraining und der frühen Sozialisierung begonnen hat. Bereiten Sie Ihr Zuhause mit sicheren Plätzen zum Spielen und Ausruhen, Spielzeug, Kratzbäumen, Katzentoiletten und vertrauten Decken vor. Machen Sie Ihr Zuhause katzensicher und suchen Sie einen Tierarzt und eine Haustierversicherung.\n\nAcht bis 12 Wochen: Setzen Sie die Sozialisierung fort, indem Sie Ihr Kätzchen an neue Menschen und Haustiere, Handhabung, Pflege und Transportboxen gewöhnen. Legen Sie eine konsequente Routine fest und belohnen Sie gutes Verhalten. Behalten Sie die gleiche Fütterungsroutine mit kleinen, regelmäßigen Mahlzeiten bei.\n\nAb 12 Wochen: Kätzchen benötigen ihre zweiten Impfungen und sollten für die Kastration im Alter von vier Monaten angemeldet werden. Eine Entwurmung sollte ebenfalls mit dem Tierarzt besprochen werden. Spiel und mentale Stimulation sind wichtig, beschäftigen Sie Ihr Kätzchen also mit Spielen und Trainingseinheiten. Ermöglichen Sie ausreichend Ruhepausen, um das Wachstum zu unterstützen.\n\nAb sechs Monaten: Halten Sie Erfahrungen positiv und überwachen Sie weiterhin das Verhalten und die Ernährungsbedürfnisse. Konsultieren Sie Ihren Tierarzt bei Verhaltensauffälligkeiten. Positive frühe Erfahrungen helfen Kätzchen, zu selbstbewussten erwachsenen Katzen heranzuwachsen.",
+          "tips": [
+            "Beginnen Sie frühzeitig mit der Sozialisierung, indem Sie Kätzchen an neue Menschen und Erfahrungen gewöhnen.",
+            "Stellen Sie sicher, dass Kätzchen die ersten Impfungen erhalten haben, bevor sie zu Ihnen kommen.",
+            "Richten Sie sichere Plätze, Katzentoiletten, Spielzeug und Kratzbäume ein.",
+            "Behalten Sie eine konsequente Fütterungsroutine mit kleinen, häufigen Mahlzeiten bei.",
+            "Bieten Sie kurze Trainingseinheiten und Spielzeit zur mentalen Stimulation an.",
+            "Melden Sie die Kastration mit etwa vier Monaten an und verfolgen Sie die Entwurmungspläne.",
+            "Überwachen Sie das Verhalten und konsultieren Sie Ihren Tierarzt bei Bedenken."
+          ],
+          "conclusion": "Durch die Bereitstellung der richtigen Pflege, positiver Erfahrungen und konsequenter Routinen vom ersten Tag an können Kätzchen zu gesunden, selbstbewussten erwachsenen Katzen heranwachsen. Frühe Aufmerksamkeit für Sozialisierung, Gesundheit und Bereicherung macht das Leben sowohl für Sie als auch für Ihren felinen Begleiter angenehm."
+        }
+      },
+      {
+        "id": 5,
+        "title": "Pflege für Hunde und Katzen",
+        "image": [
+          "https://i.postimg.cc/bwjKgW8j/13.jpg",
+          "https://i.postimg.cc/sgRtmqy3/14.jpg",
+          "https://i.postimg.cc/7Zyp9d4F/15.jpg"
+        ],
+        "description": "Wesentliche Pflegetipps für Hunde und Katzen, die Baden, Bürsten, Krallenschneiden, Haarschnitte und professionelle Pflegedienste abdecken.",
+        "category": "Pflege",
+        "author": "Petique Klinik",
+        "date": "2025-12-01",
+        "tags": [
+          "GlücklicheTiere",
+          "Haustier-Wellness"
+        ],
+        "content": {
+          "intro": "Regelmäßige pflege ist für die Gesundheit und das Wohlbefinden Ihrer Haustiere unerlässlich. Sie hilft, die Gesundheit von Haut und Fell zu erhalten, Verfilzungen vorzubeugen, das Haaren zu reduzieren und ermöglicht es Ihnen, den allgemeinen Zustand Ihres Haustieres zu überwachen. Die richtige Pflege variiert je nach Tierart und Rasse, daher ist es wichtig, die Bedürfnisse Ihres Hundes oder Ihrer Katze zu verstehen.",
+          "head": "Tipps zur Anwendung",
+          "body": "Pflege für Hunde: Hunde benötigen in der Regel Baden, Bürsten, Krallenschneiden und manchmal Haarschnitte. Baden entfernt Schmutz und Ablagerungen, sollte aber nur alle ein bis drei Monate durchgeführt werden, um Hautirritationen zu vermeiden. Bürsten entfernt abgestorbene Haare, beugt Verfilzungen vor und reduziert das Haaren; die Häufigkeit hängt von der Felllänge ab. Das Krallenschneiden sollte mit hundespezifischen Zangen oder bei Bedarf von einem Fachmann durchgeführt werden. Haarschnitte variieren je nach Rasse; beginnen Sie mit einem Bad, trocknen Sie das Tier ab, bürsten Sie es, trimmen Sie Gesicht und Pfoten und verwenden Sie dann eine Schermaschine für den Rest.\n\nPflege für Katzen: Katzen benötigen Bürsten, gelegentliches Baden, Nagel- und Pfotenpflege, Ohrenpflege, Zahnpflege und Augenpflege. Bürsten ein- oder zweimal pro Woche entfernt Schmutz und abgestorbene Haare und regt die Durchblutung an. Baden ist selten erforderlich, es sei denn, die Katze wird besonders schmutzig; verwenden Sie katzenspezifisches Shampoo und warmes Wasser. Überprüfen und reinigen Sie regelmäßig die Pfoten und schneiden Sie die Krallen vorsichtig. Eine schrittweise Desensibilisierung hilft Katzen, das Krallenschneiden zu tolerieren.\n\nProfessionelle Pflege: Wenn die Pflege zu Hause schwierig oder zeitaufwendig ist, stehen professionelle Dienste zur Verfügung, um die Hygiene und das Erscheinungsbild Ihres Haustieres zu erhalten. Tiermedizinische Zentren bieten Termine für Hunde und Katzen an und gewährleisten eine sichere und gründliche Pflege.",
+          "tips": [
+            "Baden Sie Hunde alle ein bis drei Monate mit hundespezifischem Shampoo.",
+            "Bürsten Sie Hunde häufig je nach Felllänge; Katzen ein- oder zweimal pro Woche.",
+            "Schneiden Sie Krallen vorsichtig mit artspezifischen Zangen oder beauftragen Sie einen Fachmann.",
+            "Sorgen Sie bei Bedarf für Haarschnitte für Hunde, basierend auf Rasse und Felltyp.",
+            "Überprüfen Sie regelmäßig die Katzenpfoten und sorgen Sie für die richtige Nagel- und Pfotenpflege.",
+            "Verwenden Sie katzenspezifisches Shampoo und warmes Wasser beim Baden von Katzen.",
+            "Ziehen Sie professionelle Pflegedienste in Betracht, wenn die Pflege zu Hause eine Herausforderung darstellt."
+          ],
+          "conclusion": "Pflege ist mehr als nur Kosmetik – sie ist ein wichtiger Bestandteil der Gesundheit und des Wohlbefindens von Haustieren. Regelmäßige Pflege ermöglicht die frühzeitige Erkennung von Haut-, Fell- und Nagelproblemen und bietet eine Gelegenheit zur Bindung. Beständigkeit und richtige Techniken helfen Hunden und Katzen, glücklich, komfortabel und gesund zu bleiben."
+        }
+      },
+      {
+        "id": 6,
+        "title": "Warum sollten Ihr Hund oder Ihre Katze regelmäßig entwurmt werden?",
+        "image": [
+          "https://i.postimg.cc/bNn7QpXq/16.jpg",
+          "https://i.postimg.cc/VLtxjmy1/17.jpg",
+          "https://i.postimg.cc/NfX31BhB/18.jpg"
+        ],
+        "description": "Erfahren Sie, warum eine routinemäßige Entwurmung für die Gesundheit Ihres Haustieres unerlässlich ist und welche Zeitpläne für Welpen, Kätzchen und erwachsene Tiere empfohlen werden.",
+        "category": "Gesundheit",
+        "author": "Petique Klinik",
+        "date": "2025-11-13",
+        "tags": [
+          "Haustiergesundheit",
+          "Haustier-Wellness",
+          "VomTierarztGeprüft"
+        ],
+        "content": {
+          "intro": "Entwurmung ist ein entscheidender Teil der Gesunderhaltung Ihrer Haustiere. Würmer können ernsthafte Gesundheitsprobleme sowohl für Ihre Haustiere als auch für Ihre Familie verursachen. Die Häufigkeit der Entwurmung hängt von Alter, Lebensstil und Gesundheit ab. Dieser Leitfaden bietet wichtige Empfehlungen für die routinemäßige Parasitenprävention.",
+          "head": "Tipps zur Entwurmung Ihres Haustieres",
+          "body": "Wie oft sollten Haustiere entwurmt werden?\n\n- Welpen und Kätzchen: Alle 2–3 Wochen bis zum Alter von 12 Wochen, dann monatlich bis zum Alter von 6 Monaten.\n- Erwachsene Hunde und Katzen: Mindestens alle 3–6 Monate oder wie bei Wellness-Untersuchungen empfohlen.\n- Haustiere, die jagen oder draußen herumlaufen: Können aufgrund des höheren Risikos eine häufigere Entwurmung benötigen.\n- Ganzjährige Prävention: Viele Herzwurm-Präventivmittel helfen auch bei der Kontrolle von Darmparasiten.\n\nDie Zeitpläne können je nach Lebensstil und Expositionsrisiko variieren, daher ist es wichtig, die Empfehlungen auf jedes einzelne Haustier zuzuschneiden.\n\nWann sollten Sie besorgt sein?\nAchten Sie auf Anzeichen wie sichtbare Würmer im Kot, Rutschen auf dem Hinterteil oder Lecken am Hinterteil, unerklärlichen Gewichtsverlust, einen aufgeblähten Bauch, Durchfall oder Erbrechen. Schnelle Tests und Behandlungen können das Problem in der Regel schnell lösen.",
+          "tips": [
+            "Welpen und Kätzchen: Alle 2–3 Wochen bis 12 Wochen entwurmen, dann monatlich bis 6 Monate.",
+            "Erwachsene Hunde und Katzen: Alle 3–6 Monate oder nach Rat Ihres Tierarztes entwurmen.",
+            "Hochrisiko-Tiere, die jagen oder draußen herumlaufen, benötigen möglicherweise eine häufigere Entwurmung.",
+            "Achten Sie auf Würmer im Kot, Blähungen, Rutschen, Durchfall, Erbrechen oder Gewichtsverlust.",
+            "Konsultieren Sie Ihren Tierärzt, wenn Sie sich unsicher sind oder Symptome bemerken."
+          ],
+          "conclusion": "Eine routinemäßige Entwurmung schützt Ihre Haustiere vor Parasiten und unterstützt ihre allgemeine Gesundheit. Indem Sie einen korrekten Zeitplan einhalten und auf Warnsignale achten, können Sie Ihren Hund oder Ihre Katze glücklich und parasitenfrei halten. Im Zweifelsfall wenden Sie sich bitte an Ihren Tierarzt."
+        }
+      },
+      {
+        "id": 7,
+        "title": "Zahnpflege für Hunde und Katzen",
+        "image": [
+          "https://i.postimg.cc/xTmwKnrr/19.jpg",
+          "https://i.postimg.cc/KvT6nF66/20.jpg",
+          "https://i.postimg.cc/4NcDzZDj/21.jpg"
+        ],
+        "description": "Zahngesundheit ist entscheidend für das allgemeine Wohlbefinden Ihres Haustieres. Erfahren Sie, wie Sie Zahnerkrankungen bei Katzen und Hunden vorbeugen und behandeln können.",
+        "category": "Gesundheit",
+        "author": "Petique Klinik",
+        "date": "2025-11-13",
+        "tags": [
+          "Haustiergesundheit",
+          "Haustier-Wellness"
+        ],
+        "content": {
+          "intro": "Schlechter Atem bei Haustieren ist nicht normal und kann auf eine Zahnerkrankung hindeuten. Unbehandelte Zahnprobleme können zu Schmerzen, Unbehagen führen und sogar Herz, Leber und Nieren schädigen. Regelmäßige Zahnpflege, einschließlich professioneller Kontrollen und Pflege zu Hause, hilft Zahnerkrankungen vorzubeugen und hält Ihr Haustier gesund.",
+          "head": "Tipps zur Anwendung",
+          "body": "Zahnerkrankungen oder Parodontalerkrankungen werden durch Plaquebildung auf Zähnen und Zahnfleisch verursacht. Plaque verkalkt zu Zahnstein, wenn er nicht entfernt wird, und verursacht Gingivitis sowie Schäden am Stützgewebe der Zähne. Anzeichen für Zahnerkrankungen sind schlechter Atem, verfärbte oder lockere Zähne, Sabbern, entzündetes Zahnfleisch, Schmerzen, Gesichtsschwellungen, Verhaltensänderungen und Pföteln am Maul. Etwa 80 % der Katzen und Hunde über drei Jahre haben irgendeine Form von Zahnerkrankung.",
+          "tips": [
+            "Putzen Sie die Zähne Ihres Haustieres täglich mit einer haustierspezifischen Zahnpasta und Zahnbürste.",
+            "Verwenden Sie spezielle Hunde- oder Katzenzahnbürsten oder Zahnbürsten für Kleinkinder für kleine Haustiere.",
+            "Führen Sie das Zähneputzen schrittweise ein, beginnend mit den Vorderzähnen und kurzen Einheiten.",
+            "Bieten Sie Dental-Leckerlis und Kaustreifen wie Rohhaut oder Dentabones an, um Plaque zu entfernen.",
+            "Verwenden Sie Zahnpflege-Diäten oder Premium-Haustiernahrung, die zur Erhaltung der Mundgesundheit entwickelt wurde.",
+            "Ziehen Sie Mundspülungen oder Gele für Haustiere mit schweren Zahnproblemen in Betracht.",
+            "Bieten Sie Dentalspielzeug wie Kong oder Gumabone an, um das Kauen zu fördern.",
+            "Planen Sie professionelle tierärztliche Zahnbehandlungen einschließlich Zahnsteinentfernung, Polieren und gegebenenfalls Röntgenaufnahmen ein."
+          ],
+          "conclusion": "Die Vorbeugung und Behandlung von Zahnerkrankungen bei Haustieren erfordert regelmäßiges Bürsten, Dental-Leckerlis, richtige Ernährung und professionelle tierärztliche Versorgung. Wenn Sie vermuten, dass Ihr Haustier Zahnprobleme hat, konsultieren Sie Ihren Tierärzt für einen maßgeschneiderten Zahnpflegeplan."
+        }
+      },
+      {
+        "id": 8,
+        "title": "Sicherheitstipps für Haustiere bei heißem Wetter",
+        "image": [
+          "https://i.postimg.cc/8Pv2hD2y/22.jpg",
+          "https://i.postimg.cc/HsMqQHq3/23.jpg",
+          "https://i.postimg.cc/zXhsn5sF/24.jpg"
+        ],
+        "description": "Sorgen Sie dafür, dass Ihre Haustiere an heißen Sommertagen sicher und gesund bleiben, mit diesen wichtigen Sicherheitstipps der ASPCA.",
+        "category": "Gesundheit",
+        "author": "Petique Klinik",
+        "date": "2025-12-01",
+        "tags": [
+          "Haustiergesundheit",
+          "Haustier-Wellness",
+          "VomTierarztGeprüft"
+        ],
+        "content": {
+          "intro": "Der Sommer bringt lange, sonnige Tage, die man draußen mit seinen Haustieren genießen kann, aber er birgt auch Gefahren. Befolgen Sie diese Expertentipps, um Ihre pelzigen Freunde bei heißem Wetter sicher, gesund und glücklich zu halten.",
+          "head": "Tipps zur Anwendung",
+          "body": "Haustiere sind bei heißem Wetter anfälliger für hitzebedingte Krankheiten, Dehydrierung und Unfälle. Hohe Temperaturen, direkte Sonneneinstrahlung und Sommeraktivitäten können sie gefährden. Tiere mit flachen Gesichtern (wie Möpse und Perserkatzen), ältere Tiere, übergewichtige Tiere und solche mit Herz- oder Lungenproblemen sind besonders gefährdet. Sorgen Sie immer für Schatten, frisches Wasser und vermeiden Sie übermäßige Anstrengung bei extremer Hitze.",
+          "tips": [
+            "Besuchen Sie Ihren Tierarzt für einen Check-up zu Sommerbeginn und stellen Sie sicher, dass die Herzwurm-Prävention gewährleistet ist.",
+            "Stellen Sie frisches, sauberes Wasser und schattige Plätze bereit und halten Sie Haustiere bei extremer Hitze im Haus.",
+            "Erkennen Sie Symptome einer Überhitzung: übermäßiges Hecheln, Sabbern, Schwäche, Kollaps, Krampfanfälle, Durchfall, Erbrechen oder eine Körpertemperatur über 40 °C.",
+            "Lassen Sie Haustiere niemals in geparkten Fahrzeugen – ein Hitzschlag kann tödlich sein.",
+            "Beaufsichtigen Sie Haustiere an Pools, Seen oder am Meer; führen Sie sie schrittweise an das Wasser heran und verwenden Sie bei Bedarf Schwimmhilfen.",
+            "Halten Sie Fenster und Türen ohne Insektenschutzgitter geschlossen, um Stürze zu vermeiden.",
+            "Trimmen Sie längeres Haar, aber scheren Sie Hunde nicht kahl; bürsten Sie Katzen öfter. Verwenden Sie bei Bedarf haustiersichere Sonnencreme und Insektenschutzmittel.",
+            "Vermeiden Sie es, Hunde auf heißem Asphalt laufen zu lassen; dies kann die Pfotenballen verbrennen.",
+            "Verwenden Sie Herbizide, Insektizide, Düngemittel und Citronella-Produkte vorsichtig; halten Sie Haustiere fern, bis es sicher ist.",
+            "Achten Sie auf Pflanzen in Ihrem Garten; einige können giftig sein oder Magenverstimmungen verursachen.",
+            "Bleiben Sie bei der gewohnten Ernährung und den Leckerlis Ihres Haustieres; halten Sie Müll, Alkohol und gefährliche Lebensmittel außer Reichweite.",
+            "Verwenden Sie niemals Feuerwerk in der Nähe von Haustieren; lauter Lärm und Gefahren können Traumata oder Verletzungen verursachen."
+          ],
+          "conclusion": "Indem Sie diese Sicherheitstipps für den Sommer befolgen, können Sie Ihre Haustiere vor Hitzschlag, Verletzungen und toxischen Belastungen schützen und eine unterhaltsame und gesunde Jahreszeit gewährleisten. Wenn Sie vermuten, dass Ihr Haustier etwas Schädliches aufgenommen hat, wenden Sie sich bitte sofort an Ihren Tierarzt."
+        }
+      },
+      {
+        "id": 9,
+        "title": "Sicherheitstipps für Haustiere bei kaltem Wetter",
+        "image": [
+          "https://i.postimg.cc/h4NFzh52/25.jpg",
+          "https://i.postimg.cc/c1Pqg6b9/26.jpg",
+          "https://i.postimg.cc/xjBrJq4t/27.jpg"
+        ],
+        "description": "Halten Sie Ihre Haustiere im Winter sicher und komfortabel mit diesen Expertentipps des ASPCA Animal Poison Control Center.",
+        "category": "Gesundheit",
+        "author": "Petique Klinik",
+        "date": "2025-12-01",
+        "tags": [
+          "Haustiergesundheit",
+          "Haustier-Wellness",
+          "VomTierarztGeprüft"
+        ],
+        "content": {
+          "intro": "Der Winter kann für Haustiere hart sein, da kalte Luft, Schnee, Eis und Chemikalien Risiken für ihre Gesundheit darstellen. Befolgen Sie diese Tipps, um Ihre pelzigen Freunde in den kälteren Monaten warm, sicher und gesund zu halten.",
+          "head": "Tipps zur Anwendung",
+          "body": "Haustiere sind anfällig für Gefahren bei kaltem Wetter wie Erfrierungen, Unterkühlung, rissige Pfoten, trockene Haut und chemische Belastung durch Enteisungsmittel. Ältere, kranke oder kleine Tiere sowie solche mit kurzem Fell sind besonders gefährdet.",
+          "tips": [
+            "Wenn es für Sie zu kalt ist, ist es auch für Ihr Haustier zu kalt – halten Sie Tiere im Haus.",
+            "Lassen Sie Haustiere im Winter niemals allein im Auto; sie können schnell erfrieren.",
+            "Halten Sie Ihr Zuhause befeuchtet und trocknen Sie Haustiere nach dem Reinkommen mit einem Handtuch ab, um trockener Haut vorzubeugen.",
+            "Überprüfen Sie die Pfoten nach Spaziergängen; entfernen Sie Schneeballen und Eis und verwenden Sie Vaseline oder vom Tierarzt geprüfte Pfotenschutzmittel. Hundeschuhe bieten zusätzlichen Schutz.",
+            "Verwenden Sie nach Möglichkeit haustierfreundliches Streusalz.",
+            "Scheren Sie Hunde im Winter nicht; langes Fell spendet Wärme. Trimmen Sie langhaarige Hunde, um anhaftendes Eis und Salz zu reduzieren. Kurzhaarige Hunde benötigen möglicherweise Mäntel oder Pullover.",
+            "Waschen und trocknen Sie die Pfoten und den Bauch Ihres Haustieres nach Spaziergängen, um Eis, Salz und Chemikalien zu entfernen. Achten Sie auf Risse oder Rötungen."
+          ],
+          "conclusion": "Indem Sie diese Sicherheitstipps für kaltes Wetter befolgen, können Sie Ihre Haustiere vor Erfrierungen, Unterkühlung, Verletzungen und Giftstoffen schützen und einen sicheren, gesunden und gemütlichen Winter gewährleisten. Wenn Ihr Haustier Frostschutzmittel oder einen potenziellen Giftstoff aufnimmt, wenden Sie sich bitte sofort an Ihren Tierarzt."
+        }
+      },
+      {
+        "id": 10,
+        "title": "Erste Hilfe für Haustiere: Die Grundlagen",
+        "author": "Dr. Melody R. Conklin",
+        "category": "Gesundheit",
+        "description": "Lernen Sie wichtige Techniken der Ersten Hilfe für Haustiere kennen und erfahren Sie, wie Sie ein Erste-Hilfe-Set für Ihren Hund oder Ihre Katze zusammenstellen, um Notfälle effektiv zu bewältigen.",
+        "date": "2025-12-01",
+        "tags": [
+          "Haustiergesundheit",
+          "Haustier-Wellness"
+        ],
+        "image": [
+          "https://i.postimg.cc/T2B8Lh4c/28.jpg",
+          "https://i.postimg.cc/jqBVwCFH/29.jpg",
+          "https://i.postimg.cc/KcCXk4HB/30.jpg"
+        ],
+        "content": {
+          "intro": "Unfälle und Notfälle passieren. Das Erlernen grundlegender Techniken der Ersten Hilfe für Haustiere und das Mitführen eines ordnungsgemäßen Erste-Hilfe-Sets für Ihren Hund oder Ihre Katze helfen Ihnen, Unfälle effektiver zu bewältigen. Zu wissen, was Sie zu Hause sicher handhaben können, welche Schritte Sie unternehmen müssen, bevor Sie tierärztliche Hilfe suchen, und wann tierärztliche Hilfe ein Notfall ist, ist für Tierbesitzer unerlässlich. Ziehen Sie in Erwägung, einen Erste-Hilfe-Kurs für Katzen und Hunde zu belegen, wie zum Beispiel das „Cat & Dog First Aid Online Training“ des Roten Kreuzes oder einen Kurs in einer örtlichen Tierklinik.",
+          "head": "Tipps zur Anwendung",
+          "body": "Die grundlegende Erste Hilfe für Hunde und Katzen ist im Wesentlichen gleich. Wichtig ist, das richtige Werkzeug für die Aufgabe zu haben. Ein Erste-Hilfe-Set für Haustiere, gefüllt mit den richtigen Utensilien und an einem leicht zugänglichen Ort aufbewahrt, hilft Ihnen, im Notfall ruhig zu reagieren. Denken Sie daran, das Set außerhalb der Reichweite von Kindern aufzubewahren. Beginnen Sie mit einer Aufbewahrungsbox, die deutlich als Erste-Hilfe-Set für Haustiere gekennzeichnet ist. Überprüfen Sie alle paar Monate, ob nichts abgelaufen ist, ob die Batterien funktionieren und ob das Set vollständig bestückt ist.",
+          "tips": [
+            "Enthält saugfähige, nicht klebende Gazepads, Rollgaze, medizinisches Klebeband, selbsthaftende Verbände, Wattebäusche und Wattestäbchen.",
+            "Halten Sie Einweghandschuhe, große und kleine Handtücher, ein Rektalthermometer mit Gleitmittel, Diphenhydramin und blutstillendes Pulver (oder Maisstärke) bereit.",
+            "Enthält Alkoholtupfer, 3 %iges Wasserstoffperoxid (vorsichtig verwenden), antibakterielles Spray oder Salbe, Povidon-Jod- oder Chlorhexidin-Lösung, Kochsalzlösung zur Wundspüllung und konservierungsmittelfreie Kochsalzlösung zur Augenspülung.",
+            "Bewahren Sie künstliche Tränen, steriles Gleitmittel, eine stumpfe Schere, kleine Trimmer, Pinzetten, eine Lupe, Gefäßklemmen, eine kleine Taschenlampe, ein Sofort-Kältepack, eine Oralspritze, flüssiges Spülmittel, Wasser, hypoallergenes Shampoo, einen weichen Maulkorb, Leine/Halsband, Welpenunterlagen, einen faltbaren Wassernapf und Maissirup auf.",
+            "Bevor Sie Erste Hilfe leisten: Beurteilen Sie die Situation auf Sicherheit, legen Sie bei Bedarf einen Maulkorb an (nicht bei Erbrechen), halten Sie das Tier warm und ruhig, minimieren Sie Bewegungen bei Traumata und rufen Sie Ihren Tierarzt, den tierärztlichen Notdienst oder die Giftnotrufzentrale zur Beratung an."
+          ],
+          "conclusion": "Ein gut ausgestattetes Erste-Hilfe-Set und die Kenntnis der grundlegenden Vorsichtsmaßnahmen ermöglichen es Tierbesitzern, in Notfällen effektiv zu reagieren. Überprüfen Sie regelmäßig die Vorräte, befolgen Sie die Sicherheitsverfahren und suchen Sie bei Bedarf professionellen Rat, um die Gesundheit und Sicherheit Ihres Haustieres zu gewährleisten."
+        }
+      },
+      {
+        "id": 11,
+        "title": "Katzenverhalten verstehen: Ein Leitfaden zur Körpersprache von Katzen",
+        "author": "Lolley Samba",
+        "category": "Verhalten",
+        "description": "Entschlüsseln Sie die Körpersprache Ihrer Katze mit diesem umfassenden Leitfaden zum Verständnis von Katzenverhalten und -kommunikation.",
+        "date": "2025-03-26",
+        "tags": [
+          "GlücklicheTiere",
+          "GesundeTiere"
+        ],
+        "image": [
+          "https://i.postimg.cc/RC2r6qDH/31.jpg",
+          "https://i.postimg.cc/XNtMGXzZ/32.jpg",
+          "https://i.postimg.cc/ZYXkB0MC/33.jpg"
+        ],
+        "content": {
+          "intro": "Katzen sind seit langem mysteriöse und faszinierende Gefährten des Menschen. Ihr Verhalten ist ein komplexes Geflecht aus Signalen, und das Entschlüsseln der Feinheiten der felinen Körpersprache kann die Bindung zwischen Mensch und Tier vertiefen. Egal, ob Sie ein erfahrener Katzenbesitzer oder ein Neuling sind, das Verständnis des Katzenverhaltens kann Ihnen helfen, sich in der einzigartigen Welt dieser rätselhaften Kreaturen zurechtzufinden.",
+          "head": "Tipps und Tricks, um Ihr Haustier kennenzulernen",
+          "body": "Der Schlüssel zum Verständnis Ihrer Katze liegt in der Beobachtung von Schwanz, Ohren, Augen, Schnurrhaaren, Körperhaltung und Vokalisationen. Jedes dieser Merkmale vermittelt spezifische Emotionen und Absichten. Zum Beispiel signalisiert ein steil nach oben gerichteter Schwanz Selbstvertrauen, während ein aufgeplusterter Schwanz Angst anzeigt. Nach vorne gerichtete Ohren zeigen Neugier, während flach angelegte Ohren Angst oder Wut suggerieren. Augen, Schnurrhaare und Körperhaltung bieten zusätzliche Hinweise auf die Stimmung und Absichten Ihrer Katze.",
+          "tips": [
+            "Schwanzgeflüster: Steil nach oben = glücklich/selbstbewusst; aufgeplustert = Angst/Erregung; zuckender Schwanz = Aufregung/Irritation.",
+            "Ohrenspiel: Nach vorne gerichtete Ohren = Neugier/Aufregung; flache Ohren = Angst/Wut/Unterwerfung; zuckende Ohren = Irritation/Erwartung.",
+            "Augenkontakt: Langsames Blinzeln = Vertrauen/Zuneigung; geweitete Pupillen = Angst/Aufregung/Aggression; Starren ohne Blinzeln = Herausforderung/Unbehagen.",
+            "Schnurrhaar-Weisheit: Schnurrhaare nach hinten = Angst/Aggression; Schnurrhaare nach vorne = zufrieden/entspannt; schnelle Schnurrhaarbewegung = Aufregung/Erwartung.",
+            "Haltung und Positionierung: Gewölbter Rücken/gesträubtes Fell = Angst/Aggression; entspannt/ausgestreckt = zufrieden; geduckte Haltung = Angst oder Spielbereitschaft.",
+            "Vokalisationen: Schnurren = Zufriedenheit oder Not; Fauchen/Knurren = defensiv; Miauen = Hunger, Aufregung oder Not."
+          ],
+          "conclusion": "Das Entschlüsseln der Körpersprache Ihrer Katze ist ein fortlaufender Prozess, der die Bindung zwischen Ihnen und Ihrem felinen Freund vertieft. Indem Sie diese subtilen Hinweise verstehen, können Sie eine harmonische Beziehung zu Ihrer Katze sicherstellen und Vertrauen sowie klare Kommunikation fördern. Wenn Ihre Katze das nächste Mal mit Ihnen kommuniziert, nehmen Sie sich einen Moment Zeit, um ihre Botschaft zu entschlüsseln – Sie werden ihre Emotionen besser verstehen und potenzielle Probleme vermeiden."
+        }
+      },
+      {
+        "id": 12,
+        "title": "Was sind die Vorteile des Trainings meines Hundes?",
+        "author": "Petique Klinik",
+        "category": "Verhalten",
+        "date": "2025-01-15",
+        "tags": [
+          "GlücklicheTiere"
+        ],
+        "image": [
+          "https://i.postimg.cc/NGZh9LzK/34.jpg",
+          "https://i.postimg.cc/gcxF23NJ/36.jpg",
+          "https://i.postimg.cc/y6D480v3/35.jpg"
+        ],
+        "description": "Entdecken Sie, warum Hundetraining für Sicherheit, Bindung und die Vermeidung von Langeweile unerlässlich ist, sowie Tipps, die Ihrem Hund helfen, effektiv zu lernen.",
+        "content": {
+          "intro": "Das Training Ihres Hundes ist mehr als nur das Beibringen von Befehlen – es ist ein wichtiger Teil davon, ihn sicher, selbstbewusst, geistig stimuliert und glücklich zu halten. Hunde sind intelligente Tiere, und das Lernen neuer Dinge hilft ihnen, Langeweile zu vermeiden und größere Freiheit zu genießen.",
+          "head": "Tipps zum richtigen Training Ihres Hundes",
+          "body": "Grundgehorsam, wie Sitz, Bleib und Herkommen auf Abruf, gibt Ihrem Hund die Freiheit, Aktivitäten sicher zu genießen – wie das Laufen ohne Leine und die Sozialisierung mit Menschen oder anderen Tieren. Training ist am effektivsten, wenn es belohnungsbasiert ist. Die Verwendung von Leckerlis, Spielzeug oder Lob zur Verstärkung von gutem Verhalten macht es wahrscheinlicher, dass Ihr Hund es wiederholt. Es ist wichtig herauszufinden, was Ihren Hund am meisten motiviert; viele genießen kleine Käsestücke oder Fleisch, während andere ihr Lieblingsspielzeug bevorzugen. Effektives Training erfordert kurze, konsequente Einheiten in ablenkungsfreien Umgebungen. Geduld ist entscheidend, da jeder Hund in seinem eigenen Tempo lernt. Beenden Sie die Einheit immer mit etwas, das Ihr Hund bereits kann, um das Selbstvertrauen zu stärken und das Training unterhaltsam zu gestalten. Training stärkt auch Ihre Bindung zu Ihrem Hund und hilft ihm, Ihnen zu vertrauen und zu verstehen, was von ihm erwartet wird. Für fortgeschrittene Techniken, wie das Clickertraining, können Hundeschulen oder professionelle Trainer Unterstützung bieten.",
+          "tips": [
+            "Minimieren Sie Ablenkungen, indem Sie das Training in einem ruhigen Raum beginnen.",
+            "Halten Sie die Trainingseinheiten kurz, aber häufig, um Ihren Hund nicht zu überfordern.",
+            "Seien Sie geduldig – jeder Hund lernt in seinem eigenen Tempo.",
+            "Beenden Sie jede Einheit mit einem Verhalten, das Ihr Hund bereits beherrscht.",
+            "Haben Sie Spaß! Training stärkt Ihre Bindung."
+          ],
+          "conclusion": "Hundetraining ist eine wertvolle Investition in die Sicherheit, das Verhalten und das Glück Ihres Hundes. Belohnungsbasierte Methoden machen das Lernen angenehm und stärken Ihre Bindung. Bei speziellen Problemen wie Aggression, Bellen oder Phobien sollten Sie einen professionellen Verhaltenstherapeuten oder Hundetrainer konsultieren."
+        }
+      },
+      {
+        "id": 13,
+        "title": "Warum selbstgemachtes Hundefutter gesünder für Ihr Haustier ist",
+        "author": "Petique Klinik",
+        "category": "Ernährung",
+        "date": "2025-01-20",
+        "tags": [
+          "Haustiergesundheit",
+          "Haustier-Wellness"
+        ],
+        "image": [
+          "https://i.postimg.cc/BZj9n2MX/37.jpg",
+          "https://i.postimg.cc/h4XWtVp4/38.jpg",
+          "https://i.postimg.cc/XNrSY9QS/39.jpg"
+        ],
+        "description": "Erfahren Sie, warum selbstgemachtes Hundefutter in Lebensmittelqualität die Energie, Langlebigkeit, Darmgesundheit und das allgemeine Wohlbefinden Ihres Hundes verbessern kann – und wie Sie sicher damit beginnen.",
+        "content": {
+          "intro": "Die Umstellung auf selbstgemachtes Hundefutter ist einfacher als Sie denken. Sie können schrittweise beginnen – mischen Sie zunächst nur 25 % frische Vollwertkost unter die gewohnte Nahrung Ihres Hundes – und steigern Sie dies auf 50/50 oder sogar 100 % selbstgemachte Mahlzeiten. Hunde gedeihen mit Inhaltsstoffen in Lebensmittelqualität, und viele Besitzer berichten von besserer Energie, besserer Verdauung und weniger langfristigen Gesundheitsproblemen.",
+          "head": "Tipps und Tricks",
+          "body": "Kommerzielles Hundefutter enthält oft minderwertige Fleischnebenprodukte, synthetische Vitamine, übermäßige Kohlenhydrate und sogar Fleisch von kranken oder verendeten Tieren. Studien zeigen steigende Krebs-, Fettleibigkeits- und chronische Krankheitsraten bei Haustieren im Vergleich zu früheren Jahrzehnten. Selbstgemachte Fütterung ersetzt diese fragwürdigen Zutaten durch echtes Protein, gesunde Fette, gekochtes Gemüse, Obst und sicheres Getreide. Schon die Zubereitung der Hälfte der Mahlzeiten zu Hause kann die Darmgesundheit unterstützen, Empfindlichkeiten reduzieren, die Vitalität verbessern und die Lebensspanne erhöhen. Die grundlegende Ernährung für Hunde umfasst hochwertiges Protein als Basis der Mahlzeit, gefolgt von Gemüse, Getreide, gesunden Fetten und kleinen Mengen Obst. Hunde benötigen außerdem die Vitamine A, B-Komplex, C, D, E, K sowie essentielle Mineralien wie Kalzium, Phosphor, Zink und Selen – die natürlich durch Vollwertkost wie Leber, Eier, Joghurt oder Ziegenmilch gedeckt werden können. Neue Forschungen zeigen, dass die Zugabe von gekochtem Gemüse dreimal pro Woche das Gesundheitsrisiko senkt, während Früchte Antioxidantien liefern. Getreide wie Hafer, Quinoa oder brauner Reis stabilisiert die Energie und unterstützt die Herzgesundheit. Knoblauch ist entgegen gängigen Mythen in kleinen, angemessenen Dosen sicher und bietet Vorteile für das Immunsystem und das Herz-Kreislauf-System.",
+          "tips": [
+            "Fangen Sie langsam an: Führen Sie in den ersten drei Tagen 25 % selbstgemachtes Futter ein.",
+            "Erhöhen Sie an den Tagen 4–6 auf 50 %, an den Tagen 7–9 auf 75 % und erreichen Sie bis zum Tag 10–14 100 %.",
+            "Kochen Sie alles Gemüse leicht an – Hunde können rohes Gemüse nicht gut verdauen.",
+            "Variieren Sie Protein und Gemüse für eine vollständige Ernährung.",
+            "Konsultieren Sie einen Tierärzt, wenn Ihr Hund gesundheitliche Probleme hat.",
+            "Beobachten Sie Gewicht, Energie und Kotqualität während der Umstellung."
+          ],
+          "conclusion": "Selbstgemachtes Hundefutter entfernt Giftstoffe, die in vielen kommerziellen Diäten zu finden sind, und ersetzt sie durch saubere Inhaltsstoffe in Lebensmittelqualität, die die langfristige Gesundheit unterstützen. Egal, ob Sie sich für 50/50 oder vollständig selbstgemacht entscheiden, jede Menge an echter Nahrung verbessert die Vitalität, Immunität und Langlebigkeit. Fangen Sie langsam an, halten Sie die Mahlzeiten einfach und genießen Sie die Vorteile für sich und Ihren Hund."
+        }
+      },
+      {
+        "id": 14,
+        "title": "Die Körpersprache von Hunden verstehen",
+        "image": [
+          "https://i.postimg.cc/xjXD1Lgh/40.jpg",
+          "https://i.postimg.cc/dQhPVGnf/41.jpg",
+          "https://i.postimg.cc/mkvSbvVj/42.jpg"
+        ],
+        "description": "Ein vollständiger Leitfaden, der Schwanzwedeln, Nackenfell, Körperhaltung, Gesichtsausdrücke und das richtige Lesen der Emotionen Ihres Hundes erklärt.",
+        "category": "Verhalten",
+        "author": "Petique Klinik",
+        "date": "2025-12-01",
+        "tags": [
+          "GlücklicheTiere"
+        ],
+        "content": {
+          "intro": "Die Körpersprache von Hunden umfasst viele subtile Signale – von Schwanzbewegungen bis hin zu Gesichtsausdrücken. Das Verständnis dieser Hinweise hilft, Missverständnisse zu vermeiden und stärkt die Kommunikation zwischen Ihnen und Ihrem Hund.",
+          "head": "Verstehen Sie Ihren Hund",
+          "body": "Schwanzwedeln: Ein wedelnder Schwanz bedeutet nicht immer Glück. Er zeigt lediglich emotionale Erregung an. Geschwindigkeit, Richtung und Höhe deuten auf unterschiedliche Gefühle hin. Schnelleres Wedeln zeigt eine höhere Erregung an, während ein hoch gehaltener Schwanz Selbstvertrauen oder mögliche Aggression signalisiert.\n\nAufgestelltes Nackenfell: Wenn sich die Rückenhaare eines Hundes aufstellen (Piloerektion), signalisiert dies Erregung, die Aufregung, Stress oder intensive Konzentration sein kann. Es ist nicht immer Aggression – es kann eine unwillkürliche Reaktion wie Gänsehaut beim Menschen sein.\n\nKörperhaltung: Ein Hund, der sich tief duckt, zeigt Angst oder Stress. Das Rollen auf den Rücken kann Beschwichtigung sein, nicht nur eine Einladung zum Bauchkraulen. Hunde, die sich nach vorne lehnen, können Interesse oder offensive Absichten zeigen. Eine Spielaufforderung (Brust tief, Hinterteil hoch) signalisiert den Wunsch zu spielen. Eine angehobene Pfote kann Unsicherheit anzeigen.\n\nGesichtsausdrücke: Hunde gähnen, wenn sie gestresst sind, nicht nur, wenn sie müde sind. Das Lecken der Lippen ist oft ein Zeichen von Angst. Ein Lächeln kann entweder aggressiv (Zähnefletschen) oder freundlich (unterwürfiges Grinsen) sein, abhängig von Körperhaltung und Kontext.\n\nAugen: Sanfte Augen zeigen Ruhe, während harte Augen Anspannung signalisieren. Das Vermeiden von Augenkontakt bedeutet, dass der Hund versucht, eine Situation zu beruhigen. Das Zeigen des Weißen in den Augen (Walauge) deutet auf Stress hin.\n\nSignale zusammen lesen: Kein Signal der Körpersprache steht für sich allein. Das Verständnis der gesamten Kombination – von der Rute bis zur Gesichtsspannung – hilft Ihnen, den emotionalen Zustand Ihres Hundes zu verstehen und beugt Missverständnissen vor.",
+          "tips": [
+            "Betrachten Sie den ganzen Körper, nicht nur ein einzelnes Signal.",
+            "Schnelles Schwanzwedeln = höhere emotionale Erregung, nicht unbedingt Glück.",
+            "Eine angehobene Pfote signalisiert oft Unsicherheit.",
+            "Vermeiden Sie erzwungenen Augenkontakt bei gestressten Hunden.",
+            "Lernen Sie die natürliche Rutenhaltung Ihres Hundes kennen, um emotionale Veränderungen zu bemerken.",
+            "Aufgestelltes Nackenfell bedeutet Erregung, nicht automatisch Aggression.",
+            "Gähnen und Lippenlecken können Anzeichen von Stress sein."
+          ],
+          "conclusion": "Das Verständnis der Körpersprache Ihres Hundes stärkt Ihre Bindung und hilft Ihnen, angemessen auf seine Bedürfnisse zu reagieren. Indem Sie Signale als Gesamtbild lesen, können Sie Probleme vermeiden, Vertrauen aufbauen und das emotionale Wohlbefinden Ihres Hundes unterstützen."
+        }
+      },
+      {
+        "id": 15,
+        "title": "Aggression bei Hunden vorbeugen: Was man wissen sollte",
+        "image": [
+          "https://i.postimg.cc/vTJvQJXt/43.jpg",
+          "https://i.postimg.cc/sxkJVkK9/44.jpg",
+          "https://i.postimg.cc/ZnGLTGj8/45.jpg"
+        ],
+        "description": "Ein vollständiger Leitfaden zum Verständnis von Hundeaggression, der Rolle von Sozialisierung, Gesundheit, Bereicherung und wie man Hunde sicher und weniger reaktiv hält.",
+        "category": "Verhalten",
+        "author": "Stephanie Gibeault, MSc, CPDT",
+        "date": "2024-09-13",
+        "tags": [
+          "Haustiergesundheit",
+          "Haustier-Wellness",
+          "VomTierarztGeprüft"
+        ],
+        "content": {
+          "intro": "Aggression bei Hunden kann für Besitzer unglaublich stressig sein, egal ob es sich um Knurren, Vorstürzen, Schnappen oder Beißen handelt. Obwohl kein Hundebesitzer garantieren kann, dass sein Hund niemals Aggression zeigen wird, können mehrere proaktive Schritte das Risiko erheblich senken und ein sichereres, selbstbewussteres Haustier schaffen.",
+          "head": "Tipps zur Vorbeugung von Aggression beim Hund",
+          "body": "Aggression bei Hunden ist ein natürliches hündisches Verhalten, und jeder Hund kann unter bestimmten Umständen aggressiv reagieren – sei es aus Angst, Schmerz oder wahrgenommener Bedrohung. Experten beschreiben Aggression als Verhalten, das darauf abzielt, den Abstand zu einer wahrgenommenen Bedrohung zu vergrößern oder diese zu beseitigen. Bei schlecht sozialisierten Hunden ist die Liste der „bedrohlichen“ Situationen lang und unvorhersehbar, was sie anfälliger für Reaktivität und angstbasierte Reaktionen macht. Eine frühzeitige positive Gewöhnung an Menschen, Umgebungen und alltägliche Reize im Welpenalter reduziert die Wahrscheinlichkeit zukünftiger Aggressionen drastisch.\n\nAuch die Gesundheit spielt eine wesentliche Rolle bei der Vorbeugung von aggressivem Verhalten. Hunde verbergen Schmerzen oft, was es leicht macht, zugrunde liegende medizinische Probleme zu übersehen, die Reizbarkeit oder defensive Aggression verursachen. Regelmäßige tierärztliche Betreuung und eine genaue Überwachung von Verhaltensänderungen sind entscheidend, um Probleme frühzeitig zu erkennen.\n\nGeistige Stimulation und körperliche Aktivität sind ebenso wichtig für die Aufrechterhaltung des emotionalen Gleichgewichts. Wenn Hunde nicht genügend Bewegung oder Bereicherung erhalten, die ihrer Rasse und ihrem Temperament entspricht, treten Frustration und Verhaltensprobleme – einschließlich Aggression – wahrscheinlicher auf. Das Verständnis der natürlichen Instinkte eines Hundes hilft Besitzern, die richtigen Aktivitäten auf die Bedürfnisse ihres Hundes abzustimmen.\n\nEin wesentlicher Faktor bei der Vorbeugung von Aggression ist schließlich das Gefühl der Sicherheit beim Hund. Fürsprecher zu sein bedeutet, frühe Anzeichen von Unbehagen zu bemerken – wie Gähnen, Lippenlecken, eingezogene Ruten oder nach hinten gezogene Ohren – und einzugreifen, bevor der Stress eskaliert. Das Erkennen der individuellen Auslöser eines Hundes und sein Schutz vor überfordernden Situationen hilft, Vertrauen aufzubauen und reaktive Antworten im Laufe der Zeit zu reduzieren.",
+          "tips": [
+            "Priorisieren Sie eine frühe Sozialisierung – positive Gewöhnung im Welpenalter reduziert spätere angstbasierte Aggression.",
+            "Überwachen Sie die Gesundheit Ihres Hundes genau, da Schmerzen und medizinische Probleme häufige Auslöser für aggressives Verhalten sind.",
+            "Bieten Sie tägliche Bereicherung, geistige Herausforderungen und geeignete körperliche Bewegung basierend auf der Rasse und den Bedürfnissen Ihres Hundes.",
+            "Lernen Sie die einzigartige Körpersprache Ihres Hundes kennen und bemerken Sie subtile Anzeichen von Stress wie Lippenlecken, Gähnen oder Walauge.",
+            "Setzen Sie sich für die Sicherheit Ihres Hundes ein, indem Sie überfordernde oder bedrohliche Situationen verhindern, bevor sie eskalieren.",
+            "Verwenden Sie Desensibilisierung und Gegenkonditionierung (Kopplung von beängstigenden Dingen mit Leckerlis), um positive Assoziationen aufzubauen.",
+            "Suchen Sie bei anhaltenden Angst- oder Aggressionsproblemen Hilfe bei qualifizierten Trainern oder Verhaltensberatern."
+          ],
+          "conclusion": "Obwohl man für keinen Hund garantieren kann, dass er aggressionsfrei bleibt, senken Stressreduzierung, verbesserte Sozialisierung, gute Gesundheit und die Gewährleistung emotionaler Sicherheit die Chancen drastisch. Indem Sie Ihren Hund bei Bedarf mit Bereicherung, Empathie und professioneller Anleitung unterstützen, geben Sie ihm die beste Chance auf ein stabiles und selbstbewusstes Leben – und schützen alle um ihn herum."
+        }
+      },
+      {
+        "id": 16,
+        "title": "Trennungsangst beim Hund: Wie Sie Ihrem Hund helfen können",
+        "image": [
+          "https://i.postimg.cc/d3b9qbny/46.jpg",
+          "https://i.postimg.cc/br7Rz7Ls/47.jpg",
+          "https://i.postimg.cc/J0fQ1fKh/48.jpg"
+        ],
+        "description": "Erfahren Sie mehr über Trennungsangst bei Hunden, ihre Ursachen, Symptome und effektive Strategien, damit sich Ihr Hund sicher fühlt und Stress beim Alleinsein reduziert wird.",
+        "category": "Verhalten",
+        "author": "Humane World for Animals",
+        "date": "2025-12-01",
+        "tags": [
+          "Haustiergesundheit",
+          "Haustier-Wellness"
+        ],
+        "content": {
+          "intro": "Trennungsangst beim Hund tritt auf, wenn ein Hund beim Alleinsein Not empfindet. Sie kann Zittern, übermäßiges Vokalisieren, übermäßige Körperpflege, Unfälle im Haus und sogar destruktives Verhalten verursachen. Das Verständnis der Ursachen und die Umsetzung geeigneter Strategien können Ihrem Hund helfen, sich sicher zu fühlen und die Angst zu lindern.",
+          "head": "Tipps, um Ihrem Hund zu helfen",
+          "body": "Trennungsangst unterscheidet sich von allgemeiner Angst oder Langeweile, da sie speziell auftritt, wenn ein Hund allein gelassen wird, und sich in exzessiver Panik statt in gelegentlichem Fehlverhalten äußert. Ursachen sind Änderungen der Routine, Umzug, Adoption aus Tierheimen, Rückkehr von Familienmitgliedern zur Arbeit oder Schule, der Tod eines Familienmitglieders oder Haustieres oder traumatische Ereignisse wie Missbrauch oder Vernachlässigung.\n\nSymptome sind oft Zittern, Sabbern, Graben oder Kratzen an Türen, destruktives Kauen, Heulen, Bellen, Winseln sowie Urinieren oder Kotabsatz im Haus trotz Stubenreinheit.\n\nDie Bewältigung von Trennungsangst erfordert sowohl körperliche als auch geistige Vorbereitung. Regelmäßige Bewegung, Bereicherungsspielzeug und Puzzle-Leckerlis vor dem Verlassen des Hauses können helfen, Ihren Hund auszulasten. Die Etablierung einer konsequenten Routine für Aufbrüche und Ankünfte reduziert Stress. Einige Hunde profitieren von beruhigender Musik, sicheren Räumen mit Spielzeug und Gegenständen, die den Geruch ihres Besitzers tragen, oder sogar von Hundetagesstätten, Gassigängern oder Tiersittern.\n\nIn schweren Fällen können Tierärzte angstlösende Medikamente zusammen mit Techniken zur Verhaltensänderung verschreiben. Positives Verstärkungstraining hilft beim Umgang mit Auslösern, und die Bestrafung des Hundes sollte niemals angewendet werden, da sie die Angst verschlimmert. Professionelle Hundetrainer können dabei helfen, Hunde schrittweise an das Alleinsein zu gewöhnen und Vertrauen aufzubauen.",
+          "tips": [
+            "Powern Sie Ihren Hund vor dem Verlassen des Hauses körperlich und geistig durch lange Spaziergänge und Bereicherungsspielzeug aus.",
+            "Behalten Sie konsequente Routinen für Aufbrüche und Ankünfte bei, um Stress zu reduzieren.",
+            "Verwenden Sie sichere Räume anstelle von Boxen, einschließlich Spielzeug und Gegenständen mit Ihrem Geruch.",
+            "Ziehen Sie Hundetagesstätten, Tiersitter oder Mittagsbesuche zur zusätzlichen Unterstützung in Betracht.",
+            "Probieren Sie beruhigende Musik aus, aber beobachten Sie die Reaktion Ihres Hundes, da die Vorlieben variieren.",
+            "Bestrafen Sie niemals Verhaltensweisen, die aus Trennungsangst resultieren; verwenden Sie stattdessen positive Verstärkung.",
+            "Konsultieren Sie einen Tierärzt wegen angstlösender Medikamente, wenn die Angst schwerwiegend ist.",
+            "Arbeiten Sie mit einem zertifizierten professionellen Hundetrainer zusammen, um Ihren Hund schrittweise zu desensibilisieren."
+          ],
+          "conclusion": "Die Behandlung von Trennungsangst erfordert Geduld, Beständigkeit und Mitgefühl. Während Fortschritte Monate dauern können, verbessern sich die meisten Hunde mit der richtigen Bereicherung, Routine, sicheren Plätzen und professioneller Anleitung. Das Verständnis und die Unterstützung der emotionalen Bedürfnisse Ihres Hundes fördern einen ruhigeren, selbstbewussteren Begleiter."
+        }
+      },
+      {
+        "id": 17,
+        "title": "Positive Verstärkung im Hundetraining: Ein Leitfaden",
+        "image": [
+          "https://i.postimg.cc/L5cVHcvY/49.jpg",
+          "https://i.postimg.cc/MHCYWCtc/50.jpg",
+          "https://i.postimg.cc/Gt8QnLPp/51.jpg"
+        ],
+        "description": "Verstehen Sie positive Verstärkung im Hundetraining, wie sie sich von negativer Verstärkung unterscheidet und praktische Tipps zur Stärkung erwünschter Verhaltensweisen bei Ihrem Haustier.",
+        "category": "Verhalten",
+        "author": "Stephanie Gibeault, MSc, CPDT",
+        "date": "2025-12-01",
+        "tags": [
+          "GesundeTiere",
+          "Haustiergesundheit",
+          "Haustier-Wellness"
+        ],
+        "content": {
+          "intro": "Positive Verstärkung ist eine Methode, die verwendet wird, um erwünschte Verhaltensweisen bei Hunden zu stärken, indem unmittelbar nach dem Auftreten des Verhaltens etwas hinzugefügt wird, das der Hund mag. Sie baut Vertrauen auf, verbessert die Kommunikation zwischen Mensch und Tier und unterstützt die Verhaltensgesundheit von Hunden.",
+          "head": "Tipps zur Anwendung",
+          "body": "Positive Verstärkung fügt unmittelbar nach einem Verhalten etwas hinzu, um die Wahrscheinlichkeit zu erhöhen, dass dieses Verhalten erneut auftritt. Beispiele sind das Geben von Leckerlis, Lob oder Spiel, wenn ein Hund die gewünschte Aktion ausführt, wie zum Beispiel auf Signal zu sitzen oder draußen sein Geschäft zu verrichten. Der Erfolg wird daran gemessen, ob das Verhalten häufiger oder zuverlässiger auftritt.\n\nNegative Verstärkung hingegen beinhaltet das Entfernen eines unangenehmen Reizes, wenn der Hund das Verhalten ausführt. Obwohl sie das Verhalten stärken kann, ist sie oft mit Angst oder Unbehagen verbunden und kann das Vertrauen untergraben, Angst erzeugen oder zu Aggression führen. Positive Verstärkung vermeidet diese negativen Folgen, indem sie sich auf die Belohnung erwünschter Verhaltensweise konzentriert, anstatt unerwürnschte zu bestrafen.\n\nDie Bewegung für positive Verstärkung betont humane Trainingsmethoden, die erwünschte Verhaltensweisen stärken, anstatt mit Bestrafung zu reagieren. Die Verwendung von Markern wie Clickern oder verbalen Hinweisen hilft dem Hund zu verstehen, genau welches Verhalten die Belohnung verdient hat. Wiederholtes, konsequentes Üben mit den richtigen Verstärkern stellt sicher, dass der Hund das Verhalten zuverlässig ausführt und den Trainingsprozess genießt.",
+          "tips": [
+            "Verfolgen Sie Ihren Trainingsfortschritt, um sicherzustellen, dass sich das Verhalten verbessert.",
+            "Üben Sie neue Verhaltensweisen in Umgebungen mit wenig Ablenkung.",
+            "Wählen Sie Verstärker sorgfältig aus, basierend darauf, was Ihr Hund schätzt.",
+            "Verwenden Sie Marker wie Clicker oder Worte, um erwünschtes Verhalten präzise zu signalisieren.",
+            "Halten Sie die Trainingseinheiten kurz und unterhaltsam – 5–10 Minuten pro Fähigkeit sind ideal.",
+            "Beenden Sie die Einheiten, solange Ihr Hund noch Spaß an der Aktivität hat.",
+            "Konzentrieren Sie sich darauf, das gewünschte Verhalten zu stärken, anstatt unerwünschte Verhaltensweisen zu bestrafen.",
+            "Haben Sie Spaß und machen Sie das Training zu einer positiven Erfahrung für Sie und Ihren Hund."
+          ],
+          "conclusion": "Positive Verstärkung ist eine effektive, humane und angenehme Art, Hunde zu trainieren. Durch konsequentes Belohnen erwünschter Verhaltensweisen, die Verwendung geeigneter Verstärker und die Gestaltung unterhaltsamer Trainingseinheiten können Besitzer zuverlässiges Verhalten fördern, Vertrauen aufbauen und die Bindung zu ihrem Hund stärken."
+        }
+      }
+    ]
+  },
+  "services": {
+    "ourServices": "Unsere Dienstleistungen",
+    "home": "Startseite",
+    "services": "Dienstleistungen"
+  },
+  "serviceDetails": {
+    "home": "Startseite",
+    "services": "Dienstleistungen"
+  },
+  "cart": {
+    "emptyTitle": "Ihr Warenkorb ist leer",
+    "emptyDesc": "Es sieht so aus, als hätten Sie noch nichts hinzugefügt.",
+    "startShopping": "Einkauf beginnen",
+    "continueShopping": "Einkauf fortsetzen",
+    "myCart": "Mein Warenkorb",
+    "showEmpty": "Leer anzeigen",
+    "each": "pro Stück",
+    "orderSummary": "Bestellübersicht",
+    "promoCode": "Gutscheincode",
+    "enterCode": "Code eingeben",
+    "apply": "Anwenden",
+    "subtotal": "Zwischensumme",
+    "shipping": "Versand",
+    "free": "Kostenlos",
+    "total": "Gesamt",
+    "proceedToCheckout": "Zur Kasse gehen",
+    "secureCheckout": "Sicherer Checkout",
+    "fastDelivery": "Schnelle Lieferung",
+    "freeConsultation": "Kostenlose Tierarztberatung bei Bestellungen über 100 $!",
+    "consultationDesc": "Ihre Haustiere verdienen die beste Pflege. Wir sind für Sie da."
+  },
+  "reservation": {
+    "title": "Buchen Sie den Termin Ihres Haustieres bei unseren erfahrenen Tierärzten",
+    "steps": {
+      "pet": "Haustier",
+      "service": "Service",
+      "doctor": "Arzt",
+      "dateTime": "Datum / Uhrzeit",
+      "notes": "Notizen"
+    },
+    "selectPet": "Wählen Sie Ihr Haustier",
+    "choosePet": "Wählen Sie Ihr Haustier aus",
+    "selectService": "Service auswählen",
+    "selectDoctor": "Arzt auswählen",
+    "selectDateTime": "Datum & Uhrzeit auswählen",
+    "notesLabel": "Notizen",
+    "notesPlaceholder": "Optionale Notizen",
+    "confirm": "Bestätigen",
+    "successTitle": "Erfolg!",
+    "successMessage": "Reservierung erfolgreich erstellt",
+    "modal": {
+      "title": "Reservierung bestätigen",
+      "pet": "Haustier",
+      "service": "Service",
+      "doctor": "Arzt",
+      "date": "Datum",
+      "time": "Uhrzeit",
+      "notes": "Notizen",
+      "cancel": "Abbrechen",
+      "confirm": "Bestätigen"
+    },
+    "errors": {
+      "missingFields": "Bitte füllen Sie alle erforderlichen Felder aus, bevor Sie fortfahren.",
+      "noPets": "Sie haben noch keine Haustiere registriert. Bitte fügen Sie zuerst ein Haustier hinzu.",
+      "petNotSelected": "Bitte wählen Sie ein Haustier aus, bevor Sie fortfahren.",
+      "missingFieldTitle": "Fehlende Felder",
+      "noPetsTitle": "Keine Haustiere gefunden",
+      "nopetSelected": "Kein Haustier ausgewählt"
+    }
+  },
+  "hero": {
+    "happyCustomersLine1": "Über 100.000 zufriedene Kunden",
+    "happyCustomersLine2": "Weltweit"
+  },
+  "heroSection": {
+    "welcome": "Willkommen bei Petique",
+    "takingCareOf": "Wir kümmern uns um",
+    "pets": "Haustiere",
+    "asIfThey": "als wären sie",
+    "wereOurOwn": "unsere eigenen",
+    "description": "Wir bieten die besten medizinischen Dienstleistungen für Ihre geliebten Haustiere. Von der Pflege bis hin zu Operationen haben wir alles, was Ihr vierbeiniger Freund braucht.",
+    "contactUs": "KONTAKTIEREN SIE UNS"
+  },
+  "categorySlider": {
+    "title": "Beliebte Kategorien shoppen",
+    "explore": "Alle erkunden",
+    "error": "Fehler beim Laden der Kategorien"
+  },
+  "checkout": {
+    "title": "Haustier- & Kontaktinformationen",
+    "description": "Erzählen Sie uns von sich und Ihrem vierbeinigen Freund",
+    "fullName": "Vollständiger Name",
+    "address": "Adresse",
+    "phone": "Telefonnummer",
+    "note": "Notiz (optional)",
+    "required": "*",
+    "fullNamePlaceholder": "Max Mustermann",
+    "addressPlaceholder": "Musterstraße 1, 12345 Berlin",
+    "phonePlaceholder": "+49 1XX XXXX XXXX",
+    "notePlaceholder": "Eventuelle Sonderwünsche oder Informationen, die wir wissen sollten...",
+    "continue": "Weiter",
+    "orderSummary": "Bestellübersicht",
+    "subtotal": "Zwischensumme",
+    "tax": "Umsatzsteuer (8%)",
+    "delivery": "Lieferung",
+    "free": "Kostenlos",
+    "total": "Gesamt",
+    "secure": "Sicher",
+    "fastDelivery": "Schnelle Lieferung",
+    "petFriendly": "Haustierfreundlich",
+    "haveCoupon": "Haben Sie einen Gutscheincode?",
+    "hideCoupon": "Gutschein verbergen",
+    "enterCoupon": "Gutscheincode eingeben",
+    "apply": "Anwenden",
+    "paymentMethod": "Zahlungsmethode",
+    "cashOnDelivery": "Nachnahme",
+    "cashOnDeliveryDesc": "Bezahlen Sie bei Erhalt Ihrer Bestellung",
+    "visaPayment": "Kartenzahlung",
+    "visaPaymentDesc": "Sicher bezahlen mit Visa, Mastercard, etc."
+  },
+  "orderDetails": {
+    "noOrderDataTitle": "Keine Bestelldaten gefunden",
+    "noOrderDataDesc": "Bitte gehen Sie zurück und wählen Sie eine Bestellung aus, um deren Details anzuzeigen.",
+    "goToHomepage": "Zur Startseite",
+    "orderNumber": "Bestellung #",
+    "placedOn": "Aufgegeben am",
+    "customerInfo": "Kundeninformationen",
+    "fullName": "Vollständiger Name",
+    "phoneNumber": "Telefonnummer",
+    "deliveryAddress": "Lieferadresse",
+    "specialNotes": "Besondere Hinweise",
+    "orderItems": "Bestellpositionen",
+    "qty": "Menge:",
+    "save": "Sparen:",
+    "noItems": "Keine Artikel in dieser Bestellung",
+    "orderSummary": "Bestellübersicht",
+    "subtotal": "Zwischensumme",
+    "coupon": "Gutschein",
+    "total": "Gesamt",
+    "paymentMethod": "Zahlungsmethode",
+    "orderDate": "Bestelldatum",
+    "status": "Status",
+    "continueShopping": "Weiter einkaufen",
+    "statusPlaced": "Aufgegeben",
+    "statusShipped": "Versandt",
+    "statusDelivered": "Geliefert"
+  },
+  "quote": {
+    "text": "Ein Hund ist das einzige Wesen auf Erden, das dich mehr liebt als sich selbst",
+    "button": "Mehr Details"
+  },
+  "faq": {
+    "subtitle": "Noch Fragen?",
+    "title": "Häufig gestellte Fragen (FAQ)",
+    "badge": "Wir kümmern uns",
+    "imageAlt": "Tierarzt kümmert sich um ein glückliches Haustier",
+    "items": [
+      {
+        "question": "Was sind Ihre Geschäftszeiten?",
+        "answer": "Wir sind Montag bis Freitag von 08:00 bis 18:00 Uhr und samstags von 09:00 bis 15:00 Uhr geöffnet. An Sonn- und Feiertagen haben wir geschlossen."
+      },
+      {
+        "question": "Bieten Sie Notfalldienste an?",
+        "answer": "Ja, wir bieten rund um die Uhr tierärztliche Notfalldienste an. Für Notfälle außerhalb der Geschäftszeiten rufen Sie bitte unsere Notfall-Hotline an."
+      },
+      {
+        "question": "Welche Arten von Haustieren behandeln Sie?",
+        "answer": "Wir behandeln eine Vielzahl von Haustieren, darunter Hunde, Katzen, Vögel, Kaninchen, Meerschweinchen, Hamster, Reptilien und andere kleine exotische Tiere."
+      },
+      {
+        "question": "Bieten Sie Unterbringungsmöglichkeiten an?",
+        "answer": "Ja, wir bieten komfortable Boarding-Möglichkeiten für Hunde und Katzen mit täglicher Pflege und Aufsicht an."
+      },
+      {
+        "question": "Wie kann ich mein Haustier auf den Besuch vorbereiten?",
+        "answer": "Bringen Sie frühere medizinische Unterlagen mit, lassen Sie Ihr Haustier falls nötig nüchtern und sorgen Sie dafür, dass Katzen in Boxen und Hunde an der Leine sind."
+      },
+      {
+        "question": "Wie oft sollte mein Haustier zur Untersuchung kommen?",
+        "answer": "Für erwachsene Tiere werden jährliche Kontrolluntersuchungen empfohlen, während ältere Tiere möglicherweise halbjährliche Besuche benötigen."
+      }
+    ]
+  },
+  "productsSection": {
+    "bestValue": {
+      "title": "Produkte mit bestem Wert",
+      "subtitle": "Entdecken Sie unsere preisgünstigsten Premium-Produkte für Ihre geliebten Haustiere",
+      "cta": "Jetzt shoppen"
+    },
+    "errors": {
+      "loadFailed": "Laden der Produkte fehlgeschlagen"
+    }
+  },
+  "footer": {
+    "brand": {
+      "tagline": "Vertrauensvolle Tierpflege"
+    },
+    "description": "Wir sind hier, um uns um Ihre Haustiere zu kümmern und alle Ihre Fragen zu beantworten. Egal, ob Sie zum ersten Mal Tierbesitzer sind oder einen Termin vereinbaren möchten.",
+    "newsletter": {
+      "placeholder": "E-Mail-Adresse"
+    },
+    "services": {
+      "title": "Unsere Dienstleistungen",
+      "items": [
+        "Haut- und Ohrenzytologie",
+        "Ultraschalluntersuchungen",
+        "Zahnpflege und Reinigung",
+        "Ernährungsberatung",
+        "Welpen-Wellness-Programm",
+        "Chirurgische Eingriffe"
+      ]
+    },
+    "quickLinks": {
+      "title": "Schnellzugriffe",
+      "items": {
+        "about": "Über uns",
+        "faq": "FAQ",
+        "services": "Dienstleistungen",
+        "team": "Team",
+        "portfolio": "Portfolio",
+        "blog": "Blog"
+      }
+    },
+    "openingHours": {
+      "title": "Öffnungszeiten",
+      "items": [
+        {
+          "day": "Mo - Di",
+          "time": "09:00 - 18:00 Uhr"
+        },
+        {
+          "day": "Mi - Do",
+          "time": "09:00 - 18:00 Uhr"
+        },
+        {
+          "day": "Fr - Sa",
+          "time": "09:00 - 18:00 Uhr"
+        },
+        {
+          "day": "Sonntag",
+          "time": "Nur Notfälle"
+        }
+      ]
+    },
+    "images": {
+      "cat": "Katze",
+      "dog": "Hund"
+    },
+    "copyright": "© Copyright 2024. Alle Rechte vorbehalten. Petique. Entworfen vom ITI-Team."
+  },
+  "features": {
+    "items": [
+      {
+        "icon": "shopping",
+        "title": "Breite Auswahl",
+        "desc": "Große Auswahl an Produkten für Hunde, Katzen und mehr"
+      },
+      {
+        "icon": "care",
+        "title": "Qualitätspflege",
+        "desc": "Vom Tierarzt geprüfte Produkte, denen Sie vertrauen können"
+      },
+      {
+        "icon": "happy",
+        "title": "Glückliche Tiere",
+        "desc": "Wir bringen Ruten zum Wedeln seit 2024"
+      }
+    ]
+  },
+  "productsHero": {
+    "title": "Shop",
+    "imageAlt": "Entspannte Katze"
+  },
+  "breadcrumbs": {
+    "home": "Startseite",
+    "shop": "Shop",
+    "myAccount": "Mein Konto"
+  },
+  "products": {
+    "title": "Unsere Produkte",
+    "subtitle": "Entdecken Sie erstklassige Qualitätsprodukte für Ihre geliebten Haustiere",
+    "filters": {
+      "title": "Produkte filtern",
+      "active": "Filter aktiv",
+      "search": "Suche",
+      "searchPlaceholder": "Nach Namen suchen",
+      "category": "Kategorie",
+      "allCategories": "Alle Kategorien",
+      "priceMin": "Preis (Min)",
+      "priceMax": "Preis (Max)",
+      "min": "Min",
+      "max": "Max",
+      "stock": "Bestand",
+      "all": "Alle",
+      "inStock": "Vorrätig",
+      "outStock": "Nicht vorrätig"
+    },
+    "empty": {
+      "title": "Keine Produkte gefunden",
+      "subtitle": "Versuchen Sie, Ihre Suchkriterien anzupassen",
+      "clear": "Filter löschen"
+    }
+  },
+  "pagination": {
+    "showing": "Angezeigt",
+    "of": "von",
+    "products": "Produkten",
+    "prev": "Zurück",
+    "next": "Weiter"
+  },
+  "common": {
+    "reset": "Zurücksetzen"
+  },
+  "ProductDetails": {
+    "price": "Preis",
+    "category": "Kategorie",
+    "addTocart": "In den Warenkorb",
+    "addReview": "Bewertung hinzufügen",
+    "readMore": "Weiterlesen",
+    "showLess": "Weniger anzeigen",
+    "submit": "Absenden",
+    "cancel": "Abbrechen",
+    "addNewReview": "Neue Bewertung hinzufügen",
+    "rating": "Bewertung",
+    "comment": "Kommentar",
+    "productReview": "Produktbewertungen",
+    "relatedProduct": "Verwandte Produkte",
+    "showReviews": "Bewertungen anzeigen",
+    "hideReviews": "Bewertungen ausblenden",
+    "placeholder": "Schreiben Sie hier Ihre Bewertung...",
+    "deletemessage": "Sind Sie sicher, dass Sie diese Bewertung löschen möchten?",
+    "delete": "Löschen",
+    "priceDropNotification": "Bei Preissenkung benachrichtigen",
+    "update": "Wird aktualisiert...",
+    "unsubscribe": "Abmelden",
+    "notifyMe": "Mich bei Preissenkung benachrichtigen",
+    "deleteReviewTitle": "Dauerhaft löschen?",
+    "deleteReviewText": "Dies wird die Bewertung dauerhaft entfernen und kann nicht rückgängig gemacht werden.",
+    "deleteReviewConfirm": "Ja, dauerhaft löschen",
+    "deleteReviewCancel": "Abbrechen",
+    "deleteReviewloading": "Wird gelöscht...",
+    "successdelReviewTitle": "Bewertung erfolgreich gelöscht",
+    "faildelReviewTitle": "Löschen der Bewertung fehlgeschlagen",
+    "successAddReviewTitle": "Bewertung erfolgreich hinzugefügt",
+    "failAddReviewTitle": "Hinzufügen der Bewertung fehlgeschlagen",
+    "addproducttocart": "Wird hinzugefügt...",
+    "outOfStock": "Nicht vorrätig",
+    "failedAddToCart": "Hinzufügen zum Warenkorb fehlgeschlagen",
+    "addedToCart": "Zum Warenkorb hinzugefügt",
+    "item": "Artikel",
+    "items": "Artikel",
+    "unsubscribedToast": "Von Preissenkungs-Benachrichtigungen abgemeldet",
+    "subscribedToast": "Für Preissenkungs-Benachrichtigungen angemeldet 🔔",
+    "subscriptionFailed": "Anmeldung fehlgeschlagen",
+    "notallowed": "Nicht erlaubt",
+    "loginRequiredTitle": "Anmeldung erforderlich",
+    "loginRequiredText": "Sie müssen sich anmelden, um Produkte zum Warenkorb hinzuzufügen",
+    "login": "Anmelden",
+    "continueShopping": "Weiter einkaufen"
+  },
+  "about": {
+    "badge": "Über uns",
+    "title": "Wir bieten die besten Haustierpflegedienste",
+    "card": {
+      "title": "Vertrauen unserer Kunden",
+      "description": "Wir klären Besitzer über das Lesen von Inhaltsstofflisten, die Auswahl hochwertiger Lebensmittel und das Erkennen schädlicher Inhaltsstoffe auf."
+    },
+    "features": {
+      "nutrition": "Ernährung und Diät",
+      "mental": "Mentales & emotionales Wohlbefinden",
+      "exercise": "Sport und körperliche Aktivität",
+      "preventive": "Vorsorge",
+      "grooming": "Pflege und Hygiene",
+      "specialNeeds": "Tiere mit besonderen Bedürfnissen"
+    },
+    "images": {
+      "bunnyAlt": "Hase",
+      "petAlt": "Tierarzt hält Hund"
+    }
+  },
+  "stuff": {
+    "subtitle": "Unsere Spezialisten",
+    "title": "Lernen Sie unser erfahrenes Haustierpflegeteam kennen",
+    "loading": "Ärzte werden geladen...",
+    "error": "Laden der Ärzte fehlgeschlagen"
+  },
+  "userProfile": {
+    "title": "Tierbesitzer-Dashboard",
+    "tabs": {
+      "appointments": "Termine",
+      "personalInformation": "Persönliche Informationen",
+      "myPets": "Meine Haustiere",
+      "addNewPet": "Neues Haustier hinzufügen",
+      "orders": "Bestellungen",
+      "orderTracking": "Bestellverfolgung",
+      "shoppingAnalytics": "Einkaufs-Analytics",
+      "symptomChecker": "KI-Symptom-Check"
+    },
+    "breadcrumb": {
+      "home": "Startseite",
+      "shop": "Shop",
+      "myAccount": "Mein Konto"
+    },
+    "common": {
+      "currency": "EGP",
+      "search": "Suche",
+      "noData": "Keine Daten verfügbar",
+      "years": "Jahre",
+      "today": "Heute",
+      "tomorrow": "Morgen",
+      "inDays": "In {{count}} Tagen",
+      "assignedDoctor": "Zugewiesener Arzt",
+      "doctor": "Arzt",
+      "petType": "Tierart",
+      "service": "Service",
+      "date": "Datum",
+      "time": "Uhrzeit",
+      "save": "Änderungen speichern",
+      "saving": "Wird gespeichert...",
+      "deleteConfirmTitle": "Sind Sie sicher?",
+      "deleteConfirmText": "Dieses Haustier wird entfernt",
+      "yesDelete": "Ja, löschen!",
+      "cancel": "Abbrechen"
+    },
+    "seo": {
+      "title": "Profil | Tierklinik",
+      "description": "Verwalten Sie Ihre persönlichen Informationen, Haustiere und Termine."
+    },
+    "profileAlt": "Profil",
+    "error": "Laden des Benutzerprofils fehlgeschlagen. Bitte versuchen Sie es später noch einmal.",
+    "appointments": {
+      "title": "Ihre Termine",
+      "subtitle": "Verwalten und verfolgen Sie alle Ihre Klinik-Termine",
+      "tabs": {
+        "all": "Alle",
+        "upcoming": "Anstehend",
+        "past": "Vergangen"
+      },
+      "stats": {
+        "total": "Gesamtanzahl Termine",
+        "confirmed": "Bestätigt",
+        "pending": "Ausstehend",
+        "cancelled": "Storniert",
+        "completed": "Abgeschlossen"
+      },
+      "status": {
+        "confirmed": "Bestätigt",
+        "pending": "Ausstehend",
+        "cancelled": "Storniert",
+        "completed": "Abgeschlossen"
+      },
+      "empty": {
+        "title": "Noch keine Reservierungen",
+        "text": "Sie haben noch keine Termine vereinbart. Buchen Sie Ihren ersten Termin!"
+      },
+      "error": "Laden der Reservierungen fehlgeschlagen"
+    },
+    "pets": {
+      "title": "Meine Haustiere",
+      "error": "Laden Ihrer Haustiere fehlgeschlagen.",
+      "empty": "Keine Haustiere gefunden. Fügen Sie Ihr erstes Haustier hinzu!",
+      "age": "{{age}} Jahre",
+      "weight": "{{weight}} kg",
+      "allergies": "Allergien",
+      "vaccinations": "Impfungen",
+      "nextDose": "Nächste Dosis",
+      "deleteConfirm": {
+        "title": "Sind Sie sicher?",
+        "text": "Dies kann nicht rückgängig gemacht werden!",
+        "confirm": "Ja, löschen!",
+        "cancel": "Abbrechen",
+        "deleted": "Gelöscht!",
+        "success": "Ihr Haustierdatensatz wurde gelöscht.",
+        "error": "Löschen des Haustiers fehlgeschlagen."
+      }
+    },
+    "addPet": {
+      "title": "Neues Haustier hinzufügen",
+      "submit": "Haustier hinzufügen",
+      "submitting": "Wird hinzugefügt...",
+      "placeholders": {
+        "name": "Name des Haustiers",
+        "age": "Alter",
+        "weight": "Gewicht",
+        "category": "Kategorie wählen",
+        "allergies": "Allergien (kommagetrennt)"
+      }
+    },
+    "orders": {
+      "title": "Ihre Bestellungen",
+      "error": "Laden der Bestellungen fehlgeschlagen.",
+      "empty": "Sie haben noch keine Bestellungen.",
+      "idPrefix": "Bestellung #",
+      "address": "Adresse",
+      "phone": "Telefon",
+      "payment": "Zahlung",
+      "placedOn": "Aufgegeben am",
+      "products": "Produkte",
+      "qty": "Menge",
+      "price": "Preis",
+      "total": "Gesamt",
+      "status": "Status"
+    },
+    "tracking": {
+      "title": "Bestellung verfolgen",
+      "searchPlaceholder": "Bestellnummer eingeben (z.B. A12X45)...",
+      "error": "Bestellung nicht gefunden. Bitte überprüfen Sie Ihre ID.",
+      "steps": {
+        "pending": "Ausstehend",
+        "placed": "Bestellung aufgegeben",
+        "shipping": "Unterwegs",
+        "completed": "Geliefert",
+        "canceled": "Storniert",
+        "refund": "Rückerstattet",
+        "shipped": "Versandt"
+      }
+    },
+    "analytics": {
+      "cards": {
+        "totalSpending": "Gesamtausgaben",
+        "totalOrders": "Bestellungen insgesamt",
+        "avgOrderValue": "Durchschnittlicher Bestellwert"
+      },
+      "sections": {
+        "topCategories": "Meistgekaufte Kategorien",
+        "favoriteProducts": "Lieblingsprodukte"
+      },
+      "itemsBought": "Artikel",
+      "timesPurchased": "mal gekauft"
+    },
+    "personalInfo": {
+      "title": "Persönliche Informationen",
+      "ownerName": "Name des Besitzers",
+      "email": "E-Mail",
+      "phone": "Telefonnummer",
+      "changePassword": "Passwort ändern",
+      "hidePassword": "Passwortfelder ausblenden",
+      "newPassword": "Neues Passwort",
+      "confirmPassword": "Passwort bestätigen",
+      "saving": "Wird gespeichert...",
+      "save": "Änderungen speichern",
+      "age": "Alter"
+    }
+  },
+  "auth": {
+    "common": {
+      "email": "Ihre E-Mail",
+      "password": "Ihr Passwort",
+      "confirmPassword": "Passwort bestätigen",
+      "newPassword": "Neues Passwort",
+      "repeatPassword": "Passwort wiederholen",
+      "name": "Ihr Name",
+      "phone": "Telefonnummer",
+      "otp": "OTP-Code eingeben",
+      "male": "Männlich",
+      "female": "Weiblich",
+      "or": "ODER",
+      "loading": "Wird geladen...",
+      "backToLogin": "Zurück zum Login",
+      "login": "Login",
+      "signup": "Sign Up",
+      "verify": "Verifizieren",
+      "emailError": "Bitte geben Sie eine korrekte E-Mail-Adresse ein",
+      "passwordError": "Bitte geben Sie ein korrektes Passwort ein"
+    },
+    "login": {
+      "welcomeTitle": "Willkommen zurück!",
+      "welcomeSubtitle": "Für ein besseres Erlebnis mit Ihren Haustieren.",
+      "title": "Anmelden",
+      "submit": "Einloggen",
+      "loading": "Wird angemeldet...",
+      "createAccount": "Neues Konto erstellen?",
+      "signupHere": "Hier registrieren",
+      "forgetPassword": "Passwort vergessen?",
+      "forget": "Passwort vergessen",
+      "successTitle": "Login erfolgreich!",
+      "successText": "Willkommen zurück bei Petique 🐶",
+      "errorTitle": "Login fehlgeschlagen",
+      "errorDefault": "Ungültige E-Mail oder Passwort"
+    },
+    "register": {
+      "title": "Registrieren",
+      "submit": "Registrieren",
+      "loading": "Wird erstellt...",
+      "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
+      "confirmOtp": "OTP bestätigen",
+      "alreadyRegister": "Bereits registriert?",
+      "rightTitle": "Petique beitreten",
+      "rightSubtitle": "Erstellen Sie ein Konto und genießen Sie Ihre Haustierwelt.",
+      "successTitle": "Konto erstellt!",
+      "successText": "Überprüfen Sie Ihre E-Mails. Weiterleitung zum Login... 🐱🐾",
+      "errorTitle": "Registrierungsfehler",
+      "errorDefault": "Registrierung fehlgeschlagen!"
+    },
+    "forgetPassword": {
+      "title": "Passwort zurücksetzen",
+      "subtitle": "Folgen Sie den Schritten, um Ihr Konto sicher wiederherzustellen.",
+      "step1": {
+        "title": "Geben Sie Ihre E-Mail ein",
+        "submit": "OTP senden",
+        "successTitle": "OTP gesendet! Überprüfen Sie Ihre E-Mails",
+        "errorTitle": "Senden des OTP fehlgeschlagen ❌"
+      },
+      "step2": {
+        "title": "OTP eingeben",
+        "submit": "Code verifizieren",
+        "invalidOtp": "Ungültiges OTP ❌",
+        "errorMsg": "OTP muss 6 Stellen haben"
+      },
+      "step3": {
+        "title": "Neues Passwort",
+        "submit": "Passwort zurücksetzen",
+        "successTitle": "🎉 Passwort aktualisiert",
+        "successText": "Ihr Passwort wurde erfolgreich geändert.",
+        "errorTitle": "Aktualisierung des Passworts fehlgeschlagen ❌"
+      },
+      "remember": "Erinnern Sie sich an Ihr Passwort?",
+      "defaultError": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+    },
+    "otp": {
+      "leftTitle": "Verifizieren Sie Ihre E-Mail",
+      "leftSubtitle": "Geben Sie das an Ihre E-Mail gesendete OTP ein.",
+      "title": "OTP-Verifizierung",
+      "submit": "Verifizieren",
+      "loading": "Wird verifiziert...",
+      "successTitle": "Konto verifiziert!",
+      "successText": "Ihr Konto wurde erfolgreich aktiviert.",
+      "errorTitle": "Verifizierung fehlgeschlagen",
+      "errorDefault": "Ungültiges oder abgelaufenes OTP",
+      "required": "OTP-Code ist erforderlich"
+    }
+  }
+}
