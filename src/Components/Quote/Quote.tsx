@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { FaPaw } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import styles from "./Quote.module.css";
+import quoteImg from "../../assets/images/quote.jpg";
 
 const Quote: React.FC = () => {
   const { t } = useTranslation();
@@ -13,14 +14,14 @@ const Quote: React.FC = () => {
       className={`${styles.hero} flex items-center justify-center text-center`}
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/src/assets/images/quote.jpg')",
+          `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${quoteImg})`,
       }}
     >
       <div className="px-4 max-w-3xl">
         <h2
           className={`${styles.heading} text-white text-2xl sm:text-3xl md:text-4xl font-bold mb-4`}
         >
-           “{t("quote.text")}”
+          “{t("quote.text")}”
         </h2>
 
         <motion.div
